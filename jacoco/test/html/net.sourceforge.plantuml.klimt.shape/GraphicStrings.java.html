@@ -79,22 +79,22 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 	private final FontConfiguration fontConfiguration;
 
 	public static IEntityImage createForError(List&lt;String&gt; strings, boolean useRed) {
-<span class="nc" id="L82">		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,</span>
+<span class="fc" id="L82">		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,</span>
 				CreoleMode.NO_CREOLE, true);
 	}
 
 	private static HColor getForeColor(boolean useRed) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (useRed)</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (useRed)</span>
 <span class="nc" id="L88">			return HColors.BLACK;</span>
 
-<span class="nc" id="L90">		return HColors.MY_GREEN;</span>
+<span class="fc" id="L90">		return HColors.MY_GREEN;</span>
 	}
 
 	private static HColor getBackColor(boolean useRed) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (useRed)</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (useRed)</span>
 <span class="nc" id="L95">			return HColors.RED_LIGHT;</span>
 
-<span class="nc" id="L97">		return HColors.BLACK;</span>
+<span class="fc" id="L97">		return HColors.BLACK;</span>
 	}
 
 	public static TextBlock createGreenOnBlackMonospaced(List&lt;String&gt; strings) {

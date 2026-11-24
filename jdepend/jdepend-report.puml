@@ -345,7 +345,7 @@ Total Classes: 3
 "net.atmp" --> "net.sourceforge.plantuml.klimt.geom"
 "net.atmp" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml" %lighten("red", 53) {
+class "net.sourceforge.plantuml" %lighten("red", 54) {
 Total Classes: 38
 }
 "net.sourceforge.plantuml" --> "java.awt"
@@ -356,6 +356,7 @@ Total Classes: 38
 "net.sourceforge.plantuml" --> "java.nio.charset"
 "net.sourceforge.plantuml" --> "java.util"
 "net.sourceforge.plantuml" --> "java.util.logging"
+"net.sourceforge.plantuml" --> "java.util.regex"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.braille"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.cli"

@@ -1864,10 +1864,10 @@
                 <ConcreteClasses>26</ConcreteClasses>
                 <AbstractClasses>12</AbstractClasses>
                 <Ca>102</Ca>
-                <Ce>28</Ce>
+                <Ce>29</Ce>
                 <A>0.32</A>
                 <I>0.22</I>
-                <D>0.47</D>
+                <D>0.46</D>
                 <V>1</V>
             </Stats>
 
@@ -2000,6 +2000,7 @@
                 <Package>java.nio.charset</Package>
                 <Package>java.util</Package>
                 <Package>java.util.logging</Package>
+                <Package>java.util.regex</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.cli</Package>
