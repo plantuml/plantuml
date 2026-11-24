@@ -116,6 +116,29 @@ class PortableImageAwt implements PortableImage {
 
 		final int w = (int) Math.round(image.getWidth() * scaleFactor);
 		final int h = (int) Math.round(image.getHeight() * scaleFactor);
+
+		// AffineTransformOp runs native code (medialib) whose pixels depend on the
+		// platform: on macOS aarch64, a few pixels along the border come out off by
+		// one, so the PNG embedded in an SVG is not the same as on Linux (issue
+		// #3045). MlibAffine is a pure Java port of that code, which gives the very
+		// same pixels as medialib on Linux. It is only used for the source types
+		// where this has been checked: a premultiplied or a gray source (linear
+		// color space) is interpolated differently by AffineTransformOp.
+		if (w > 0 && h > 0 && isPortedType(interpolationType)) {
+			final int srcW = image.getWidth();
+			final int srcH = image.getHeight();
+			final int[] src = image.getRGB(0, 0, srcW, srcH, null, 0, srcW);
+			final int[] dst = new int[w * h];
+			if (interpolationType == AffineTransformOp.TYPE_BILINEAR)
+				MlibAffine.bilinear(src, srcW, srcH, dst, w, h, scaleFactor);
+			else
+				MlibAffine.nearest(src, srcW, srcH, dst, w, h, scaleFactor);
+
+			final BufferedImage scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+			scaled.setRGB(0, 0, w, h, dst, 0, w);
+			return new PortableImageAwt(scaled);
+		}
+
 		// Always use TYPE_INT_ARGB as destination: copying image.getType() may yield a
 		// type without alpha (e.g. RGB color type 2) or TYPE_CUSTOM, which produces a
 		// blank image after AffineTransformOp and breaks the GraalVM native build
@@ -125,6 +148,27 @@ class PortableImageAwt implements PortableImage {
 		at.scale(scaleFactor, scaleFactor);
 		final AffineTransformOp scaleOp = new AffineTransformOp(at, interpolationType);
 		return new PortableImageAwt(scaleOp.filter(image, scaled));
+	}
+
+	private boolean isPortedType(int interpolationType) {
+		if (interpolationType != AffineTransformOp.TYPE_BILINEAR
+				&& interpolationType != AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
+			return false;
+
+		// MlibAffine draws nothing for such sizes: leave them to AffineTransformOp
+		if (image.getWidth() >= (1 << 15) || image.getHeight() >= (1 << 15))
+			return false;
+
+		switch (image.getType()) {
+		case BufferedImage.TYPE_INT_ARGB:
+		case BufferedImage.TYPE_INT_RGB:
+		case BufferedImage.TYPE_4BYTE_ABGR:
+		case BufferedImage.TYPE_3BYTE_BGR:
+		case BufferedImage.TYPE_BYTE_INDEXED:
+		case BufferedImage.TYPE_BYTE_BINARY:
+			return true;
+		}
+		return false;
 	}
 
 }

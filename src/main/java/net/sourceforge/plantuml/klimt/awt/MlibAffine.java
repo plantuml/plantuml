@@ -12,9 +12,16 @@ package net.sourceforge.plantuml.klimt.awt;
  * (positive, identical on both axes, no translation) of an ARGB image.
  * Intermediate values keep the exact order of operations of the C code,
  * because a difference of one unit in the last place may change the pixel.
+ * <p>
+ * The JVM uses it too, instead of <code>AffineTransformOp</code> (see
+ * <code>PortableImageAwt.scale</code>): the native medialib is compiled
+ * differently on each platform, and the double arithmetic of the edges does
+ * not round the same way everywhere (on macOS aarch64, a few pixels are off
+ * by one, issue #3045). Java forbids fusing a multiplication and an addition
+ * into one FMA instruction, so this port gives the same pixels everywhere:
+ * those of medialib on Linux.
  */
 final class MlibAffine {
-	// ::remove file when JAVA8
 
 	private static final int SHIFT = 16;
 	private static final int PREC = 1 << SHIFT;
