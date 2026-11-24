@@ -65,6 +65,9 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	private Set<File> usedFiles = new HashSet<>();
 	private final PathSystem pathSystem;
 	private final Charset charset;
+	// Diagram type of a start line: "uml" for "@startuml", "chart" for "\startchart foo.png"
+	private static final Pattern START_TYPE = Pattern.compile("^[@\\\\]start(\\w+)");
+	// Type of the last @startXXX block that never met its @endXXX, or null
 	private String unclosedDiagramType;
 
 //	/**
@@ -136,8 +139,9 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 					reader.setPaused(false);
 				}
 			}
-			if (current != null && !current.isEmpty()) {
-				final Matcher start = Pattern.compile("^[@\\\\]start(\\w+)").matcher(current.get(0).getString().trim());
+			// The input ended inside a block: remember its type to name the missing end line
+			if (current != null && current.isEmpty() == false) {
+				final Matcher start = START_TYPE.matcher(current.get(0).getString().trim());
 				if (start.find())
 					unclosedDiagramType = start.group(1);
 			}

@@ -258,11 +258,19 @@ public class SourceStringReader {
 
 	}
 
+	/**
+	 * Explains why no diagram was found: names the missing end line when the
+	 * source opens a block (say <code>@startchart</code>) and never closes it.
+	 */
+	public String getNoValidStartMessage() {
+		if (unclosedDiagramType == null)
+			return "No valid @start/@end found, please check the version";
+
+		return "@start" + unclosedDiagramType + " without @end" + unclosedDiagramType;
+	}
+
 	public ImageData noValidStartFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-		final String message = unclosedDiagramType == null ? "No valid @start/@end found, please check the version"
-				: "@start" + unclosedDiagramType + " without @end" + unclosedDiagramType;
-		final TextBlock error = GraphicStrings.createForError(
-				Arrays.asList(message),
+		final TextBlock error = GraphicStrings.createForError(Arrays.asList(getNoValidStartMessage()),
 				fileFormatOption.isUseRedForError());
 
 		return TextBlockExporter.builder(error, fileFormatOption, false).build().exportTo(os);
