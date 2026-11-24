@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="192px" preserveAspectRatio="none" style="width:229px;height:192px;background:#FFFFFF;" version="1.1" viewBox="0 0 229 192" width="229px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="49.688" x2="49.688" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="59.375" x="20" y="92"/>
+    <text fill="#000" font-size="12" textLength="39.375" x="30" y="111.333">Launch</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="49.688" x2="59.688" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="71.375" x="59.688" y="139"/>
+    <text fill="#000" font-size="12" textLength="51.375" x="69.688" y="158.333">Complete</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="49.688" x2="49.688" y1="124" y2="155"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="179.775" x2="179.775" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="57.425" x="151.063" y="92"/>
+    <text fill="#000" font-size="12" textLength="37.425" x="161.063" y="111.333">Design</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="49.688" x2="179.775" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="112.1" x="58.681" y="20"/>
+    <text fill="#000" font-size="12" textLength="92.1" x="68.681" y="39.333">Business Process</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="114.731" x2="114.731" y1="52" y2="72"/>
+  </g>
+</svg>

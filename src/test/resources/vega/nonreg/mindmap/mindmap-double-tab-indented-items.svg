@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="129px" preserveAspectRatio="none" style="width:404px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 404 129" width="404px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="127.45" x="10" y="47"/>
+    <text fill="#000" font-size="14" textLength="107.45" x="20" y="67.889">Business Process</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="65.938" x="187.45" y="20"/>
+    <text fill="#000" font-size="14" textLength="45.938" x="197.45" y="40.889">Launch</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="79.938" x="303.388" y="20"/>
+    <text fill="#000" font-size="14" textLength="59.938" x="313.388" y="40.889">Complete</text>
+    <path d="M253.388,37 L263.388,37 C278.388,37 278.388,37 293.388,37 L303.388,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M137.45,64 L147.45,64 C162.45,64 162.45,37 177.45,37 L187.45,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="63.663" x="187.45" y="74"/>
+    <text fill="#000" font-size="14" textLength="43.663" x="197.45" y="94.889">Design</text>
+    <path d="M137.45,64 L147.45,64 C162.45,64 162.45,91 177.45,91 L187.45,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>
