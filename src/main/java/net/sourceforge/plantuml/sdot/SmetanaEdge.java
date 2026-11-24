@@ -44,15 +44,19 @@ import h.ST_splines;
 import h.ST_textlabel_t;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.cruise.XAbstractEdge;
 import net.sourceforge.plantuml.cruise.XEdge;
+import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -62,10 +66,15 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.LineParam;
@@ -87,22 +96,23 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private final ST_Agedge_s edge;
 	private final YMirror ymirror;
 	private final TextBlock label;
-	private final TextBlock headLabel;
-	private final TextBlock tailLabel;
-	private final TextBlock tailRole;
-	private final TextBlock headRole;
+	private final EndpointLabel headLabel;
+	private final EndpointLabel tailLabel;
+	private DotPath orthogonalPath;
+	private UTranslate labelPosition;
+	private UTranslate headLabelPosition;
+	private UTranslate tailLabelPosition;
 
 	public SmetanaEdge(Link link, ST_Agedge_s edge, YMirror ymirror, TextBlock label,
-			TextBlock tailLabel, TextBlock headLabel, TextBlock tailRole, TextBlock headRole,
+			TextBlock tailQuantifier, TextBlock headQuantifier, TextBlock tailRole, TextBlock headRole,
 			Bibliotekon bibliotekon, ISkinParam skinParam) {
 		super(link, skinParam, bibliotekon);
 		this.edge = edge;
 		this.ymirror = ymirror;
 		this.label = label;
-		this.tailLabel = tailLabel;
-		this.headLabel = headLabel;
-		this.tailRole = tailRole;
-		this.headRole = headRole;
+		final boolean orthogonal = skinParam.getDotSplines() == DotSplines.ORTHO;
+		this.tailLabel = new EndpointLabel(tailQuantifier, tailRole, orthogonal);
+		this.headLabel = new EndpointLabel(headQuantifier, headRole, orthogonal);
 	}
 
 	private LinkStrategy getLinkStrategy() {
@@ -127,89 +137,30 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 			group.put(UGroupType.DATA_LINK_TYPE, linkTypeName);
 		ug.startGroup(group);
 
-		DotPath dotPath = getDotPathInternal();
-
+		final DotPath dotPath = orthogonalPath == null ? getDisplayedPath(ug.getStringBounder()) : orthogonalPath.copy();
 		if (dotPath != null) {
-			if (ymirror != null)
-				dotPath = ymirror.getMirrored(dotPath);
-
-			RectangleArea rectangleArea1 = null;
-			RectangleArea rectangleArea2 = null;
-			if (link.getEntity1().isGroup()) {
-				final Cluster cluster1 = bibliotekon.getCluster(link.getEntity1());
-				rectangleArea1 = cluster1.getRectangleArea();
-
-			}
-			if (link.getEntity2().isGroup()) {
-				final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());
-				rectangleArea2 = cluster2.getRectangleArea();
-			}
-
-			dotPath = dotPath.simulateCompound(rectangleArea2, rectangleArea1);
-
-			// simulateCompound only clips to the plain bounding rectangle. For a cluster
-			// drawn as a shaped symbol (e.g. a package rendered as a folder, see
-			// USymbolFolder) the visible border is NOT that rectangle: the body top edge
-			// sits htitle below the bounding box because of the title tab. Without the
-			// step below, an arrow pointing at such a cluster stops at the bounding box
-			// and floats above the drawn border (arrows too short towards packages).
-			// Mirror SvekEdge.drawU, which applies Cluster.getMagneticBorder()
-			// (delegating to USymbolFolder) for the very same reason on the dot pipeline.
-			// Moving the path endpoints here also relocates the arrowheads, since
-			// printExtremityAtStart/End read them straight from dotPath below.
-			if (rectangleArea1 != null) {
-				final Cluster cluster1 = bibliotekon.getCluster(link.getEntity1());
-				final UTranslate force = cluster1.getMagneticBorder().getForceAt(ug.getStringBounder(),
-						dotPath.getStartPoint());
-				dotPath.moveStartPoint(force);
-			}
-			if (rectangleArea2 != null) {
-				final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());
-				final UTranslate force = cluster2.getMagneticBorder().getForceAt(ug.getStringBounder(),
-						dotPath.getEndPoint());
-				dotPath.moveEndPoint(force);
-			}
-
 			final Style styleLine = getStyle();
 
 			final Rainbow rainbow = Rainbow.build(styleLine, skinParam.getIHtmlColorSet());
-
-			// Warning: duplicated from SmetanaPath and SvekEdge
-			HColor arrowHeadColor = rainbow.getArrowHeadColor();
 			HColor color = rainbow.getColor();
 
 			if (this.link.getColors() != null) {
 				final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
-				if (newColor != null) {
+				if (newColor != null)
 					color = newColor;
-					arrowHeadColor = color;
-				}
-			} else if (this.link.getSpecificColor() != null) {
+			} else if (this.link.getSpecificColor() != null)
 				color = this.link.getSpecificColor();
-				arrowHeadColor = color;
-			}
 
 			ug = ug.apply(HColors.none().bg()).apply(color);
 			final LinkType linkType = link.getType();
-			final UStroke suggestedStroke = styleLine.getStroke();
-			final UStroke defaultThickness = skinParam.getThickness(LineParam.arrow, null);
-
-			UStroke stroke;
-			if (suggestedStroke == null || linkType.getStyle().isNormal() == false)
-				stroke = linkType.getStroke3(defaultThickness);
-			else
-				stroke = linkType.getStroke3(suggestedStroke);
-
-			if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
-				stroke = link.getColors().getSpecificLineStroke();
+			final UStroke stroke = getLineStroke(styleLine);
 
 			final Url url = link.getUrl();
 			if (url != null)
 				ug.startUrl(url);
 
-			// Filled decorations (eg -->> ) must be painted with the line color, as
-			// SvekEdge.drawU does on the dot pipeline. The background stays none here,
-			// so hollow decorations are already covered by the ug built above.
+			// Filled arrowheads inherit the connector color as their fill.
+			// Hollow decorations use the transparent background set above.
 			UGraphic ugStart = ug.apply(color);
 			if (linkType.getDecor2().isFill())
 				ugStart = ugStart.apply(color.bg());
@@ -226,44 +177,246 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 				ug.closeUrl();
 
 		}
-		if (getLabelRectangleTranslate("label") != null)
-			label.drawU(ug.apply(getLabelRectangleTranslate("label")));
-
-		if (getLabelRectangleTranslate("head_label") != null)
-			headLabel.drawU(ug.apply(getLabelRectangleTranslate("head_label")));
-
-		if (getLabelRectangleTranslate("tail_label") != null)
-			tailLabel.drawU(ug.apply(getLabelRectangleTranslate("tail_label")));
-
-		if (dotPath != null) {
-			// Not "dotPath" mirrored again: it is already mirrored, and its ends have been
-			// moved to make room for the decorations.
-			DotPath pathForRoles = getDotPathInternal();
-			if (ymirror != null)
-				pathForRoles = ymirror.getMirrored(pathForRoles);
-
-			if (tailRole != null && getLabelRectangleTranslate("tail_label") != null) {
-				final UTranslate tailTr = getLabelRectangleTranslate("tail_label");
-				final XPoint2D tailLabelPos = new XPoint2D(tailTr.getDx(), tailTr.getDy());
-				drawRoleLabel(ug, tailRole, tailLabel, tailLabelPos,
-						pathForRoles.getStartPoint(), pathForRoles.getEndPoint(), pathForRoles.sample());
-			}
-			if (headRole != null && getLabelRectangleTranslate("head_label") != null) {
-				final UTranslate headTr = getLabelRectangleTranslate("head_label");
-				final XPoint2D headLabelPos = new XPoint2D(headTr.getDx(), headTr.getDy());
-				drawRoleLabel(ug, headRole, headLabel, headLabelPos,
-						pathForRoles.getEndPoint(), pathForRoles.getStartPoint(), pathForRoles.sample());
-			}
+		drawLabel(ug, label, labelPosition, "label");
+		drawLabel(ug, headLabel.text, headLabelPosition, "head_label");
+		drawLabel(ug, tailLabel.text, tailLabelPosition, "tail_label");
+		if (dotPath != null && skinParam.getDotSplines() != DotSplines.ORTHO
+				&& (tailLabel.hasPair() || headLabel.hasPair())) {
+			final DotPath pathForRoles = getMirroredPath();
+			drawSplineRole(ug, tailLabel, "tail_label", pathForRoles, true);
+			drawSplineRole(ug, headLabel, "head_label", pathForRoles, false);
 		}
 
 		ug.closeGroup();
-		// printDebug(ug);
+	}
+
+	private DotPath getMirroredPath() {
+		final DotPath path = getDotPathInternal();
+		return path == null || ymirror == null ? path : ymirror.getMirrored(path);
+	}
+
+	private DotPath getDisplayedPath(StringBounder stringBounder) {
+		DotPath dotPath = getMirroredPath();
+		if (dotPath == null)
+			return null;
+
+		RectangleArea rectangleArea1 = null;
+		RectangleArea rectangleArea2 = null;
+		if (link.getEntity1().isGroup()) {
+			final Cluster cluster1 = bibliotekon.getCluster(link.getEntity1());
+			rectangleArea1 = cluster1.getRectangleArea();
+		}
+		if (link.getEntity2().isGroup()) {
+			final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());
+			rectangleArea2 = cluster2.getRectangleArea();
+		}
+
+		dotPath = dotPath.simulateCompound(rectangleArea2, rectangleArea1);
+
+		// Attach the clipped path and its arrowheads to the visible symbol border.
+		// A package folder, for example, has a title tab above the body border.
+		// SvekEdge uses the same magnetic border for Graphviz.
+		if (rectangleArea1 != null) {
+			final Cluster cluster1 = bibliotekon.getCluster(link.getEntity1());
+			final UTranslate force = cluster1.getMagneticBorder().getForceAt(stringBounder,
+					dotPath.getStartPoint());
+			dotPath.moveStartPoint(force);
+		}
+		if (rectangleArea2 != null) {
+			final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());
+			final UTranslate force = cluster2.getMagneticBorder().getForceAt(stringBounder,
+					dotPath.getEndPoint());
+			dotPath.moveEndPoint(force);
+		}
+		return dotPath;
+	}
+
+	/**
+	 * Returns the path that will be painted, including a spline fallback.
+	 * Orthogonal runs become tracks that subsequent edges can route alongside.
+	 */
+	DotPath routeOrthogonally(StringBounder stringBounder, Map<Entity, RectangleArea> nodeAreas,
+			List<RectangleArea> nodes, List<RectangleArea> clusters, List<RectangleArea> usedTracks) {
+		final DotPath spline = getDisplayedPath(stringBounder);
+		if (spline == null)
+			return null;
+		// The edge enters the clusters around its ends. Any other cluster is as solid as a node.
+		final List<RectangleArea> obstacles = new ArrayList<>(nodes);
+		for (RectangleArea cluster : clusters)
+			if (cluster.contains(spline.getStartPoint()) == false && cluster.contains(spline.getEndPoint()) == false)
+				obstacles.add(cluster);
+		final Entity source = link.getEntity1();
+		final Entity target = link.getEntity2();
+		final OrthogonalPath.Endpoint tail = endpoint(source, nodeAreas.get(source), link.getType().getDecor2(),
+				stringBounder);
+		final OrthogonalPath.Endpoint head = endpoint(target, nodeAreas.get(target), link.getType().getDecor1(),
+				stringBounder);
+		orthogonalPath = OrthogonalPath.route(spline, tail, head, obstacles, usedTracks);
+		if (orthogonalPath == null)
+			return spline;
+		for (XCubicCurve2D segment : orthogonalPath.getBeziers())
+			usedTracks.add(RectangleArea.build(segment.getP1(), segment.getP2()));
+		return orthogonalPath;
+	}
+
+	private OrthogonalPath.Endpoint endpoint(Entity entity, RectangleArea area, LinkDecor decor,
+			StringBounder stringBounder) {
+		final EntityPosition position = entity.getEntityPosition();
+		final OrthogonalPath.Endpoint.Shape shape;
+		if (position.isPort())
+			shape = OrthogonalPath.Endpoint.Shape.BOX;
+		else if (position.usePortP())
+			shape = OrthogonalPath.Endpoint.Shape.CIRCLE;
+		else
+			shape = OrthogonalPath.Endpoint.Shape.FIXED;
+		return new OrthogonalPath.Endpoint(area, shape, decorationExtent(decor, stringBounder));
+	}
+
+	private double decorationExtent(LinkDecor decor, StringBounder stringBounder) {
+		// The outline above a downward-facing attachment.
+		return -measureDecoration(decor, Math.PI / 2, stringBounder).getMinY();
+	}
+
+	private double decorationHalfWidth(LinkDecor decor, StringBounder stringBounder) {
+		// The outline on either side of a rightward-facing attachment.
+		final MinMax bounds = measureDecoration(decor, 0, stringBounder);
+		return Math.max(-bounds.getMinY(), bounds.getMaxY());
+	}
+
+	private MinMax measureDecoration(LinkDecor decor, double angle, StringBounder stringBounder) {
+		final ExtremityFactory factory = decor.getExtremityFactoryComplete(skinParam.getBackgroundColor());
+		if (factory == null)
+			return MinMax.getEmpty(true);
+		// LimitFinder pads polygons horizontally, so only the vertical extent is exact.
+		try {
+			final UDrawable decoration = factory.createUDrawable(new XPoint2D(0, 0), angle, null);
+			if (decoration != null)
+				return TextBlockUtils.getMinMax(decoration, stringBounder, true);
+		} catch (UnsupportedOperationException e) {
+			// The normal drawing path also handles unsupported decorations.
+		}
+		return MinMax.getEmpty(true);
+	}
+
+	void reserveConnector(OrthogonalLabelPlacement placement, DotPath path, StringBounder stringBounder) {
+		placement.addPath(path, getLineStroke(getStyle()).getThickness());
+		reserveDecoration(placement, link.getType().getDecor2(), path.getStartPoint(), path.getStartAngle() + Math.PI,
+				stringBounder);
+		reserveDecoration(placement, link.getType().getDecor1(), path.getEndPoint(), path.getEndAngle(), stringBounder);
+	}
+
+	private void reserveDecoration(OrthogonalLabelPlacement placement, LinkDecor decor, XPoint2D tip, double angle,
+			StringBounder stringBounder) {
+		final double length = decorationExtent(decor, stringBounder);
+		if (length == 0)
+			return;
+		final double halfWidth = decorationHalfWidth(decor, stringBounder);
+		final XPoint2D base = new XPoint2D(tip.x - length * Math.cos(angle), tip.y - length * Math.sin(angle));
+		final double marginX = halfWidth * Math.abs(Math.sin(angle));
+		final double marginY = halfWidth * Math.abs(Math.cos(angle));
+		placement.addDecoration(new RectangleArea(Math.min(tip.x, base.x) - marginX, Math.min(tip.y, base.y) - marginY,
+				Math.max(tip.x, base.x) + marginX, Math.max(tip.y, base.y) + marginY));
+	}
+
+	/** A note draws the connector of its link itself, straight between both ends. */
+	void reserveNoteConnector(OrthogonalLabelPlacement placement) {
+		final XPoint2D start = getStartPoint();
+		final XPoint2D end = getEndPoint();
+		placement.addPath(new DotPath().addCurve(start, start, end, end), UStroke.simple().getThickness());
+	}
+
+	void placeEndpointLabels(OrthogonalLabelPlacement placement, DotPath path, StringBounder stringBounder) {
+		final XPoint2D start = path.getStartPoint();
+		final XPoint2D end = path.getEndPoint();
+		if (isBlank(link.getQuantifier2(), link.getRole2()) == false)
+			headLabelPosition = headLabel.place(placement, end, start, stringBounder);
+		if (isBlank(link.getQuantifier1(), link.getRole1()) == false)
+			tailLabelPosition = tailLabel.place(placement, start, end, stringBounder);
+	}
+
+	void placeMiddleLabel(OrthogonalLabelPlacement placement, DotPath path, StringBounder stringBounder) {
+		final UTranslate original = getLabelRectangleTranslate("label");
+		if (original == null || (link.getNote() == null && link.getLabel().isWhite()))
+			return;
+		final XDimension2D dimension = label.calculateDimension(stringBounder);
+		labelPosition = orthogonalPath == null ? placement.placeSplineLabel(path, original, dimension)
+				: placement.placeMidpoint(orthogonalPath, dimension);
+	}
+
+	// Blank labels keep the position from the layout and leave their room to visible ones.
+	private static boolean isBlank(String... texts) {
+		for (String text : texts)
+			if (text != null && text.trim().isEmpty() == false)
+				return false;
+		return true;
+	}
+
+	private void drawLabel(UGraphic ug, TextBlock text, UTranslate routedPosition, String fieldName) {
+		final UTranslate position = routedPosition == null ? getLabelRectangleTranslate(fieldName) : routedPosition;
+		if (position != null)
+			text.drawU(ug.apply(position));
+	}
+
+	private void drawSplineRole(UGraphic ug, EndpointLabel label, String fieldName, DotPath path, boolean tail) {
+		if (label.hasPair() == false)
+			return;
+		final UTranslate position = getLabelRectangleTranslate(fieldName);
+		if (position != null)
+			drawRoleLabel(ug, label.role, label.quantifier, new XPoint2D(position.getDx(), position.getDy()),
+					tail ? path.getStartPoint() : path.getEndPoint(),
+					tail ? path.getEndPoint() : path.getStartPoint(), path.sample());
+	}
+
+	private static final class EndpointLabel {
+		private final TextBlock quantifier;
+		private final TextBlock role;
+		private final TextBlock text;
+
+		EndpointLabel(TextBlock quantifier, TextBlock role, boolean orthogonal) {
+			this.quantifier = quantifier;
+			this.role = role;
+			if (orthogonal && hasPair())
+				this.text = TextBlockUtils.mergeTB(quantifier, role, HorizontalAlignment.CENTER);
+			else
+				this.text = quantifier != null ? quantifier : role;
+		}
+
+		boolean hasPair() {
+			return quantifier != null && role != null;
+		}
+
+		UTranslate place(OrthogonalLabelPlacement placement, XPoint2D end, XPoint2D other,
+				StringBounder stringBounder) {
+			if (text == null)
+				return null;
+
+			double rowOffset = 0;
+			if (hasPair()) {
+				// Each row's center is offset from the block's center by
+				// half the height of the other row.
+				final TextBlock adjacentRow = other.y > end.y ? quantifier : role;
+				rowOffset = adjacentRow.calculateDimension(stringBounder).getHeight() / 2;
+			}
+			return placement.placeEndpoint(end, other, text.calculateDimension(stringBounder), rowOffset);
+		}
 	}
 
 	private Style getStyle() {
 		final StyleQuery query = StyleQueries.ARROW.add(diagramType().getStyleName())
 				.withStereotype(link.getStereotype());
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
+	}
+
+	private UStroke getLineStroke(Style style) {
+		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
+			return link.getColors().getSpecificLineStroke();
+
+		final LinkType type = link.getType();
+		final UStroke suggested = style.getStroke();
+		if (suggested != null && type.getStyle().isNormal())
+			return type.getStroke3(suggested);
+
+		return type.getStroke3(skinParam.getThickness(LineParam.arrow, null));
 	}
 
 	public XPoint2D getStartPoint() {
@@ -297,7 +450,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);
 			if (extremity2 != null) {
 				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {
-					final double decorationLength = extremity2.getDecorationLength();
+					final double decorationLength = decorationLength(dotPath, extremity2, 0);
 					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));
 				}
 				extremity2.drawU(ug);
@@ -322,7 +475,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 			final Extremity extremity1 = (Extremity) extremityFactory1.createUDrawable(p0, endAngle, null);
 			if (extremity1 != null) {
 				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {
-					final double decorationLength = extremity1.getDecorationLength();
+					final double decorationLength = decorationLength(dotPath, extremity1, dotPath.getBeziers().size() - 1);
 					dotPath.moveEndPoint(new UTranslate(decorationLength, 0).rotate(endAngle - Math.PI));
 				}
 				extremity1.drawU(ug);
@@ -332,6 +485,16 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 			e.printStackTrace();
 			System.err.println("CANNOT DRAW printExtremityAtEnd");
 		}
+	}
+
+	private double decorationLength(DotPath path, Extremity extremity, int segment) {
+		final double length = extremity.getDecorationLength();
+		if (orthogonalPath == null)
+			return length;
+		// A decoration can consume the whole last run. Keep the shortened edge on
+		// its original axis instead of moving the endpoint past its nearest bend.
+		final XCubicCurve2D line = path.getBeziers().get(segment);
+		return Math.min(length, Math.max(0, line.getP1().distance(line.getP2()) - 0.01));
 	}
 
 //	private void printDebug(UGraphic ug) {

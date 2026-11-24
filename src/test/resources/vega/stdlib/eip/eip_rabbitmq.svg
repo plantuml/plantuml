@@ -63,27 +63,27 @@
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk9">
       <polygon fill="#181818" points="159.884,224,150.884,220,154.884,224,150.884,228,159.884,224" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M124.23,224 C135.144,224 142.294,224 154.884,224" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M124.23,224 C124.23,224 154.884,224 154.884,224" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0005" data-entity-2="ent0008" data-link-type="dependency" id="lnk10">
       <polygon fill="#181818" points="445.939,224,436.939,220,440.939,224,436.939,228,445.939,224" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M410.151,224 C422.194,224 429.268,224 440.939,224" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M410.151,224 C410.151,224 440.939,224 440.939,224" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0008" data-entity-2="ent0003" data-link-type="dependency" id="lnk11">
-      <polygon fill="#181818" points="670.929,273.412,663.947,266.465,666.258,271.628,661.094,273.939,670.929,273.412" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M635.159,259.756 C647.574,264.495 655.16,267.391 666.258,271.628" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="670.929,273.412,661.929,269.412,665.929,273.412,661.929,277.412,670.929,273.412" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M635.159,259.756 C635.159,259.756 654.929,259.756 654.929,259.756 C654.929,259.756 654.929,273.412 654.929,273.412 C654.929,273.412 665.929,273.412 665.929,273.412" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0008" data-entity-2="ent0004" data-link-type="dependency" id="lnk12">
-      <polygon fill="#181818" points="670.929,159.101,661.091,159.56,666.459,161.342,664.677,166.711,670.929,159.101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M635.159,177.037 C647.574,170.812 655.361,166.907 666.459,161.342" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="670.929,159.101,661.929,155.101,665.929,159.101,661.929,163.101,670.929,159.101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M635.159,177.037 C635.159,177.037 654.929,177.037 654.929,177.037 C654.929,177.037 654.929,159.101 654.929,159.101 C654.929,159.101 665.929,159.101 665.929,159.101" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk13">
-      <polygon fill="#181818" points="800.884,292.987,791.983,288.77,795.885,292.866,791.789,296.768,800.884,292.987" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M765.23,292.122 C776.144,292.387 783.295,292.561 795.885,292.866" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="800.884,292.555,791.884,288.555,795.884,292.555,791.884,296.555,800.884,292.555" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M765.23,292.555 C765.23,292.555 795.884,292.555 795.884,292.555" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="dependency" id="lnk14">
-      <polygon fill="#181818" points="800.884,133.615,791.771,129.879,795.886,133.761,792.004,137.875,800.884,133.615" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M765.23,134.653 C776.144,134.336 783.296,134.127 795.886,133.761" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="800.884,134.134,791.884,130.134,795.884,134.134,791.884,138.134,800.884,134.134" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M765.23,134.134 C765.23,134.134 795.884,134.134 795.884,134.134" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="caption" data-source-line="3">
       <text fill="#000" font-size="14" textLength="126" x="471" y="415.889">container 'RabbitMQ'</text>

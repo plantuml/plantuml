@@ -24,9 +24,8 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
  * ortho": each labelled link is routed through its label node, and every
  * segment of every link stays horizontal or vertical.
  * <p>
- * Geometry is Graphviz's, so this runs through Svek (not Smetana, which has no
- * orthogonal routing and is what Vega uses) and is skipped when dot is not
- * installed.
+ * This test exercises Svek's Graphviz pipeline and is skipped when dot is
+ * unavailable.
  */
 class ComponentEdgeLabelOrthoTest extends SvekSvgTest {
 

@@ -71,24 +71,35 @@ import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.shape.UHidden;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UEmpty;
+import net.sourceforge.plantuml.klimt.shape.UHidden;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -204,6 +215,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		private final MinMaxMutable minMax;
 		private final double canvasMargin;
 		private MinMax measuredMinMax;
+		private StringBounder routedFor;
 
 		public Drawing(double canvasMargin) {
 			this.minMax = getSmetanaMinMax();
@@ -219,20 +231,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			return minMax.getDimension().delta(2 * canvasMargin + 4, canvasMargin + 16);
 		}
 
-		// The structural minMax (from Smetana's own node/cluster layout boxes) does not
-		// account for geometry drawn afterwards by our own code, such as self-loop edge
-		// curves (SmetanaEdge): a self-loop can visually extend past the rightmost node
-		// it is attached to. At the diagram root this went unnoticed because nothing
-		// framed the drawing tightly, but once this Drawing is used as the image of a
-		// region inside a ConcurrentStates/InnerStateAutonom, that extra geometry gets
-		// clipped by the surrounding border.
-		//
-		// To fix this in a way that cannot regress already-approved renders, we measure
-		// the actually-drawn bounding box once (same technique as SvekResult on the dot
-		// side: draw into a LimitFinder to record real extents), and only ADD extra
-		// margin/translation where the real drawing overflows the structural baseline.
-		// When there is no overflow (the common case), dimension and translate are
-		// byte-for-byte identical to the previous, purely structural computation.
+		// Smetana's layout bounds cover the nodes and clusters. Measure the
+		// rendered edges and labels as well so the canvas and any enclosing
+		// state region can expand where the drawing extends past those bounds.
 		private MinMax getMeasuredMinMax(StringBounder stringBounder) {
 			if (measuredMinMax == null) {
 				final UTranslate baseline = getBaselineTranslate();
@@ -253,12 +254,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			drawContent(shifted);
 		}
 
-		// Draws the diagram content. The caller is responsible for positioning ug at
-		// the desired origin beforehand (no translation is applied here), so that this
-		// method can be reused both for the real draw and for the bounding-box
-		// measurement dry-run above.
-		private void drawContent(UGraphic ug) {
-
+		private void makeEdges(StringBounder stringBounder) {
 			smetanaPathes.clear();
 
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
@@ -267,31 +263,43 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 					continue;
 
 				final ST_Agedge_s edge = ent.getValue();
-				final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);
-				final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);
-				final TextBlock role1 = getRoleLabel(ug.getStringBounder(), link, 1);
-				final TextBlock role2 = getRoleLabel(ug.getStringBounder(), link, 2);
-				final TextBlock tailLabel = quantifier1 != null ? quantifier1 : role1;
-				final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;
-				final TextBlock tailRole = quantifier1 != null ? role1 : null;
-				final TextBlock headRole = quantifier2 != null ? role2 : null;
+				final TextBlock quantifier1 = getQuantifier(stringBounder, link, 1);
+				final TextBlock quantifier2 = getQuantifier(stringBounder, link, 2);
+				final TextBlock role1 = getRoleLabel(stringBounder, link, 1);
+				final TextBlock role2 = getRoleLabel(stringBounder, link, 2);
 				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,
-						getLabel(ug.getStringBounder(), link), tailLabel, headLabel, tailRole, headRole,
+							getLabel(stringBounder, link), quantifier1, quantifier2, role1, role2,
 						getBibliotekon(), diagram.getSkinParam());
 				smetanaPathes.put(link, smetanaPath);
 			}
+		}
 
+		// The caller supplies the drawing origin, both for measurement and for
+		// the actual rendering. Routes and label positions use diagram coordinates.
+		private void drawContent(UGraphic ug) {
+			final StringBounder stringBounder = ug.getStringBounder();
+			final boolean orthogonal = diagram.getSkinParam().getDotSplines() == DotSplines.ORTHO;
+			// Measurement and rendering can share the same routes when their
+			// text metrics match. Edges copy the path before painting decorations.
+			final boolean reroute = orthogonal && routedFor != stringBounder;
+			if (orthogonal == false || reroute)
+				makeEdges(stringBounder);
+
+			// A cluster with entry or exit points derives its frame from their
+			// positions, which the routes around that frame rely on.
+			if (reroute)
+				for (Map.Entry<Entity, ST_Agnode_s> ent : nodes.entrySet())
+					moveToLayoutPosition(ent.getKey(), ent.getValue());
+
+			final ClusterHeaderBounds clusterHeaders = reroute ? new ClusterHeaderBounds() : null;
 			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet())
-				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());
+				drawGroup(ug, ymirror, ent.getKey(), ent.getValue(), clusterHeaders);
 
 			for (Map.Entry<Entity, ST_Agnode_s> ent : nodes.entrySet()) {
 				final Entity leaf = ent.getKey();
-				final ST_Agnode_s agnode = ent.getValue();
-				final XPoint2D corner = getCorner(agnode);
+				final XPoint2D corner = moveToLayoutPosition(leaf, ent.getValue());
 
 				final SvekNode node = getBibliotekon().getNode(leaf);
-				node.resetMove();
-				node.moveDelta(corner.getX(), corner.getY());
 				final IEntityImage image = node.getImage();
 				// Same as SvekResult on the dot pipeline: 'hide' (as opposed to 'remove')
 				// keeps the node in the layout but must not paint it.
@@ -299,10 +307,75 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				image.drawU(ugNode.apply(UTranslate.point(corner)));
 			}
 
+			if (clusterHeaders != null) {
+				routeOrthogonalEdges(stringBounder, clusterHeaders.bounds);
+				routedFor = stringBounder;
+			}
+
 			for (Entry<Link, SmetanaEdge> ent : smetanaPathes.entrySet())
 				if (ent.getKey().isOpale() == false)
 					ent.getValue().drawU(ug);
+		}
 
+		private XPoint2D moveToLayoutPosition(Entity leaf, ST_Agnode_s agnode) {
+			final XPoint2D corner = getCorner(agnode);
+			final SvekNode node = getBibliotekon().getNode(leaf);
+			node.resetMove();
+			node.moveDelta(corner.getX(), corner.getY());
+			return corner;
+		}
+
+		// Route after drawing the groups so their frames and header positions
+		// are final. Keep layout coordinates here so the measured and rendered
+		// diagrams can use the same routes at different drawing origins.
+		private void routeOrthogonalEdges(StringBounder stringBounder, List<RectangleArea> clusterHeaders) {
+			final Map<Entity, RectangleArea> nodeAreas = new LinkedHashMap<>();
+			final List<RectangleArea> obstacles = new ArrayList<>(clusterHeaders);
+			for (Entity entity : nodes.keySet()) {
+				final SvekNode node = getBibliotekon().getNode(entity);
+				final RectangleArea area = node.getRectangleArea();
+				nodeAreas.put(entity, area);
+				if (node.isHidden() == false)
+					obstacles.add(area);
+			}
+			final OrthogonalLabelPlacement placement = new OrthogonalLabelPlacement(obstacles);
+			final List<RectangleArea> clusterAreas = new ArrayList<>();
+			final List<RectangleArea> usedTracks = new ArrayList<>();
+			for (Entity entity : clusters.keySet()) {
+				final RectangleArea area = getBibliotekon().getCluster(entity).getRectangleArea();
+				if (area != null) {
+					nodeAreas.put(entity, area);
+					if (entity.isHidden() == false) {
+						placement.addClusterBorder(area);
+						clusterAreas.add(area);
+						// An edge running along a border would disappear into it.
+						usedTracks.addAll(OrthogonalPath.sides(area));
+					}
+				}
+			}
+
+			final Map<SmetanaEdge, DotPath> visiblePaths = new LinkedHashMap<>();
+			// Labels on both orthogonal routes and splines must clear every visible connector.
+			for (Entry<Link, SmetanaEdge> entry : smetanaPathes.entrySet()) {
+				final Link link = entry.getKey();
+				if (link.isHidden())
+					continue;
+				final SmetanaEdge edge = entry.getValue();
+				if (link.isOpale()) {
+					edge.reserveNoteConnector(placement);
+					continue;
+				}
+				final DotPath path = edge.routeOrthogonally(stringBounder, nodeAreas, obstacles, clusterAreas, usedTracks);
+				if (path != null) {
+					visiblePaths.put(edge, path);
+					edge.reserveConnector(placement, path, stringBounder);
+				}
+			}
+			// End labels have less room to move than labels along the connector.
+			for (Entry<SmetanaEdge, DotPath> entry : visiblePaths.entrySet())
+				entry.getKey().placeEndpointLabels(placement, entry.getValue(), stringBounder);
+			for (Entry<SmetanaEdge, DotPath> entry : visiblePaths.entrySet())
+				entry.getKey().placeMiddleLabel(placement, entry.getValue(), stringBounder);
 		}
 
 		@Fast
@@ -329,6 +402,87 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			return null;
 		}
 
+	}
+
+	/** Collects the painted bounds of group labels in diagram coordinates. */
+	private static final class ClusterHeaderBounds {
+		private final List<RectangleArea> bounds = new ArrayList<>();
+		private LimitFinder measuring;
+
+		TextBlock wrap(TextBlock label) {
+			return new TextBlock() {
+				@Override
+				public XDimension2D calculateDimension(StringBounder stringBounder) {
+					return label.calculateDimension(stringBounder);
+				}
+
+				@Override
+				public void drawU(UGraphic ug) {
+					final LimitFinder previous = measuring;
+					measuring = LimitFinder.create(ug.getStringBounder(), false);
+					try {
+						label.drawU(ug);
+						// The raw limits distinguish an empty block from a point at the origin.
+						final double minX = measuring.getMinX();
+						final double minY = measuring.getMinY();
+						final double maxX = measuring.getMaxX();
+						final double maxY = measuring.getMaxY();
+						if (minX <= maxX && minY <= maxY)
+							bounds.add(new RectangleArea(minX, minY, maxX, maxY));
+					} finally {
+						measuring = previous;
+					}
+				}
+			};
+		}
+
+		void record(UShape shape, UTranslate translate) {
+			if (measuring == null || shape instanceof UEmpty
+					|| shape instanceof UText && ((UText) shape).getText().trim().isEmpty())
+				return;
+
+			final UGraphic limits = measuring.apply(translate);
+			if (shape instanceof UImage) {
+				final UImage image = (UImage) shape;
+				// UImage dimensions are the last pixel coordinates.
+				limits.draw(new UEmpty(image.getWidth() + 1, image.getHeight() + 1));
+			} else if (shape instanceof UImageSvg) {
+				final UImageSvg image = (UImageSvg) shape;
+				if (image.getWidth() > 0 && image.getHeight() > 0)
+					limits.draw(new UEmpty(image.getWidth(), image.getHeight()));
+			} else {
+				try {
+					limits.draw(shape);
+				} catch (UnsupportedOperationException e) {
+					// A graphic without bounds can still be painted by its output driver.
+				}
+			}
+		}
+	}
+
+	// Track the translation while painting the cluster. Only the wrapped
+	// labels record bounds, so the cluster border remains traversable.
+	private static final class ClusterHeaderGraphic extends UGraphicDelegator {
+		private final UTranslate translate;
+		private final ClusterHeaderBounds headers;
+
+		ClusterHeaderGraphic(UGraphic ug, UTranslate translate, ClusterHeaderBounds headers) {
+			super(ug);
+			this.translate = translate;
+			this.headers = headers;
+		}
+
+		@Override
+		public UGraphic apply(UChange change) {
+			final UTranslate next = change instanceof UTranslate ? translate.compose((UTranslate) change) : translate;
+			return new ClusterHeaderGraphic(getUg().apply(change), next, headers);
+		}
+
+		@Override
+		public void draw(UShape shape) {
+			headers.record(shape, translate);
+			super.draw(shape);
+		}
 	}
 
 	// Duplicate GeneralImageBuilder
@@ -362,7 +516,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return single;
 	}
 
-	private void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr) {
+	private void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr,
+			ClusterHeaderBounds clusterHeaders) {
 		JUtils.LOG2("drawGroup");
 		try {
 			final ST_Agrec_s tmp1 = gr.data;
@@ -380,7 +535,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				cluster.setTitlePosition(new XPoint2D(x, Math.min(upperRight.getY(), lowerLeft.getY())));
 			}
 			JUtils.LOG2("cluster=" + cluster);
-			cluster.drawU(ug);
+			if (clusterHeaders == null)
+				cluster.drawU(ug);
+			else
+				cluster.drawU(new ClusterHeaderGraphic(ug, UTranslate.none(), clusterHeaders), clusterHeaders::wrap);
 			// ug.apply(new UTranslate(llx, lly)).apply(HColors.BLUE).draw(new
 			// URectangle(urx - llx, ury - lly));
 		} catch (Exception e) {
@@ -474,18 +632,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		if (false) SMETANA_TRACE("CucaDiagramFileMakerSmetana",
 				"exportEntity: entity=" + leaf.getName() + " nodeUid=" + node.getUid());
 		agsafeset(zz, agnode, new CString("shape"), new CString("box"), new CString(""));
-		// Without an explicit empty label, Smetana (like dot) pads the node to fit its
-		// default label ("\N", the node name), so a node smaller than about 16x24 px
-		// is enlarged around its center while the image is drawn at the enlarged
-		// node's top-left corner. For the 4x4 association point (issue #2903) this
-		// left the point 6 px left of and 10 px above the edges that target the node
-		// center. Only the association point is handled here: applying it to every
-		// node also shrinks every other small node (start/end, bars...) and moves
-		// 26 existing Vega references, which is a separate change.
-		// The same applies to the 12x12 junction pseudostate: with the default label its
-		// node grew to 16x24, drawing the circle off-center and leaving a visible gap
-		// between the circle and its outgoing edges.
-		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION || leaf.getLeafType() == LeafType.JUNCTION)
+		// These symbols attach edges at their painted bounds. Smetana's default
+		// node label would enlarge their layout boxes beyond those bounds.
+		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION || leaf.getLeafType() == LeafType.JUNCTION
+				|| (leaf.getEntityPosition().usePortP() && diagram.getSkinParam().getDotSplines() == DotSplines.ORTHO))
 			agsafeset(zz, agnode, new CString("label"), new CString(""), new CString(""));
 		final XDimension2D dim = getDim(node);
 		final String width = "" + dim.getWidth();

@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+!pragma layout smetana
+skinparam linetype ortho
+
+sprite $dot <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="15" fill="red"/></svg>
+[Outside]
+rectangle "<$dot> X" as Container {
+	[Inside]
+}
+[Outside] --> [Inside]
+@enduml
