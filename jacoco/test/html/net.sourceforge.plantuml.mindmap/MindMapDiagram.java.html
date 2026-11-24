@@ -134,26 +134,28 @@ public class MindMapDiagram extends TitledDiagram {
 	private String first;
 
 	public int getSmartLevel(String type) {
-<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (first == null)</span>
-<span class="fc" id="L138">			first = type;</span>
+		// Replace tabs before keeping the first marker too, or a tab indented first
+		// item never matches the markers compared with it below
+<span class="fc" id="L139">		type = type.replace('\t', ' ');</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		if (first == null)</span>
+<span class="fc" id="L141">			first = type;</span>
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		if (type.endsWith(&quot;**&quot;))</span>
-<span class="fc" id="L141">			type = type.replace('\t', ' ').trim();</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (type.endsWith(&quot;**&quot;))</span>
+<span class="fc" id="L144">			type = type.trim();</span>
 
-<span class="fc" id="L143">		type = type.replace('\t', ' ');</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (type.contains(&quot; &quot;) == false)</span>
-<span class="fc" id="L145">			return type.length() - 1;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (type.contains(&quot; &quot;) == false)</span>
+<span class="fc" id="L147">			return type.length() - 1;</span>
 
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (type.endsWith(first))</span>
-<span class="fc" id="L148">			return type.length() - first.length();</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (type.endsWith(first))</span>
+<span class="fc" id="L150">			return type.length() - first.length();</span>
 
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (type.trim().length() == 1)</span>
-<span class="nc" id="L151">			return type.length() - 1;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (type.trim().length() == 1)</span>
+<span class="nc" id="L153">			return type.length() - 1;</span>
 
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (type.startsWith(first))</span>
-<span class="nc" id="L154">			return type.length() - first.length();</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (type.startsWith(first))</span>
+<span class="fc" id="L156">			return type.length() - first.length();</span>
 
-<span class="nc" id="L156">		throw new UnsupportedOperationException(&quot;type=&lt;&quot; + type + &quot;&gt;[&quot; + first + &quot;]&quot;);</span>
+<span class="nc" id="L158">		throw new UnsupportedOperationException(&quot;type=&lt;&quot; + type + &quot;&gt;[&quot; + first + &quot;]&quot;);</span>
 	}
 
 }
