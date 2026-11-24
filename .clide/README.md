@@ -12,4 +12,4 @@ See sources of those stubs, here:
 ## 🔖 Reference
 
 - [Command Line IDE (`CLIDE`)](https://github.com/plantuml/clide)
-- [What clide is for?](/CLAUDE-FIXING-ISSUES.md#3-what-clide-is-for)
+- [What clide is for?](/CLAUDE-FIXING-ISSUES.md#13-clide)

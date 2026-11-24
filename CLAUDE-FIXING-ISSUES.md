@@ -16,9 +16,9 @@ test reference change without having looked at what changed.**
 
 ## 0. The whole job in ten steps
 
-1. Check the toolchain (§1.1), clone PlantUML shallow, `ant`, keep a **before**
-   jar (§1.2).
-2. Build clide and start its daemon (§1.3). Do this now, not "if I need it":
+1. Check the toolchain (§1.1), get PlantUML (already cloned, else a shallow
+   clone), `ant`, keep a **before** jar (§1.2).
+2. Get clide and start its daemon (§1.3). Do this now, not "if I need it":
    the test runner of §5 comes out of it.
 3. Render the issue's diagram and **look at the PNG** (§2).
 4. Build variants around it: nesting, notes, wider labels, neighbouring syntax
@@ -42,9 +42,9 @@ silently skip it.
 
 ### 1.1 Check the toolchain first
 
-Everything is built with `ant` and runs offline, and it needs a **full JDK**,
-not just a JRE. A fresh sandbox may lack `ant` even though the build is
-"offline": check before cloning anything.
+PlantUML is built with `ant` and the build runs offline; it needs a **full JDK**,
+not just a JRE. clide (§1.3) needs `python3` and a JDK 21, but not `ant`. A fresh sandbox may
+lack `ant` even though the build is "offline": check before cloning anything.
 
 ```bash
 which java javac ant python3
@@ -56,8 +56,10 @@ empty and `apt-get install -y ant` alone answers "Unable to locate package".
 
 ```bash
 apt-get update && apt-get install -y ant
-``` Never use `gradlew`: it downloads its
-distribution from a domain the sandbox cannot reach, so it always fails here.
+```
+
+Never use `gradlew`: it downloads its distribution from a domain the sandbox
+cannot reach, so it always fails here.
 
 ### 1.2 PlantUML, and a "before" jar
 
@@ -94,7 +96,9 @@ git log -L <start>,<end>:<file>
 entry points around one Java **daemon** that does the actual work:
 `start_clide.py` starts it, `clide.py` talks to it, and neither of them is
 `java` itself. Read `clide/CLAUDE.md` once; it is kept current and what follows
-can drift.
+can drift. There is no `ant` to run: `start_clide.py` builds `clide.jar` itself
+(`build_clide.py`: `javac` plus Python's `zipfile`, a few seconds, only when the
+jar is missing or stale). It needs a **JDK 21** on `PATH` and `python3`.
 
 **Why you need it even for a five-line fix.** Beyond navigation, clide is what
 provides the JUnit console runner used in §5: it unpacks the test jars (JUnit 5,
@@ -106,11 +110,9 @@ not enough to *finish* the job.
 
 ```bash
 git clone --depth 1 https://github.com/plantuml/clide
-cd clide && ant                      # produces clide.jar
 ```
 
-`start_clide.py` needs `clide.jar` built and sitting next to it, and says so
-plainly if it isn't.
+`start_clide.py` says so plainly if `java`/`javac` is missing.
 
 **Step 1 — start the daemon, once.**
 
@@ -165,7 +167,7 @@ printf 'rebuild\nerrors\nfind_symbol\nSomeUnrelatedClassName\n' | /tmp/c.sh
 A command that needs a position printed by the previous one (`find_symbol`
 feeding `list_members`) still has to be its own invocation.
 
-**If clide cannot be built or started** in your environment, carry on with grep
+**If clide cannot be fetched or started** in your environment, carry on with grep
 and `ant`, but write it in your reply, together with everything §5 that this
 prevented.
 
