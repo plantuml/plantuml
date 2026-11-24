@@ -41,7 +41,6 @@ import java.io.UncheckedIOException;
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 
 public class StdlibSpriteSvg implements Sprite {
@@ -49,10 +48,17 @@ public class StdlibSpriteSvg implements Sprite {
 	
 	final private Lazy<Sprite> sprite;
 
+	// The SVG is read when the sprite is first drawn, not when it is declared: a
+	// library file declares many sprites, and the C build reads svg.spm again
+	// for each sprite it looks for
 	public StdlibSpriteSvg(Stdlib lib, String name) {
 		this.sprite = new Lazy<>(() -> {
 			try {
-				return lib.readSvgSprite(name);
+				final Sprite result = lib.readSvgSprite(name);
+				if (result == null)
+					return new StdlibSpriteMissing(":" + lib.getName() + ":" + name);
+
+				return result;
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new UncheckedIOException(e);
@@ -62,11 +68,7 @@ public class StdlibSpriteSvg implements Sprite {
 
 	@Override
 	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale, final HColor backColor) {
-		final Sprite tmp = this.sprite.get();
-		if (tmp == null)
-			return TextBlockUtils.EMPTY_TEXT_BLOCK;
-		
-		return tmp.asTextBlock(fontColor, forcedColor, scale, backColor);
+		return this.sprite.get().asTextBlock(fontColor, forcedColor, scale, backColor);
 	}
 
 }

@@ -41,7 +41,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -173,19 +172,33 @@ public class Stdlib {
 		}
 	}
 
+	/**
+	 * A library whose info has a <code>link=</code> (awslib, bootstrap, gcp,
+	 * material...) is the library it links to. The link must not be followed
+	 * inside <code>all.computeIfAbsent</code>: a ConcurrentHashMap may not be
+	 * modified by its own mapping function, and when the nested insertion makes
+	 * the table grow, it throws "IllegalStateException: Recursive update". That
+	 * depends only on how many libraries are already cached, so a diagram or a
+	 * test could fail or not depending on what came before it.
+	 * <p>
+	 * Two threads may build the same library at the same time: putIfAbsent keeps
+	 * the first one, and both get it.
+	 */
 	public static Stdlib retrieve(final String name) throws IOException {
-		return all.computeIfAbsent(name, key -> {
-			try {
-				final Stdlib result = new Stdlib(key);
-				final String link = result.getLinkFromInfo();
-				if (link != null)
-					return retrieve(link);
+		final Stdlib cached = all.get(name);
+		if (cached != null)
+			return cached;
 
-				return result;
-			} catch (IOException e) {
-				throw new UncheckedIOException(e);
-			}
-		});
+		Stdlib result = new Stdlib(name);
+		final String link = result.getLinkFromInfo();
+		if (link != null)
+			result = retrieve(link);
+
+		final Stdlib previous = all.putIfAbsent(name, result);
+		if (previous != null)
+			return previous;
+
+		return result;
 	}
 
 	private String getLinkFromInfo() {

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+' edgy2 declares most of its icons in procedures ($activitysprite,
+' $outcomesprite, $objectsprite): each call must draw its own icon, with the
+' colors and the text of that call. bPeopleIcon is declared directly.
+!include <edgy/edgy2>
+rectangle "<$bActivityIcon> <$bOutcomeIcon> <$bObjectIcon>\n<$bJourneyIcon> <$bTaskIcon> <$bChannelIcon>\n<$bBrandIcon> <$bProductIcon> <$bPeopleIcon>" as r
+@enduml

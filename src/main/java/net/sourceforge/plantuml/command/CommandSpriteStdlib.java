@@ -42,6 +42,7 @@ import java.util.Collection;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.preproc.Stdlib;
+import net.sourceforge.plantuml.preproc.StdlibSpriteMissing;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -76,7 +77,9 @@ public class CommandSpriteStdlib extends SingleLineCommand2<TitledDiagram> {
 			final Stdlib lib = Stdlib.retrieve(arg.get("STDLIB", 0));
 			final String exportedName = arg.get("STDLIB", 1);
 			final String name = arg.get("NAME", 0);
-			final Sprite sprite = lib.readSprite(exportedName);
+			Sprite sprite = lib.readSprite(exportedName);
+			if (sprite == null)
+				sprite = new StdlibSpriteMissing("#" + lib.getName() + "#" + exportedName);
 
 			system.addSprite(name, sprite);
 		} catch (IOException e) {

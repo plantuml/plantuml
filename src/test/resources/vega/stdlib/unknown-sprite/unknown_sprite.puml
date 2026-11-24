@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+' A sprite that the standard library does not have draws a message, in the
+' color of the text around it, instead of nothing (#3039)
+sprite $svgok :edgy:edgy2:bPeopleIcon
+sprite $svgmissing :edgy:edgy2:bNoSuchIcon
+sprite $bitmapmissing #awslib14#nosuchsprite
+rectangle "ok <$svgok> | <$svgmissing> | <$bitmapmissing> | <$svgmissing*0.5>" as r
+note right of r #black
+  <color:white>dark <$svgmissing></color>
+end note
+@enduml
