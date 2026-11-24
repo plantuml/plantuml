@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="199px" preserveAspectRatio="none" style="width:132px;height:199px;background:#FFFFFF;" version="1.1" viewBox="0 0 132 199" width="132px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Container-->
+    <g class="cluster" data-qualified-name="Container" data-source-line="6" id="ent0002">
+      <rect fill="none" height="119" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="110" x="14" y="56"/>
+      <image height="32" width="32" x="48.319" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMyIiB3aWR0aD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjE1IiBmaWxsPSJyZWQiLz48L3N2Zz4=" y="58"/>
+      <text fill="#000" font-size="14" font-weight="700" x="80.319" y="86.889">X</text>
+    </g>
+    <!--entity Outside-->
+    <g class="entity" data-qualified-name="Outside" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.213" x="25" y="4"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="93.213" y="9"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="91.213" y="11"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="91.213" y="15"/>
+      <text fill="#000" font-size="14" textLength="48.213" x="40" y="34.889">Outside</text>
+    </g>
+    <!--entity Inside-->
+    <g class="entity" data-qualified-name="Container.Inside" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.363" x="30.5" y="115"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="87.863" y="120"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="85.863" y="122"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="85.863" y="126"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="45.5" y="145.889">Inside</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="69,114.676,73,105.676,69,109.676,65,105.676,69,114.676" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M69,48.016 C69,48.016 69,54 69,54 C69,54 93.681,54 93.681,54 C93.681,54 93.681,105.676 93.681,105.676 C93.681,105.676 69,105.676 69,105.676 C69,105.676 69,109.676 69,109.676" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

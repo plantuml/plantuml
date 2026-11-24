@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (3 entities)
+---
+@startuml
+!pragma layout smetana
+skinparam linetype ortho
+
+class Sender
+class Relay
+package Destination {
+	class Receiver
+}
+
+Sender --> Relay
+Relay --> Receiver
+Sender "1" <--> "0..*"/"-packets" Destination : forward packet
+@enduml

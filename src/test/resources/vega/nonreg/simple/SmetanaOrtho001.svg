@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="293px" preserveAspectRatio="none" style="width:218px;height:293px;background:#FFFFFF;" version="1.1" viewBox="0 0 218 293" width="218px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Destination-->
+    <g class="cluster" data-qualified-name="Destination" data-source-line="6" id="ent0003">
+      <path d="M16.5,164 L87.588,164 A3.75,3.75 0 0 1 90.088,166.5 L97.088,184 L165.5,184 A2.5,2.5 0 0 1 168,186.5 L168,266.5 A2.5,2.5 0 0 1 165.5,269 L16.5,269 A2.5,2.5 0 0 1 14,266.5 L14,166.5 A2.5,2.5 0 0 1 16.5,164" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="97.088" y1="184" y2="184"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="70.088" x="18" y="176.889">Destination</text>
+    </g>
+    <!--class Sender-->
+    <g class="entity" data-qualified-name="Sender" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.15" x="81.5" y="4"/>
+      <ellipse cx="96.5" cy="20" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="91.5" y="25">C</text>
+      <text fill="#000" font-size="14" textLength="45.15" x="110.5" y="23.889">Sender</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="82.5" x2="157.65" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="82.5" x2="157.65" y1="44" y2="44"/>
+    </g>
+    <!--class Relay-->
+    <g class="entity" data-qualified-name="Relay" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.875" x="40" y="89"/>
+      <ellipse cx="55" cy="105" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="50" y="110">C</text>
+      <text fill="#000" font-size="14" textLength="35.875" x="69" y="108.889">Relay</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41" x2="106.875" y1="121" y2="121"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41" x2="106.875" y1="129" y2="129"/>
+    </g>
+    <!--class Receiver-->
+    <g class="entity" data-qualified-name="Destination.Receiver" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.3" x="30.5" y="205"/>
+      <ellipse cx="45.5" cy="221" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="40.5" y="226">C</text>
+      <text fill="#000" font-size="14" textLength="55.3" x="59.5" y="224.889">Receiver</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="116.8" y1="237" y2="237"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="116.8" y1="245" y2="245"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="86.904,88.716,90.904,79.716,86.904,83.716,82.904,79.716,86.904,88.716" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.186,52.12 C107.186,52.12 107.186,72.716 107.186,72.716 C107.186,72.716 86.904,72.716 86.904,72.716 C86.904,72.716 86.904,83.716 86.904,83.716" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="74,204.965,78,195.965,74,199.965,70,195.965,74,204.965" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M74,137.07 C74,137.07 74,158 74,158 C74,158 92.088,158 92.088,158 C92.088,158 92.088,188.965 92.088,188.965 C92.088,188.965 74,188.965 74,188.965 C74,188.965 74,199.965 74,199.965" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="122.8,52.217,118.8,61.217,122.8,57.217,126.8,61.217,122.8,52.217" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="136.221,183.502,140.221,174.502,136.221,178.502,132.221,174.502,136.221,183.502" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M122.8,57.217 C122.8,57.217 122.8,159 122.8,159 C122.8,159 136.221,159 136.221,159 C136.221,159 136.221,178.502 136.221,178.502" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="81.575" x="128.8" y="119.611">forward packet</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="144.975" y="137.611">0..*</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="128.3" y="146.5"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="44.769" x="138.3" y="152.611">packets</text>
+      <text fill="#000" font-size="13" x="129.8" y="65.111">1</text>
+    </g>
+  </g>
+</svg>

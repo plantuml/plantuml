@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+!pragma layout smetana
+skinparam linetype ortho
+left to right direction
+
+state Idle
+state Busy
+Idle --> Busy : start
+Busy --> Busy : retry
+@enduml

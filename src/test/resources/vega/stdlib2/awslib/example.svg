@@ -117,12 +117,12 @@
     </g>
     <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="dependency" id="lnk10">
       <polygon fill="#666" points="524,341.254,520,350.254,524,346.254,528,350.254,524,341.254" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M524,346.254 C524,378.846 524,415.175 524,447.764" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <path d="M524,346.254 C524,346.254 524,383 524,383 C524,383 580.675,383 580.675,383 C580.675,383 580.675,431.764 580.675,431.764 C580.675,431.764 524,431.764 524,431.764 C524,431.764 524,447.764 524,447.764" fill="none" style="stroke:#666;stroke-width:1;"/>
       <text fill="#666" font-family="Verdana" font-size="12" x="526" y="376.333"> </text>
     </g>
     <g class="link" data-entity-1="ent0013" data-entity-2="ent0015" data-link-type="dependency" id="lnk17">
       <polygon fill="#666" points="304,341.254,300,350.254,304,346.254,308,350.254,304,341.254" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M304,346.254 C304,378.846 304,415.175 304,447.764" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <path d="M304,346.254 C304,346.254 304,383 304,383 C304,383 360.675,383 360.675,383 C360.675,383 360.675,431.764 360.675,431.764 C360.675,431.764 304,431.764 304,431.764 C304,431.764 304,447.764 304,447.764" fill="none" style="stroke:#666;stroke-width:1;"/>
       <text fill="#666" font-family="Verdana" font-size="12" x="306" y="376.333"> </text>
     </g>
   </g>

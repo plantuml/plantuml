@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.UnaryOperator;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.CucaNote;
@@ -298,14 +299,22 @@ public class Cluster implements Moveable {
 	}
 
 	public void drawU(UGraphic ug) {
+		drawU(ug, UnaryOperator.identity());
+	}
+
+	/**
+	 * Lets the caller decorate or measure each label at its final position.
+	 * The wrapper receives titles, stereotypes, state descriptions and cluster notes.
+	 */
+	public void drawU(UGraphic ug, UnaryOperator<TextBlock> wrapLabel) {
 		if (group.isHidden())
 			return;
 
 		if (diagram.getPragma().isTrue(PragmaKey.KERMOR)) {
 			if (xyNoteTop != null)
-				getCucaNote(Position.TOP).drawU(ug.apply(UTranslate.point(xyNoteTop)));
+				wrapLabel.apply(getCucaNote(Position.TOP)).drawU(ug.apply(UTranslate.point(xyNoteTop)));
 			if (xyNoteBottom != null)
-				getCucaNote(Position.BOTTOM).drawU(ug.apply(UTranslate.point(xyNoteBottom)));
+				wrapLabel.apply(getCucaNote(Position.BOTTOM)).drawU(ug.apply(UTranslate.point(xyNoteBottom)));
 		}
 
 		final String fullName = group.getName();
@@ -346,14 +355,15 @@ public class Cluster implements Moveable {
 			if (entityPositionsExceptNormal().size() > 0)
 				manageEntryExitPoint(ug.getStringBounder());
 
+			final TextBlock title = wrapLabel.apply(clusterHeader.getTitle());
 			if (skinParam.useSwimlanes(diagramType)) {
-				drawSwinLinesState(ug, borderColor);
+				drawSwinLinesState(ug, borderColor, title);
 				return;
 			}
 			final boolean isState = diagramType == DiagramType.STATE;
 
 			if (isState && group.getUSymbol() == null) {
-				drawUState(ug, diagramType, rounded, shadowing);
+				drawUState(ug, rounded, shadowing, title, wrapLabel.apply(group.getStateDescription(skinParam)));
 				return;
 			}
 			PackageStyle packageStyle = group.getPackageStyle();
@@ -367,7 +377,7 @@ public class Cluster implements Moveable {
 					skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(), group.getGroupType());
 
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
-					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
+					title, wrapLabel.apply(clusterHeader.getStereo()), rectangleArea, stroke);
 //			final HorizontalAlignment horizontalAlignment = skinParam
 //			.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
 			final HorizontalAlignment horizontalAlignment = clusterHeader.getTitleHorizontalAlignment();
@@ -437,8 +447,8 @@ public class Cluster implements Moveable {
 		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);
 	}
 
-	private void drawSwinLinesState(UGraphic ug, HColor borderColor) {
-		clusterHeader.getTitle().drawU(ug.apply(UTranslate.dx(xyTitle.x)));
+	private void drawSwinLinesState(UGraphic ug, HColor borderColor, TextBlock title) {
+		title.drawU(ug.apply(UTranslate.dx(xyTitle.x)));
 
 		final ULine line = ULine.vline(rectangleArea.getHeight());
 		ug = ug.apply(borderColor);
@@ -449,7 +459,7 @@ public class Cluster implements Moveable {
 
 	// GroupPngMakerState
 
-	private void drawUState(UGraphic ug, DiagramType diagramType, double rounded, double shadowing) {
+	private void drawUState(UGraphic ug, double rounded, double shadowing, TextBlock title, TextBlock attribute) {
 
 		HColor borderColor = group.getColors().getColor(ColorType.LINE);
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
@@ -475,7 +485,6 @@ public class Cluster implements Moveable {
 					.value(PName.BackGroundColor).asColor(colorSet);
 		}
 
-		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
 		if (rectangleArea.getDimension().getWidth() == 0) {
 			System.err.println("Cluster::drawUState issue");
@@ -490,8 +499,7 @@ public class Cluster implements Moveable {
 
 		final double descriptionHeight = attributeHeight + (attributeHeight > 0 ? IEntityImage.MARGIN : 0);
 
-		final double nameHeight = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()
-				+ IEntityImage.MARGIN;
+		final double nameHeight = title.calculateDimension(ug.getStringBounder()).getHeight() + IEntityImage.MARGIN;
 
 		final RoundedContainer r = new RoundedContainer(borderColor, rectangleArea.getDimension(), nameHeight,
 				descriptionHeight, northBackcolor, centerBackColor, southBackcolor, stroke, rounded, shadowing);
@@ -499,7 +507,7 @@ public class Cluster implements Moveable {
 		r.drawU(ug.apply(rectangleArea.getPosition()));
 
 		clusterHeader.getTitleHorizontalAlignment().draw(
-				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), clusterHeader.getTitle(),
+				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), title,
 				IEntityImage.MARGIN, 0, rectangleArea.getWidth());
 
 		if (attributeHeight > 0)

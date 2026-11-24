@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="103px" preserveAspectRatio="none" style="width:188px;height:103px;background:#FFFFFF;" version="1.1" viewBox="0 0 188 103" width="188px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Idle" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="37.176"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="61.176" y2="61.176"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="19.713" y="53.065">Idle</text>
+    </g>
+    <g class="entity" data-qualified-name="Busy" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="51.15" x="121" y="37.176"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="121" x2="172.15" y1="61.176" y2="61.176"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="131" y="53.065">Busy</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="120.68,62.176,111.68,58.176,115.68,62.176,111.68,66.176,120.68,62.176" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.07,62.176 C56.07,62.176 115.68,62.176 115.68,62.176" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.188" x="75.781" y="53.287">start</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="157.333,37,161.333,28,157.333,32,153.333,28,157.333,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M135.667,37 C135.667,37 135.667,21 135.667,21 C135.667,21 157.333,21 157.333,21 C157.333,21 157.333,32 157.333,32" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.919" x="133.541" y="12.111">retry</text>
+    </g>
+  </g>
+</svg>
