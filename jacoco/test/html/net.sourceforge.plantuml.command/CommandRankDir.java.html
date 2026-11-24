@@ -75,15 +75,16 @@ public class CommandRankDir extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L78">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
-<span class="fc" id="L79">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
+		// the words may be separated by a tab or a non-breaking space too, as %s accepts them
+<span class="fc" id="L79">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replaceAll(&quot;[\\s\u00A0]&quot;, &quot;_&quot;);</span>
+<span class="fc" id="L80">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
 		// diagram.setRankdir(Rankdir.valueOf(s));
-<span class="fc" id="L81">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L82">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L86">		return FIRST_TOKENS;</span>
+<span class="fc" id="L87">		return FIRST_TOKENS;</span>
 	}
 
 }

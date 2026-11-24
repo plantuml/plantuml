@@ -86,8 +86,8 @@ package net.sourceforge.plantuml.text;
 	private static long getMask(char ch) {
 <span class="fc bfc" id="L87" title="All 2 branches covered.">		if (ch &lt; masks.length)</span>
 <span class="fc" id="L88">			return masks[ch];</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		else if (ch == '\u00A0')</span>
-<span class="nc" id="L90">			return MASK_SPACES;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		else if (ch == '\u00A0')</span>
+<span class="fc" id="L90">			return MASK_SPACES;</span>
 
 <span class="fc" id="L92">		return 0L;</span>
 	}

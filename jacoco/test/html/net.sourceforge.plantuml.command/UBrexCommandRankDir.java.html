@@ -77,21 +77,22 @@ public class UBrexCommandRankDir extends UBrexSingleLineCommand2&lt;TitledDiagra
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L80">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
-<span class="fc" id="L81">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
+		// the words may be separated by a tab or a non-breaking space too, as %s accepts them
+<span class="fc" id="L81">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replaceAll(&quot;[\\s\u00A0]&quot;, &quot;_&quot;);</span>
+<span class="fc" id="L82">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
 		// diagram.setRankdir(Rankdir.valueOf(s));
-<span class="fc" id="L83">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
 
 	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
-<span class="fc" id="L89">		return FIRST_TOKENS;</span>
+<span class="fc" id="L90">		return FIRST_TOKENS;</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L94">		return FIRST_TOKENS;</span>
+<span class="fc" id="L95">		return FIRST_TOKENS;</span>
 	}
 
 }
