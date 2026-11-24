@@ -16,6 +16,8 @@ class SourceStringReaderTest {
 	@CsvSource({
 			"@startchart, @startchart without @endchart",
 			"@startuml diagram.png, @startuml without @enduml",
+			"\\startuml, \\startuml without \\enduml",
+			"\\startchart diagram.svg, \\startchart without \\endchart",
 			"plain text, No valid @start/@end found"
 	})
 	void reportsMissingDiagramMarkers(String firstLine, String expected) throws IOException {

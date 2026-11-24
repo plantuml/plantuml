@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.utils.MyCollections;
 public class SourceStringReader {
 
 	final private List<BlockUml> blocks;
+	private final String unclosedPrefix;
 	private final String unclosedDiagramType;
 
 	public SourceStringReader(String source) {
@@ -105,6 +106,7 @@ public class SourceStringReader {
 			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
 					newCurrentDir, "string");
 			this.blocks = builder.getBlockUmls();
+			this.unclosedPrefix = builder.getUnclosedPrefix();
 			this.unclosedDiagramType = builder.getUnclosedDiagramType();
 		} catch (IOException e) {
 			Log.error("error " + e);
@@ -260,7 +262,8 @@ public class SourceStringReader {
 
 	public ImageData noValidStartFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
 		final String message = unclosedDiagramType == null ? "No valid @start/@end found, please check the version"
-				: "@start" + unclosedDiagramType + " without @end" + unclosedDiagramType;
+				: unclosedPrefix + "start" + unclosedDiagramType + " without "
+						+ unclosedPrefix + "end" + unclosedDiagramType;
 		final TextBlock error = GraphicStrings.createForError(
 				Arrays.asList(message),
 				fileFormatOption.isUseRedForError());

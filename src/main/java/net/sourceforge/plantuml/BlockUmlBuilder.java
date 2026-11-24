@@ -61,10 +61,13 @@ import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
+	private static final Pattern START_DIRECTIVE = Pattern.compile("^([@\\\\])start(\\w+)");
+
 	private final List<BlockUml> blocks = new ArrayList<>();
 	private Set<File> usedFiles = new HashSet<>();
 	private final PathSystem pathSystem;
 	private final Charset charset;
+	private String unclosedPrefix;
 	private String unclosedDiagramType;
 
 //	/**
@@ -137,9 +140,11 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				}
 			}
 			if (current != null && !current.isEmpty()) {
-				final Matcher start = Pattern.compile("^[@\\\\]start(\\w+)").matcher(current.get(0).getString().trim());
-				if (start.find())
-					unclosedDiagramType = start.group(1);
+				final Matcher start = START_DIRECTIVE.matcher(current.get(0).getString().trim());
+				if (start.find()) {
+					unclosedPrefix = start.group(1);
+					unclosedDiagramType = start.group(2);
+				}
 			}
 		} finally {
 			readerInit.close();
@@ -148,6 +153,10 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 	public List<BlockUml> getBlockUmls() {
 		return MyCollections.unmodifiableList(blocks);
+	}
+
+	String getUnclosedPrefix() {
+		return unclosedPrefix;
 	}
 
 	String getUnclosedDiagramType() {
