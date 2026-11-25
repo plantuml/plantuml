@@ -40,6 +40,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -92,7 +93,9 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		if (StartUtils.isEndDirective(s.getString()))
 			return buildEmptyError(source, s, it.getTrace(), preprocessing);
 
-		final Diagram sys = executeLine(source, s.getString(), preprocessing);
+		// The line may be indented, with spaces, tabs or non-breaking spaces, as the
+		// commands of the other diagrams: each factory reads the line without them
+		final Diagram sys = executeLine(source, StringUtils.trin(s.getString()), preprocessing);
 		if (sys == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s, getDiagramType());
 			// return PSystemErrorUtils.buildV1(source, err, null);
