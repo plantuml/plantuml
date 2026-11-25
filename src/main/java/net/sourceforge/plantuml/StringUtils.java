@@ -655,6 +655,29 @@ public class StringUtils {
 		return c <= ' ' || c == '\u00A0';
 	}
 
+	/**
+	 * Reads a line made of a keyword and its argument, as the hand-written parsers do
+	 * outside the command patterns: the keyword (in any case), at least one blank, then
+	 * the argument. The blanks are the ones {@link #trin(String)} removes, so a tab or a
+	 * non-breaking space separates the words as {@code %s} does in the commands, and the
+	 * line may be indented.
+	 *
+	 * @return the argument with its blanks removed, or {@code null} when the line does
+	 *         not start with the keyword followed by a blank, or has nothing after it
+	 */
+	public static String getKeywordArgument(String line, String keyword) {
+		final String trimmed = trin(line);
+		final int len = keyword.length();
+		if (trimmed.length() <= len || trimmed.regionMatches(true, 0, keyword, 0, len) == false)
+			return null;
+
+		if (isTrimmable(trimmed.charAt(len)) == false)
+			return null;
+
+		// trimmed has no trailing blank: something non blank follows the keyword
+		return trin(trimmed.substring(len));
+	}
+
 	public static String trin(String arg) {
 		final int len = arg.length();
 		if (len == 0)

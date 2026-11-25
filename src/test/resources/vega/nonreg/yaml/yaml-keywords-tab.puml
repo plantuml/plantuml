@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Yaml)
+---
+@startyaml
+  Title	Indented title
+hide empty members
+a: 1
+b:
+  - x
+  - y
+@endyaml

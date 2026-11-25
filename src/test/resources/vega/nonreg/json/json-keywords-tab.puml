@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Json)
+---
+@startjson
+title	Keywords after a tab
+scale 1.5
+skinparam	backgroundColor #EEEEEE
+{
+  "a": 1,
+  "b": [1, 2]
+}
+@endjson

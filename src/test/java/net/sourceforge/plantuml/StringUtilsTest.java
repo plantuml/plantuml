@@ -242,4 +242,20 @@ class StringUtilsTest {
 		assertEquals("foo", StringUtils.trim2("\u00A0foo \u00A0").toString());
 	}
 
+	@Test
+	void test_getKeywordArgument() {
+		assertEquals("Foo", StringUtils.getKeywordArgument("title Foo", "title"));
+		assertEquals("Foo", StringUtils.getKeywordArgument("title\tFoo", "title"));
+		assertEquals("Foo", StringUtils.getKeywordArgument("title\u00A0Foo", "title"));
+		assertEquals("Foo Bar", StringUtils.getKeywordArgument("  title  Foo Bar \t", "title"));
+		assertEquals("Foo", StringUtils.getKeywordArgument("\tTitle Foo", "title"));
+		assertEquals("Foo", StringUtils.getKeywordArgument("\u00A0title Foo", "title"));
+		// the keyword must be a whole word followed by an argument
+		assertEquals(null, StringUtils.getKeywordArgument("titles Foo", "title"));
+		assertEquals(null, StringUtils.getKeywordArgument("title", "title"));
+		assertEquals(null, StringUtils.getKeywordArgument("title \t", "title"));
+		assertEquals(null, StringUtils.getKeywordArgument("tit", "title"));
+		assertEquals(null, StringUtils.getKeywordArgument("", "title"));
+	}
+
 }

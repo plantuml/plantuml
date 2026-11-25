@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
@@ -62,7 +63,8 @@ public class StyleExtractor {
 	public StyleExtractor(Iterator<StringLocated> data) {
 		while (data.hasNext()) {
 			StringLocated line = data.next();
-			final String s = line.getString().trim();
+			// The keywords below may be followed by a tab or a non-breaking space, as %s accepts them
+			final String s = StringUtils.trin(line.getString());
 			if (s.length() == 0)
 				continue;
 			if (startStyle(s)) {
@@ -81,19 +83,19 @@ public class StyleExtractor {
 						break;
 					style.add(line);
 				}
-			} else if (list.size() <= 1 && s.startsWith("!assume ")) {
+			} else if (list.size() <= 1 && StringUtils.getKeywordArgument(s, "!assume") != null) {
 				// Ignore
-			} else if (list.size() <= 1 && s.startsWith("!pragma ")) {
+			} else if (list.size() <= 1 && StringUtils.getKeywordArgument(s, "!pragma") != null) {
 				// Ignore
-			} else if (list.size() <= 1 && s.startsWith("hide ")) {
+			} else if (list.size() <= 1 && StringUtils.getKeywordArgument(s, "hide") != null) {
 				// Ignore
-			} else if (list.size() <= 1 && s.startsWith("scale ")) {
+			} else if (list.size() <= 1 && StringUtils.getKeywordArgument(s, "scale") != null) {
 				this.scale = s;
-			} else if (list.size() <= 1 && s.startsWith("title ")) {
-				this.title = s.substring("title ".length()).trim();
-			} else if (list.size() <= 1 && s.startsWith("skin ")) {
-				this.newSkin = s.substring("skin ".length()).trim();
-			} else if (list.size() <= 1 && s.startsWith("skinparam ")) {
+			} else if (list.size() <= 1 && StringUtils.getKeywordArgument(s, "title") != null) {
+				this.title = StringUtils.getKeywordArgument(s, "title");
+			} else if (list.size() <= 1 && StringUtils.getKeywordArgument(s, "skin") != null) {
+				this.newSkin = StringUtils.getKeywordArgument(s, "skin");
+			} else if (list.size() <= 1 && StringUtils.getKeywordArgument(s, "skinparam") != null) {
 				if (s.contains("handwritten") && s.contains("true"))
 					handwritten = true;
 				if (s.contains("{")) {

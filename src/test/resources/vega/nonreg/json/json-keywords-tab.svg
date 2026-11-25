@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="153px" preserveAspectRatio="none" style="width:237px;height:153px;background:#FFFFFF;" version="1.1" viewBox="0 0 237 153" width="237px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title">
+      <text fill="#000" font-size="21" font-weight="700" textLength="174.956" x="30" y="46.333">Keywords after a tab</text>
+    </g>
+    <rect fill="#F1F1F1" height="54" rx="7.5" ry="7.5" style="stroke:#F1F1F1;stroke-width:2.25;" width="53.363" x="49.388" y="67.5"/>
+    <text fill="#000" font-size="21" font-weight="700" x="56.888" y="86.833">a</text>
+    <text fill="#000" font-size="21" x="83.569" y="86.833">1</text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="76.069" x2="76.069" y1="67.5" y2="94.5"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="49.388" x2="102.75" y1="94.5" y2="94.5"/>
+    <text fill="#000" font-size="21" font-weight="700" x="56.888" y="113.833">b</text>
+    <text fill="#000" font-size="21" textLength="17.325" x="83.569" y="113.833">   </text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="76.069" x2="76.069" y1="94.5" y2="121.5"/>
+    <rect fill="none" height="54" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:2.25;" width="53.363" x="49.388" y="67.5"/>
+    <rect fill="#F1F1F1" height="54" rx="7.5" ry="7.5" style="stroke:#F1F1F1;stroke-width:2.25;" width="26.681" x="158.888" y="81"/>
+    <text fill="#000" font-size="21" x="166.388" y="100.333">1</text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="158.888" x2="185.569" y1="108" y2="108"/>
+    <text fill="#000" font-size="21" x="166.388" y="127.333">2</text>
+    <rect fill="none" height="54" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:2.25;" width="26.681" x="158.888" y="81"/>
+    <path d="M85.388,108 L104.888,108 C119.141,108 135.107,108 147.85,108" fill="none" style="stroke:#000;stroke-width:1.5;stroke-dasharray:4.5,4.5;"/>
+    <path d="M147.85,112.594 L151.295,108 L147.85,103.406 L159.335,108 L147.85,112.594" fill="#000"/>
+    <ellipse cx="85.388" cy="108" fill="#000" rx="4.5" ry="4.5" style="stroke:#000;stroke-width:1.5;"/>
+  </g>
+</svg>

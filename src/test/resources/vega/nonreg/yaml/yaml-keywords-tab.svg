@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="102px" preserveAspectRatio="none" style="width:118px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 118 102" width="118px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title">
+      <text fill="#000" font-size="14" font-weight="700" textLength="76.212" x="20" y="30.889">Indented title</text>
+    </g>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="35.575" x="13.106" y="45"/>
+    <text fill="#000" font-size="14" font-weight="700" x="18.106" y="57.889">a</text>
+    <text fill="#000" font-size="14" x="35.894" y="57.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="30.894" x2="30.894" y1="45" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="13.106" x2="48.681" y1="63" y2="63"/>
+    <text fill="#000" font-size="14" font-weight="700" x="18.106" y="75.889">b</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="35.894" y="75.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="30.894" x2="30.894" y1="63" y2="81"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="35.575" x="13.106" y="45"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="17" x="86.106" y="54"/>
+    <text fill="#000" font-size="14" x="91.106" y="66.889">x</text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.106" x2="103.106" y1="72" y2="72"/>
+    <text fill="#000" font-size="14" x="91.106" y="84.889">y</text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="17" x="86.106" y="54"/>
+    <path d="M37.106,72 L50.106,72 C59.617,72 70.283,72 78.732,72" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M78.732,75.034 L81.008,72 L78.732,68.966 L86.317,72 L78.732,75.034" fill="#000"/>
+    <ellipse cx="37.106" cy="72" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>
