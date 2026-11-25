@@ -101,7 +101,11 @@ public class MagicBox {
 
 		comment.drawU(ug);
 
-		final double deltaWidth = rect.getWidth() - small.calculateDimension(ug.getStringBounder()).getWidth();
+		// A text wider than its box (in text output, where characters are measured otherwise
+		// than by the layout) starts at the left of the box instead of being centered left
+		// of it, out of the drawing
+		final double deltaWidth = Math.max(0,
+				rect.getWidth() - small.calculateDimension(ug.getStringBounder()).getWidth());
 		final double deltaHeight = rect.getHeight() - small.calculateDimension(ug.getStringBounder()).getHeight();
 
 		small.drawU(ug.apply(new UTranslate(deltaWidth / 2, moveY + deltaHeight / 2)));
