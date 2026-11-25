@@ -68,9 +68,17 @@ public class SvgAttributes {
 		final SvgAttributes result = new SvgAttributes();
 		final Matcher2 m = p.matcher(args, 0);
 		while (m.find())
-			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));
+			if (isEventHandler(m.group(1)) == false)
+				result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));
 
 		return result;
+	}
+
+	// The names come from the diagram source (<text onclick="...">) and are written as they
+	// are into the SVG: an event handler would run its script wherever the SVG is shown,
+	// in any case since an SVG inlined in HTML reads ONCLICK as onclick. They are dropped
+	static boolean isEventHandler(String name) {
+		return name.regionMatches(true, 0, "on", 0, 2);
 	}
 
 	public Map<String, String> attributes() {
@@ -79,7 +87,8 @@ public class SvgAttributes {
 
 	public SvgAttributes add(String key, String value) {
 		final SvgAttributes result = cloneMe();
-		result.attributes.put(key, value);
+		if (isEventHandler(key) == false)
+			result.attributes.put(key, value);
 		return result;
 	}
 

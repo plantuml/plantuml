@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : <text onclick="alert(1)" fill="red">event handler dropped</text>
+Alice -> Bob : <text ONMOUSEOVER="alert(2)" font-weight="bold">in any case</text>
+@enduml
