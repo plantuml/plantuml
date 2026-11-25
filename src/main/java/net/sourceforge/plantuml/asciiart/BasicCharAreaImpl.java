@@ -70,6 +70,11 @@ public class BasicCharAreaImpl implements BasicCharArea {
 	}
 
 	public void drawChar(char c, int x, int y) {
+		// The area grows to the right and to the bottom only: a text placed left of or
+		// above its origin (a margin rounded below zero) is clipped instead of crashing
+		if (x < 0 || y < 0)
+			return;
+
 		ensurePossible(x, y);
 		chars[x][y] = c;
 		if (x >= width) {
