@@ -80,7 +80,13 @@ public class EvalBooleanTest {
         "  !  A  , false", // spaces around operator
         "A  &&  B  , false", // spaces around operator
         "(  A  )  , true", // spaces around parentheses
-        "  (  A  ||  B  )  &&  C  , true" // spaces around operator and parentheses
+        "  (  A  ||  B  )  &&  C  , true", // spaces around operator and parentheses
+
+        // Tabs and non-breaking spaces, such as a trailing tab after !ifdef FOO
+        "'A\t', true",
+        "'\tA\t&&\tB', false",
+        "'A ||\t(\tB )\t', true",
+        "'!\u00A0A\u00A0', false"
     })
     void testBooleanExpressions(String expression, boolean expected) {
         assertEquals(expected, new EvalBoolean(expression, TEST_TRUTH).eval());
