@@ -45,13 +45,18 @@ public class PSystemListFontsFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-		final String lineLower = StringUtils.goLowerCase(line);
-		if (lineLower.equals("listfont") || lineLower.equals("listfonts") || lineLower.startsWith("listfont ")
-				|| lineLower.startsWith("listfonts ")) {
-			final int idx = line.indexOf(' ');
-			return new PSystemListFonts(source, idx == -1 ? "This is a test" : StringUtils.trin(line.substring(idx)), preprocessing);
-		}
-		return null;
+		// The line may be indented, and the text separated by any blank %s accepts
+		final String trimmed = StringUtils.trin(line);
+		if (trimmed.equalsIgnoreCase("listfont") || trimmed.equalsIgnoreCase("listfonts"))
+			return new PSystemListFonts(source, "This is a test", preprocessing);
+
+		String text = StringUtils.getKeywordArgument(line, "listfont");
+		if (text == null)
+			text = StringUtils.getKeywordArgument(line, "listfonts");
+		if (text == null)
+			return null;
+
+		return new PSystemListFonts(source, text, preprocessing);
 	}
 
 }

@@ -46,12 +46,13 @@ public class PSystemOpenIconicFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-		final String lineLower = StringUtils.goLowerCase(line);
-		if (lineLower.startsWith("openiconic ") == false)
+		// Everything after the keyword, blanks removed: "openiconic  home" names "home" too,
+		// and so do an indented line and a tab or a non-breaking space after the keyword
+		final String argument = StringUtils.getKeywordArgument(line, "openiconic");
+		if (argument == null)
 			return null;
 
-		// Everything after the keyword, blanks removed: "openiconic  home" names "home" too
-		final String iconName = StringUtils.trin(lineLower.substring("openiconic ".length()));
+		final String iconName = StringUtils.goLowerCase(argument);
 		final OpenIconic icon = OpenIconic.retrieve(iconName);
 		// An unknown icon is reported on its line instead of crashing on a null icon
 		if (icon == null)

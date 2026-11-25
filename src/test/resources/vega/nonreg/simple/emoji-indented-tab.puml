@@ -1,0 +1,6 @@
+---
+output: utxt
+---
+@startuml
+	emoji	zz
+@enduml

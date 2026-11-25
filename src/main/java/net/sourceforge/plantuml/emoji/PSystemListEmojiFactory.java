@@ -46,13 +46,15 @@ public class PSystemListEmojiFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-		final String lineLower = StringUtils.goLowerCase(line);
-		if (lineLower.equals("emoji") || lineLower.startsWith("emoji ")) {
-			final int idx = line.indexOf(' ');
-			final String code = idx == -1 ? "26" : line.substring(idx + 1);
-			return new PSystemListEmoji(source, code.toLowerCase(), preprocessing);
-		}
-		return null;
+		// The line may be indented, and the code separated by any blank %s accepts
+		if (StringUtils.trin(line).equalsIgnoreCase("emoji"))
+			return new PSystemListEmoji(source, "26", preprocessing);
+
+		final String code = StringUtils.getKeywordArgument(line, "emoji");
+		if (code == null)
+			return null;
+
+		return new PSystemListEmoji(source, StringUtils.goLowerCase(code), preprocessing);
 	}
 
 }
