@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startwbs
+<style>
+.s {
+  BackgroundColor #FFCC00
+}
+</style>
+* root
+** item <<s>> 
+@endwbs

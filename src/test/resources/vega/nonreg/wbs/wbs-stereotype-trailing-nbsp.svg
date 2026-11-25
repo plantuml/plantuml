@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="145px" preserveAspectRatio="none" style="width:83px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 83 145" width="83px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="41.325" x2="41.325" y1="72" y2="92"/>
+    <rect fill="#FC0" height="32" style="stroke:#181818;stroke-width:1.5;" width="42.65" x="20" y="92"/>
+    <text fill="#000" font-size="12" textLength="22.65" x="30" y="111.333">item</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="41.325" x2="41.325" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="40.625" x="21.013" y="20"/>
+    <text fill="#000" font-size="12" textLength="20.625" x="31.013" y="39.333">root</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="41.325" x2="41.325" y1="52" y2="72"/>
+  </g>
+</svg>
