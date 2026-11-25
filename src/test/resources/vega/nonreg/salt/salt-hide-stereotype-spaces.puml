@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Salt)
+---
+@startsalt
+  Hide  Stereotype
+{
+[OK] | [Cancel]
+}
+@endsalt

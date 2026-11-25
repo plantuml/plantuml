@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="34px" preserveAspectRatio="none" style="width:98px;height:34px;background:#FFFFFF;" version="1.1" viewBox="0 0 98 34" width="98px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="21.325" x="8.5" y="8.5"/>
+    <text fill="#000" font-size="12" textLength="17.325" x="10.5" y="19.833">OK</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="52" x="36.825" y="8.5"/>
+    <text fill="#000" font-size="12" textLength="37.425" x="44.113" y="19.833">Cancel</text>
+  </g>
+</svg>

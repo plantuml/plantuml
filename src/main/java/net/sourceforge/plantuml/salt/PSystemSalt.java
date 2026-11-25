@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ScaleSimple;
@@ -181,6 +182,12 @@ public class PSystemSalt extends TitledDiagram {
 		dictionary.addSprite(name, sprite);
 	}
 
+	// As the "hide stereotype" command of the other diagrams: any blank between the words
+	// (tab, non-breaking space, several spaces), indented or not, in any case. A line left
+	// here reaches the salt parser, which cannot read it and fails the whole drawing
+	private static final Pattern HIDE_STEREOTYPE = Pattern
+			.compile("[\\s\u00A0]*hide[\\s\u00A0]+stereotype[\\s\u00A0]*", Pattern.CASE_INSENSITIVE);
+
 	private List<String> manageSprite() {
 
 		final Command<TitledDiagram> cmd = CommandFactorySprite.ME.createMultiLine(false);
@@ -188,7 +195,7 @@ public class PSystemSalt extends TitledDiagram {
 		final List<String> result = new ArrayList<>();
 		for (Iterator<String> it = data.iterator(); it.hasNext();) {
 			String s = it.next();
-			if (s.equals("hide stereotype")) {
+			if (HIDE_STEREOTYPE.matcher(s).matches()) {
 				// System.err.println("skipping " + s);
 			} else if (s.startsWith("skinparam ")) {
 				// System.err.println("skipping " + s);
