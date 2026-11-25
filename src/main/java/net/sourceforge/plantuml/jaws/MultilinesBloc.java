@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.jaws;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.utils.BlocLines;
+
 public class MultilinesBloc {
 
 	private final int initialHeaderLength;
@@ -66,9 +68,11 @@ public class MultilinesBloc {
 		return sb.toString();
 	}
 
+	// Tabs indent the lines as spaces do, one character each, as BlocLines.trimSmart
+	// counts them: with spaces only, a block indented with tabs kept its indentation
 	private int countSpaceAtStart(String part) {
 		int result = 0;
-		while (result < part.length() && part.charAt(result) == ' ')
+		while (result < part.length() && BlocLines.isSpaceOrTab(part.charAt(result)))
 			result++;
 		return result;
 	}
