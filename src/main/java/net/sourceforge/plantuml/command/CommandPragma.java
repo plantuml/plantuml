@@ -81,7 +81,7 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 
 		// Mirror the special cases of executeArg.
 		if (name.equals("svgsize")) {
-			if (value != null && value.contains(" "))
+			if (value != null && svgSizeWords(value).countTokens() >= 2)
 				return "Setting the SVG size to '" + value + "'";
 
 			return "Setting the SVG size (ignored: two space-separated values are expected)";
@@ -102,16 +102,21 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 		return sb.toString();
 	}
 
+	// The two values of svgsize, separated by any blank %s accepts: a tab or a
+	// non-breaking space was not seen as a separator, and the pragma was ignored
+	private static StringTokenizer svgSizeWords(String value) {
+		return new StringTokenizer(value, " \t\r\n\f\u00A0");
+	}
+
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));
 		final String value = arg.get("VALUE", 0);
 		if (name.equalsIgnoreCase("svgsize")) {
-			if (value.contains(" ")) {
-				final StringTokenizer st = new StringTokenizer(value);
+			final StringTokenizer st = svgSizeWords(value);
+			if (st.countTokens() >= 2)
 				system.getSkinParam().setSvgSize(st.nextToken(), st.nextToken());
-			}
 		} else {
 			system.getPragma().define(name, value);
 
