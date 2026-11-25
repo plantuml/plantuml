@@ -88,21 +88,23 @@ public class PSystemMath extends DirectOsDiagram implements FormulaDiagram {
 	}
 
 	public void doCommandLine(String line) {
-		final String lineLower = StringUtils.trin(StringUtils.goLowerCase(line));
+		// The options may be indented: read their values from the trimmed line, where lineLower found them
+		final String trimmed = StringUtils.trin(line);
+		final String lineLower = StringUtils.goLowerCase(trimmed);
 		final String colorParam = "color ";
 		final String backParam = "backgroundcolor ";
 		if (lineLower.startsWith(colorParam)) {
-			final HColor col3 = getColor(line.substring(colorParam.length()));
+			final HColor col3 = getColor(trimmed.substring(colorParam.length()));
 			if (col3 != null) {
 				color = col3;
 			}
 		} else if (lineLower.startsWith(backParam)) {
-			final HColor col3 = getColor(line.substring(backParam.length()));
+			final HColor col3 = getColor(trimmed.substring(backParam.length()));
 			if (col3 != null) {
 				backColor = col3;
 			}
 		} else if (lineLower.startsWith("scale ")) {
-			final String value = line.substring("scale ".length());
+			final String value = trimmed.substring("scale ".length());
 			try {
 				final float scale1 = Float.parseFloat(value);
 				if (scale1 > 0) {
@@ -112,7 +114,7 @@ public class PSystemMath extends DirectOsDiagram implements FormulaDiagram {
 				Logme.error(e);
 			}
 		} else if (lineLower.startsWith("dpi ")) {
-			final String value = line.substring("dpi ".length());
+			final String value = trimmed.substring("dpi ".length());
 			try {
 				final float dpi1 = Float.parseFloat(value);
 				if (dpi1 > 0) {

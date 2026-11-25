@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+  scale 2
+  color blue
+x^2
+@endmath

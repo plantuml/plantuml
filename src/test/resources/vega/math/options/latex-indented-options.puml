@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+  scale 2
+  color blue
+\frac{a}{b}
+@endlatex
