@@ -39,6 +39,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexConcat;
@@ -111,7 +112,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	private LocalDate resultE(GanttDiagram gantt, UMatcher arg) {
-		final String type = arg.findFirstValueByKey("ETYPE").toUpperCase();
+		final String type = arg.findFirstValueByKey("ETYPE").toUpperCase(Locale.ENGLISH);
 		final String operation = arg.findFirstValueByKey("EOPERATION");
 		int day = Integer.parseInt(arg.findFirstValueByKey("ECOUNT"));
 		if ("-".equals(operation))

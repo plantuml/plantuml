@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -751,7 +752,7 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 		}
 
 		private DataImage decodeDataImage(String href) {
-			final String lowerHref = href.toLowerCase();
+			final String lowerHref = href.toLowerCase(Locale.ENGLISH);
 			if (lowerHref.startsWith("data:image/svg+xml;base64,")) {
 				LOG.fine("Skipping embedded SVG image data URI");
 				return null;
@@ -1019,7 +1020,7 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 			if (value == null || value.isEmpty())
 				return HColorLinearGradient.SpreadMethod.PAD;
 
-			final String lower = value.toLowerCase();
+			final String lower = value.toLowerCase(Locale.ENGLISH);
 			if ("reflect".equals(lower))
 				return HColorLinearGradient.SpreadMethod.REFLECT;
 			if ("repeat".equals(lower))

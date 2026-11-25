@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.builtin;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -78,7 +79,7 @@ public class GetStdlib extends SimpleReturnFunction {
 					final JsonObject metadata = Json.object();
 					// Key in README.md will be in lowercase anyway
 					for (Entry<String, String> ent : folder.getMetadata().entrySet())
-						metadata.add(ent.getKey().toLowerCase(), ent.getValue());
+						metadata.add(ent.getKey().toLowerCase(Locale.ENGLISH), ent.getValue());
 
 					result.add(folderName, metadata);
 				}
@@ -88,15 +89,15 @@ public class GetStdlib extends SimpleReturnFunction {
 				final Stdlib folder = Stdlib.retrieve(folderName);
 				// Key in README.md will be in lowercase anyway
 				for (Entry<String, String> ent : folder.getMetadata().entrySet())
-					result.add(ent.getKey().toLowerCase(), ent.getValue());
+					result.add(ent.getKey().toLowerCase(Locale.ENGLISH), ent.getValue());
 			} else if (values.size() == 2) {
 				final String folderName = values.get(0).toString();
-				final String key = values.get(1).toString().toLowerCase();
+				final String key = values.get(1).toString().toLowerCase(Locale.ENGLISH);
 				final Stdlib folder = Stdlib.retrieve(folderName);
 				String value = folder.getMetadata().get(key);
 				// Temporary, we check the uppercase key if needed
 				if (value == null)
-					value = folder.getMetadata().get(key.toUpperCase());
+					value = folder.getMetadata().get(key.toUpperCase(Locale.ENGLISH));
 				if (value == null)
 					value = "";
 				return TValue.fromString(value);

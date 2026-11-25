@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style.value;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -206,7 +207,7 @@ public class ValueImpl implements Value {
 		if (raw == null || raw.isEmpty())
 			return UFontFace.normal();
 
-		final String s = raw.trim().toLowerCase();
+		final String s = raw.trim().toLowerCase(Locale.ENGLISH);
 		if ("bold".equals(s))
 			return UFontFace.bold();
 		if ("italic".equals(s))

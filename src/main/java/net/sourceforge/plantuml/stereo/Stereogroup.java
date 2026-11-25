@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -116,7 +117,7 @@ public class Stereogroup {
 		if (labels.size() == 0)
 			return null;
 
-		switch (labels.get(0).toLowerCase()) {
+		switch (labels.get(0).toLowerCase(Locale.ENGLISH)) {
 		case "choice":
 			return LeafType.STATE_CHOICE;
 		case "fork":

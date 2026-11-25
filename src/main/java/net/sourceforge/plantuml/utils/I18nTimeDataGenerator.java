@@ -237,7 +237,7 @@ public class I18nTimeDataGenerator {
 	private static String capitalize(String s) {
 		if (s == null || s.isEmpty())
 			return s;
-		return Character.toUpperCase(s.charAt(0)) + s.toLowerCase().substring(1);
+		return Character.toUpperCase(s.charAt(0)) + s.toLowerCase(Locale.ENGLISH).substring(1);
 	}
 
 	private static String dayShortName(DayOfWeek d, Locale locale) {

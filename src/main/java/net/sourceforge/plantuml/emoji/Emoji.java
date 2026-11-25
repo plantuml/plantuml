@@ -42,6 +42,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -144,10 +145,10 @@ public class Emoji {
 	public static Emoji retrieve(String name) {
 		// ::comment when JAVA8
 		if (TeaVM.isTeaVM() && TeaVM.isC() == false)
-			return retrieveFromJs(name.toLowerCase());
+			return retrieveFromJs(name.toLowerCase(Locale.ENGLISH));
 		else
 			// ::done
-			return ALL.get(name.toLowerCase());
+			return ALL.get(name.toLowerCase(Locale.ENGLISH));
 	}
 
 	// ::comment when JAVA8

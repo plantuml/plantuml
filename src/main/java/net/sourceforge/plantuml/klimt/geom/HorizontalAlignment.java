@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -73,7 +74,7 @@ public enum HorizontalAlignment {
 	}
 
 	public String getGraphVizValue() {
-		return toString().substring(0, 1).toLowerCase();
+		return toString().substring(0, 1).toLowerCase(Locale.ENGLISH);
 	}
 
 	public void draw(UGraphic ug, TextBlock tb, double xpadding, double ypadding, double width) {

@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.tim;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
@@ -62,7 +63,7 @@ public class EaterTheme extends Eater {
 		skipSpaces();
 		this.name = this.eatAllToEnd();
 
-		final int x = this.name.toLowerCase().indexOf(" from ");
+		final int x = this.name.toLowerCase(Locale.ENGLISH).indexOf(" from ");
 		if (x != -1) {
 			final String fromTmp = this.name.substring(x + " from ".length()).trim();
 			this.from = context.applyFunctionsAndVariables(memory, new StringLocated(fromTmp, getLineLocation()));

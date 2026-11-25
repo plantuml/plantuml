@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.style;
 
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -89,7 +90,7 @@ public class StyleBuilder implements AutomaticCounter {
 		if (name.contains(Style.STAR))
 			throw new IllegalArgumentException();
 
-		name = name.toLowerCase();
+		name = name.toLowerCase(Locale.ENGLISH);
 		final StyleQuery signature = StyleQuery.empty().withStereotype(name);
 
 		// An exact-signature lookup, not a cascade: only a bare ".name { ... }" declared with

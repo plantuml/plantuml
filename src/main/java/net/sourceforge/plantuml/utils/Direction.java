@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.utils;
 
+import java.util.Locale;
+
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.regex.RegexResult;
 
@@ -130,7 +132,7 @@ public enum Direction {
 	}
 
 	public static Direction lazzyValueOf(String s) {
-		s = s.toUpperCase();
+		s = s.toUpperCase(Locale.ENGLISH);
 		if ("TOP".equals(s))
 			return UP;
 		if ("BOTTOM".equals(s))

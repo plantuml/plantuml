@@ -44,6 +44,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.plantuml.json.Json;
@@ -94,7 +95,7 @@ public class PathSystem {
 		if (TeaVM.isC())
 			return null;
 		path = path.replaceAll("\\.json$", "");
-		final String full = path.toLowerCase();
+		final String full = path.toLowerCase(Locale.ENGLISH);
 		final int slash = full.indexOf('/');
 		if (slash == -1)
 			return null;
@@ -119,7 +120,7 @@ public class PathSystem {
 			final byte[] content = Stdlib.getPumlResource(path.substring(1, path.length() - 1));
 			return content == null ? null : new ByteArrayInputStream(content);
 		}
-		final String full = path.substring(1, path.length() - 1).toLowerCase();
+		final String full = path.substring(1, path.length() - 1).toLowerCase(Locale.ENGLISH);
 		final int slash = full.indexOf('/');
 		if (slash == -1)
 			return null;
@@ -347,7 +348,7 @@ public class PathSystem {
 		}
 
 		if (path.startsWith("<") && path.endsWith(">")) {
-			final String full = path.substring(1, path.length() - 1).toLowerCase();
+			final String full = path.substring(1, path.length() - 1).toLowerCase(Locale.ENGLISH);
 			final String libname = full.substring(0, full.indexOf('/'));
 			final String filepath = full.substring(libname.length() + 1);
 			return new InputFileStdlib(Stdlib.retrieve(libname), Paths.get(filepath));

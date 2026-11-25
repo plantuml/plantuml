@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -440,7 +441,7 @@ public class SvgGraphics {
 				elt.setAttribute("y2", formatPercent(gr.getY2()));
 			}
 			if (gr.getSpreadMethod() != HColorLinearGradient.SpreadMethod.PAD) {
-				elt.setAttribute("spreadMethod", gr.getSpreadMethod().name().toLowerCase());
+				elt.setAttribute("spreadMethod", gr.getSpreadMethod().name().toLowerCase(Locale.ENGLISH));
 			}
 			id = gradientId + gradients.size();
 			gradients.put(key, id);

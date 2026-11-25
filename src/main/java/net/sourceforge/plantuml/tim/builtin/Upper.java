@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.tim.builtin;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,6 +61,6 @@ public class Upper extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) {
-		return TValue.fromString(values.get(0).toString().toUpperCase());
+		return TValue.fromString(values.get(0).toString().toUpperCase(Locale.ENGLISH));
 	}
 }

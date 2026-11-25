@@ -35,11 +35,13 @@
  */
 package net.sourceforge.plantuml.gantt.core;
 
+import java.util.Locale;
+
 public enum TaskAttribute {
 	START, END, LOAD;
 
 	public static TaskAttribute fromString(String value) {
-		return valueOf(value.toUpperCase());
+		return valueOf(value.toUpperCase(Locale.ENGLISH));
 	}
 
 }

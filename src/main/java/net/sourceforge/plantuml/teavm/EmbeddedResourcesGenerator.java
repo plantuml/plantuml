@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Generates {@code EmbeddedResources.java} by reading the skins of the main
@@ -96,7 +97,7 @@ public final class EmbeddedResourcesGenerator {
 	}
 
 	private static String constantName(String skinName) {
-		return skinName.toUpperCase() + "_SKIN_B64";
+		return skinName.toUpperCase(Locale.ENGLISH) + "_SKIN_B64";
 	}
 
 	/**

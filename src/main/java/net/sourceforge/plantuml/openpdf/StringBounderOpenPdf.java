@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.openpdf;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -112,13 +113,13 @@ public class StringBounderOpenPdf implements StringBounder {
 		if (family == null)
 			family = "Helvetica";
 
-		final String key = family.toLowerCase() + (bold ? "-b" : "") + (italic ? "-i" : "");
+		final String key = family.toLowerCase(Locale.ENGLISH) + (bold ? "-b" : "") + (italic ? "-i" : "");
 		final BaseFont cached = fontCache.get(key);
 		if (cached != null)
 			return cached;
 
 		final String baseName;
-		final String lower = family.toLowerCase();
+		final String lower = family.toLowerCase(Locale.ENGLISH);
 		if (lower.contains("courier") || lower.contains("mono")) {
 			if (bold && italic)
 				baseName = BaseFont.COURIER_BOLDOBLIQUE;

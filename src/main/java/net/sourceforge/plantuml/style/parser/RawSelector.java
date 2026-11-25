@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.style.parser;
 
+import java.util.Locale;
+
 import net.sourceforge.plantuml.style.SName;
 
 /**
@@ -120,11 +122,11 @@ public final class RawSelector {
 	public String canonicalOtherKey() {
 		switch (kind) {
 		case STEREOTYPE:
-			return raw.substring(1).toLowerCase();
+			return raw.substring(1).toLowerCase(Locale.ENGLISH);
 		case DEPTH:
 			return "depth(" + depth + ")";
 		case UNKNOWN:
-			return raw.toLowerCase();
+			return raw.toLowerCase(Locale.ENGLISH);
 		default:
 			throw new IllegalStateException("Not applicable to " + kind);
 		}

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -109,7 +110,7 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 			sb.append(", stereotyped ").append(lineLast.get("STEREOGROUP", 0));
 			final BoxStyle style = stereogroup.getBoxStyle();
 			if (style != BoxStyle.PLAIN)
-				sb.append(" (box style: ").append(style.name().toLowerCase()).append(")");
+				sb.append(" (box style: ").append(style.name().toLowerCase(Locale.ENGLISH)).append(")");
 		}
 
 		// Mirror the deprecation warning emitted by executeNow; note that the

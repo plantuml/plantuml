@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.security;
 
+import java.util.Locale;
+
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 /**
@@ -117,7 +119,7 @@ public enum SecurityProfile {
 
 		final String env = SecurityUtils.getenv("PLANTUML_SECURITY_PROFILE");
 		if (env != null)
-			switch (env.toUpperCase()) {
+			switch (env.toUpperCase(Locale.ENGLISH)) {
 			case "SANDBOX":
 				return SANDBOX;
 			case "ALLOWLIST":
@@ -179,7 +181,7 @@ public enum SecurityProfile {
 		if (name == null)
 			return false;
 
-		final String lname = name.toLowerCase();
+		final String lname = name.toLowerCase(Locale.ENGLISH);
 		if (lname.startsWith("plantuml.security"))
 			return false;
 

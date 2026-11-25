@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.chart.command;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
@@ -130,7 +131,7 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 
 		// Set marker shape if specified
 		if (markerStr != null) {
-			switch (markerStr.toLowerCase()) {
+			switch (markerStr.toLowerCase(Locale.ENGLISH)) {
 			case "square":
 				series.setMarkerShape(ChartSeries.MarkerShape.SQUARE);
 				break;

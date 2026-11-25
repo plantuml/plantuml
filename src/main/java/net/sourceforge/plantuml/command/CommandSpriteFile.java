@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -185,7 +186,7 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	private boolean isSvg(String name) {
-		return name.toLowerCase().endsWith(".svg");
+		return name.toLowerCase(Locale.ENGLISH).endsWith(".svg");
 	}
 
 	@Override

@@ -224,12 +224,12 @@ public class StringUtils {
 	}
 
 	public static String manageArrowForSequence(String s) {
-		s = s.replace('=', '-').toLowerCase();
+		s = s.replace('=', '-').toLowerCase(Locale.ENGLISH);
 		return s;
 	}
 
 	public static String capitalize(String s) {
-		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+		return s.substring(0, 1).toUpperCase(Locale.ENGLISH) + s.substring(1).toLowerCase(Locale.ENGLISH);
 	}
 
 	public static char goUpperCase(char c) {
@@ -283,7 +283,7 @@ public class StringUtils {
 		if (s.indexOf('<') != -1 || s.indexOf('>') != -1)
 			throw new IllegalArgumentException(s);
 
-		s = s.toLowerCase();
+		s = s.toLowerCase(Locale.ENGLISH);
 		if (s.contains("left"))
 			return Direction.LEFT;
 
@@ -414,7 +414,7 @@ public class StringUtils {
 	}
 
 	public static int getPragmaRevision(String uml) {
-		uml = uml.toLowerCase();
+		uml = uml.toLowerCase(Locale.ENGLISH);
 		final String header = "@startuml\n!pragma revision ";
 		if (uml.startsWith(header) == false)
 			return -1;

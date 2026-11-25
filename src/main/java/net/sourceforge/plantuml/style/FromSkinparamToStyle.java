@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -335,7 +336,7 @@ public class FromSkinparamToStyle {
 		if (value.equalsIgnoreCase("dashed"))
 			value = "7;7";
 
-		final List<Data> datas = knowledge.get(key.toLowerCase());
+		final List<Data> datas = knowledge.get(key.toLowerCase(Locale.ENGLISH));
 
 		if (datas == null) {
 			if (key.equalsIgnoreCase("shadowing"))
@@ -379,7 +380,7 @@ public class FromSkinparamToStyle {
 		} else if (read.startsWith("line.dashed")) {
 			for (Data data : datas)
 				addStyle(PName.LineStyle, ValueImpl.regular("7;7", counter), data.styleNames);
-		} else if (read.toLowerCase().contains("bold")) {
+		} else if (read.toLowerCase(Locale.ENGLISH).contains("bold")) {
 			for (Data data : datas)
 				addStyle(PName.LineThickness, ValueImpl.regular("2", counter), data.styleNames);
 		}
@@ -423,7 +424,7 @@ public class FromSkinparamToStyle {
 	}
 
 	private static void addConvert(String skinparam, PName propertyName, SName... styleNames) {
-		skinparam = skinparam.toLowerCase();
+		skinparam = skinparam.toLowerCase(Locale.ENGLISH);
 		List<Data> datas = knowledge.get(skinparam);
 		if (datas == null) {
 			datas = new ArrayList<>();

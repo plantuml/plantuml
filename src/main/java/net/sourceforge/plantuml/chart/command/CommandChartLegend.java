@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.chart.command;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
@@ -79,7 +80,7 @@ public class CommandChartLegend extends SingleLineCommand2<ChartDiagram> {
 		final String position = arg.get("POSITION", 0);
 
 		ChartDiagram.LegendPosition legendPosition;
-		switch (position.toLowerCase()) {
+		switch (position.toLowerCase(Locale.ENGLISH)) {
 		case "left":
 			legendPosition = ChartDiagram.LegendPosition.LEFT;
 			break;

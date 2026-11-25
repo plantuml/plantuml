@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.chart.command;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
@@ -83,7 +84,7 @@ public class CommandChartOrientation extends SingleLineCommand2<ChartDiagram> {
 		final String orientationStr = arg.get("ORIENTATION", 0);
 
 		ChartDiagram.Orientation orientation;
-		switch (orientationStr.toLowerCase()) {
+		switch (orientationStr.toLowerCase(Locale.ENGLISH)) {
 		case "vertical":
 			orientation = ChartDiagram.Orientation.VERTICAL;
 			break;

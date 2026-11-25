@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.core;
 
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.style.SName;
 
@@ -301,7 +302,7 @@ public enum DiagramType {
 	public String humanReadableName() {
 		if (this == DESCRIPTION)
 			return "component";
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ENGLISH);
 	}
 
 }

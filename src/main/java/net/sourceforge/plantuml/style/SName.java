@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.style;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public enum SName {
@@ -209,13 +210,13 @@ public enum SName {
 
 	static {
 		for (SName sname : SName.values()) {
-			final String s = sname.name().replace("_", "").toLowerCase();
+			final String s = sname.name().replace("_", "").toLowerCase(Locale.ENGLISH);
 			ALL.put(s, sname);
 		}
 	}
 
 	public static SName retrieve(String s) {
-		return ALL.get(s.toLowerCase());
+		return ALL.get(s.toLowerCase(Locale.ENGLISH));
 	}
 
 }

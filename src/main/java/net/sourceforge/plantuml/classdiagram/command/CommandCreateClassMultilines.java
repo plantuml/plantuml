@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
@@ -166,7 +167,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		final StringBuilder sb = new StringBuilder();
 
 		final String typeString = StringUtils.goUpperCase(line0.get("TYPE", 0));
-		sb.append("Creating ").append(typeString.toLowerCase());
+		sb.append("Creating ").append(typeString.toLowerCase(Locale.ENGLISH));
 
 		final String idShort = line0.getLazzy("CODE", 0);
 		if (idShort != null)

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.font;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -119,7 +120,7 @@ public class UFontFace {
 		if (cssValue == null)
 			return null;
 
-		final String trimmed = cssValue.trim().toLowerCase();
+		final String trimmed = cssValue.trim().toLowerCase(Locale.ENGLISH);
 		switch (trimmed) {
 		case "normal":
 			return NORMAL;

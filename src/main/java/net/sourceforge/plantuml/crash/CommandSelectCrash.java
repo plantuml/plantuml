@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.crash;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
@@ -86,7 +87,7 @@ public class CommandSelectCrash extends UBrexSingleLineCommand2<CrashDiagram> {
 			ParserPass currentPass) throws NoSuchColorException {
 
 		final String typeString = arg.get("TYPE", 0);
-		final CrashType type = CrashType.valueOf(typeString.toUpperCase());
+		final CrashType type = CrashType.valueOf(typeString.toUpperCase(Locale.ENGLISH));
 
 		diagram.setCrashType(type);
 

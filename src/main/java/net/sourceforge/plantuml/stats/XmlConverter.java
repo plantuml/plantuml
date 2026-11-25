@@ -40,6 +40,7 @@ import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -74,7 +75,7 @@ public class XmlConverter {
 		final Document document = builder.newDocument();
 		document.setXmlStandalone(true);
 
-		final Element root = (Element) document.createElement("plantuml".toUpperCase());
+		final Element root = (Element) document.createElement("plantuml".toUpperCase(Locale.ENGLISH));
 		document.appendChild(root);
 
 		// final Element elt1 = (Element)
@@ -92,10 +93,10 @@ public class XmlConverter {
 	}
 
 	private void addNode(Element root, Document document, StatsTable table) {
-		final Element elt = (Element) document.createElement(toXmlName(table.getName()).toUpperCase());
+		final Element elt = (Element) document.createElement(toXmlName(table.getName()).toUpperCase(Locale.ENGLISH));
 
 		for (StatsLine statsLine : table.getLines()) {
-			final Element line = (Element) document.createElement("line".toUpperCase());
+			final Element line = (Element) document.createElement("line".toUpperCase(Locale.ENGLISH));
 			for (StatsColumn col : table.getColumnHeaders()) {
 				final Element value = (Element) document.createElement(col.name());
 				// value.setAttribute("value", toText(statsLine.getValue(col)));

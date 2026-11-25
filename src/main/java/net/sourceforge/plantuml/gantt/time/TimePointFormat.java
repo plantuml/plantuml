@@ -99,7 +99,7 @@ public enum TimePointFormat {
 	            return TimePointFormat.MONTH_SHORT.format(when, locale) + " " + when.getDayOfMonth() + "일";
 	        case "ru":
 	            // "день месяца" (ex: "17 июня")
-	            return when.getDayOfMonth() + " " + TimePointFormat.MONTH_LONG.format(when, locale).toLowerCase();
+	            return when.getDayOfMonth() + " " + TimePointFormat.MONTH_LONG.format(when, locale).toLowerCase(locale);
 	        case "zh":
 	            // "月/日" (ex: "6月/17日")
 	            return TimePointFormat.MONTH_SHORT.format(when, locale) + when.getDayOfMonth() + "日";

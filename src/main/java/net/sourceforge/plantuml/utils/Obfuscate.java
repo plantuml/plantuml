@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -91,7 +92,7 @@ public class Obfuscate {
 	}
 
 	private String changeWord(final String word) {
-		final String lower = word.toLowerCase();
+		final String lower = word.toLowerCase(Locale.ENGLISH);
 		if (except.contains(lower) || lower.matches("^([a-f0-9]{3}|[a-f0-9]{6})$"))
 			return word;
 
@@ -129,7 +130,7 @@ public class Obfuscate {
 	}
 
 	public void addException(String word) {
-		word = word.toLowerCase();
+		word = word.toLowerCase(Locale.ENGLISH);
 		if (words.contains(word))
 			throw new IllegalArgumentException("Obfuscate collision on word: " + word);
 

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.klimt.creole.command;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.creole.Parser;
@@ -78,7 +79,7 @@ public class CommandCreoleImg implements Command {
 
 		String src = m.group(2);
 		final double scale = Parser.getScale(m.group(3), 1);
-		if (src.toLowerCase().startsWith("src="))
+		if (src.toLowerCase(Locale.ENGLISH).startsWith("src="))
 			src = src.substring(4);
 
 		src = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(src, "\"");

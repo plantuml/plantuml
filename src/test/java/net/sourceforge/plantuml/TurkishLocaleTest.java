@@ -2,6 +2,7 @@ package net.sourceforge.plantuml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
 import org.junitpioneer.jupiter.DefaultLocale;
 
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.crash.CrashDiagram;
 import net.sourceforge.plantuml.gantt.GanttTaskTableColumn;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -51,6 +54,22 @@ class TurkishLocaleTest {
 	@Test
 	void ganttColumnNameIsParsed() {
 		assertEquals(GanttTaskTableColumn.DURATION, GanttTaskTableColumn.of("duration"));
+	}
+
+	@Test
+	void upperAndLowerFunctionsDoNotDependOnLocale() throws IOException {
+		final String svg = toSvg("@startuml\nalice -> bob : %upper(\"list\") %lower(\"TITLE\")\n@enduml");
+		assertTrue(svg.contains("LIST"), svg);
+		assertTrue(svg.contains("title"), svg);
+		assertFalse(svg.contains("\u0130"), svg);
+		assertFalse(svg.contains("\u0131"), svg);
+	}
+
+	@Test
+	void crashTypeIsParsed() {
+		final Diagram diagram = new SourceStringReader("@startcrash\ncrash when drawing\n@endcrash").getBlocks()
+				.get(0).getDiagram();
+		assertInstanceOf(CrashDiagram.class, diagram);
 	}
 
 	private static String toSvg(String source) throws IOException {

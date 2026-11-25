@@ -51,6 +51,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -180,7 +181,7 @@ public class SecurityUtils {
 	private static final Map<String, String> commandLineProperties = new HashMap<>();
 
 	private static String normalizeName(String name) {
-		return name.replace(".", "_").toUpperCase();
+		return name.replace(".", "_").toUpperCase(Locale.ENGLISH);
 	}
 
 	/**
@@ -205,7 +206,7 @@ public class SecurityUtils {
 	}
 
 	private static boolean isJavascriptLink(String url) {
-		return url.toLowerCase().replaceAll("[^a-z]", "").startsWith("javascript");
+		return url.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "").startsWith("javascript");
 	}
 
 	private static boolean allowJavascriptInLink() {
@@ -226,7 +227,7 @@ public class SecurityUtils {
 		if (StringUtils.isNotEmpty(result))
 			return result;
 
-		final String alternateName = name.replace(".", "_").toUpperCase();
+		final String alternateName = name.replace(".", "_").toUpperCase(Locale.ENGLISH);
 		return System.getenv(alternateName);
 	}
 

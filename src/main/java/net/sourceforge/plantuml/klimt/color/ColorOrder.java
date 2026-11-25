@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
+import java.util.Locale;
+
 import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public enum ColorOrder {
@@ -69,7 +71,7 @@ public enum ColorOrder {
 
 	public static ColorOrder fromString(String order) {
 		try {
-			return ColorOrder.valueOf(order.toUpperCase());
+			return ColorOrder.valueOf(order.toUpperCase(Locale.ENGLISH));
 		} catch (Exception e) {
 			return null;
 		}

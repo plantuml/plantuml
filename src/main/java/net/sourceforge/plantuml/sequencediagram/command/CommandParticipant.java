@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Locale;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -109,7 +111,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 		else
 			type = "participant";
 
-		sb.append(create ? "Creating " : "Declaring ").append(type.toLowerCase());
+		sb.append(create ? "Creating " : "Declaring ").append(type.toLowerCase(Locale.ENGLISH));
 
 		if (code != null)
 			sb.append(" '").append(code).append("'");

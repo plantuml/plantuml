@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.tim.builtin;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,7 +63,7 @@ public class BoolVal extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
-		final String s = values.get(0).toString().toLowerCase();
+		final String s = values.get(0).toString().toLowerCase(Locale.ENGLISH);
 		switch (s) {
 		case "true":
 		case "1":

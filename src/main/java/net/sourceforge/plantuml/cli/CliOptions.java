@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -107,7 +108,7 @@ public class CliOptions {
 		// SecurityUtils, as the GraalVM build reads them as system properties.
 		if (TeaVM.isC())
 			for (Entry<String, String> ent : defines().entrySet())
-				if (ent.getKey().toLowerCase().startsWith("plantuml"))
+				if (ent.getKey().toLowerCase(Locale.ENGLISH).startsWith("plantuml"))
 					SecurityUtils.setCommandLineProperty(ent.getKey(), ent.getValue());
 
 		for (String key : flags.getMap(CliFlag.INCLUDE, CliFlag.INCLUDE_LONG).keySet())

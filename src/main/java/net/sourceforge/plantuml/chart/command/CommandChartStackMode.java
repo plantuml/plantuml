@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.chart.command;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
@@ -83,7 +84,7 @@ public class CommandChartStackMode extends SingleLineCommand2<ChartDiagram> {
 		final String mode = arg.get("MODE", 0);
 
 		ChartDiagram.StackMode stackMode;
-		switch (mode.toLowerCase()) {
+		switch (mode.toLowerCase(Locale.ENGLISH)) {
 		case "grouped":
 			stackMode = ChartDiagram.StackMode.GROUPED;
 			break;

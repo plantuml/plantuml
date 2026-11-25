@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -96,7 +97,7 @@ public class Stdlib {
 	}
 
 	public static byte[] getPumlResource(String fullname) {
-		fullname = fullname.toLowerCase().replace(".puml", "");
+		fullname = fullname.toLowerCase(Locale.ENGLISH).replace(".puml", "");
 		final int last = fullname.indexOf('/');
 		if (last == -1)
 			return null;
@@ -166,7 +167,7 @@ public class Stdlib {
 					final String name = dis.readUTF();
 					final int len = dis.readInt();
 					final byte data[] = FileUtils.readExactly(dis, len);
-					map.put(name.toLowerCase(), data);
+					map.put(name.toLowerCase(Locale.ENGLISH), data);
 				}
 			}
 		}
@@ -576,7 +577,7 @@ public class Stdlib {
 	}
 
 	public InputStream newInputStream(Path path) throws IOException {
-		final String pathString = path.toString().toLowerCase().replace(".puml", "").replace('\\', '/');
+		final String pathString = path.toString().toLowerCase(Locale.ENGLISH).replace(".puml", "").replace('\\', '/');
 		final byte[] data = loadPumlResource(pathString);
 		return new ByteArrayInputStream(data);
 	}

@@ -49,6 +49,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -519,7 +520,7 @@ public class Run {
 
 	public static boolean isOpenJdkRunning() {
 		final String jvmName = System.getProperty("java.vm.name");
-		if (jvmName != null && jvmName.toLowerCase().contains("openjdk"))
+		if (jvmName != null && jvmName.toLowerCase(Locale.ENGLISH).contains("openjdk"))
 			return true;
 
 		return false;

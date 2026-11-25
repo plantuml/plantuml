@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.picoweb;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 public class ReceivedHTTPRequest {
@@ -42,7 +43,7 @@ public class ReceivedHTTPRequest {
 			throw new BadRequest400("Bad request line");
 		}
 
-		request.method = tokenizer.nextToken().toUpperCase();
+		request.method = tokenizer.nextToken().toUpperCase(Locale.ENGLISH);
 		request.path = tokenizer.nextToken();
 
 		// Headers
@@ -52,9 +53,9 @@ public class ReceivedHTTPRequest {
 			String line = readLine(in);
 			if (line.isEmpty()) {
 				break;
-			} else if (line.toLowerCase().startsWith(CONTENT_LENGTH_HEADER)) {
+			} else if (line.toLowerCase(Locale.ENGLISH).startsWith(CONTENT_LENGTH_HEADER)) {
 				contentLength = parseContentLengthHeader(line);
-			} else if (line.toLowerCase().startsWith("origin:")) {
+			} else if (line.toLowerCase(Locale.ENGLISH).startsWith("origin:")) {
 				request.origin = line.substring("origin:".length()).trim();
 			}
 		}

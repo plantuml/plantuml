@@ -40,6 +40,7 @@ import java.net.Proxy;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -209,7 +210,7 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 			JsonObject proxyObject = proxyValue.asObject();
 			JsonValue proxyType = proxyObject.get("type");
 			if (proxyType != null && !proxyType.isNull()) {
-				type = Proxy.Type.valueOf(proxyType.asString().toUpperCase());
+				type = Proxy.Type.valueOf(proxyType.asString().toUpperCase(Locale.ENGLISH));
 			}
 			if (type == Proxy.Type.DIRECT) {
 				return Proxy.NO_PROXY;

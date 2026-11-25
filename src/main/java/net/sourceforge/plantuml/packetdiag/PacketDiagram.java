@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.packetdiag;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -307,7 +308,7 @@ public class PacketDiagram extends TitledDiagram {
 			return;
 		}
 		try {
-			this.scaleDirection = ScaleDirection.valueOf(dir.toUpperCase());
+			this.scaleDirection = ScaleDirection.valueOf(dir.toUpperCase(Locale.ENGLISH));
 		} catch (IllegalArgumentException e) {
 			this.scaleDirection = ScaleDirection.LTR;
 		}

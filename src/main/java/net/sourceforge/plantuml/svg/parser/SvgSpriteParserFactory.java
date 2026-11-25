@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.svg.parser;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -110,7 +111,7 @@ public final class SvgSpriteParserFactory {
 			String value = pragma.getValue(PragmaKey.SVG_PARSER);
 			if (value == null)
 				return "nano";
-			value = value.trim().toLowerCase();
+			value = value.trim().toLowerCase(Locale.ENGLISH);
 			if (value.length() == 0)
 				return "nano";
 			return value;

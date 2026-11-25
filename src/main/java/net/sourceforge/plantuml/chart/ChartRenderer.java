@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.chart;
 
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -1033,7 +1034,7 @@ public class ChartRenderer {
 				try {
 					final String styleMarkerShape = scatterStyle.value(PName.MarkerShape).asString();
 					if (styleMarkerShape != null && !styleMarkerShape.isEmpty()) {
-						switch (styleMarkerShape.toLowerCase()) {
+						switch (styleMarkerShape.toLowerCase(Locale.ENGLISH)) {
 							case "circle":
 								markerShape = ChartSeries.MarkerShape.CIRCLE;
 								break;

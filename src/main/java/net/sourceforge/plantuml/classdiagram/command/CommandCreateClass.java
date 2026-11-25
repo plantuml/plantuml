@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
@@ -129,7 +130,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		final StringBuilder sb = new StringBuilder();
 
 		final String typeString = StringUtils.goUpperCase(arg.get("TYPE", 0));
-		sb.append("Creating ").append(typeString.toLowerCase());
+		sb.append("Creating ").append(typeString.toLowerCase(Locale.ENGLISH));
 
 		final String idShort = arg.getLazzy("CODE", 0);
 		if (idShort != null)

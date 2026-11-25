@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.security;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -126,7 +127,7 @@ public final class UrlPolicy {
 		// Remove user information, because we don't like to store user/password or
 		// userTokens in allow-list
 		path = removeUserInfoFromUrlPath(path);
-		path = path.trim().toLowerCase();
+		path = path.trim().toLowerCase(Locale.ENGLISH);
 		// We simplify/normalize the url, removing default ports
 		path = path.replace(":80/", "");
 		path = path.replace(":443/", "");

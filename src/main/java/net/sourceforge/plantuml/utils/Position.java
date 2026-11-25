@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.utils;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
@@ -43,7 +44,7 @@ public enum Position {
 	RIGHT, LEFT, BOTTOM, TOP;
 
 	public static Position fromString(String s) {
-		return Position.valueOf(s.toUpperCase());
+		return Position.valueOf(s.toUpperCase(Locale.ENGLISH));
 	}
 
 	public Position withRankdir(Rankdir rankdir) {

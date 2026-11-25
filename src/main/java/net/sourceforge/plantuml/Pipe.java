@@ -47,6 +47,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -286,7 +287,7 @@ public class Pipe {
 	}
 
 	void manageFormat(String s) {
-		s = s.toLowerCase();
+		s = s.toLowerCase(Locale.ENGLISH);
 		if (s.contains("png"))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.PNG));
 		else if (s.contains("svg"))
