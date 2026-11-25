@@ -79,11 +79,6 @@ public class ColorParser {
 		return new ColorParser("COLOR", new RegexLeaf(1, "COLOR", "(" + COLORS_REGEXP + ")"), mainType);
 	}
 
-	public static ColorParser simpleColor(String optPrefix, ColorType mainType) {
-		return new ColorParser("COLOR", new RegexLeaf(1, "COLOR", "(?:" + optPrefix + " (" + COLORS_REGEXP + "))?"),
-				mainType);
-	}
-
 	// Old Parsers
 
 	public static RegexLeaf exp1() {
