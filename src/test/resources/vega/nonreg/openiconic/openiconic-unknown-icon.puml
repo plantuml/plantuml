@@ -1,0 +1,7 @@
+---
+output: utxt
+expected-status: 400
+---
+@startuml
+openiconic no-such-icon
+@enduml

@@ -51,9 +51,8 @@ public class PSystemOpenIconic extends UgSimpleDiagram {
 
 	private final TextBlock textBlock;
 
-	public PSystemOpenIconic(UmlSource source, String iconName, double factor, PreprocessingArtifact preprocessing) {
+	public PSystemOpenIconic(UmlSource source, OpenIconic icon, double factor, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
-		final OpenIconic icon = OpenIconic.retrieve(iconName);
 		this.textBlock = icon.asTextBlock(HColors.BLACK, factor);
 	}
 

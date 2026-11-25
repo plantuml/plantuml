@@ -1,0 +1,7 @@
+---
+output: svg
+expected-description: (Open iconic)
+---
+@startuml
+openiconic  account-login
+@enduml

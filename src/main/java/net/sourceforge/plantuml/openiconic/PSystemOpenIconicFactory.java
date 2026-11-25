@@ -47,11 +47,17 @@ public class PSystemOpenIconicFactory extends PSystemSingleLineFactory {
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final String lineLower = StringUtils.goLowerCase(line);
-		if (lineLower.startsWith("openiconic ")) {
-			final int idx = line.indexOf(' ');
-			return new PSystemOpenIconic(source, lineLower.substring(idx + 1), 1.0, preprocessing);
-		}
-		return null;
+		if (lineLower.startsWith("openiconic ") == false)
+			return null;
+
+		// Everything after the keyword, blanks removed: "openiconic  home" names "home" too
+		final String iconName = StringUtils.trin(lineLower.substring("openiconic ".length()));
+		final OpenIconic icon = OpenIconic.retrieve(iconName);
+		// An unknown icon is reported on its line instead of crashing on a null icon
+		if (icon == null)
+			return null;
+
+		return new PSystemOpenIconic(source, icon, 1.0, preprocessing);
 	}
 
 }
