@@ -1,0 +1,4 @@
+@startuml
+Alice -> Bob
+Alice -> Carol
+@enduml

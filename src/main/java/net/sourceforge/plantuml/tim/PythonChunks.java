@@ -169,10 +169,15 @@ public final class PythonChunks {
 		return result;
 	}
 
-	/** Removes up to <code>indent</code> leading spaces: the indentation of the "!python" line. */
+	/**
+	 * Removes up to <code>indent</code> leading spaces or tabs: the indentation of the
+	 * "!python" line, counted by {@link #leadingSpaces(String)} with its tabs too. Only
+	 * that PlantUML-side indentation goes: a tab left in the Python code itself is still
+	 * reported by the Python lexer.
+	 */
 	private static String removeIndent(String line, int indent) {
 		int n = 0;
-		while (n < indent && n < line.length() && line.charAt(n) == ' ')
+		while (n < indent && n < line.length() && (line.charAt(n) == ' ' || line.charAt(n) == '\t'))
 			n++;
 		return line.substring(n);
 	}
