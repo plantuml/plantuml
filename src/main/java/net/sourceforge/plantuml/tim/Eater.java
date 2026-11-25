@@ -224,7 +224,10 @@ public abstract class Eater {
 	}
 
 	final public void skipSpaces() {
-		while (i < stringLocated.length() && Character.isWhitespace(stringLocated.charAt(i)))
+		// The non-breaking space too, as %s accepts it in the commands and EvalBoolean between
+		// the words of an expression: "!unquoted<NBSP>procedure" was a syntax error
+		while (i < stringLocated.length()
+				&& (Character.isWhitespace(stringLocated.charAt(i)) || stringLocated.charAt(i) == '\u00A0'))
 			i++;
 
 	}

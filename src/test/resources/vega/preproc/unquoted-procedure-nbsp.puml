@@ -1,0 +1,9 @@
+---
+output: preproc
+---
+@startuml
+!unquoted procedure $p($x)
+Alice -> Bob : $x
+!endprocedure
+$p(hi)
+@enduml
