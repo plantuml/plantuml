@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+start
+floating	note left: after a tab
+:step;
+floating note right
+after a non-breaking space
+end note
+stop
+@enduml

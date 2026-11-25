@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chart.command;
 import java.util.Arrays;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.chart.ChartSeries;
@@ -84,7 +85,7 @@ public class CommandChartPie extends SingleLineCommand2<ChartDiagram> {
 				new RegexOptional(ChartSeriesName.regex("labels", "percent", "donut")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED)), //
-				new RegexLeaf(1, "OPTIONS", "((?:\\s+(?:labels|percent|donut(?:\\s+[0-9.]+%)?))*)"), //
+				new RegexLeaf(1, "OPTIONS", "((?:[%s]+(?:labels|percent|donut(?:[%s]+[0-9.]+%)?))*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
@@ -113,7 +114,7 @@ public class CommandChartPie extends SingleLineCommand2<ChartDiagram> {
 
 		final String options = arg.get("OPTIONS", 0);
 		if (options != null) {
-			final String[] words = options.trim().split("\\s+");
+			final String[] words = StringUtils.trin(options).split("[\\s\u00A0]+");
 			for (int i = 0; i < words.length; i++) {
 				if (words[i].equals("labels")) {
 					series.setShowLabels(true);

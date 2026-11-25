@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="147px" preserveAspectRatio="none" style="width:267px;height:147px;background:#FFFFFF;" version="1.1" viewBox="0 0 267 147" width="267px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="35" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="236.188" x="13" y="13"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="173.375" x="20" y="22">Missing '{': write 'group g {' and close it with '}'</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="226.188" x="20" y="42">'end	group' is deprecated: close the group with '}' instead</text>
+    <rect fill="none" height="71" style="stroke:#000;stroke-width:1.5;" width="46.675" x="16" y="56"/>
+    <path d="M33.788,56 L33.788,63 L23.788,73 L16,73" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" x="19" y="67.889">g</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="26.675" x="26" y="83"/>
+    <text fill="#000" font-size="12" x="36" y="102.333">a</text>
+  </g>
+</svg>

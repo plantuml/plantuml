@@ -61,7 +61,7 @@ public class CommandCloseGroupLegacy3 extends SingleLineCommand2<ActivityDiagram
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCloseGroupLegacy3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "CMD", "(end ?group|group ?end)"), //
+				new RegexLeaf(1, "CMD", "(end[%s]?group|group[%s]?end)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

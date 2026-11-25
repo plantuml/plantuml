@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [a, b, c]
+v-axis 0 --> 10
+bar "s" [1, 5, 8]
+@endchart

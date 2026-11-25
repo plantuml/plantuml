@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="152px" preserveAspectRatio="none" style="width:334px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 334 152" width="334px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M15,15 L15,38 L87.188,38 L87.188,25 L77.188,15 L15,15" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M77.188,15 L77.188,25 L87.188,25 L77.188,15" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="51.188" x="21" y="30.111">after a tab</text>
+    <ellipse cx="117.188" cy="26.5" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <path d="M148.513,62.5 L148.513,85.5 L313.244,85.5 L313.244,72.5 L303.244,62.5 L148.513,62.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M303.244,62.5 L303.244,72.5 L313.244,72.5 L303.244,62.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="143.731" x="154.513" y="77.611">after a non-breaking space</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="42.65" x="95.863" y="58"/>
+    <text fill="#000" font-size="12" textLength="22.65" x="105.863" y="77.333">step</text>
+    <ellipse cx="117.188" cy="121" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="117.188" cy="121" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="117.188" x2="117.188" y1="36.5" y2="58"/>
+    <polygon fill="#181818" points="113.188,48,117.188,58,121.188,48,117.188,52" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="117.188" x2="117.188" y1="90" y2="110"/>
+    <polygon fill="#181818" points="113.188,100,117.188,110,121.188,100,117.188,104" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

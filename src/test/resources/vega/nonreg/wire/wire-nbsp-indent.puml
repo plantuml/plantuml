@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: Wire Diagram
+---
+@startwire
+* A [200x100]
+ * B [50x30]
+@endwire

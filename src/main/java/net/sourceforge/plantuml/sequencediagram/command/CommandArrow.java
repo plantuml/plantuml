@@ -131,7 +131,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 						new RegexLeaf(1, "PART2LONG", "[%g]([^%g]+)[%g]"), //
 						new RegexLeaf(2, "PART2LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)"), //
 						new RegexLeaf(2, "PART2CODELONG", "([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
-				new RegexLeaf(1, "MULTICAST", "((?:\\s&\\s[%pLN_.@]+)*)"), //
+				new RegexLeaf(1, "MULTICAST", "((?:[%s]&[%s][%pLN_.@]+)*)"), //
 				new RegexLeaf(2, "PART2ANCHOR", ANCHOR), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "ACTIVATION", "(?:(\\+\\+|\\*\\*|!!|--|--\\+\\+|\\+\\+--)?)"), //
@@ -149,7 +149,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (multicast != null) {
 			final List<Participant> result = new ArrayList<>();
 			for (String s : AMPERSAND.split(multicast)) {
-				s = s.trim();
+				s = StringUtils.trin(s);
 				if (s.length() == 0)
 					continue;
 

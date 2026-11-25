@@ -450,7 +450,7 @@ public class Display implements Iterable<CharSequence>, AsciiBlock {
 		return this;
 	}
 
-	public final static Pattern2 patternStereotype = Pattern2.cmpile("^(.*?)(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+	public final static Pattern2 patternStereotype = Pattern2.cmpile("^(.*?)(\\<\\<[%s]*(.*)[%s]*\\>\\>)[%s]*$");
 
 	public Stereotype getEndingStereotype() {
 		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1), 0);

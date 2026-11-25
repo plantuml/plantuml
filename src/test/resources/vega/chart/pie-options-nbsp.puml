@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+pie labels percent
+"a": 1
+"b": 3
+@endchart

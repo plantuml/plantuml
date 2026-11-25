@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startgantt
+Project starts 2024-01-01
+printscale weekly with week	numbering from 3
+[Task] lasts 20 days
+@endgantt

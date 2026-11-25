@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+time	axis unit "ms"
+robust "Web" as W
+@0
+W is Idle
+@100
+W is Busy
+@enduml

@@ -62,7 +62,7 @@ public class CommandComponent extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandComponent.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf(1, "INDENT", "([%s]*)"), //
 				new RegexLeaf("\\*"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "NAME", "([\\w]+)"), //

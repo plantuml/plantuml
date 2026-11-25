@@ -44,7 +44,8 @@ public enum NoteType {
 		if (s == null) {
 			return NoteType.NOTE;
 		}
-		return NoteType.valueOf(StringUtils.goUpperCase(s).replace(' ', '_'));
+		// The words may be separated by any blank %s accepts, as in "floating<TAB>note"
+		return NoteType.valueOf(StringUtils.goUpperCase(s).replaceAll("[\\s\u00A0]+", "_"));
 	}
 
 }

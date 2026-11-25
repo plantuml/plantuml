@@ -139,7 +139,7 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 		return new Fork(getSkinParam(), root);
 	}
 
-	public final static Pattern2 patternStereotype = Pattern2.cmpile("^\\s*(.*?)\\s*(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+	public final static Pattern2 patternStereotype = Pattern2.cmpile("^[%s]*(.*?)[%s]*(\\<\\<[%s]*(.*)[%s]*\\>\\>)[%s]*$");
 
 	public CommandExecutionResult addIdea(String code, HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {

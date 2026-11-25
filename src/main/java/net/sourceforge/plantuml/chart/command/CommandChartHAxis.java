@@ -67,7 +67,7 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(2, "RANGE", "(-?[0-9.]+)\\s*-?->\\s*(-?[0-9.]+)")), //
+				new RegexOptional(new RegexLeaf(2, "RANGE", "(-?[0-9.]+)[%s]*-?->[%s]*(-?[0-9.]+)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "DATA", "\\[(.*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //

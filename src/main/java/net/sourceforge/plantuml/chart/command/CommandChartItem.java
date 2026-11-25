@@ -82,7 +82,7 @@ public class CommandChartItem extends SingleLineCommand2<ChartDiagram> {
 								new RegexLeaf("[*-]"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf(1, "BULLETED", "(.*?)")), //
-						new RegexLeaf(1, "KEYED", "([^*\\-\\s].*:.*?)")), //
+						new RegexLeaf(1, "KEYED", "([^*\\-%s].*:.*?)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}

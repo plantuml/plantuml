@@ -1,0 +1,9 @@
+---
+output: utxt
+---
+@startuml
+participant A
+participant B
+participant C
+A -> B & C : multicast
+@enduml

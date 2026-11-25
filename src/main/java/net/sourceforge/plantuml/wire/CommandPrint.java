@@ -58,7 +58,7 @@ public class CommandPrint extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPrint.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf(1, "INDENT", "([%s]*)"), //
 				new RegexLeaf("print"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //

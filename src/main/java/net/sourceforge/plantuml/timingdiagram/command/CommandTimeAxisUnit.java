@@ -60,7 +60,7 @@ public class CommandTimeAxisUnit extends SingleLineCommand2<TimingDiagram> {
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandTimeAxisUnit.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("time"), //
-				new RegexLeaf("[-_ ]?"), //
+				new RegexLeaf("[-_%s]?"), //
 				new RegexLeaf("axis"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("unit"), //

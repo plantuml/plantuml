@@ -60,7 +60,7 @@ public class SvgAttributes {
 		return new SvgAttributes();
 	}
 
-	static private final Pattern2 p = Pattern2.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
+	static private final Pattern2 p = Pattern2.cmpile("(\\w+)[%s]*=[%s]*([%g][^%g]*[%g]|(?:\\w+))");
 
 	public static SvgAttributes build(String args) {
 		final SvgAttributes result = new SvgAttributes();

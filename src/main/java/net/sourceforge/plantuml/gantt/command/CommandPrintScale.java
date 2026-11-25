@@ -76,8 +76,8 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexOr("OPTION", //
-								new RegexLeaf(1, "(with\\s+calendar\\s+date)"),
-								new RegexLeaf(1, "NUMBER", "(?:with\\s+week\\s+numbering\\s+from\\s+(-?\\d+))")))), //
+								new RegexLeaf(1, "(with[%s]+calendar[%s]+date)"),
+								new RegexLeaf(1, "NUMBER", "(?:with[%s]+week[%s]+numbering[%s]+from[%s]+(-?\\d+))")))), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("zoom"), //

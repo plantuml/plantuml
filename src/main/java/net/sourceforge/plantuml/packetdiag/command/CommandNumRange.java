@@ -87,8 +87,8 @@ public class CommandNumRange extends SingleLineCommand2<PacketDiagram> {
 										new RegexLeaf(2, "RANGE", "(\\d{1,7})(?:-(\\d{1,7}))(?::)?"), //
 										new RegexLeaf("\\*") //
 						), //
-						new RegexLeaf(1, "DESC", "\\s+(.*?)"), //
-						new RegexLeaf(1, "ATTRIBUTE", "(?:\\s*\\[(.*?)\\])?"), //
+						new RegexLeaf(1, "DESC", "[%s]+(.*?)"), //
+						new RegexLeaf(1, "ATTRIBUTE", "(?:[%s]*\\[(.*?)\\])?"), //
 						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 

@@ -71,7 +71,7 @@ public class CommandChartRAxis extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("r-axis"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(2, "RANGE", "(-?[0-9.]+)\\s*-?->\\s*(-?[0-9.]+)")), //
+				new RegexOptional(new RegexLeaf(2, "RANGE", "(-?[0-9.]+)[%s]*-?->[%s]*(-?[0-9.]+)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf("ticks"), //
