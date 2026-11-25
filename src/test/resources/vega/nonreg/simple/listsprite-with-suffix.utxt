@@ -1,0 +1,6 @@
+[From string (line 2) ]
+
+@startuml
+listspritefoo
+^^^^^^^^^^^^^
+ Syntax Error? (Assumed diagram type: sequence)

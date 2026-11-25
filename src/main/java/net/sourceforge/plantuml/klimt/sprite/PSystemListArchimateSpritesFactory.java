@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -46,10 +45,11 @@ public class PSystemListArchimateSpritesFactory extends PSystemSingleLineFactory
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-		final String lineLower = StringUtils.goLowerCase(line);
-		if (lineLower.startsWith("listsprite")) 
+		// The keyword alone, as CommandListSprite reads it ("listsprites?"): a prefix test
+		// also took "listspritefoo" or "listsprite something"
+		if (line.equalsIgnoreCase("listsprite") || line.equalsIgnoreCase("listsprites"))
 			return new PSystemListArchimateSprites(source, preprocessing);
-		
+
 		return null;
 	}
 

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -46,8 +45,8 @@ public class PSystemListOpenIconicFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-		final String lineLower = StringUtils.goLowerCase(line);
-		if (lineLower.startsWith("listopeniconic"))
+		// The keyword alone: a prefix test also took "listopeniconicfoo"
+		if (line.equalsIgnoreCase("listopeniconic"))
 			return new PSystemListOpenIconic(source, preprocessing);
 
 		return null;
