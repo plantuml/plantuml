@@ -1,0 +1,8 @@
+---
+output: utxt
+expected-status: 400
+---
+@startwire
+* A [200x100]
+  * B [50x30]
+@endwire

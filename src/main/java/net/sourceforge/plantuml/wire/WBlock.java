@@ -162,7 +162,11 @@ public class WBlock {
 			this.addedToCursor = null;
 			return CommandExecutionResult.ok();
 		}
-		return getLastChild().newColumn(level - 1);
+		final WBlock last = getLastChild();
+		if (last == null)
+			return tooDeep();
+
+		return last.newColumn(level - 1);
 	}
 
 	public CommandExecutionResult wgoto(int level, double x, double y) {
@@ -171,7 +175,11 @@ public class WBlock {
 			this.addedToCursor = null;
 			return CommandExecutionResult.ok();
 		}
-		return getLastChild().wgoto(level - 1, x, y);
+		final WBlock last = getLastChild();
+		if (last == null)
+			return tooDeep();
+
+		return last.wgoto(level - 1, x, y);
 	}
 
 	public CommandExecutionResult wmove(int level, double x, double y) {
@@ -179,7 +187,11 @@ public class WBlock {
 			this.cursor = this.cursor.compose(new UTranslate(x, y));
 			return CommandExecutionResult.ok();
 		}
-		return getLastChild().wmove(level - 1, x, y);
+		final WBlock last = getLastChild();
+		if (last == null)
+			return tooDeep();
+
+		return last.wmove(level - 1, x, y);
 	}
 
 	public CommandExecutionResult print(StringBounder stringBounder, ISkinParam skinParam, int level, String text) {
@@ -190,7 +202,11 @@ public class WBlock {
 
 			return CommandExecutionResult.ok();
 		}
-		return getLastChild().print(stringBounder, skinParam, level - 1, text);
+		final WBlock last = getLastChild();
+		if (last == null)
+			return tooDeep();
+
+		return last.print(stringBounder, skinParam, level - 1, text);
 	}
 
 	public CommandExecutionResult addBlock(int level, String name, double width, double height, HColor color) {
@@ -212,7 +228,16 @@ public class WBlock {
 		}
 
 		final WBlock last = getLastChild();
+		if (last == null)
+			return tooDeep();
+
 		return last.addBlock(level - 1, name, width, height, color);
+	}
+
+	// Each leading blank, or each run of four spaces, is one level: a line indented
+	// deeper than the components declared so far has no component to go into
+	private static CommandExecutionResult tooDeep() {
+		return CommandExecutionResult.error("Indentation too deep: no enclosing component at this level");
 	}
 
 	private UTranslate getNextPosition() {

@@ -1,0 +1,7 @@
+[From string (line 3) ]
+
+@startwire
+* A [200x100]
+  * B [50x30]
+  ^^^^^^^^^^^
+ Indentation too deep: no enclosing component at this level (Assumed diagram type: wire)
