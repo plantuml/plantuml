@@ -1,0 +1,6 @@
+[From string (line 2) ]
+
+@startsalt
+foo bar
+^^^^^^^
+ Cannot read this salt diagram: check the lines before its first bracket and that its brackets are balanced (Assumed diagram type: salt)

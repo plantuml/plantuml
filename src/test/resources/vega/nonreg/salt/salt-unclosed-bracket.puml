@@ -1,0 +1,8 @@
+---
+output: utxt
+expected-status: 400
+---
+@startsalt
+{
+[OK] | [Cancel]
+@endsalt

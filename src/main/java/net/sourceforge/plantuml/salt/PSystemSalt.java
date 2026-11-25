@@ -112,6 +112,21 @@ public class PSystemSalt extends TitledDiagram {
 		return data.size();
 	}
 
+	// A line the salt parser cannot read (a stray word before "{", an unclosed bracket)
+	// was only found when drawing, as an exception that crashed PlantUML:
+	// the elements are now built once at the end of the parsing too, to report it as an
+	// error of the diagram. They are built again for the drawing, as before
+	@Override
+	public String checkFinalError() {
+		try {
+			createElement(manageSprite());
+		} catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+			// IndexOutOfBoundsException: an unclosed bracket makes the parser read past the last line
+			return "Cannot read this salt diagram: check the lines before its first bracket and that its brackets are balanced";
+		}
+		return super.checkFinalError();
+	}
+
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		final Element salt = createElement(manageSprite());
