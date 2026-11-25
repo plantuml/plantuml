@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startgit
+*	abc1234	(HEAD) first
+| * def5678 second
+|/
+* 0123456	base
+@endgit

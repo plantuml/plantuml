@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GIT" height="115px" preserveAspectRatio="none" style="width:167px;height:115px;background:#FFFFFF;" version="1.1" viewBox="0 0 167 115" width="167px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="17" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;" width="66" x="10" y="38"/>
+    <text fill="#000" font-size="13" textLength="36.238" x="10" y="35.111">HEAD</text>
+    <text fill="#000" font-family="monospace" font-size="15" font-weight="700" textLength="57.563" x="14.219" y="50.667">abc1234</text>
+    <rect fill="none" height="24" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;" width="62" x="94" y="28"/>
+    <text fill="#000" font-family="monospace" font-size="15" font-weight="700" textLength="54.188" x="97.906" y="44.167">def5678</text>
+    <rect fill="none" height="24" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;" width="66" x="51" y="80"/>
+    <text fill="#000" font-family="monospace" font-size="15" font-weight="700" textLength="58.406" x="54.797" y="96.167">0123456</text>
+    <path d="M54.639,55.194 C59.57,61.207 65.346,68.252 70.466,74.495" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;"/>
+    <path d="M68.284,76.284 L71.808,76.131 L72.648,72.705 L74.939,79.95 L68.284,76.284" fill="#181818"/>
+    <path d="M115.901,52.097 C110.593,58.57 103.789,66.867 97.83,74.134" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;"/>
+    <path d="M95.51,72.232 L96.403,75.874 L100.15,76.037 L93.074,79.934 L95.51,72.232" fill="#181818"/>
+  </g>
+</svg>

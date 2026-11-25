@@ -47,7 +47,31 @@ public class GitTextArea {
 	private final List<Commit> commits = new ArrayList<>();
 
 	public void add(String s) {
-		lines.add(s);
+		lines.add(normalize(s));
+	}
+
+	private static final int TAB_SIZE = 4;
+
+	// The graph is read column by column, and the commit name ends at the first space:
+	// a tab ("*<TAB>abc1234", "abc1234<TAB>message") is expanded and a non-breaking space
+	// becomes a plain one, as the files diagram does with the output of "tree"
+	static String normalize(String line) {
+		if (line.indexOf('\t') == -1 && line.indexOf('\u00A0') == -1)
+			return line;
+
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < line.length(); i++) {
+			final char c = line.charAt(i);
+			if (c == '\t')
+				do {
+					sb.append(' ');
+				} while (sb.length() % TAB_SIZE != 0);
+			else if (c == '\u00A0')
+				sb.append(' ');
+			else
+				sb.append(c);
+		}
+		return sb.toString();
 	}
 
 	public List<Commit> getAllCommits() {
