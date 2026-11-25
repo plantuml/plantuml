@@ -60,7 +60,9 @@ public class SvgAttributes {
 		return new SvgAttributes();
 	}
 
-	static private final Pattern2 p = Pattern2.cmpile("(\\w+)[%s]*=[%s]*([%g][^%g]*[%g]|(?:\\w+))");
+	// An attribute name may hold hyphens ("font-weight", "text-decoration"): with \w+ alone
+	// only the part after the last hyphen was kept, "font-weight" giving "weight"
+	static private final Pattern2 p = Pattern2.cmpile("(\\w[-\\w]*)[%s]*=[%s]*([%g][^%g]*[%g]|(?:\\w+))");
 
 	public static SvgAttributes build(String args) {
 		final SvgAttributes result = new SvgAttributes();

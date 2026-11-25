@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : <text font-weight="bold" text-decoration="underline">hyphenated attributes</text>
+@enduml
