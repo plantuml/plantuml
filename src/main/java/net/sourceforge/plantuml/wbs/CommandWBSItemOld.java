@@ -70,7 +70,7 @@ public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 	static IRegex getRegexConcat(int mode) {
 		if (mode == 0)
 			return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //
-					new RegexLeaf(1, Constant.WBS_TYPE, "([ \t]*[*+-]+)"), //
+					new RegexLeaf(1, Constant.WBS_TYPE, "([%s]*[*+-]+)"), //
 					new RegexOr( //
 						new RegexConcat( //
 							new RegexOptional(new RegexLeaf(1, "BACKCOLOR_1", "\\[(#\\w+)\\]")), //
@@ -91,7 +91,7 @@ public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 					RegexLeaf.end());
 
 		return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //
-				new RegexLeaf(1, Constant.WBS_TYPE, "([ \t]*[*+-]+)"), //
+				new RegexLeaf(1, Constant.WBS_TYPE, "([%s]*[*+-]+)"), //
 				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexOr( //
 					new RegexConcat( //

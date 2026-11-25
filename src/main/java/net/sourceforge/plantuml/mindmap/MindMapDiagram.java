@@ -134,9 +134,10 @@ public class MindMapDiagram extends TitledDiagram {
 	private String first;
 
 	public int getSmartLevel(String type) {
-		// Replace tabs before keeping the first marker too, or a tab indented first
-		// item never matches the markers compared with it below
-		type = type.replace('\t', ' ');
+		// Replace tabs (and non-breaking spaces, accepted by %s in the commands) before
+		// keeping the first marker too, or an indented first item never matches the
+		// markers compared with it below
+		type = type.replace('\t', ' ').replace('\u00A0', ' ');
 		if (first == null)
 			first = type;
 
@@ -155,7 +156,9 @@ public class MindMapDiagram extends TitledDiagram {
 		if (type.startsWith(first))
 			return type.length() - first.length();
 
-		throw new UnsupportedOperationException("type=<" + type + ">[" + first + "]");
+		// Indented otherwise than the first item ("  *" then " **"): the markers alone
+		// give the level, as for an item that is not indented
+		return type.trim().length() - 1;
 	}
 
 }

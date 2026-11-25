@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startwbs
+  * root
+ ** a
+ *** b
+ ** c
+@endwbs

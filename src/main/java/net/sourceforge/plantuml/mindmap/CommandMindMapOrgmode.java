@@ -62,7 +62,7 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandMindMapOrgmode.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "TYPE", "([ \t]*[*#]+)"), //
+				new RegexLeaf(1, "TYPE", "([%s]*[*#]+)"), //
 				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf(1, "SHAPE", "(_)?"), //
 				RegexLeaf.spaceZeroOrMore(), //

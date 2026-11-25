@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="192px" preserveAspectRatio="none" style="width:137px;height:192px;background:#FFFFFF;" version="1.1" viewBox="0 0 137 192" width="137px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="33.338" x2="33.338" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="26.675" x="20" y="92"/>
+    <text fill="#000" font-size="12" x="30" y="111.333">a</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="33.338" x2="43.338" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="26.675" x="43.338" y="139"/>
+    <text fill="#000" font-size="12" x="53.338" y="158.333">b</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="33.338" x2="33.338" y1="124" y2="155"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="103.012" x2="103.012" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="26" x="90.012" y="92"/>
+    <text fill="#000" font-size="12" x="100.012" y="111.333">c</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="33.338" x2="103.012" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="40.625" x="47.862" y="20"/>
+    <text fill="#000" font-size="12" textLength="20.625" x="57.862" y="39.333">root</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="68.175" x2="68.175" y1="52" y2="72"/>
+  </g>
+</svg>

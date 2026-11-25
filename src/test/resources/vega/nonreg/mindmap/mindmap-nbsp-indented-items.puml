@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startmindmap
+ * root
+ ** a
+ ** b
+@endmindmap
