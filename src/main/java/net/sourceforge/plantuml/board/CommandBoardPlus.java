@@ -61,6 +61,8 @@ public class CommandBoardPlus extends SingleLineCommand2<BoardDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandBoardPlus.class.getName(), RegexLeaf.start(), //
+				// An indented line keeps its "+": the blanks in front are not part of the label
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "PLUS", "([+]*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "LABEL", "([^%s].*)"), RegexLeaf.end());
