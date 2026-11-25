@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: (Open iconic)
+---
+@startuml
+skinparam	handwritten true
+  openiconic	account-login
+@enduml

@@ -91,17 +91,16 @@ final public class UmlSource {
 		return new UmlSource(trimmed, rawSource);
 	}
 
+	// The keyword may be indented and followed by a tab or a non-breaking space, as the
+	// skinparam and !pragma commands accept it: anything else is not taken for noise and
+	// makes a single line diagram ("emoji", "openiconic"...) look like two lines
 	private static boolean isNoise(String line) {
 		if (line.isEmpty())
 			return true;
-		switch (line.charAt(0)) {
-		case 's':
-			return line.startsWith("skinparam ") || line.startsWith("skinparamlocked ");
-		case '!':
-			return line.startsWith("!pragma ");
-		default:
-			return false;
-		}
+
+		return StringUtils.getKeywordArgument(line, "skinparam") != null
+				|| StringUtils.getKeywordArgument(line, "skinparamlocked") != null
+				|| StringUtils.getKeywordArgument(line, "!pragma") != null;
 	}
 
 	public boolean containsIgnoreCase(String searched) {
