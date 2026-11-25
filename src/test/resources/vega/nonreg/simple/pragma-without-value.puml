@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (1 entities)
+---
+@startuml
+!pragma layout
+!pragma svgsize
+class A
+@enduml

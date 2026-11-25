@@ -113,20 +113,21 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 			ParserPass currentPass) {
 		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));
 		final String value = arg.get("VALUE", 0);
+		// The value is optional ("!pragma layout" alone): it may be null below
 		if (name.equalsIgnoreCase("svgsize")) {
-			final StringTokenizer st = svgSizeWords(value);
-			if (st.countTokens() >= 2)
+			final StringTokenizer st = value == null ? null : svgSizeWords(value);
+			if (st != null && st.countTokens() >= 2)
 				system.getSkinParam().setSvgSize(st.nextToken(), st.nextToken());
 		} else {
 			system.getPragma().define(name, value);
 
 			// Honored in every build: the browser (TeaVM) build uses it to lay out
 			// class/component/deployment/state/usecase diagrams without viz-global.js.
-			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("smetana"))
+			if (name.equalsIgnoreCase("layout") && "smetana".equalsIgnoreCase(value))
 				system.setUseSmetana(true);
 
 			if (!TeaVM.isTeaVM()) {
-				if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot"))
+				if (name.equalsIgnoreCase("graphviz_dot") && "jdot".equalsIgnoreCase(value))
 					return CommandExecutionResult.error(
 							"This directive has been renamed to '!pragma layout smetana'. Please update your diagram.");
 
@@ -134,10 +135,10 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 					return CommandExecutionResult.error("This directive has been renamed to '!pragma layout " + value
 							+ "'. Please update your diagram.");
 
-				if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("elk"))
+				if (name.equalsIgnoreCase("layout") && "elk".equalsIgnoreCase(value))
 					system.setUseElk(true);
 
-				if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))
+				if (name.equalsIgnoreCase("layout") && GraphvizRuntimeEnvironment.VIZJS.equalsIgnoreCase(value))
 					system.getSkinParam().setUseVizJs(true);
 			}
 
