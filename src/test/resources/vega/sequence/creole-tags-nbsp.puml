@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : <color red>color</color> <size 20>size</size>
+Alice -> Bob : <text fill = "blue">svg attribute</text>
+@enduml

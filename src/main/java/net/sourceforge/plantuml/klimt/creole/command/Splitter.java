@@ -48,16 +48,16 @@ public class Splitter {
 
 	static final String endFontPattern = "\\</font\\>|\\</color\\>|\\</size\\>|\\</text\\>";
 	static final String endSupSub = "\\</sup\\>|\\</sub\\>";
-	public static final String fontPattern = "\\<font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{1,6}|\\w+)[%g]?)+[%s]*\\>";
-	public static final String fontColorPattern = "\\<color[\\s:]+(#[0-9a-fA-F]{1,6}|#?\\w+)[%s]*\\>";
-	public static final String fontSizePattern = "\\<size[\\s:]+(\\d+)[%s]*\\>";
+	public static final String fontPattern = "\\<font([%s]+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=[%s]*[%g]?(#[0-9a-fA-F]{1,6}|\\w+)[%g]?)+[%s]*\\>";
+	public static final String fontColorPattern = "\\<color[%s:]+(#[0-9a-fA-F]{1,6}|#?\\w+)[%s]*\\>";
+	public static final String fontSizePattern = "\\<size[%s:]+(\\d+)[%s]*\\>";
 	static final String fontSup = "\\<sup\\>";
 	static final String fontSub = "\\<sub\\>";
-	public static final String qrcodePattern = "\\<qrcode[\\s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
-	static final String imgPattern = "\\<img\\s+(src[%s]*=[%s]*[%q%g]?[^\\s%g>]+[%q%g]?[%s]*|vspace\\s*=\\s*[%q%g]?\\d+[%q%g]?\\s*|valign[%s]*=[%s]*[%q%g]?(top|middle|bottom)[%q%g]?[%s]*)+\\>";
-	public static final String imgPatternNoSrcColon = "\\<img[\\s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
-	public static final String fontFamilyPattern = "\\<font[\\s:]+([^>]+)/?\\>";
-	public static final String svgAttributePattern = "\\<text[\\s:]+([^>]+)/?\\>";
+	public static final String qrcodePattern = "\\<qrcode[%s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
+	static final String imgPattern = "\\<img[%s]+(src[%s]*=[%s]*[%q%g]?[^%s%g>]+[%q%g]?[%s]*|vspace[%s]*=[%s]*[%q%g]?\\d+[%q%g]?[%s]*|valign[%s]*=[%s]*[%q%g]?(top|middle|bottom)[%q%g]?[%s]*)+\\>";
+	public static final String imgPatternNoSrcColon = "\\<img[%s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
+	public static final String fontFamilyPattern = "\\<font[%s:]+([^>]+)/?\\>";
+	public static final String svgAttributePattern = "\\<text[%s:]+([^>]+)/?\\>";
 
 	private static final String scaleOrColor = "(" + //
 			"[\\{,]?" + //

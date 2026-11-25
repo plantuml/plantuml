@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.openiconic.OpenIconic;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.url.Url;
 
@@ -90,8 +91,9 @@ public class AtomTextUtils {
 		return createAtomTextForUrl(url.getLabel(), url, fontConfiguration, skinSimple);
 	}
 
-	private static final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern + "|"
-			+ Splitter.imgPatternNoSrcColon + "|" + Splitter.emojiPattern);
+	// Pattern2.transform: the Splitter patterns write the blanks as %s, which only Pattern2 expands
+	private static final Pattern p = Pattern.compile(Pattern2.transform(Splitter.openiconPattern + "|"
+			+ Splitter.spritePattern + "|" + Splitter.imgPatternNoSrcColon + "|" + Splitter.emojiPattern));
 
 	private static Atom createAtomTextForUrl(final String text, Url url, FontConfiguration fontConfiguration,
 			ISkinSimple skinSimple) {
