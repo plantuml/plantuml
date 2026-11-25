@@ -58,7 +58,8 @@ public class EvalBoolean {
 	}
 
 	private boolean eat(char charToEat) {
-		while (ch == ' ') {
+		// Tabs and non-breaking spaces separate words too, as %s does in the commands
+		while (Character.isWhitespace(ch) || ch == '\u00A0') {
 			nextChar();
 		}
 		if (ch == charToEat) {
