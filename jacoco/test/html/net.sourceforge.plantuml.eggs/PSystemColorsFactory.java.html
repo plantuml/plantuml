@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L52">		final Matcher matcher = pattern.matcher(line);</span>
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (matcher.matches()) </span>
-<span class="nc" id="L54">			return new PSystemColors(source, matcher.group(1), preprocessing);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (matcher.matches()) </span>
+<span class="fc" id="L54">			return new PSystemColors(source, matcher.group(1), preprocessing);</span>
 		
 <span class="fc" id="L56">		return null;</span>
 	}

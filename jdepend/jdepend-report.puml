@@ -1361,7 +1361,7 @@ Total Classes: 26
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.style.value"
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.eggs" %lighten("red", 95) {
+class "net.sourceforge.plantuml.eggs" %lighten("red", 91) {
 Total Classes: 8
 }
 "net.sourceforge.plantuml.eggs" --> "java.awt"
@@ -3318,6 +3318,7 @@ Total Classes: 13
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.descdiagram"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.ebnf"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.eggs"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.error"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.explain"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.gantt"

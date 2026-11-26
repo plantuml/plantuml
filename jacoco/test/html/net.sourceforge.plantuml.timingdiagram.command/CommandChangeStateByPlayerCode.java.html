@@ -106,8 +106,8 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 			ParserPass currentPass) throws NoSuchColorException {
 <span class="fc" id="L107">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
 <span class="fc" id="L108">		final Player player = diagram.getPlayer(code);</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (player == null)</span>
-<span class="nc" id="L110">			return CommandExecutionResult.error(&quot;Unknown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (player == null)</span>
+<span class="fc" id="L110">			return CommandExecutionResult.error(&quot;Unknown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
 
 <span class="fc" id="L112">		final TimeTick now = diagram.getNow();</span>
 <span class="fc" id="L113">		return addState(diagram, arg, player, now);</span>

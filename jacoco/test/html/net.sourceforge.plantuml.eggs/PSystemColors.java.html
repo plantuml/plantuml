@@ -74,23 +74,23 @@ import net.sourceforge.plantuml.text.BackSlash;
 // http://www.redblobgames.com/grids/hexagons/
 public class PSystemColors extends UgSimpleDiagram {
 
-<span class="nc" id="L77">	private final double rectangleHeight = 28;</span>
-<span class="nc" id="L78">	private final double rectangleWidth = 175;</span>
-<span class="nc" id="L79">	private final HColorSet colors = HColorSet.instance();</span>
+<span class="fc" id="L77">	private final double rectangleHeight = 28;</span>
+<span class="fc" id="L78">	private final double rectangleWidth = 175;</span>
+<span class="fc" id="L79">	private final HColorSet colors = HColorSet.instance();</span>
 	private final String paletteCentralColor;
-<span class="nc" id="L81">	private final double size = 60;</span>
+<span class="fc" id="L81">	private final double size = 60;</span>
 
 	public PSystemColors(UmlSource source, String option, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L84">		super(source, preprocessing);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (option == null)</span>
-<span class="nc" id="L86">			this.paletteCentralColor = null;</span>
+<span class="fc" id="L84">		super(source, preprocessing);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (option == null)</span>
+<span class="fc" id="L86">			this.paletteCentralColor = null;</span>
 		else
-<span class="nc" id="L88">			this.paletteCentralColor = option.replaceAll(&quot;\\#&quot;, &quot;&quot;);</span>
+<span class="fc" id="L88">			this.paletteCentralColor = option.replaceAll(&quot;\\#&quot;, &quot;&quot;);</span>
 
-<span class="nc" id="L90">	}</span>
+<span class="fc" id="L90">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L93">		return new DiagramDescription(&quot;(Colors)&quot;);</span>
+<span class="fc" id="L93">		return new DiagramDescription(&quot;(Colors)&quot;);</span>
 	}
 
 	@Fast

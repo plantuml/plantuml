@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.openiconic;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -60,38 +61,48 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 public class PSystemListOpenIconic extends UgDiagram {
 
 	public PSystemListOpenIconic(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L63">		super(source, preprocessing);</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L64">		super(source, preprocessing);</span>
+<span class="fc" id="L65">	}</span>
 
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception {
-<span class="nc" id="L67">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L68">		lines.add(&quot;&lt;b&gt;List Open Iconic&quot;);</span>
-<span class="nc" id="L69">		lines.add(&quot;&lt;i&gt;Credit to&quot;);</span>
-<span class="nc" id="L70">		lines.add(&quot;https://useiconic.com/open&quot;);</span>
-<span class="nc" id="L71">		lines.add(&quot; &quot;);</span>
-<span class="nc" id="L72">		try (BufferedReader br = new BufferedReader(new InputStreamReader(getResourceAllTxt()))) {</span>
-<span class="nc" id="L73">			String s = null;</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			while ((s = br.readLine()) != null) {</span>
-				// lines.add(&quot;&lt;&amp;yen&gt; &quot; + s);
-				// System.err.println(&quot;s=&quot; + s);
-<span class="nc" id="L77">				lines.add(&quot;&lt;&amp;&quot; + s + &quot;&gt; &quot; + s);</span>
-			}
+<span class="nc" id="L68">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L69">		lines.add(&quot;&lt;b&gt;List Open Iconic&quot;);</span>
+<span class="nc" id="L70">		lines.add(&quot;&lt;i&gt;Credit to&quot;);</span>
+<span class="nc" id="L71">		lines.add(&quot;https://useiconic.com/open&quot;);</span>
+<span class="nc" id="L72">		lines.add(&quot; &quot;);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (String s : getNames())</span>
+<span class="nc" id="L74">			lines.add(&quot;&lt;&amp;&quot; + s + &quot;&gt; &quot; + s);</span>
+
+<span class="nc" id="L76">		final List&lt;TextBlock&gt; cols = PSystemDonors.getCols(lines, 7, 0);</span>
+<span class="nc" id="L77">		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);</span>
+	}
+
+	private List&lt;String&gt; getNames() throws IOException {
+		// ::comment when JAVA8
+		// The JS build has no class loader either: the names come from openiconic.js
+<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false)</span>
+<span class="nc" id="L84">			return OpenIconic.namesFromJs();</span>
+		// ::done
+<span class="nc" id="L86">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L87">		try (BufferedReader br = new BufferedReader(new InputStreamReader(getResourceAllTxt()))) {</span>
+<span class="nc" id="L88">			String s = null;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			while ((s = br.readLine()) != null)</span>
+<span class="nc" id="L90">				result.add(s);</span>
 		}
-<span class="nc" id="L80">		final List&lt;TextBlock&gt; cols = PSystemDonors.getCols(lines, 7, 0);</span>
-<span class="nc" id="L81">		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);</span>
+<span class="nc" id="L92">		return result;</span>
 	}
 
 	private InputStream getResourceAllTxt() {
 		// ::comment when JAVA8
 		// The C build embeds the list in the executable, there is no class loader
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (TeaVM.isC())</span>
-<span class="nc" id="L88">			return new ByteArrayInputStream(EmbeddedFiles.read(&quot;openiconic/all.txt&quot;));</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L99">			return new ByteArrayInputStream(EmbeddedFiles.read(&quot;openiconic/all.txt&quot;));</span>
 		// ::done
-<span class="nc" id="L90">		return getClass().getResourceAsStream(&quot;/openiconic/all.txt&quot;);</span>
+<span class="nc" id="L101">		return getClass().getResourceAsStream(&quot;/openiconic/all.txt&quot;);</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L94">		return new DiagramDescription(&quot;(Open iconic)&quot;);</span>
+<span class="fc" id="L105">		return new DiagramDescription(&quot;(Open iconic)&quot;);</span>
 	}
 
 }
