@@ -247,3 +247,140 @@ tasks.register("npmPackage") {
 		println("")
 	}
 }
+
+// ============================================
+// npm package @plantuml/core-nowasm - the same engine, with no WebAssembly at all
+// ============================================
+//
+// Produces license-variants/plantuml-mit/build/npm-plantuml-nowasm/, a package
+// independent of @plantuml/core, for hosts where WebAssembly cannot run (a
+// Content Security Policy without 'wasm-unsafe-eval', WebAssembly disabled by
+// policy, jitless engines). Compared with @plantuml/core:
+//   - the very same plantuml.js (MIT, built by this subproject), same version;
+//   - viz-global-nowasm.js instead of viz-global.js: the same Viz.js, with its
+//     Graphviz module translated from WebAssembly to JavaScript by
+//     tools/viz-nowasm (committed in src/main/teavm/nowasm/, which no other
+//     package copies);
+//   - no Wasm GC engine (plantuml-wasm.js, plantuml.wasm...);
+//   - the demo pages and GITHUB_INTEGRATION.md load viz-global-nowasm.js.
+// The task fails if the result contains a .wasm file or a WebAssembly call,
+// so that a package which does not keep that promise cannot be published.
+//
+// Usage:
+//   gradlew :plantuml-mit:npmPackageNowasm -Pci
+//   cd license-variants/plantuml-mit/build/npm-plantuml-nowasm
+//   npm publish --access public                # done manually by the maintainer
+//
+tasks.register("npmPackageNowasm") {
+	description = "Assembles @plantuml/core-nowasm: the MIT TeaVM JS engine with no WebAssembly at all."
+	group = "teavm"
+
+	dependsOn("generateJavaScript")
+
+	val outputDir = layout.buildDirectory.dir("npm-plantuml-nowasm")
+
+	doLast {
+		val pkgDir = outputDir.get().asFile
+		pkgDir.deleteRecursively()
+		pkgDir.mkdirs()
+
+		// Same version rule as npmPackage, so that both packages of one build
+		// carry the same version.
+		val gradleVersion = project.version.toString()
+		val npmVersion = (project.findProperty("npmVersion") as String?)?.trim()?.takeIf { it.isNotEmpty() }
+			?: Regex("^(\\d+\\.\\d+\\.\\d+)([A-Za-z]+)(\\d+)$")
+				.matchEntire(gradleVersion)
+				?.let { m -> "${m.groupValues[1]}-${m.groupValues[2].lowercase()}.${m.groupValues[3]}" }
+			?: gradleVersion
+		val isPrerelease = npmVersion.contains("-")
+		val npmName = (project.findProperty("npmNowasmName") as String?)?.trim()?.takeIf { it.isNotEmpty() }
+			?: "@plantuml/core-nowasm"
+
+		copy {
+			from(teavmJsOutputDir) {
+				include("plantuml-mit.js")
+				rename { "plantuml.js" }
+			}
+			into(pkgDir)
+		}
+
+		// The same companion files as npmPackage, minus viz-global.js. The pages
+		// and the integration guide are rewritten to load viz-global-nowasm.js.
+		val include = listOf(
+			"emoji.js",
+			"openiconic.js",
+			"themes.js",
+			"main.js",
+			"plantuml-codec.js",
+			"zoom.js",
+			"main.css",
+			"favicon.svg",
+			"favicon.ico",
+			"index.html",
+			"index-basic.html",
+			"index-basic-dark.html",
+			"index-collection.html",
+			"github-integration-poc.html",
+			"github-integration-web-worker-poc.html",
+			"GITHUB_INTEGRATION.md"
+		)
+		val teavmSrcDir = rootProject.layout.projectDirectory.dir("src/main/teavm")
+		copy {
+			for (sub in listOf("web", "generated")) {
+				from(teavmSrcDir.dir(sub)) {
+					include(*include.toTypedArray())
+				}
+			}
+			filesMatching(listOf("*.html", "GITHUB_INTEGRATION.md")) {
+				filter { line -> line.replace("viz-global.js", "viz-global-nowasm.js") }
+			}
+			from(teavmSrcDir.dir("vendor")) {
+				exclude("viz-global.js")
+				into("vendor")
+			}
+			from(teavmSrcDir.dir("nowasm")) {
+				include("viz-global-nowasm.js")
+			}
+			into(pkgDir)
+		}
+
+		copy {
+			from(layout.projectDirectory) {
+				include("mit-license.txt")
+				rename { "LICENSE" }
+			}
+			into(pkgDir)
+		}
+
+		val cdnInstall = if (isPrerelease) "npm install $npmName@beta" else "npm install $npmName"
+		fun render(template: String): String =
+			layout.projectDirectory.file("npm-nowasm/$template").asFile.readText(Charsets.UTF_8)
+				.replace("@npmName@", npmName)
+				.replace("@npmVersion@", npmVersion)
+				.replace("@cdnInstall@", cdnInstall)
+		file("$pkgDir/package.json").writeText(render("package.json.tmpl"))
+		file("$pkgDir/README.md").writeText(render("README.md.tmpl"))
+
+		// The promise of this package: no WebAssembly anywhere.
+		val wasmCall = Regex("WebAssembly\\s*\\.\\s*(instantiate|instantiateStreaming|compile|compileStreaming|Module|Instance)\\b")
+		pkgDir.walkTopDown().filter { it.isFile }.forEach { f ->
+			if (f.name.endsWith(".wasm"))
+				throw GradleException("npmPackageNowasm: ${f.name} is a WebAssembly file")
+			if (f.name.endsWith(".js") && wasmCall.containsMatchIn(f.readText(Charsets.UTF_8)))
+				throw GradleException("npmPackageNowasm: ${f.name} uses WebAssembly")
+		}
+
+		println("")
+		println("======================")
+		println("npm package assembled (MIT flavor, no WebAssembly):")
+		println("  dir     : ${pkgDir.absolutePath}")
+		println("  name    : $npmName")
+		println("  version : $npmVersion  (from gradle '$gradleVersion')")
+		if (isPrerelease)
+			println("  NOTE    : prerelease -> publish with:  npm publish --tag beta --access public")
+		else
+			println("  publish : npm publish --access public")
+		println("======================")
+		println("")
+	}
+}

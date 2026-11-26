@@ -55,6 +55,16 @@ into the target element later. See
 [GITHUB_INTEGRATION.md](./GITHUB_INTEGRATION.md) for details and a full
 GitHub-style integration example.
 
+## Pages where WebAssembly is not allowed
+
+`viz-global.js` runs Graphviz as WebAssembly. Under a Content Security Policy
+without `'wasm-unsafe-eval'` (or where WebAssembly is disabled), it cannot
+start, and the diagrams that need Graphviz (class, component, state, use
+case...) render as an error naming Viz. Use the package
+[`@plantuml/core-nowasm`](https://www.npmjs.com/package/@plantuml/core-nowasm)
+instead: the same engine, same version, with Graphviz translated to plain
+JavaScript and no WebAssembly at all.
+
 ## WebAssembly build (experimental)
 
 The same engine is also shipped compiled to WebAssembly (Wasm GC).

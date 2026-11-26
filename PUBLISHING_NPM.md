@@ -22,6 +22,9 @@ rendering; the only intentional difference is that the Sudoku diagram
 (the single GPL-bound component reachable from the browser entrypoint) is
 excluded from the MIT flavor.
 
+The second package, `@plantuml/core-nowasm` (see below), is assembled by the
+same subproject from the same MIT engine.
+
 > The root project still produces a GPL JS build for the project site / demo
 > (via the root `npmPackage` and `teavm` tasks). That build is **not** what gets
 > published to npm — it is independent and untouched by this procedure.
@@ -169,6 +172,32 @@ The CDNs sync from npm within a few minutes:
 
 - `https://unpkg.com/@plantuml/core/plantuml.js`
 - `https://cdn.jsdelivr.net/npm/@plantuml/core/plantuml.js`
+
+## Second package: `@plantuml/core-nowasm`
+
+`@plantuml/core-nowasm` is the same engine with **no WebAssembly at all**, for
+hosts whose Content Security Policy forbids it (no `'wasm-unsafe-eval'`). It is
+independent of `@plantuml/core`: its own name, its own `package.json` and
+README (templates in `license-variants/plantuml-mit/npm-nowasm/`), and it is
+MIT as well. Compared with `@plantuml/core` it has the very same `plantuml.js`,
+`viz-global-nowasm.js` instead of `viz-global.js` (Graphviz translated to
+JavaScript by `tools/viz-nowasm`, committed in `src/main/teavm/nowasm/`), no
+Wasm GC engine, and demo pages that load `viz-global-nowasm.js`. The task stops
+if the package would contain a `.wasm` file or a WebAssembly call.
+
+Publish it with the **same version** as `@plantuml/core`, right after it:
+
+```powershell
+.\gradlew :plantuml-mit:npmPackageNowasm -Pci "-PnpmVersion=1.2026.6"
+cd license-variants\plantuml-mit\build\npm-plantuml-nowasm
+npm pack --dry-run
+npm publish --access public          # or: --tag beta --access public
+```
+
+Before that, if `src/main/teavm/vendor/viz-global.js` was updated since the
+last release, regenerate `viz-global-nowasm.js` (`tools/viz-nowasm`, see its
+README): `tools/browser-test/check-viz-nowasm.js` fails while it is stale.
+`-PnpmNowasmName=...` changes the package name.
 
 ## Notes
 
