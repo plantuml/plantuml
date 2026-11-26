@@ -64,7 +64,8 @@ final class OrthogonalPath {
 	private static final double OUTER_SEARCH_MARGIN = 24;
 	// Counted in scanned obstacles and tracks. A second handles about 200 million.
 	private static final long EDGE_BUDGET = 2_000_000;
-	private static final long DIAGRAM_BUDGET = 100_000_000;
+	// Dense diagrams of 150 to 200 edges need up to 300 million for all their routes.
+	private static final long DIAGRAM_BUDGET = 500_000_000;
 
 	private static final SearchAttempt[] SEARCH_ATTEMPTS = {
 			new SearchAttempt(16, NODE_GAP),
