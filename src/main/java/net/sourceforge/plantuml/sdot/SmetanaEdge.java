@@ -237,6 +237,8 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final DotPath spline = getDisplayedPath(stringBounder);
 		if (spline == null)
 			return null;
+		if (budget.isSpent())
+			return spline;
 		// The edge enters the clusters around its ends. Any other cluster is as solid as a node.
 		final List<RectangleArea> obstacles = new ArrayList<>(nodes);
 		for (RectangleArea cluster : clusters)
