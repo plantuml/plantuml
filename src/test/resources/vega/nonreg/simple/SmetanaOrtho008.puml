@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (3 entities)
+---
+@startuml
+!pragma layout smetana
+!pragma smetana_ortho
+skinparam linetype ortho
+' Blank lines enlarge the title without painting anything.
+component "Composite\n\n\n\n" as Composite {
+	portin request
+	[First]
+	[Second]
+	request --> First
+	request --> Second
+}
+@enduml
