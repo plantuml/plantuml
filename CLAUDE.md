@@ -131,3 +131,92 @@ git clone --depth 1 https://github.com/plantuml/plantuml
 - `org.stathissideris` - external library (ditaa)
 - `org.scilab.forge.jlatexmath` - external library (JLaTeXMath 1.0.7, vendored; the drawing is being replaced by a canvas in phase 2 of `PLAN.md`, see its `readme.md` for what is modified)
 
+
+
+## clide (semantic navigator and test-runner bootstrap)
+
+**clide** is a semantic code navigator. It is two Python entry points around one
+Java **daemon** that does the actual work: `start_clide.py` starts it, `clide.py`
+talks to it, and neither of them is `java` itself. Read `clide/CLAUDE.md` once;
+it is kept current and what follows can drift.
+
+clide builds itself: `start_clide.py` runs `build_clide.py` (`javac` plus
+Python's `zipfile`, a few seconds, only when `clide.jar` is missing or stale), so
+no `ant` or Gradle is needed for clide. It needs a **JDK 21** and `python3` on
+`PATH`. This is a requirement of clide only: PlantUML itself must still stay
+Java 8 compatible (see Code Style Guidelines). If `java`/`javac` is missing,
+`start_clide.py` says so plainly.
+
+**Why you need it even for a five-line fix.** Beyond navigation, clide provides
+the JUnit console runner used in "Vega: the main regression harness": it unpacks
+the test jars (JUnit 5, JUnit Pioneer, XMLUnit) into the gitignored
+`.clide/tmp/jar-junit/` the first time it runs against the project. Those jars
+are not committed. Skip clide and you cannot run the Vega tests, which means no
+reference files and no proof that the fix does not move anything else. Grep is
+enough to *find* a small bug; it is not enough to *finish* the job.
+
+Clone clide next to the PlantUML checkout (shallow, like this repository), so
+that it sits in `../clide`:
+
+```bash
+git clone --depth 1 https://github.com/plantuml/clide ../clide
+```
+
+**Step 1 - start the daemon, once.** From the repository root:
+
+```bash
+python3 ../clide/start_clide.py .
+# prints the boot trace, then a line ending "... is ready to use." - proceed once you see it
+ls .clide/tmp/jar-junit/   # the JUnit jars should now be there
+```
+
+It launches the daemon detached, prints its boot trace live and waits for it to
+be ready. One daemon per project, reused for the whole session. Running the same
+command again is safe: it recognizes the running daemon and starts nothing
+further. A client that finds no daemon fails with a message naming this exact
+command - that is the fix, not a retry of the client.
+
+**Step 2 - connect a client and send commands.** `clide.py` is the *only*
+client. It is line-oriented, **one token per line**: keyword first, then one
+line per parameter, `exit` last. This wrapper pays for itself immediately (run it
+from the repository root; the paths are resolved when the script is written):
+
+```bash
+cat > /tmp/c.sh <<EOF
+#!/bin/bash
+{ cat; echo exit; } | python3 "$(cd ../clide && pwd)/clide.py" "$(pwd)" 2>/dev/null
+EOF
+chmod +x /tmp/c.sh
+printf 'help\nexit\n' | /tmp/c.sh      # once: every command with its exact arity
+printf 'find_symbol\nSomeClassName\n' | /tmp/c.sh
+```
+
+The project path may be left out of a bare `clide.py` call (it defaults to the
+last one `start_clide.py` was pointed at); the wrapper keeps it explicit because
+that is safer in a script reused across a whole session. `man <keyword>` details
+one command.
+
+Two things to get right the first time:
+
+- `find_symbol SomeClassName` on one line fails with `UNKNOWN_KEYWORD`: the whole
+  line was looked up as a keyword. One token per line.
+- Never open a second client before the first one finished with its own
+  command. Two short-lived invocations back to back are fine - each connects,
+  finishes, and disconnects with `exit` - and no daemon-side state is lost
+  between them (transactions and open files live in the daemon).
+
+Each invocation pays a fixed ~40 ms (Python starting and connecting to the warm
+daemon), once per invocation and not per command, so pipe several commands
+before `exit` when all their parameters are known up front:
+
+```bash
+printf 'rebuild\nerrors\nfind_symbol\nSomeUnrelatedClassName\n' | /tmp/c.sh
+```
+
+A command that needs a position printed by the previous one (`find_symbol`
+feeding `list_members`) still has to be its own invocation.
+
+**If clide cannot be fetched or started** in your environment, carry on with grep
+and `ant dist`, but say so in your reply, together with what this prevented:
+without the JUnit jars, the Vega tests cannot be run, so there are no reference
+files and no regression check.
