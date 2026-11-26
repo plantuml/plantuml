@@ -1,0 +1,27 @@
+---
+output: svg
+expected-description: (6 entities)
+---
+@startuml
+!pragma layout smetana
+!pragma smetana_ortho
+skinparam linetype ortho
+left to right direction
+component Outer {
+	portin n
+	component Inner {
+		portout y
+		[A]
+		A --> y
+	}
+	portout x
+	n --> y
+	n --> x
+}
+[z]
+[z1]
+z --> Outer
+z1 --> n
+' A hidden cluster keeps its layout frame, which the frame of Outer follows.
+hide Inner
+@enduml
