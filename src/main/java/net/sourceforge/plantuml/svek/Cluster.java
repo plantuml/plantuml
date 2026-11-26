@@ -453,8 +453,12 @@ public class Cluster implements Moveable {
 		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);
 	}
 
+	private void drawSwimlaneTitle(UGraphic ug, TextBlock title) {
+		title.drawU(ug.apply(UTranslate.dx(xyTitle.x)));
+	}
+
 	private void drawSwinLinesState(UGraphic ug, HColor borderColor) {
-		clusterHeader.getTitle().drawU(ug.apply(UTranslate.dx(xyTitle.x)));
+		drawSwimlaneTitle(ug, clusterHeader.getTitle());
 
 		final ULine line = ULine.vline(rectangleArea.getHeight());
 		ug = ug.apply(borderColor);
@@ -755,11 +759,16 @@ public class Cluster implements Moveable {
 	 */
 	public List<RectangleArea> getHeaderAreas(StringBounder stringBounder) {
 		final List<RectangleArea> result = new ArrayList<>();
-		if (rectangleArea == null || skinParam.useSwimlanes(diagram.getDiagramType()))
+		if (rectangleArea == null)
 			return result;
 
 		final HeaderFinder finder = new HeaderFinder(stringBounder, UTranslate.none(), result, new AtomicBoolean());
 		final TextBlock title = finder.probe(clusterHeader.getTitle());
+		if (skinParam.useSwimlanes(diagram.getDiagramType())) {
+			if (xyTitle != null)
+				drawSwimlaneTitle(finder, title);
+			return result;
+		}
 		if (diagram.getDiagramType() == DiagramType.STATE && group.getUSymbol() == null) {
 			if (xyTitle != null)
 				drawStateHeader(finder, title, finder.probe(group.getStateDescription(skinParam)));
