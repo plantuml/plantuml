@@ -106,6 +106,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 	private final Fashion ctx;
 	private final USymbol symbol;
+	private final double straightBorderInset;
 
 	@Override
 	public StyleQuery getStyleQuery() {
@@ -176,6 +177,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		ctx = new Fashion(backcolor, forecolor).withStroke(stroke).withShadow(deltaShadow).withCorner(roundCorner,
 				diagonalCorner);
+		straightBorderInset = isPaintedAsItsBox(symbol) ? Math.max(roundCorner / 2, diagonalCorner) : -1;
 
 		final Display codeDisplay = Display.getWithNewlines(getSkinParam().getPragma(), entity.getName());
 		if ((entity.getDisplay().equalsLike(codeDisplay) && symbol.getSNames()[0] == SName.package_)
@@ -341,6 +343,19 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	public ShapeType getShapeType() {
 		return shapeType;
+	}
+
+	// Symbols whose outline is the rectangle of the whole image, apart from its
+	// corners. Interfaces, actors, clouds, databases and the like only fit in it.
+	private static boolean isPaintedAsItsBox(USymbol symbol) {
+		return symbol == USymbols.RECTANGLE || symbol == USymbols.COMPONENT2 || symbol == USymbols.COMPONENT_RECTANGLE
+				|| symbol == USymbols.CARD || symbol == USymbols.AGENT || symbol == USymbols.ARTIFACT
+				|| symbol == USymbols.ARCHIMATE;
+	}
+
+	@Override
+	public double getStraightBorderInset() {
+		return straightBorderInset;
 	}
 
 	@Override

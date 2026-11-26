@@ -55,4 +55,14 @@ public interface IEntityImage extends Hideable, TextBlock {
 		return false;
 	}
 
+	/**
+	 * How far from each corner the painted border starts to run straight along
+	 * the sides of the image's box, or a negative value if the image does not
+	 * paint its box. Orthogonal routing in Smetana moves edge attachments only
+	 * along that straight part.
+	 */
+	public default double getStraightBorderInset() {
+		return -1;
+	}
+
 }

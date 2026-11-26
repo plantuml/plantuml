@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="290px" preserveAspectRatio="none" style="width:308px;height:290px;background:#FFFFFF;" version="1.1" viewBox="0 0 308 290" width="308px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Registry-->
+    <g class="entity" data-qualified-name="Registry" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="285.7" x="6" y="97"/>
+      <ellipse cx="118.919" cy="113" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="113.919" y="118">C</text>
+      <text fill="#000" font-size="14" textLength="51.363" x="139.419" y="116.889">Registry</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="290.7" y1="129" y2="129"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="290.7" y1="137" y2="137"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="149.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="259.7" x="26" y="151.889">register(name: String, service: Service): void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="163.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="176.575" x="26" y="165.889">lookup(name: String): Service</text>
+    </g>
+    <!--class Logger-->
+    <g class="entity" data-qualified-name="Logger" data-source-line="12" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.575" x="14" y="12"/>
+      <ellipse cx="29" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="24" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="43.575" x="43" y="31.889">Logger</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15" x2="88.575" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15" x2="88.575" y1="52" y2="52"/>
+    </g>
+    <!--class Storage-->
+    <g class="entity" data-qualified-name="Storage" data-source-line="13" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81" x="108.5" y="12"/>
+      <ellipse cx="123.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="118.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="49" x="137.5" y="31.889">Storage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="109.5" x2="188.5" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="109.5" x2="188.5" y1="52" y2="52"/>
+    </g>
+    <!--class Network-->
+    <g class="entity" data-qualified-name="Network" data-source-line="14" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.363" x="207.5" y="12"/>
+      <ellipse cx="222.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="217.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="51.363" x="236.5" y="31.889">Network</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="208.5" x2="289.863" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="208.5" x2="289.863" y1="52" y2="52"/>
+    </g>
+    <!--class Cache-->
+    <g class="entity" data-qualified-name="Cache" data-source-line="18" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.512" x="112.5" y="226"/>
+      <ellipse cx="127.5" cy="242" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="122.5" y="247">C</text>
+      <text fill="#000" font-size="14" textLength="40.512" x="141.5" y="245.889">Cache</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="113.5" x2="184.013" y1="258" y2="258"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="113.5" x2="184.013" y1="266" y2="266"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="51.787,96.736,55.787,87.736,51.787,91.736,47.787,87.736,51.787,96.736" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M51.787,60.481 C51.787,60.481 51.787,91.736 51.787,91.736" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="149,96.736,153,87.736,149,91.736,145,87.736,149,96.736" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M149,60.481 C149,60.481 149,91.736 149,91.736" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="249.181,96.941,253.181,87.941,249.181,91.941,245.181,87.941,249.181,96.941" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M249.181,60.234 C249.181,60.234 249.181,91.941 249.181,91.941" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="148.756,225.762,152.756,216.762,148.756,220.762,144.756,216.762,148.756,225.762" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M148.756,173 C148.756,173 148.756,220.762 148.756,220.762" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="18.85" x="123.906" y="202.992">fills</text>
+    </g>
+  </g>
+</svg>

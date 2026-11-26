@@ -32,8 +32,8 @@
       <text fill="#000" font-size="14" textLength="47.512" x="40" y="267.889">Second</text>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
-      <polygon fill="#181818" points="64,148.734,68,139.734,64,143.734,60,139.734,64,148.734" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M69.657,108 C69.657,108 97.969,108 97.969,108 C97.969,108 97.969,139.734 97.969,139.734 C97.969,139.734 64,139.734 64,139.734 C64,139.734 64,143.734 64,143.734" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="89,167.75,98,171.75,94,167.75,98,163.75,89,167.75" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M69.657,108 C69.657,108 98,108 98,108 C98,108 98,167.75 98,167.75 C98,167.75 94,167.75 94,167.75" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk7">
       <polygon fill="#181818" points="64,251.655,68,242.655,64,246.655,60,242.655,64,251.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

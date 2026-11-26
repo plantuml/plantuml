@@ -360,6 +360,19 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			for (RectangleArea area : clusterAreas)
 				placement.addClusterBorder(area);
 
+			// Edges that share a node side divide it among themselves before any is routed.
+			final OrthogonalPorts ports = new OrthogonalPorts(obstacles, clusterAreas);
+			final Map<SmetanaEdge, OrthogonalPorts.Attachment> attachments = new LinkedHashMap<>();
+			for (Entry<Link, SmetanaEdge> entry : smetanaPathes.entrySet()) {
+				final Link link = entry.getKey();
+				if (link.isHidden() || link.isOpale())
+					continue;
+				final OrthogonalPorts.Attachment attachment = entry.getValue().attach(stringBounder, nodeAreas, ports);
+				if (attachment != null)
+					attachments.put(entry.getValue(), attachment);
+			}
+			ports.assign(budget);
+
 			final Map<SmetanaEdge, DotPath> visiblePaths = new LinkedHashMap<>();
 			// Labels on both orthogonal routes and splines must clear every visible connector.
 			for (Entry<Link, SmetanaEdge> entry : smetanaPathes.entrySet()) {
@@ -371,8 +384,11 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 					edge.reserveNoteConnector(placement);
 					continue;
 				}
-				final DotPath path = edge.routeOrthogonally(stringBounder, nodeAreas, obstacles, clusterAreas, usedTracks,
-						budget);
+				final OrthogonalPorts.Attachment attachment = attachments.get(edge);
+				if (attachment == null)
+					continue;
+				final DotPath path = edge.routeOrthogonally(stringBounder, attachment, obstacles, clusterAreas,
+						usedTracks, budget);
 				if (path != null) {
 					visiblePaths.put(edge, path);
 					edge.reserveConnector(placement, path, stringBounder);

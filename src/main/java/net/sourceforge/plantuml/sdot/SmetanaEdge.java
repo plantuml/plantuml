@@ -99,6 +99,8 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private final EndpointLabel headLabel;
 	private final EndpointLabel tailLabel;
 	private final boolean orthogonal;
+	private OrthogonalPath.Endpoint tail;
+	private OrthogonalPath.Endpoint head;
 	private DotPath orthogonalPath;
 	// Set once the routing budget of the diagram is spent. Looking for a free
 	// place for the label of a spline costs more than the search it replaces.
@@ -231,15 +233,30 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	/**
-	 * Returns the path that will be painted, including a spline fallback.
-	 * Orthogonal runs become tracks that subsequent edges can route alongside.
+	 * Registers both ends of the edge, so that their attachments are chosen
+	 * together with those of all other edges. Returns null for an edge without
+	 * a path.
 	 */
-	DotPath routeOrthogonally(StringBounder stringBounder, Map<Entity, RectangleArea> nodeAreas,
-			List<RectangleArea> nodes, List<RectangleArea> clusters, List<RectangleArea> usedTracks,
-			OrthogonalPath.SearchBudget budget) {
+	OrthogonalPorts.Attachment attach(StringBounder stringBounder, Map<Entity, RectangleArea> nodeAreas,
+			OrthogonalPorts ports) {
 		final DotPath spline = getDisplayedPath(stringBounder);
 		if (spline == null)
 			return null;
+		final Entity source = link.getEntity1();
+		final Entity target = link.getEntity2();
+		tail = endpoint(source, nodeAreas.get(source), link.getType().getDecor2(), stringBounder);
+		head = endpoint(target, nodeAreas.get(target), link.getType().getDecor1(), stringBounder);
+		return ports.add(spline, tail, head);
+	}
+
+	/**
+	 * Returns the path that will be painted, including a spline fallback.
+	 * Orthogonal runs become tracks that subsequent edges can route alongside.
+	 */
+	DotPath routeOrthogonally(StringBounder stringBounder, OrthogonalPorts.Attachment attachment,
+			List<RectangleArea> nodes, List<RectangleArea> clusters, List<RectangleArea> usedTracks,
+			OrthogonalPath.SearchBudget budget) {
+		final DotPath spline = getDisplayedPath(stringBounder);
 		if (budget.isSpent()) {
 			keepsLayoutLabel = true;
 			return spline;
@@ -249,13 +266,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		for (RectangleArea cluster : clusters)
 			if (cluster.contains(spline.getStartPoint()) == false && cluster.contains(spline.getEndPoint()) == false)
 				obstacles.add(cluster);
-		final Entity source = link.getEntity1();
-		final Entity target = link.getEntity2();
-		final OrthogonalPath.Endpoint tail = endpoint(source, nodeAreas.get(source), link.getType().getDecor2(),
-				stringBounder);
-		final OrthogonalPath.Endpoint head = endpoint(target, nodeAreas.get(target), link.getType().getDecor1(),
-				stringBounder);
-		orthogonalPath = OrthogonalPath.route(spline, tail, head, obstacles, usedTracks, budget);
+		orthogonalPath = OrthogonalPath.route(spline, attachment, tail, head, obstacles, usedTracks, budget);
 		if (orthogonalPath == null)
 			return spline;
 		for (XCubicCurve2D segment : orthogonalPath.getBeziers())
@@ -266,14 +277,24 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private OrthogonalPath.Endpoint endpoint(Entity entity, RectangleArea area, LinkDecor decor,
 			StringBounder stringBounder) {
 		final EntityPosition position = entity.getEntityPosition();
-		final OrthogonalPath.Endpoint.Shape shape;
+		final double decoration = decorationExtent(decor, stringBounder);
 		if (position.isPort())
-			shape = OrthogonalPath.Endpoint.Shape.BOX;
-		else if (position.usePortP())
-			shape = OrthogonalPath.Endpoint.Shape.CIRCLE;
-		else
-			shape = OrthogonalPath.Endpoint.Shape.FIXED;
-		return new OrthogonalPath.Endpoint(area, shape, decorationExtent(decor, stringBounder));
+			return new OrthogonalPath.Endpoint(area, OrthogonalPath.Endpoint.Shape.BOX, decoration);
+		if (position.usePortP())
+			return new OrthogonalPath.Endpoint(area, OrthogonalPath.Endpoint.Shape.CIRCLE, decoration);
+		final double inset = straightBorderInset(entity);
+		if (inset >= 0)
+			return OrthogonalPath.Endpoint.side(area, decoration, decorationHalfWidth(decor, stringBounder), inset);
+		return new OrthogonalPath.Endpoint(area, OrthogonalPath.Endpoint.Shape.FIXED, decoration);
+	}
+
+	// Where the painted border of a node runs straight, so that an attachment
+	// can move along it. Negative for a node that does not paint its box.
+	private double straightBorderInset(Entity entity) {
+		if (entity.isGroup())
+			return -1;
+		final SvekNode node = bibliotekon.getNode(entity);
+		return node == null ? -1 : node.getImage().getStraightBorderInset();
 	}
 
 	private double decorationExtent(LinkDecor decor, StringBounder stringBounder) {

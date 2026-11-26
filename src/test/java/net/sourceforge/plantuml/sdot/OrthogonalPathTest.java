@@ -188,6 +188,23 @@ class OrthogonalPathTest {
 				"Once the budget is spent, each remaining edge keeps its spline");
 	}
 
+	@Test
+	void aJogMovedToTheMiddleStaysOutOfTheArrowhead() {
+		// Only 8 px between the nodes, and a 6 px arrowhead: the route fits with
+		// the least clearance, and its jog must stay behind the arrowhead.
+		final RectangleArea sender = new RectangleArea(0, 0, 40, 20);
+		final RectangleArea receiver = new RectangleArea(60, 28, 100, 48);
+		final DotPath original = straightLine(new XPoint2D(20, 20), new XPoint2D(80, 28));
+
+		final DotPath routed = route(original, sender, receiver, Arrays.asList(sender, receiver),
+				Collections.emptyList(), 0, 6);
+
+		assertNotNull(routed);
+		final List<XCubicCurve2D> segments = routed.getBeziers();
+		final XCubicCurve2D last = segments.get(segments.size() - 1);
+		assertTrue(last.y2 - last.y1 >= 6, "The last run must hold the arrowhead, was " + (last.y2 - last.y1));
+	}
+
 	private static DotPath route(DotPath spline, RectangleArea tail, RectangleArea head, List<RectangleArea> nodes,
 			List<RectangleArea> tracks, double tailDecoration, double headDecoration) {
 		return route(spline, tail, head, nodes, tracks, tailDecoration, headDecoration,
@@ -197,10 +214,14 @@ class OrthogonalPathTest {
 	private static DotPath route(DotPath spline, RectangleArea tail, RectangleArea head, List<RectangleArea> nodes,
 			List<RectangleArea> tracks, double tailDecoration, double headDecoration,
 			OrthogonalPath.SearchBudget budget) {
-		return OrthogonalPath.route(spline,
-				new OrthogonalPath.Endpoint(tail, OrthogonalPath.Endpoint.Shape.FIXED, tailDecoration),
-				new OrthogonalPath.Endpoint(head, OrthogonalPath.Endpoint.Shape.FIXED, headDecoration), nodes, tracks,
-				budget);
+		final OrthogonalPath.Endpoint tailEnd = new OrthogonalPath.Endpoint(tail, OrthogonalPath.Endpoint.Shape.FIXED,
+				tailDecoration);
+		final OrthogonalPath.Endpoint headEnd = new OrthogonalPath.Endpoint(head, OrthogonalPath.Endpoint.Shape.FIXED,
+				headDecoration);
+		// Fixed ends stay where the spline puts them.
+		final OrthogonalPorts.Attachment attachment = new OrthogonalPorts(nodes, Collections.emptyList()).add(spline,
+				tailEnd, headEnd);
+		return OrthogonalPath.route(spline, attachment, tailEnd, headEnd, nodes, tracks, budget);
 	}
 
 	private static DotPath straightLine(XPoint2D a, XPoint2D b) {
