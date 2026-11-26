@@ -168,11 +168,39 @@ class OrthogonalPathTest {
 		assertNull(routed, "The ten-pixel gap cannot contain both decorations");
 	}
 
+	@Test
+	void edgesOfADiagramShareOneSearchBudget() {
+		final RectangleArea sender = new RectangleArea(0, 0, 20, 20);
+		final RectangleArea receiver = new RectangleArea(100, 0, 120, 20);
+		final RectangleArea obstacle = new RectangleArea(40, -10, 80, 30);
+		final List<RectangleArea> nodes = Arrays.asList(sender, obstacle, receiver);
+		final DotPath original = straightLine(new XPoint2D(20, 10), new XPoint2D(100, 10));
+		final int limit = 100_000;
+		final OrthogonalPath.SearchBudget budget = new OrthogonalPath.SearchBudget(limit);
+
+		int routed = 0;
+		while (routed < limit && route(original, sender, receiver, nodes, Collections.emptyList(), 0, 0, budget) != null)
+			routed++;
+
+		assertTrue(routed > 0, "The first detour is well within the budget");
+		assertTrue(routed < limit, "Every detour takes its share of the budget");
+		assertNull(route(original, sender, receiver, nodes, Collections.emptyList(), 0, 0, budget),
+				"Once the budget is spent, each remaining edge keeps its spline");
+	}
+
 	private static DotPath route(DotPath spline, RectangleArea tail, RectangleArea head, List<RectangleArea> nodes,
 			List<RectangleArea> tracks, double tailDecoration, double headDecoration) {
+		return route(spline, tail, head, nodes, tracks, tailDecoration, headDecoration,
+				new OrthogonalPath.SearchBudget());
+	}
+
+	private static DotPath route(DotPath spline, RectangleArea tail, RectangleArea head, List<RectangleArea> nodes,
+			List<RectangleArea> tracks, double tailDecoration, double headDecoration,
+			OrthogonalPath.SearchBudget budget) {
 		return OrthogonalPath.route(spline,
 				new OrthogonalPath.Endpoint(tail, OrthogonalPath.Endpoint.Shape.FIXED, tailDecoration),
-				new OrthogonalPath.Endpoint(head, OrthogonalPath.Endpoint.Shape.FIXED, headDecoration), nodes, tracks);
+				new OrthogonalPath.Endpoint(head, OrthogonalPath.Endpoint.Shape.FIXED, headDecoration), nodes, tracks,
+				budget);
 	}
 
 	private static DotPath straightLine(XPoint2D a, XPoint2D b) {

@@ -1,0 +1,21 @@
+---
+output: svg
+expected-description: (6 entities)
+---
+@startuml
+!pragma layout smetana
+!pragma smetana_ortho
+skinparam linetype ortho
+
+state Composite {
+	state in <<entryPoint>>
+	state out <<exitPoint>>
+	state First
+	state Second
+	in --> First
+	First --> Second : next
+	Second --> out
+}
+[*] --> in
+out --> [*]
+@enduml
