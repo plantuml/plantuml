@@ -44,6 +44,8 @@ import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityProfile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class ProcessRunner {
 	
@@ -52,71 +54,75 @@ public class ProcessRunner {
 	private String error;
 	private String out;
 
-<span class="nc" id="L55">	public ProcessRunner(String[] cmd) {</span>
-<span class="nc" id="L56">		this.cmd = cmd;</span>
-<span class="nc" id="L57">	}</span>
+<span class="nc" id="L57">	public ProcessRunner(String[] cmd) {</span>
+<span class="nc" id="L58">		this.cmd = cmd;</span>
+<span class="nc" id="L59">	}</span>
 
 	public ProcessState run(byte[] in, OutputStream redirection) {
-<span class="nc" id="L60">		return run(in, redirection, null);</span>
+<span class="nc" id="L62">		return run(in, redirection, null);</span>
 	}
 
 	public ProcessState run(byte[] in, OutputStream redirection, SFile dir) {
-<span class="nc" id="L64">		Process process = null;</span>
+<span class="nc" id="L66">		Process process = null;</span>
 		try {
-<span class="nc" id="L66">			final ProcessBuilder builder = new ProcessBuilder(cmd);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (dir != null)</span>
-<span class="nc" id="L68">				builder.directory(dir.conv());</span>
-<span class="nc" id="L69">			builder.redirectErrorStream(true);</span>
+<span class="nc" id="L68">			final ProcessBuilder builder = new ProcessBuilder(cmd);</span>
+<span class="nc" id="L69">			final SecurityProfile profile = SecurityUtils.getSecurityProfile();</span>
+<span class="nc bnc" id="L70" title="All 6 branches missed.">			if (profile == SecurityProfile.SANDBOX || profile == SecurityProfile.INTERNET</span>
+					|| profile == SecurityProfile.INTERNET_WITH_DOTSVG)
+<span class="nc" id="L72">				builder.environment().put(&quot;SERVER_NAME&quot;, &quot;plantuml&quot;);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (dir != null)</span>
+<span class="nc" id="L74">				builder.directory(dir.conv());</span>
+<span class="nc" id="L75">			builder.redirectErrorStream(true);</span>
 
-<span class="nc" id="L71">			process = builder.start();</span>
+<span class="nc" id="L77">			process = builder.start();</span>
 
 			// Handling input to the process
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (in != null)</span>
-<span class="nc" id="L75">				try (OutputStream os = process.getOutputStream()) {</span>
-<span class="nc" id="L76">					os.write(in);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (in != null)</span>
+<span class="nc" id="L81">				try (OutputStream os = process.getOutputStream()) {</span>
+<span class="nc" id="L82">					os.write(in);</span>
 				}
 
-<span class="nc" id="L79">			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();</span>
-<span class="nc" id="L80">			try (InputStream is = process.getInputStream()) {</span>
-<span class="nc" id="L81">				final byte[] buffer = new byte[1024];</span>
+<span class="nc" id="L85">			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();</span>
+<span class="nc" id="L86">			try (InputStream is = process.getInputStream()) {</span>
+<span class="nc" id="L87">				final byte[] buffer = new byte[1024];</span>
 				int length;
-<span class="nc bnc" id="L83" title="All 2 branches missed.">				while ((length = is.read(buffer)) != -1) {</span>
-<span class="nc" id="L84">					outputStream.write(buffer, 0, length);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">					if (redirection != null)</span>
-<span class="nc" id="L86">						redirection.write(buffer, 0, length);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">				while ((length = is.read(buffer)) != -1) {</span>
+<span class="nc" id="L90">					outputStream.write(buffer, 0, length);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">					if (redirection != null)</span>
+<span class="nc" id="L92">						redirection.write(buffer, 0, length);</span>
 				}
 			}
 
 			// Wait for process to terminate
-<span class="nc" id="L91">			final long timeoutMs = (Long) GlobalConfig.getInstance().value(GlobalConfigKey.TIMEOUT_MS);</span>
-<span class="nc" id="L92">			final boolean finished = process.waitFor(timeoutMs, TimeUnit.MILLISECONDS);</span>
-<span class="nc" id="L93">			outputStream.close();</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (finished) {</span>
-<span class="nc" id="L95">				this.out = new String(outputStream.toByteArray(), &quot;UTF-8&quot;);</span>
-<span class="nc" id="L96">				return ProcessState.TERMINATED_OK();</span>
+<span class="nc" id="L97">			final long timeoutMs = (Long) GlobalConfig.getInstance().value(GlobalConfigKey.TIMEOUT_MS);</span>
+<span class="nc" id="L98">			final boolean finished = process.waitFor(timeoutMs, TimeUnit.MILLISECONDS);</span>
+<span class="nc" id="L99">			outputStream.close();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (finished) {</span>
+<span class="nc" id="L101">				this.out = new String(outputStream.toByteArray(), &quot;UTF-8&quot;);</span>
+<span class="nc" id="L102">				return ProcessState.TERMINATED_OK();</span>
 			}
 
-<span class="nc" id="L99">			return ProcessState.TIMEOUT();</span>
+<span class="nc" id="L105">			return ProcessState.TIMEOUT();</span>
 
-<span class="nc" id="L101">		} catch (Throwable e) {</span>
-<span class="nc" id="L102">			Logme.error(e);</span>
-<span class="nc" id="L103">			this.error = e.toString();</span>
-<span class="nc" id="L104">			return ProcessState.EXCEPTION(e);</span>
+<span class="nc" id="L107">		} catch (Throwable e) {</span>
+<span class="nc" id="L108">			Logme.error(e);</span>
+<span class="nc" id="L109">			this.error = e.toString();</span>
+<span class="nc" id="L110">			return ProcessState.EXCEPTION(e);</span>
 		} finally {
-<span class="nc bnc" id="L106" title="All 6 branches missed.">			if (process != null &amp;&amp; out == null &amp;&amp; process.isAlive()) {</span>
+<span class="nc bnc" id="L112" title="All 6 branches missed.">			if (process != null &amp;&amp; out == null &amp;&amp; process.isAlive()) {</span>
 				// Process did not finish in time, kill it
-<span class="nc" id="L108">				process.destroy();</span>
+<span class="nc" id="L114">				process.destroy();</span>
 				// Not really sure that we should overwrite &quot;this.error&quot; here
-<span class="nc" id="L110">				this.error = &quot;Timeout - kill&quot;;</span>
+<span class="nc" id="L116">				this.error = &quot;Timeout - kill&quot;;</span>
 				try {
-<span class="nc bnc" id="L112" title="All 2 branches missed.">					if (process.waitFor(500, TimeUnit.MILLISECONDS) == false) {</span>
-<span class="nc" id="L113">						process.destroyForcibly();</span>
-<span class="nc" id="L114">						this.error = &quot;Timeout - kill force&quot;;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">					if (process.waitFor(500, TimeUnit.MILLISECONDS) == false) {</span>
+<span class="nc" id="L119">						process.destroyForcibly();</span>
+<span class="nc" id="L120">						this.error = &quot;Timeout - kill force&quot;;</span>
 					}
-<span class="nc" id="L116">				} catch (InterruptedException e) {</span>
+<span class="nc" id="L122">				} catch (InterruptedException e) {</span>
 					// Nothing we can really do
-<span class="nc" id="L118">					e.printStackTrace();</span>
-<span class="nc" id="L119">				}</span>
+<span class="nc" id="L124">					e.printStackTrace();</span>
+<span class="nc" id="L125">				}</span>
 
 			}
 
@@ -124,11 +130,11 @@ public class ProcessRunner {
 	}
 
 	public final String getError() {
-<span class="nc" id="L127">		return error;</span>
+<span class="nc" id="L133">		return error;</span>
 	}
 
 	public final String getOut() {
-<span class="nc" id="L131">		return out;</span>
+<span class="nc" id="L137">		return out;</span>
 	}
 
 }
