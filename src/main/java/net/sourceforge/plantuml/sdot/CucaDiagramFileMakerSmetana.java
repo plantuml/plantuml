@@ -333,13 +333,15 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			// Entry and exit points move the frame of their cluster, which also
 			// depends on the frames of the clusters inside it. The map lists outer
 			// clusters first, so place them all and fit the inner ones first.
+			// A hidden cluster keeps its layout frame, as it does when drawing.
 			final Map<Entity, Cluster> placed = new LinkedHashMap<>();
 			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet())
 				placed.put(ent.getKey(), placeGroup(stringBounder, ymirror, ent.getKey(), ent.getValue()));
-			final List<Cluster> innerFirst = new ArrayList<>(placed.values());
+			final List<Entity> innerFirst = new ArrayList<>(placed.keySet());
 			Collections.reverse(innerFirst);
-			for (Cluster cluster : innerFirst)
-				cluster.fitToEntryExitPoints(stringBounder);
+			for (Entity entity : innerFirst)
+				if (entity.isHidden() == false)
+					placed.get(entity).fitToEntryExitPoints(stringBounder);
 
 			for (Map.Entry<Entity, Cluster> ent : placed.entrySet()) {
 				final Entity entity = ent.getKey();

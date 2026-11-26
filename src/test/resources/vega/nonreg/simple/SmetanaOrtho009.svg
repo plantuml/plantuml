@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="257px" preserveAspectRatio="none" style="width:246px;height:257px;background:#FFFFFF;" version="1.1" viewBox="0 0 246 257" width="246px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Outer-->
+    <g class="cluster" data-qualified-name="Outer" data-source-line="5" id="ent0001">
+      <rect fill="none" height="190" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="161" x="69" y="12"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="210" y="17"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="208" y="19"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="208" y="23"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="34.913" x="132.044" y="35.889">Outer</text>
+    </g>
+    <!--entity z-->
+    <g class="entity" data-qualified-name="z" data-source-line="16" id="ent0010">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47" x="10" y="135"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="37" y="140"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="35" y="142"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="35" y="146"/>
+      <text fill="#000" font-size="14" x="25" y="165.889">z</text>
+    </g>
+    <!--entity z1-->
+    <g class="entity" data-qualified-name="z1" data-source-line="17" id="ent0011">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.787" x="6" y="197"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="40.787" y="202"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="38.787" y="204"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="38.787" y="208"/>
+      <text fill="#000" font-size="14" textLength="14.787" x="21" y="227.889">z1</text>
+    </g>
+    <g class="entity" data-qualified-name="Outer.n" data-source-line="6" id="ent0002">
+      <text fill="#000" font-size="14" x="121.606" y="218.889">n</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="119.5" y="196"/>
+    </g>
+    <g class="entity" data-qualified-name="Outer.x" data-source-line="12" id="ent0007">
+      <text fill="#000" font-size="14" x="188.5" y="218.889">x</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="186" y="196"/>
+    </g>
+    <!--entity A-->
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="190,208,186,217,190,213,194,217,190,208" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M127.5,208 C127.5,208 127.5,224 127.5,224 C127.5,224 190,224 190,224 C190,224 190,213 190,213" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0001" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="68.76,163.471,59.76,159.471,63.76,163.471,59.76,167.471,68.76,163.471" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M57.211,161.29 C57.211,161.29 59.76,161.29 59.76,161.29 C59.76,161.29 59.76,163.471 59.76,163.471 C59.76,163.471 63.76,163.471 63.76,163.471" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0002" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="119.5,202.97,110.5,198.97,114.5,202.97,110.5,206.97,119.5,202.97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.016,213.991 C61.016,213.991 110.5,213.991 110.5,213.991 C110.5,213.991 110.5,202.97 110.5,202.97 C110.5,202.97 114.5,202.97 114.5,202.97" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>
