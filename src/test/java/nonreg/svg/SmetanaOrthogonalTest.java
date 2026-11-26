@@ -30,6 +30,25 @@ class SmetanaOrthogonalTest {
 	private static final Pattern NUMBER = Pattern.compile("-?\\d+(?:\\.\\d+)?");
 
 	@Test
+	void orthogonalRoutingNeedsThePragma() throws Exception {
+		final String[] diagram = { "class A", "class B", "class C", "A --> B", "A --> C" };
+
+		assertTrue(isOrthogonal(linkPoints(link(renderWith("!pragma smetana_ortho", diagram), 0))));
+		assertFalse(isOrthogonal(linkPoints(link(renderWith("", diagram), 0))),
+				"Without the pragma Smetana keeps drawing its splines");
+	}
+
+	private static boolean isOrthogonal(List<Point2D> points) {
+		for (int i = 1; i < points.size(); i++) {
+			final Point2D a = points.get(i - 1);
+			final Point2D b = points.get(i);
+			if (a.getX() != b.getX() && a.getY() != b.getY())
+				return false;
+		}
+		return true;
+	}
+
+	@Test
 	void parallelEdgesLeaveEachOthersLabelsClear() throws Exception {
 		final Document svg = render("class A", "class B", "A --> B : bravo", "A --> B : charlie", "A --> B : delta");
 
@@ -330,7 +349,11 @@ class SmetanaOrthogonalTest {
 	}
 
 	private static Document render(String... lines) throws Exception {
-		final String source = "@startuml\n!pragma layout smetana\nskinparam linetype ortho\n"
+		return renderWith("!pragma smetana_ortho", lines);
+	}
+
+	private static Document renderWith(String optIn, String... lines) throws Exception {
+		final String source = "@startuml\n!pragma layout smetana\n" + optIn + "\nskinparam linetype ortho\n"
 				+ String.join("\n", lines) + "\n@enduml";
 		final ByteArrayOutputStream output = new ByteArrayOutputStream();
 		new SourceStringReader(source).outputImage(output, new FileFormatOption(FileFormat.SVG));

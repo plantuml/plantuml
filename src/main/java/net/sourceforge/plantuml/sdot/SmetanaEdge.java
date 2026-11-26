@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.cruise.XEdge;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.decoration.Rainbow;
-import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -98,6 +97,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private final TextBlock label;
 	private final EndpointLabel headLabel;
 	private final EndpointLabel tailLabel;
+	private final boolean orthogonal;
 	private DotPath orthogonalPath;
 	private UTranslate labelPosition;
 	private UTranslate headLabelPosition;
@@ -105,12 +105,12 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 	public SmetanaEdge(Link link, ST_Agedge_s edge, YMirror ymirror, TextBlock label,
 			TextBlock tailQuantifier, TextBlock headQuantifier, TextBlock tailRole, TextBlock headRole,
-			Bibliotekon bibliotekon, ISkinParam skinParam) {
+			Bibliotekon bibliotekon, ISkinParam skinParam, boolean orthogonal) {
 		super(link, skinParam, bibliotekon);
 		this.edge = edge;
 		this.ymirror = ymirror;
 		this.label = label;
-		final boolean orthogonal = skinParam.getDotSplines() == DotSplines.ORTHO;
+		this.orthogonal = orthogonal;
 		this.tailLabel = new EndpointLabel(tailQuantifier, tailRole, orthogonal);
 		this.headLabel = new EndpointLabel(headQuantifier, headRole, orthogonal);
 	}
@@ -180,7 +180,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		drawLabel(ug, label, labelPosition, "label");
 		drawLabel(ug, headLabel.text, headLabelPosition, "head_label");
 		drawLabel(ug, tailLabel.text, tailLabelPosition, "tail_label");
-		if (dotPath != null && skinParam.getDotSplines() != DotSplines.ORTHO
+		if (dotPath != null && orthogonal == false
 				&& (tailLabel.hasPair() || headLabel.hasPair())) {
 			final DotPath pathForRoles = getMirroredPath();
 			drawSplineRole(ug, tailLabel, "tail_label", pathForRoles, true);

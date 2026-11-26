@@ -5,7 +5,7 @@ expected-description: (3 entities)
 @startuml
 !pragma layout smetana
 skinparam linetype ortho
-
+!pragma smetana_ortho
 class Sender
 class Relay
 package Destination {
