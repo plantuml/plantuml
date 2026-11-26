@@ -1,0 +1,19 @@
+---
+output: svg
+expected-description: (3 entities)
+---
+@startuml
+!pragma layout smetana
+<style>
+arrow {
+	LineColor blue
+	HeadColor red
+}
+</style>
+class A
+class B
+class C
+A --> B
+A --|> C
+B -[#green]-> C
+@enduml
