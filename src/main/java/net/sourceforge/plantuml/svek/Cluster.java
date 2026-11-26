@@ -821,6 +821,12 @@ public class Cluster implements Moveable {
 			return ColorMapper.IDENTITY;
 		}
 
+		// An embedded diagram asks whether it is drawn as SVG.
+		@Override
+		public boolean matchesProperty(String propertyName) {
+			return getStringBounder().matchesProperty(propertyName);
+		}
+
 		// Blank lines and hidden blocks have a size, but they paint nothing.
 		@Override
 		public void draw(UShape shape) {
