@@ -57,6 +57,7 @@ public enum PragmaKey {
 	LABEL_DISTANCE, //
 	RATIO, //
 	SHOW_DEPRECATION, //
+	SMETANA_ORTHO("true"), //
 	SVG_FONT, //
 	SVG_INTERACTIVE, //
 	SVG_PARSER, //

@@ -6,7 +6,7 @@ expected-description: (2 entities)
 !pragma layout smetana
 skinparam linetype ortho
 left to right direction
-
+!pragma smetana_ortho
 state Idle
 state Busy
 Idle --> Busy : start

@@ -102,6 +102,7 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -188,6 +189,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return result;
 	}
 
+	// Routing "linetype ortho" on top of a layout made for splines is opt-in,
+	// until it has proved itself on real diagrams.
+	private boolean isOrthogonal() {
+		return diagram.getSkinParam().getDotSplines() == DotSplines.ORTHO
+				&& diagram.getPragma().isTrue(PragmaKey.SMETANA_ORTHO);
+	}
+
 	private MinMaxMutable getSmetanaMinMax() {
 		final MinMaxMutable result = MinMaxMutable.getEmpty(false);
 		for (ST_Agnode_s n : nodes.values()) {
@@ -270,7 +278,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				final TextBlock role2 = getRoleLabel(stringBounder, link, 2);
 				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,
 							getLabel(stringBounder, link), quantifier1, quantifier2, role1, role2,
-						getBibliotekon(), diagram.getSkinParam());
+						getBibliotekon(), diagram.getSkinParam(), isOrthogonal());
 				smetanaPathes.put(link, smetanaPath);
 			}
 		}
@@ -279,7 +287,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		// the actual rendering. Routes and label positions use diagram coordinates.
 		private void drawContent(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final boolean orthogonal = diagram.getSkinParam().getDotSplines() == DotSplines.ORTHO;
+			final boolean orthogonal = isOrthogonal();
 			// Measurement and rendering can share the same routes when their
 			// text metrics match. Edges copy the path before painting decorations.
 			final boolean reroute = orthogonal && routedFor != stringBounder;
@@ -636,7 +644,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		// These symbols attach edges at their painted bounds. Smetana's default
 		// node label would enlarge their layout boxes beyond those bounds.
 		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION || leaf.getLeafType() == LeafType.JUNCTION
-				|| (leaf.getEntityPosition().usePortP() && diagram.getSkinParam().getDotSplines() == DotSplines.ORTHO))
+				|| (leaf.getEntityPosition().usePortP() && isOrthogonal()))
 			agsafeset(zz, agnode, new CString("label"), new CString(""), new CString(""));
 		final XDimension2D dim = getDim(node);
 		final String width = "" + dim.getWidth();
