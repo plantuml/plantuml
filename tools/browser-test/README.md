@@ -86,6 +86,26 @@ an unhandled exception and leaving the target element empty. A control page with
 `viz-global.js` pins that the normal path is unchanged. Run the same
 way with `node check-viz-missing.js target=...`.
 
+## check-viz-nowasm.js
+
+Checks `@plantuml/core-nowasm`, the npm package with no WebAssembly at all, against
+`@plantuml/core`. Run it with `target=` the `@plantuml/core` directory; the nowasm package is
+looked for next to it (`build/npm-plantuml-nowasm`), or given with `nowasm=<dir>`. Build both
+first: `gradle :plantuml-mit:npmPackage :plantuml-mit:npmPackageNowasm -Pci`.
+
+- The packages: the nowasm one has no `.wasm` file, no script calling WebAssembly, no
+  `viz-global.js` and no page loading it; `@plantuml/core` has no `viz-global-nowasm.js`; both
+  ship the same `plantuml.js`; and `viz-global-nowasm.js` was generated from the `viz-global.js`
+  of `@plantuml/core` (its header records the sha256 of its source), so a Viz.js update without
+  running `tools/viz-nowasm` again fails here.
+- Pages are served with `Content-Security-Policy: script-src 'self'` (no `'unsafe-eval'`, no
+  `'wasm-unsafe-eval'`). A control page first pins that this policy really blocks
+  `@plantuml/core` (a `wasm-eval` violation, and a diagram reporting Viz). Then, with
+  `@plantuml/core-nowasm` under the same policy, class, component, state, use case, object and
+  deployment diagrams render, into the DOM and to a string, with no CSP violation and no console
+  or page error, and their SVG is identical to what `@plantuml/core` produces without CSP.
+- The same identity holds on a page where `WebAssembly` has been deleted, as in a jitless engine.
+
 ## check-stdlib-loader.js
 
 Checks how the engine loads stdlib bundles for `!include <lib/...>`, and the two host-provided

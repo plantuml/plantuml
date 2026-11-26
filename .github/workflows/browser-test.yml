@@ -49,9 +49,10 @@ jobs:
 
       - name: Build engine
         run: |
-          ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
+          ./gradlew :plantuml-mit:npmPackage :plantuml-mit:npmPackageNowasm -Pci --no-daemon
           test -f license-variants/plantuml-mit/build/npm-plantuml/plantuml.js
           test -f license-variants/plantuml-mit/build/npm-plantuml/themes.js
+          test -f license-variants/plantuml-mit/build/npm-plantuml-nowasm/viz-global-nowasm.js
 
       # The engine must not rely on TeaVM coroutines (threads, Object.wait(), @Async...):
       # see tools/teavm-coroutines/README.md. The headless engine (MCP server) is built
