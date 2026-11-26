@@ -100,6 +100,9 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private final EndpointLabel tailLabel;
 	private final boolean orthogonal;
 	private DotPath orthogonalPath;
+	// Set once the routing budget of the diagram is spent. Looking for a free
+	// place for the label of a spline costs more than the search it replaces.
+	private boolean keepsLayoutLabel;
 	private UTranslate labelPosition;
 	private UTranslate headLabelPosition;
 	private UTranslate tailLabelPosition;
@@ -237,8 +240,10 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final DotPath spline = getDisplayedPath(stringBounder);
 		if (spline == null)
 			return null;
-		if (budget.isSpent())
+		if (budget.isSpent()) {
+			keepsLayoutLabel = true;
 			return spline;
+		}
 		// The edge enters the clusters around its ends. Any other cluster is as solid as a node.
 		final List<RectangleArea> obstacles = new ArrayList<>(nodes);
 		for (RectangleArea cluster : clusters)
@@ -338,8 +343,12 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (original == null || (link.getNote() == null && link.getLabel().isWhite()))
 			return;
 		final XDimension2D dimension = label.calculateDimension(stringBounder);
-		labelPosition = orthogonalPath == null ? placement.placeSplineLabel(path, original, dimension)
-				: placement.placeMidpoint(orthogonalPath, dimension);
+		if (keepsLayoutLabel)
+			labelPosition = placement.keepLabel(original, dimension);
+		else if (orthogonalPath == null)
+			labelPosition = placement.placeSplineLabel(path, original, dimension);
+		else
+			labelPosition = placement.placeMidpoint(orthogonalPath, dimension);
 	}
 
 	// Blank labels keep the position from the layout and leave their room to visible ones.
