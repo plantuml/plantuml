@@ -8,13 +8,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemColors;
 import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagram;
+import net.sourceforge.plantuml.openiconic.PSystemListOpenIconic;
 import net.sourceforge.plantuml.teavm.c.PSystemBuilderC;
 import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
 
 /**
  * The browser (JavaScript) and native (C) editions have their own list of
- * diagram factories: <code>colors</code> and <code>listsprite(s)</code> must be
- * in both of them, as in the JVM edition.
+ * diagram factories: <code>colors</code>, <code>listsprite(s)</code> and
+ * <code>listopeniconic</code> must be in both of them, as in the JVM edition.
  */
 class SpecialDiagramsInEditorTest {
 
@@ -36,6 +37,12 @@ class SpecialDiagramsInEditorTest {
 	@ValueSource(strings = { "listsprite", "listsprites" })
 	void listSprites(String body) {
 		check("sprite $foo [4x4/16] {\n0000\nFFFF\n0000\nFFFF\n}\n" + body, ListSpriteDiagram.class);
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "listopeniconic" })
+	void listOpenIconic(String body) {
+		check(body, PSystemListOpenIconic.class);
 	}
 
 }

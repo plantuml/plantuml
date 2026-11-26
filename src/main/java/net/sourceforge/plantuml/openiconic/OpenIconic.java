@@ -146,6 +146,25 @@ public class OpenIconic {
 	@JSBody(params = "name", script = GLOBAL + "var o = g && g.PLANTUML_OPENICONIC;"
 			+ "return (o && o[name]) ? o[name] : null;")
 	private static native String jsGetPathLine(String name);
+
+	// The names of all the icons (listopeniconic), in the order of all.txt, which
+	// openiconic.js is generated from. Empty while openiconic.js is not loaded:
+	// the diagram is rendered again once it is (PendingResources).
+	public static List<String> namesFromJs() {
+		final List<String> result = new ArrayList<>();
+		loadOpeniconicJsIfNeeded();
+		if (openiconicJsLoaded == false)
+			return result;
+		final String names = jsGetNames();
+		if (names != null && names.isEmpty() == false)
+			for (String s : names.split("\n"))
+				result.add(s);
+		return result;
+	}
+
+	@JSBody(script = GLOBAL + "var o = g && g.PLANTUML_OPENICONIC;"
+			+ "return o ? Object.keys(o).join('\\n') : null;")
+	private static native String jsGetNames();
 	// ::done
 
 	OpenIconic(String name) throws IOException {

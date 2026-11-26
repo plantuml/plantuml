@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.openiconic;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -69,16 +70,26 @@ public class PSystemListOpenIconic extends UgDiagram {
 		lines.add("<i>Credit to");
 		lines.add("https://useiconic.com/open");
 		lines.add(" ");
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(getResourceAllTxt()))) {
-			String s = null;
-			while ((s = br.readLine()) != null) {
-				// lines.add("<&yen> " + s);
-				// System.err.println("s=" + s);
-				lines.add("<&" + s + "> " + s);
-			}
-		}
+		for (String s : getNames())
+			lines.add("<&" + s + "> " + s);
+
 		final List<TextBlock> cols = PSystemDonors.getCols(lines, 7, 0);
 		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);
+	}
+
+	private List<String> getNames() throws IOException {
+		// ::comment when JAVA8
+		// The JS build has no class loader either: the names come from openiconic.js
+		if (TeaVM.isTeaVM() && TeaVM.isC() == false)
+			return OpenIconic.namesFromJs();
+		// ::done
+		final List<String> result = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(getResourceAllTxt()))) {
+			String s = null;
+			while ((s = br.readLine()) != null)
+				result.add(s);
+		}
+		return result;
 	}
 
 	private InputStream getResourceAllTxt() {
