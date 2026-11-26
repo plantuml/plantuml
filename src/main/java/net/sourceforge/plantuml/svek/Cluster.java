@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.UnaryOperator;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.CucaNote;
@@ -60,16 +60,20 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
+import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicNo;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
@@ -80,7 +84,9 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
+import net.sourceforge.plantuml.klimt.shape.UEmpty;
 import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -299,22 +305,14 @@ public class Cluster implements Moveable {
 	}
 
 	public void drawU(UGraphic ug) {
-		drawU(ug, UnaryOperator.identity());
-	}
-
-	/**
-	 * Lets the caller decorate or measure each label at its final position.
-	 * The wrapper receives titles, stereotypes, state descriptions and cluster notes.
-	 */
-	public void drawU(UGraphic ug, UnaryOperator<TextBlock> wrapLabel) {
 		if (group.isHidden())
 			return;
 
 		if (diagram.getPragma().isTrue(PragmaKey.KERMOR)) {
 			if (xyNoteTop != null)
-				wrapLabel.apply(getCucaNote(Position.TOP)).drawU(ug.apply(UTranslate.point(xyNoteTop)));
+				getCucaNote(Position.TOP).drawU(ug.apply(UTranslate.point(xyNoteTop)));
 			if (xyNoteBottom != null)
-				wrapLabel.apply(getCucaNote(Position.BOTTOM)).drawU(ug.apply(UTranslate.point(xyNoteBottom)));
+				getCucaNote(Position.BOTTOM).drawU(ug.apply(UTranslate.point(xyNoteBottom)));
 		}
 
 		final String fullName = group.getName();
@@ -352,18 +350,16 @@ public class Cluster implements Moveable {
 			ug.startUrl(url);
 
 		try {
-			if (entityPositionsExceptNormal().size() > 0)
-				manageEntryExitPoint(ug.getStringBounder());
+			fitToEntryExitPoints(ug.getStringBounder());
 
-			final TextBlock title = wrapLabel.apply(clusterHeader.getTitle());
 			if (skinParam.useSwimlanes(diagramType)) {
-				drawSwinLinesState(ug, borderColor, title);
+				drawSwinLinesState(ug, borderColor);
 				return;
 			}
 			final boolean isState = diagramType == DiagramType.STATE;
 
 			if (isState && group.getUSymbol() == null) {
-				drawUState(ug, rounded, shadowing, title, wrapLabel.apply(group.getStateDescription(skinParam)));
+				drawUState(ug, diagramType, rounded, shadowing);
 				return;
 			}
 			PackageStyle packageStyle = group.getPackageStyle();
@@ -377,7 +373,7 @@ public class Cluster implements Moveable {
 					skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(), group.getGroupType());
 
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
-					title, wrapLabel.apply(clusterHeader.getStereo()), rectangleArea, stroke);
+					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
 //			final HorizontalAlignment horizontalAlignment = skinParam
 //			.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
 			final HorizontalAlignment horizontalAlignment = clusterHeader.getTitleHorizontalAlignment();
@@ -419,6 +415,16 @@ public class Cluster implements Moveable {
 		return style.getStroke();
 	}
 
+	/**
+	 * Moves the frame onto the entry and exit points that sit on its border.
+	 * Drawing does this as well. A caller that needs the final frame before
+	 * anything is drawn can ask for it here.
+	 */
+	public void fitToEntryExitPoints(StringBounder stringBounder) {
+		if (entityPositionsExceptNormal().size() > 0)
+			manageEntryExitPoint(stringBounder);
+	}
+
 	void manageEntryExitPoint(StringBounder stringBounder) {
 		final Collection<RectangleArea> insides = new ArrayList<>();
 		final List<XPoint2D> points = new ArrayList<>();
@@ -447,8 +453,8 @@ public class Cluster implements Moveable {
 		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);
 	}
 
-	private void drawSwinLinesState(UGraphic ug, HColor borderColor, TextBlock title) {
-		title.drawU(ug.apply(UTranslate.dx(xyTitle.x)));
+	private void drawSwinLinesState(UGraphic ug, HColor borderColor) {
+		clusterHeader.getTitle().drawU(ug.apply(UTranslate.dx(xyTitle.x)));
 
 		final ULine line = ULine.vline(rectangleArea.getHeight());
 		ug = ug.apply(borderColor);
@@ -459,7 +465,7 @@ public class Cluster implements Moveable {
 
 	// GroupPngMakerState
 
-	private void drawUState(UGraphic ug, double rounded, double shadowing, TextBlock title, TextBlock attribute) {
+	private void drawUState(UGraphic ug, DiagramType diagramType, double rounded, double shadowing) {
 
 		HColor borderColor = group.getColors().getColor(ColorType.LINE);
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
@@ -485,6 +491,7 @@ public class Cluster implements Moveable {
 					.value(PName.BackGroundColor).asColor(colorSet);
 		}
 
+		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
 		if (rectangleArea.getDimension().getWidth() == 0) {
 			System.err.println("Cluster::drawUState issue");
@@ -499,26 +506,34 @@ public class Cluster implements Moveable {
 
 		final double descriptionHeight = attributeHeight + (attributeHeight > 0 ? IEntityImage.MARGIN : 0);
 
-		final double nameHeight = title.calculateDimension(ug.getStringBounder()).getHeight() + IEntityImage.MARGIN;
+		final double nameHeight = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()
+				+ IEntityImage.MARGIN;
 
 		final RoundedContainer r = new RoundedContainer(borderColor, rectangleArea.getDimension(), nameHeight,
 				descriptionHeight, northBackcolor, centerBackColor, southBackcolor, stroke, rounded, shadowing);
 
 		r.drawU(ug.apply(rectangleArea.getPosition()));
 
-		clusterHeader.getTitleHorizontalAlignment().draw(
-				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), title,
-				IEntityImage.MARGIN, 0, rectangleArea.getWidth());
-
-		if (attributeHeight > 0)
-			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,
-					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));
+		drawStateHeader(ug, clusterHeader.getTitle(), attribute);
 
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 		if (withSymbol)
 			EntityImageState.drawSymbol(ug.apply(borderColor), rectangleArea.getMaxX(), rectangleArea.getMaxY());
 
+	}
+
+	private void drawStateHeader(UGraphic ug, TextBlock title, TextBlock attribute) {
+		final StringBounder stringBounder = ug.getStringBounder();
+		final double nameHeight = title.calculateDimension(stringBounder).getHeight() + IEntityImage.MARGIN;
+
+		clusterHeader.getTitleHorizontalAlignment().draw(
+				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), title,
+				IEntityImage.MARGIN, 0, rectangleArea.getWidth());
+
+		if (attribute.calculateDimension(stringBounder).getHeight() > 0)
+			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,
+					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));
 	}
 
 	public void setPosition(XPoint2D min, XPoint2D max) {
@@ -732,6 +747,96 @@ public class Cluster implements Moveable {
 
 	public XDimension2D getTitleDimension(StringBounder stringBounder) {
 		return clusterHeader.getTitle().calculateDimension(stringBounder);
+	}
+
+	/**
+	 * The areas of the title, the stereotype and the state description, for
+	 * those that paint something. The frame itself is not part of them.
+	 */
+	public List<RectangleArea> getHeaderAreas(StringBounder stringBounder) {
+		final List<RectangleArea> result = new ArrayList<>();
+		if (rectangleArea == null || skinParam.useSwimlanes(diagram.getDiagramType()))
+			return result;
+
+		final HeaderFinder finder = new HeaderFinder(stringBounder, UTranslate.none(), result, new AtomicBoolean());
+		final TextBlock title = finder.probe(clusterHeader.getTitle());
+		if (diagram.getDiagramType() == DiagramType.STATE && group.getUSymbol() == null) {
+			if (xyTitle != null)
+				drawStateHeader(finder, title, finder.probe(group.getStateDescription(skinParam)));
+			return result;
+		}
+		PackageStyle packageStyle = group.getPackageStyle();
+		if (packageStyle == null)
+			packageStyle = skinParam.packageStyle();
+
+		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), title,
+				finder.probe(clusterHeader.getStereo()), rectangleArea, UStroke.simple());
+		try {
+			decoration.drawU(finder, HColors.BLACK, HColors.BLACK, 0, 0, clusterHeader.getTitleHorizontalAlignment(),
+					skinParam.getStereotypeAlignment(), 0);
+		} catch (UnsupportedOperationException e) {
+			// A package style without a symbol draws no frame and no header either.
+		}
+		return result;
+	}
+
+	// Follows the UTranslate of a drawing to learn where it puts the blocks
+	// it has been given, without painting anything itself.
+	private static final class HeaderFinder extends UGraphicNo {
+		private final List<RectangleArea> areas;
+		private final AtomicBoolean painted;
+
+		HeaderFinder(StringBounder stringBounder, UTranslate translate, List<RectangleArea> areas,
+				AtomicBoolean painted) {
+			super(stringBounder, translate);
+			this.areas = areas;
+			this.painted = painted;
+		}
+
+		@Override
+		public UGraphic apply(UChange change) {
+			if (change instanceof UTranslate)
+				return new HeaderFinder(getStringBounder(), getTranslate().compose((UTranslate) change), areas, painted);
+			return this;
+		}
+
+		// A raster sprite asks for it before it draws its image.
+		@Override
+		public ColorMapper getColorMapper() {
+			return ColorMapper.IDENTITY;
+		}
+
+		@Override
+		public void draw(UShape shape) {
+			final boolean blank = shape instanceof UEmpty || shape instanceof UComment
+					|| (shape instanceof UText && ((UText) shape).getText().trim().isEmpty());
+			if (blank == false)
+				painted.set(true);
+		}
+
+		TextBlock probe(final TextBlock block) {
+			return new TextBlock() {
+				@Override
+				public XDimension2D calculateDimension(StringBounder stringBounder) {
+					return block.calculateDimension(stringBounder);
+				}
+
+				// A hidden stereotype still has a size. Only keep a block that shows something.
+				@Override
+				public void drawU(UGraphic ug) {
+					if (ug instanceof HeaderFinder == false)
+						return;
+					painted.set(false);
+					block.drawU(ug);
+					if (painted.get() == false)
+						return;
+					final XDimension2D dim = calculateDimension(ug.getStringBounder());
+					final UTranslate position = ((HeaderFinder) ug).getTranslate();
+					areas.add(new RectangleArea(position.getDx(), position.getDy(), position.getDx() + dim.getWidth(),
+							position.getDy() + dim.getHeight()));
+				}
+			};
+		}
 	}
 
 	public MagneticBorder getMagneticBorder() {

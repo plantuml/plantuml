@@ -273,7 +273,8 @@ class SmetanaOrthogonalTest {
 	}
 
 	private static Rectangle2D textBounds(Element text) {
-		final double height = Double.parseDouble(text.getAttribute("font-size"));
+		// The line box of the default font starts 0.93 em above the baseline.
+		final double height = 0.93 * Double.parseDouble(text.getAttribute("font-size"));
 		return new Rectangle2D.Double(Double.parseDouble(text.getAttribute("x")),
 				Double.parseDouble(text.getAttribute("y")) - height, Double.parseDouble(text.getAttribute("textLength")),
 				height);

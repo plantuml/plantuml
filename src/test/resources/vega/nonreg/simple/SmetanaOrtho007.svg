@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="211px" preserveAspectRatio="none" style="width:118px;height:211px;background:#FFFFFF;" version="1.1" viewBox="0 0 118 211" width="118px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Composite-->
+    <g class="cluster" data-qualified-name="Composite" data-source-line="16" id="ent0001">
+      <path d="M26.5,79 L92.5,79 A12.5,12.5 0 0 1 105,91.5 L105,98 L14,98 L14,91.5 A12.5,12.5 0 0 1 26.5,79" fill="#F1F1F1"/>
+      <rect fill="none" height="108" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="91" x="14" y="79"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="105" y1="98" y2="98"/>
+      <image height="9" width="9" x="21.724" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAcklEQVR4XmP4//8/Awjr6upeZGBg+A/DHR0dZTA5MGFsbHyGlZX1F7IiPj6+j62trVVgRSAT0BXAsKio6CuoDZiSWDCGADaMIYCJQb7g5+f/gCEBxA4ODvtB8mDfgXwBciSyAnt7+wPbtm3zhAcBoXACALTjc777q9k3AAAAAElFTkSuQmCC" y="89.385"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="30.339" y="94.889">Composite</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="21" id="ent0005">
+      <ellipse cx="59" cy="14" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="10.938" x="53.531" y="57.889">in</text>
+    <ellipse cx="59" cy="79" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <g class="entity" data-qualified-name="Composite.Inner" data-source-line="18" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="51.85" x="33" y="121"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="33" x2="84.85" y1="145" y2="145"/>
+      <text fill="#000" font-size="14" textLength="31.85" x="43" y="136.889">Inner</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="59,120.796,63,111.796,59,115.796,55,111.796,59,120.796" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64.657,81 C64.657,81 97.776,81 97.776,81 C97.776,81 97.776,111.796 97.776,111.796 C97.776,111.796 59,111.796 59,111.796 C59,111.796 59,115.796 59,115.796" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="59,73,63,64,59,68,55,64,59,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M59,24.026 C59,24.026 59,68 59,68" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>
