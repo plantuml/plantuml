@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.CucaNote;
@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicNo;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -85,6 +86,8 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.UEmpty;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.skin.AlignmentParam;
@@ -762,7 +765,8 @@ public class Cluster implements Moveable {
 		if (rectangleArea == null)
 			return result;
 
-		final HeaderFinder finder = new HeaderFinder(stringBounder, UTranslate.none(), result, new AtomicBoolean());
+		final HeaderFinder finder = new HeaderFinder(stringBounder, UTranslate.none(), result,
+				new AtomicReference<LimitFinder>());
 		final TextBlock title = finder.probe(clusterHeader.getTitle());
 		if (skinParam.useSwimlanes(diagram.getDiagramType())) {
 			if (xyTitle != null)
@@ -789,23 +793,25 @@ public class Cluster implements Moveable {
 		return result;
 	}
 
-	// Follows the UTranslate of a drawing to learn where it puts the blocks
-	// it has been given, without painting anything itself.
+	// Follows the UTranslate of a drawing to learn where the blocks it has
+	// been given paint something, without painting anything itself.
 	private static final class HeaderFinder extends UGraphicNo {
 		private final List<RectangleArea> areas;
-		private final AtomicBoolean painted;
+		// The painted bounds of the block being probed. Empty outside of one,
+		// so that the frame of the cluster is not recorded.
+		private final AtomicReference<LimitFinder> probing;
 
 		HeaderFinder(StringBounder stringBounder, UTranslate translate, List<RectangleArea> areas,
-				AtomicBoolean painted) {
+				AtomicReference<LimitFinder> probing) {
 			super(stringBounder, translate);
 			this.areas = areas;
-			this.painted = painted;
+			this.probing = probing;
 		}
 
 		@Override
 		public UGraphic apply(UChange change) {
 			if (change instanceof UTranslate)
-				return new HeaderFinder(getStringBounder(), getTranslate().compose((UTranslate) change), areas, painted);
+				return new HeaderFinder(getStringBounder(), getTranslate().compose((UTranslate) change), areas, probing);
 			return this;
 		}
 
@@ -815,12 +821,30 @@ public class Cluster implements Moveable {
 			return ColorMapper.IDENTITY;
 		}
 
+		// Blank lines and hidden blocks have a size, but they paint nothing.
 		@Override
 		public void draw(UShape shape) {
-			final boolean blank = shape instanceof UEmpty || shape instanceof UComment
-					|| (shape instanceof UText && ((UText) shape).getText().trim().isEmpty());
-			if (blank == false)
-				painted.set(true);
+			final LimitFinder limits = probing.get();
+			if (limits == null || shape instanceof UEmpty || shape instanceof UComment
+					|| (shape instanceof UText && ((UText) shape).getText().trim().isEmpty()))
+				return;
+
+			final UGraphic at = limits.apply(getTranslate());
+			if (shape instanceof UImage) {
+				// The dimensions of a UImage are its last pixel coordinates.
+				final UImage image = (UImage) shape;
+				at.draw(new UEmpty(image.getWidth() + 1, image.getHeight() + 1));
+			} else if (shape instanceof UImageSvg) {
+				final UImageSvg image = (UImageSvg) shape;
+				if (image.getWidth() > 0 && image.getHeight() > 0)
+					at.draw(new UEmpty(image.getWidth(), image.getHeight()));
+			} else {
+				try {
+					at.draw(shape);
+				} catch (UnsupportedOperationException e) {
+					// A shape without known bounds cannot be routed around.
+				}
+			}
 		}
 
 		TextBlock probe(final TextBlock block) {
@@ -830,19 +854,19 @@ public class Cluster implements Moveable {
 					return block.calculateDimension(stringBounder);
 				}
 
-				// A hidden stereotype still has a size. Only keep a block that shows something.
 				@Override
 				public void drawU(UGraphic ug) {
-					if (ug instanceof HeaderFinder == false)
-						return;
-					painted.set(false);
-					block.drawU(ug);
-					if (painted.get() == false)
-						return;
-					final XDimension2D dim = calculateDimension(ug.getStringBounder());
-					final UTranslate position = ((HeaderFinder) ug).getTranslate();
-					areas.add(new RectangleArea(position.getDx(), position.getDy(), position.getDx() + dim.getWidth(),
-							position.getDy() + dim.getHeight()));
+					final LimitFinder limits = LimitFinder.create(ug.getStringBounder(), false);
+					probing.set(limits);
+					try {
+						block.drawU(ug);
+					} finally {
+						probing.set(null);
+					}
+					// The raw limits tell a block that painted nothing from a point at the origin.
+					if (limits.getMinX() <= limits.getMaxX() && limits.getMinY() <= limits.getMaxY())
+						areas.add(new RectangleArea(limits.getMinX(), limits.getMinY(), limits.getMaxX(),
+								limits.getMaxY()));
 				}
 			};
 		}
