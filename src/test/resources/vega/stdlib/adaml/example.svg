@@ -92,34 +92,34 @@
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="29.25" x="388.5" y="267.333">starts</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk14">
-      <polygon fill="#000" points="182.42,475.653,180.984,465.909,179.745,471.429,174.226,470.19,182.42,475.653" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="182.42,475.653,180.984,465.909,179.745,471.429,174.226,470.19,182.42,475.653" style="stroke:#000;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M153.5,88.25 C153.5,121.893 153.5,172.762 153.5,217 C153.5,217 153.5,217 153.5,394 C153.5,424.509 167.651,452.334 179.745,471.429" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="19.35" x="157.5" y="310.333">see</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk15">
-      <polygon fill="#000" points="68.828,199.881,74.646,191.934,69.889,194.995,66.828,190.237,68.828,199.881" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="68.828,199.881,74.646,191.934,69.889,194.995,66.828,190.237,68.828,199.881" style="stroke:#000;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M138.71,63.677 C127.414,74.053 112.188,89.642 102.5,106 C84.385,136.586 74.807,172.339 69.889,194.995" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="28.05" x="107.138" y="119.333">plays</text>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" x="117.15" y="131.333">&amp;</text>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="29.325" x="106.5" y="143.333">tunes</text>
     </g>
     <g class="link" data-entity-1="ent0004" data-entity-2="ent0009" data-link-type="dependency" id="lnk16">
-      <polygon fill="#000" points="350.838,291.94,344.255,284.614,346.273,289.898,340.989,291.917,350.838,291.94" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="350.838,291.94,344.255,284.614,346.273,289.898,340.989,291.917,350.838,291.94" style="stroke:#000;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M255.895,236.175 C271.959,247.594 294.002,262.54 314.5,274 C326.047,280.456 334.567,284.662 346.273,289.898" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="58.65" x="318.5" y="267.333">commands</text>
     </g>
     <g class="link" data-entity-1="ent0009" data-entity-2="ent0011" data-link-type="dependency" id="lnk17">
-      <polygon fill="#000" points="419.767,579.904,429.585,579.13,424.162,577.521,425.772,572.098,419.767,579.904" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="419.767,579.904,429.585,579.13,424.162,577.521,425.772,572.098,419.767,579.904" style="stroke:#000;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M419.886,322.037 C443.15,333.349 471.744,351.729 485.5,378 C491.685,389.812 487.31,394.79 485.5,408 C475.855,478.405 487.366,506.892 442.5,562 C436.458,569.421 432.637,572.926 424.162,577.521" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="49.35" x="486.5" y="445.333">manages</text>
     </g>
     <g class="link" data-entity-1="ent0009" data-entity-2="ent0010" data-link-type="dependency" id="lnk18">
-      <polygon fill="#000" points="392.615,478.892,401.697,475.082,396.043,475.252,395.873,469.597,392.615,478.892" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="392.615,478.892,401.697,475.082,396.043,475.252,395.873,469.597,392.615,478.892" style="stroke:#000;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M397.057,322.312 C400.857,327.522 404.54,333.69 406.5,340 C422.056,390.084 424.695,408.813 406.5,458 C403.612,465.806 401.547,469.406 396.043,475.252" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="55.35" x="422.5" y="396.333">configures</text>
     </g>
     <g class="link" data-entity-1="ent0009" data-entity-2="ent0008" data-link-type="dependency" id="lnk19">
-      <polygon fill="#000" points="340.196,377.984,341.479,368.219,338.778,373.189,333.807,370.488,340.196,377.984" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="340.196,377.984,341.479,368.219,338.778,373.189,333.807,370.488,340.196,377.984" style="stroke:#000;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M356.937,322.016 C350.361,326.775 344.186,332.761 340.5,340 C334.491,351.8 335.544,362.259 338.778,373.189" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="58.65" x="344.5" y="353.333">commands</text>
     </g>
@@ -138,7 +138,7 @@
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="51.75" x="383.5" y="555.333">samples &gt;</text>
     </g>
     <g class="link" data-entity-1="ent0011" data-entity-2="ent0005" data-link-type="dependency" id="lnk23">
-      <polygon fill="#000" points="200.151,671.893,209.998,672.089,204.76,669.954,206.895,664.716,200.151,671.893" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="200.151,671.893,209.998,672.089,204.76,669.954,206.895,664.716,200.151,671.893" style="stroke:#000;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M346.935,610.125 C307.57,626.69 246.955,652.198 204.76,669.954" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
       <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="25.425" x="294.5" y="647.333">ADC</text>
     </g>

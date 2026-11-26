@@ -2,7 +2,7 @@
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <!--class A-->
-    <g class="entity" data-qualified-name="A" data-source-line="8" id="ent0001">
+    <g class="entity" data-qualified-name="A" data-source-line="9" id="ent0001">
       <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="30" y="12"/>
       <ellipse cx="45" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000" font-family="monospace" font-size="14" x="40" y="33">C</text>
@@ -11,7 +11,7 @@
       <line style="stroke:#181818;stroke-width:0.5;" x1="31" x2="70.363" y1="52" y2="52"/>
     </g>
     <!--class B-->
-    <g class="entity" data-qualified-name="B" data-source-line="9" id="ent0002">
+    <g class="entity" data-qualified-name="B" data-source-line="10" id="ent0002">
       <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="96"/>
       <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
@@ -20,7 +20,7 @@
       <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="136" y2="136"/>
     </g>
     <!--class C-->
-    <g class="entity" data-qualified-name="C" data-source-line="10" id="ent0003">
+    <g class="entity" data-qualified-name="C" data-source-line="11" id="ent0003">
       <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="29.5" y="180"/>
       <ellipse cx="44.5" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000" font-family="monospace" font-size="14" x="39.5" y="201">C</text>
@@ -29,16 +29,16 @@
       <line style="stroke:#181818;stroke-width:0.5;" x1="30.5" x2="70.65" y1="220" y2="220"/>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
-      <polygon fill="#F00" points="33.247,95.947,39.614,88.433,34.652,91.148,31.936,86.186,33.247,95.947" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M43.687,60.279 C40.416,71.453 37.914,80.003 34.652,91.148" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <polygon fill="#F00" points="33.247,95.947,39.614,88.433,34.652,91.148,31.936,86.186,33.247,95.947" style="stroke:#F00;stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M43.687,60.279 C40.416,71.453 37.914,80.003 34.652,91.148" fill="none" style="stroke:#00F;stroke-width:3;"/>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="extension" id="lnk5">
-      <polygon fill="none" points="53.41,179.783,61.382,162.565,49.457,161.226,53.41,179.783" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M53.41,60.217 C54.629,71.068 55.9,84.175 56.5,96 C57.581,117.306 57.581,122.694 56.5,144 C55.9,155.825 56.638,151.045 55.419,161.896" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <polygon fill="none" points="53.41,179.783,61.382,162.565,49.457,161.226,53.41,179.783" style="stroke:#F00;stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53.41,60.217 C54.629,71.068 55.9,84.175 56.5,96 C57.581,117.306 57.581,122.694 56.5,144 C55.9,155.825 56.638,151.045 55.419,161.896" fill="none" style="stroke:#00F;stroke-width:3;"/>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
-      <polygon fill="#008000" points="43.753,179.947,45.064,170.186,42.348,175.148,37.386,172.433,43.753,179.947" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M33.313,144.279 C36.584,155.453 39.086,164.003 42.348,175.148" fill="none" style="stroke:#008000;stroke-width:1;"/>
+      <polygon fill="#008000" points="43.753,179.947,45.064,170.186,42.348,175.148,37.386,172.433,43.753,179.947" style="stroke:#008000;stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M33.313,144.279 C36.584,155.453 39.086,164.003 42.348,175.148" fill="none" style="stroke:#008000;stroke-width:3;"/>
     </g>
   </g>
 </svg>

@@ -444,7 +444,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		}
 		// Filled decorations take the connector color as their fill.
 		// Hollow ones keep the transparent background of the connector.
-		UGraphic ugHead = ug.apply(headColor);
+		UGraphic ugHead = ug.apply(headColor).apply(stroke.onlyThickness());
 		if (decor.isFill())
 			ugHead = ugHead.apply(color.bg());
 		extremity.drawU(ugHead);
