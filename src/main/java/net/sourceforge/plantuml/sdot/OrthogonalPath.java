@@ -62,7 +62,9 @@ final class OrthogonalPath {
 	private static final double STRAIGHT_TOLERANCE = 1.5;
 	private static final double LOCAL_SEARCH_MARGIN = 72;
 	private static final double OUTER_SEARCH_MARGIN = 24;
-	private static final int SEARCH_BUDGET = 2_000_000;
+	// Counted in scanned obstacles and tracks. A second handles about 200 million.
+	private static final long EDGE_BUDGET = 2_000_000;
+	private static final long DIAGRAM_BUDGET = 100_000_000;
 
 	private static final SearchAttempt[] SEARCH_ATTEMPTS = {
 			new SearchAttempt(16, NODE_GAP),
@@ -75,11 +77,14 @@ final class OrthogonalPath {
 	}
 
 	/**
-	 * Finds an orthogonal route within a shared budget for all search attempts.
+	 * Finds an orthogonal route within the budget that all edges of a diagram share.
 	 * A null result leaves the original Smetana spline available to the caller.
 	 */
 	static DotPath route(DotPath spline, Endpoint tail, Endpoint head, List<RectangleArea> nodes,
-			List<RectangleArea> usedTracks) {
+			List<RectangleArea> usedTracks, SearchBudget budget) {
+		budget.startEdge();
+		if (budget.exhausted())
+			return null;
 		final XPoint2D start = spline.getStartPoint();
 		final XPoint2D end = spline.getEndPoint();
 		final List<RectangleArea> obstacles = new ArrayList<>(nodes);
@@ -89,7 +94,6 @@ final class OrthogonalPath {
 		final MinMax original = spline.getMinMax();
 		final RectangleArea originalBounds = new RectangleArea(original.getMinX(), original.getMinY(),
 				original.getMaxX(), original.getMaxY());
-		final SearchBudget budget = new SearchBudget();
 		final List<Port> targets = head.ports(end, spline.getEndAngle() + Math.PI);
 		for (Port from : tail.ports(start, spline.getStartAngle()))
 			for (Port to : targets) {
@@ -102,8 +106,9 @@ final class OrthogonalPath {
 
 	private static DotPath route(RectangleArea originalBounds, Port from, Port to, List<RectangleArea> obstacles,
 			List<RectangleArea> usedTracks, SearchBudget budget) {
+		budget.spend(obstacles.size() + usedTracks.size());
 		final DotPath straight = tryStraight(from, to, obstacles, usedTracks);
-		if (straight != null)
+		if (straight != null || budget.exhausted())
 			return straight;
 
 		// Search near the original edge first, so a small local reroute does not consider
@@ -112,6 +117,7 @@ final class OrthogonalPath {
 				budget);
 		if (local != null || budget.exhausted())
 			return local;
+		budget.spend(obstacles.size());
 		return search(expand(enclosing(originalBounds, obstacles), OUTER_SEARCH_MARGIN), from, to, obstacles, usedTracks,
 				budget);
 	}
@@ -148,7 +154,8 @@ final class OrthogonalPath {
 		// Shorten the terminal runs before narrowing the clearance to half
 		// a pixel, the space needed on either side of a one-pixel stroke.
 		for (SearchAttempt attempt : SEARCH_ATTEMPTS) {
-			if (budget.exhausted())
+			// Checking both stems and building the grid scans every obstacle and track.
+			if (budget.spend(3 * obstacles.size() + usedTracks.size()) == false)
 				break;
 			// Share the available space between opposing ports so neither
 			// stem can force the middle of the path to double back.
@@ -533,18 +540,36 @@ final class OrthogonalPath {
 		}
 	}
 
-	// Each expansion can scan every obstacle and used track. Bound their
-	// combined cost across retries so crowded diagrams can fall back promptly.
-	private static final class SearchBudget {
-		private int remaining = SEARCH_BUDGET;
+	/**
+	 * Bounds the routing work of a whole diagram, counted in scanned obstacles
+	 * and tracks. A single edge only gets a share of it, so that one crowded
+	 * edge cannot use up what the edges after it need. An edge that finds its
+	 * share spent keeps its spline.
+	 */
+	static final class SearchBudget {
+		private long diagram;
+		private long edge;
 
-		boolean spend(int amount) {
-			remaining -= amount;
-			return remaining >= 0;
+		SearchBudget() {
+			this(DIAGRAM_BUDGET);
 		}
 
-		boolean exhausted() {
-			return remaining <= 0;
+		SearchBudget(long diagram) {
+			this.diagram = diagram;
+		}
+
+		private void startEdge() {
+			edge = Math.min(diagram, EDGE_BUDGET);
+		}
+
+		private boolean spend(long amount) {
+			diagram -= amount;
+			edge -= amount;
+			return edge >= 0;
+		}
+
+		private boolean exhausted() {
+			return edge <= 0;
 		}
 	}
 

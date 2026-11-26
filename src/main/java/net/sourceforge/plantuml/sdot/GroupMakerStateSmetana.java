@@ -78,11 +78,14 @@ public final class GroupMakerStateSmetana {
 	private final CucaDiagram diagram;
 	private final Entity group;
 	private final StringBounder stringBounder;
+	private final OrthogonalPath.SearchBudget budget;
 
-	public GroupMakerStateSmetana(CucaDiagram diagram, Entity group, StringBounder stringBounder) {
+	GroupMakerStateSmetana(CucaDiagram diagram, Entity group, StringBounder stringBounder,
+			OrthogonalPath.SearchBudget budget) {
 		this.diagram = diagram;
 		this.group = group;
 		this.stringBounder = stringBounder;
+		this.budget = budget;
 		if (group.isGroup() == false)
 			throw new IllegalArgumentException();
 	}
@@ -130,7 +133,7 @@ public final class GroupMakerStateSmetana {
 	}
 
 	private IEntityImage subLayout() {
-		final CucaDiagramFileMakerSmetana maker = new CucaDiagramFileMakerSmetana(diagram, group);
+		final CucaDiagramFileMakerSmetana maker = new CucaDiagramFileMakerSmetana(diagram, group, budget);
 		return maker.getImage(stringBounder);
 	}
 

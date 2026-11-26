@@ -232,7 +232,8 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	 * Orthogonal runs become tracks that subsequent edges can route alongside.
 	 */
 	DotPath routeOrthogonally(StringBounder stringBounder, Map<Entity, RectangleArea> nodeAreas,
-			List<RectangleArea> nodes, List<RectangleArea> clusters, List<RectangleArea> usedTracks) {
+			List<RectangleArea> nodes, List<RectangleArea> clusters, List<RectangleArea> usedTracks,
+			OrthogonalPath.SearchBudget budget) {
 		final DotPath spline = getDisplayedPath(stringBounder);
 		if (spline == null)
 			return null;
@@ -247,7 +248,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 				stringBounder);
 		final OrthogonalPath.Endpoint head = endpoint(target, nodeAreas.get(target), link.getType().getDecor1(),
 				stringBounder);
-		orthogonalPath = OrthogonalPath.route(spline, tail, head, obstacles, usedTracks);
+		orthogonalPath = OrthogonalPath.route(spline, tail, head, obstacles, usedTracks, budget);
 		if (orthogonalPath == null)
 			return spline;
 		for (XCubicCurve2D segment : orthogonalPath.getBeziers())

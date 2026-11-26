@@ -1,0 +1,27 @@
+---
+output: svg
+expected-description: (3 entities)
+---
+@startuml
+!pragma layout smetana
+!pragma smetana_ortho
+skinparam linetype ortho
+
+' A raster sprite in the title of a composite state.
+sprite $dot [8x8/16] {
+00FFFF00
+0FFFFFF0
+FFFFFFFF
+FFFFFFFF
+FFFFFFFF
+FFFFFFFF
+0FFFFFF0
+00FFFF00
+}
+state "<$dot> Composite" as Composite {
+	state in <<entryPoint>>
+	state Inner
+	in --> Inner
+}
+[*] --> in
+@enduml

@@ -59,14 +59,14 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 // diagrams keep their current (unchanged) behavior.
 public final class CucaDiagramSimplifierStateSmetana {
 
-	public void simplify(CucaDiagram diagram, StringBounder stringBounder) {
+	void simplify(CucaDiagram diagram, StringBounder stringBounder, OrthogonalPath.SearchBudget budget) {
 		boolean changed;
 		do {
 			changed = false;
 			final Collection<Entity> groups = getOrdered(diagram.getRootGroup());
 			for (Entity g : groups)
 				if (g.isAutarkic()) {
-					final GroupMakerStateSmetana maker = new GroupMakerStateSmetana(diagram, g, stringBounder);
+					final GroupMakerStateSmetana maker = new GroupMakerStateSmetana(diagram, g, stringBounder, budget);
 					final IEntityImage img = maker.getImage();
 					g.overrideImage(img, g.getGroupType() == GroupType.CONCURRENT_STATE ? LeafType.STATE_CONCURRENT
 							: LeafType.STATE);

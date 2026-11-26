@@ -74,15 +74,11 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
-import net.sourceforge.plantuml.klimt.UChange;
-import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -96,11 +92,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.klimt.shape.UEmpty;
 import net.sourceforge.plantuml.klimt.shape.UHidden;
-import net.sourceforge.plantuml.klimt.shape.UImage;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
-import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -140,14 +132,17 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	private final Rankdir rankdir;
 
 	private final Entity root;
+	// Shared with the nested layouts of composite states.
+	private final OrthogonalPath.SearchBudget budget;
 
 	public CucaDiagramFileMakerSmetana(CucaDiagram diagram) {
-		this(diagram, diagram.getRootGroup());
+		this(diagram, diagram.getRootGroup(), new OrthogonalPath.SearchBudget());
 	}
 
-	public CucaDiagramFileMakerSmetana(CucaDiagram diagram, Entity root) {
+	CucaDiagramFileMakerSmetana(CucaDiagram diagram, Entity root, OrthogonalPath.SearchBudget budget) {
 		super(diagram, root);
 		this.root = root;
+		this.budget = budget;
 		this.rankdir = diagram.getSkinParam().getRankdir();
 
 	}
@@ -224,12 +219,19 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		private final MinMaxMutable minMax;
 		private final double canvasMargin;
 		private MinMax measuredMinMax;
-		private StringBounder routedFor;
 
 		public Drawing(double canvasMargin) {
 			this.minMax = getSmetanaMinMax();
 			this.ymirror = new YMirror(minMax.getMaxY() + 6);
 			this.canvasMargin = canvasMargin;
+		}
+
+		// Builds the edges and routes them once, so that measuring and drawing
+		// only read the result.
+		void prepareEdges(StringBounder stringBounder) {
+			makeEdges(stringBounder);
+			if (isOrthogonal())
+				routeOrthogonalEdges(stringBounder);
 		}
 
 		private UTranslate getBaselineTranslate() {
@@ -264,8 +266,6 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 
 		private void makeEdges(StringBounder stringBounder) {
-			smetanaPathes.clear();
-
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
 				final Link link = ent.getKey();
 				if (link.isInvis())
@@ -284,41 +284,20 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 
 		// The caller supplies the drawing origin, both for measurement and for
-		// the actual rendering. Routes and label positions use diagram coordinates.
+		// the actual rendering.
 		private void drawContent(UGraphic ug) {
-			final StringBounder stringBounder = ug.getStringBounder();
-			final boolean orthogonal = isOrthogonal();
-			// Measurement and rendering can share the same routes when their
-			// text metrics match. Edges copy the path before painting decorations.
-			final boolean reroute = orthogonal && routedFor != stringBounder;
-			if (orthogonal == false || reroute)
-				makeEdges(stringBounder);
-
-			// A cluster with entry or exit points derives its frame from their
-			// positions, which the routes around that frame rely on.
-			if (reroute)
-				for (Map.Entry<Entity, ST_Agnode_s> ent : nodes.entrySet())
-					moveToLayoutPosition(ent.getKey(), ent.getValue());
-
-			final ClusterHeaderBounds clusterHeaders = reroute ? new ClusterHeaderBounds() : null;
 			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet())
-				drawGroup(ug, ymirror, ent.getKey(), ent.getValue(), clusterHeaders);
+				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());
 
 			for (Map.Entry<Entity, ST_Agnode_s> ent : nodes.entrySet()) {
-				final Entity leaf = ent.getKey();
-				final XPoint2D corner = moveToLayoutPosition(leaf, ent.getValue());
+				final XPoint2D corner = moveToLayoutPosition(ent.getKey(), ent.getValue());
 
-				final SvekNode node = getBibliotekon().getNode(leaf);
+				final SvekNode node = getBibliotekon().getNode(ent.getKey());
 				final IEntityImage image = node.getImage();
 				// Same as SvekResult on the dot pipeline: 'hide' (as opposed to 'remove')
 				// keeps the node in the layout but must not paint it.
 				final UGraphic ugNode = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
 				image.drawU(ugNode.apply(UTranslate.point(corner)));
-			}
-
-			if (clusterHeaders != null) {
-				routeOrthogonalEdges(stringBounder, clusterHeaders.bounds);
-				routedFor = stringBounder;
 			}
 
 			for (Entry<Link, SmetanaEdge> ent : smetanaPathes.entrySet())
@@ -334,34 +313,39 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			return corner;
 		}
 
-		// Route after drawing the groups so their frames and header positions
-		// are final. Keep layout coordinates here so the measured and rendered
-		// diagrams can use the same routes at different drawing origins.
-		private void routeOrthogonalEdges(StringBounder stringBounder, List<RectangleArea> clusterHeaders) {
+		// Routes and label positions use layout coordinates, so the measured and
+		// the rendered diagram share them at different drawing origins.
+		private void routeOrthogonalEdges(StringBounder stringBounder) {
 			final Map<Entity, RectangleArea> nodeAreas = new LinkedHashMap<>();
-			final List<RectangleArea> obstacles = new ArrayList<>(clusterHeaders);
-			for (Entity entity : nodes.keySet()) {
+			final List<RectangleArea> obstacles = new ArrayList<>();
+			for (Map.Entry<Entity, ST_Agnode_s> ent : nodes.entrySet()) {
+				final Entity entity = ent.getKey();
+				// The frame of a cluster with entry or exit points follows their positions.
+				moveToLayoutPosition(entity, ent.getValue());
 				final SvekNode node = getBibliotekon().getNode(entity);
 				final RectangleArea area = node.getRectangleArea();
 				nodeAreas.put(entity, area);
 				if (node.isHidden() == false)
 					obstacles.add(area);
 			}
-			final OrthogonalLabelPlacement placement = new OrthogonalLabelPlacement(obstacles);
 			final List<RectangleArea> clusterAreas = new ArrayList<>();
 			final List<RectangleArea> usedTracks = new ArrayList<>();
-			for (Entity entity : clusters.keySet()) {
-				final RectangleArea area = getBibliotekon().getCluster(entity).getRectangleArea();
-				if (area != null) {
-					nodeAreas.put(entity, area);
-					if (entity.isHidden() == false) {
-						placement.addClusterBorder(area);
-						clusterAreas.add(area);
-						// An edge running along a border would disappear into it.
-						usedTracks.addAll(OrthogonalPath.sides(area));
-					}
-				}
+			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet()) {
+				final Entity entity = ent.getKey();
+				final Cluster cluster = placeGroup(stringBounder, ymirror, entity, ent.getValue());
+				cluster.fitToEntryExitPoints(stringBounder);
+				nodeAreas.put(entity, cluster.getRectangleArea());
+				if (entity.isHidden())
+					continue;
+				clusterAreas.add(cluster.getRectangleArea());
+				// An edge running along a border would disappear into it.
+				usedTracks.addAll(OrthogonalPath.sides(cluster.getRectangleArea()));
+				// The border remains traversable. Only the title is in the way.
+				obstacles.addAll(cluster.getHeaderAreas(stringBounder));
 			}
+			final OrthogonalLabelPlacement placement = new OrthogonalLabelPlacement(obstacles);
+			for (RectangleArea area : clusterAreas)
+				placement.addClusterBorder(area);
 
 			final Map<SmetanaEdge, DotPath> visiblePaths = new LinkedHashMap<>();
 			// Labels on both orthogonal routes and splines must clear every visible connector.
@@ -374,7 +358,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 					edge.reserveNoteConnector(placement);
 					continue;
 				}
-				final DotPath path = edge.routeOrthogonally(stringBounder, nodeAreas, obstacles, clusterAreas, usedTracks);
+				final DotPath path = edge.routeOrthogonally(stringBounder, nodeAreas, obstacles, clusterAreas, usedTracks,
+						budget);
 				if (path != null) {
 					visiblePaths.put(edge, path);
 					edge.reserveConnector(placement, path, stringBounder);
@@ -413,87 +398,6 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	}
 
-	/** Collects the painted bounds of group labels in diagram coordinates. */
-	private static final class ClusterHeaderBounds {
-		private final List<RectangleArea> bounds = new ArrayList<>();
-		private LimitFinder measuring;
-
-		TextBlock wrap(TextBlock label) {
-			return new TextBlock() {
-				@Override
-				public XDimension2D calculateDimension(StringBounder stringBounder) {
-					return label.calculateDimension(stringBounder);
-				}
-
-				@Override
-				public void drawU(UGraphic ug) {
-					final LimitFinder previous = measuring;
-					measuring = LimitFinder.create(ug.getStringBounder(), false);
-					try {
-						label.drawU(ug);
-						// The raw limits distinguish an empty block from a point at the origin.
-						final double minX = measuring.getMinX();
-						final double minY = measuring.getMinY();
-						final double maxX = measuring.getMaxX();
-						final double maxY = measuring.getMaxY();
-						if (minX <= maxX && minY <= maxY)
-							bounds.add(new RectangleArea(minX, minY, maxX, maxY));
-					} finally {
-						measuring = previous;
-					}
-				}
-			};
-		}
-
-		void record(UShape shape, UTranslate translate) {
-			if (measuring == null || shape instanceof UEmpty
-					|| shape instanceof UText && ((UText) shape).getText().trim().isEmpty())
-				return;
-
-			final UGraphic limits = measuring.apply(translate);
-			if (shape instanceof UImage) {
-				final UImage image = (UImage) shape;
-				// UImage dimensions are the last pixel coordinates.
-				limits.draw(new UEmpty(image.getWidth() + 1, image.getHeight() + 1));
-			} else if (shape instanceof UImageSvg) {
-				final UImageSvg image = (UImageSvg) shape;
-				if (image.getWidth() > 0 && image.getHeight() > 0)
-					limits.draw(new UEmpty(image.getWidth(), image.getHeight()));
-			} else {
-				try {
-					limits.draw(shape);
-				} catch (UnsupportedOperationException e) {
-					// A graphic without bounds can still be painted by its output driver.
-				}
-			}
-		}
-	}
-
-	// Track the translation while painting the cluster. Only the wrapped
-	// labels record bounds, so the cluster border remains traversable.
-	private static final class ClusterHeaderGraphic extends UGraphicDelegator {
-		private final UTranslate translate;
-		private final ClusterHeaderBounds headers;
-
-		ClusterHeaderGraphic(UGraphic ug, UTranslate translate, ClusterHeaderBounds headers) {
-			super(ug);
-			this.translate = translate;
-			this.headers = headers;
-		}
-
-		@Override
-		public UGraphic apply(UChange change) {
-			final UTranslate next = change instanceof UTranslate ? translate.compose((UTranslate) change) : translate;
-			return new ClusterHeaderGraphic(getUg().apply(change), next, headers);
-		}
-
-		@Override
-		public void draw(UShape shape) {
-			headers.record(shape, translate);
-			super.draw(shape);
-		}
-	}
-
 	// Duplicate GeneralImageBuilder
 	private boolean isOpalisable(Entity entity) {
 		if (entity.isGroup())
@@ -525,34 +429,37 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return single;
 	}
 
-	private void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr,
-			ClusterHeaderBounds clusterHeaders) {
+	private void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr) {
 		JUtils.LOG2("drawGroup");
 		try {
-			final ST_Agrec_s tmp1 = gr.data;
-			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) tmp1;
-			final BoxInfo boxInfo = BoxInfo.fromGraphInfo(data);
-			final XPoint2D upperRight = ymirror.getMirrored(boxInfo.getUpperRight());
-			final XPoint2D lowerLeft = ymirror.getMirrored(boxInfo.getLowerLeft());
-
-			final Cluster cluster = getBibliotekon().getCluster(group);
-			cluster.setPosition(upperRight, lowerLeft);
-
-			final XDimension2D dimTitle = cluster.getTitleDimension(ug.getStringBounder());
-			if (dimTitle != null) {
-				final double x = (upperRight.getX() + lowerLeft.getX()) / 2 - dimTitle.getWidth() / 2;
-				cluster.setTitlePosition(new XPoint2D(x, Math.min(upperRight.getY(), lowerLeft.getY())));
-			}
+			final Cluster cluster = placeGroup(ug.getStringBounder(), ymirror, group, gr);
 			JUtils.LOG2("cluster=" + cluster);
-			if (clusterHeaders == null)
-				cluster.drawU(ug);
-			else
-				cluster.drawU(new ClusterHeaderGraphic(ug, UTranslate.none(), clusterHeaders), clusterHeaders::wrap);
+			cluster.drawU(ug);
 			// ug.apply(new UTranslate(llx, lly)).apply(HColors.BLUE).draw(new
 			// URectangle(urx - llx, ury - lly));
 		} catch (Exception e) {
 			System.err.println("CANNOT DRAW GROUP");
 		}
+	}
+
+	// Drawing a cluster with entry or exit points moves its frame onto them.
+	// Start again from the layout each time, so that this happens only once.
+	private Cluster placeGroup(StringBounder stringBounder, YMirror ymirror, Entity group, ST_Agraph_s gr) {
+		final ST_Agrec_s tmp1 = gr.data;
+		final ST_Agraphinfo_t data = (ST_Agraphinfo_t) tmp1;
+		final BoxInfo boxInfo = BoxInfo.fromGraphInfo(data);
+		final XPoint2D upperRight = ymirror.getMirrored(boxInfo.getUpperRight());
+		final XPoint2D lowerLeft = ymirror.getMirrored(boxInfo.getLowerLeft());
+
+		final Cluster cluster = getBibliotekon().getCluster(group);
+		cluster.setPosition(upperRight, lowerLeft);
+
+		final XDimension2D dimTitle = cluster.getTitleDimension(stringBounder);
+		if (dimTitle != null) {
+			final double x = (upperRight.getX() + lowerLeft.getX()) / 2 - dimTitle.getWidth() / 2;
+			cluster.setTitlePosition(new XPoint2D(x, Math.min(upperRight.getY(), lowerLeft.getY())));
+		}
+		return cluster;
 	}
 
 	private void printAllSubgroups(StringBounder stringBounder, Entity parent) {
@@ -697,7 +604,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		// Turn composite states into pre-rendered leaves, mirroring the dot pipeline.
 		// Selective for now: concurrent states are left untouched (see the simplifier).
 		if (diagram.getDiagramType() == DiagramType.STATE)
-			new CucaDiagramSimplifierStateSmetana().simplify(diagram, stringBounder);
+			new CucaDiagramSimplifierStateSmetana().simplify(diagram, stringBounder, budget);
 
 		return layoutAndGetTextBlock(stringBounder);
 	}
@@ -734,15 +641,24 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		// No monitor in the C build: it is single-threaded, and its monitors do not
 		// survive a garbage collection happening while they are held
+		final Drawing drawing;
 		if (TeaVM.isC())
-			return layoutOpen(stringBounder);
+			drawing = layoutOpen(stringBounder);
+		else
+			synchronized (lock) {
+				drawing = layoutOpen(stringBounder);
+			}
 
-		synchronized (lock) {
-			return layoutOpen(stringBounder);
-		}
+		if (drawing == null)
+			return TextBlockUtils.EMPTY_TEXT_BLOCK;
+
+		// Routing only reads the finished layout, so it does not make other
+		// diagrams wait for the lock.
+		drawing.prepareEdges(stringBounder);
+		return drawing;
 	}
 
-	private TextBlock layoutOpen(StringBounder stringBounder) {
+	private Drawing layoutOpen(StringBounder stringBounder) {
 		final Globals zz = Globals.open();
 		try {
 			return getTextBlockInternal(stringBounder, zz);
@@ -761,7 +677,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return new TextBlockToEntityImage(textBlock);
 	}
 
-	private TextBlock getTextBlockInternal(StringBounder stringBounder, Globals zz) {
+	// Returns null when there is nothing to lay out.
+	private Drawing getTextBlockInternal(StringBounder stringBounder, Globals zz) {
 
 		final ST_Agraph_s g = agopen(zz, new CString("g"), zz.Agdirected, null);
 
@@ -801,7 +718,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		addPortRankingEdges(zz, g);
 
 		if (nodes.values().isEmpty() && clusters.values().isEmpty())
-			return TextBlockUtils.EMPTY_TEXT_BLOCK;
+			return null;
 
 		final ST_GVC_s gvc = gvContext(zz);
 		SmetanaDebug.reset();
@@ -814,8 +731,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		// sub-layout the surrounding InnerStateAutonom already provides the padding,
 		// so we drop this margin to avoid extra space inside the composite state.
 		final double canvasMargin = isNestedLayout() ? 0 : 6;
-		final TextBlock drawable = new Drawing(canvasMargin);
-		return drawable;
+		return new Drawing(canvasMargin);
 	}
 
 	// Smetana has no {rank=source/sink} groups (unlike the dot pipeline), so a

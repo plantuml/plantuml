@@ -1,0 +1,40 @@
+---
+output: svg
+expected-description: (8 entities)
+---
+@startuml
+!pragma layout smetana
+!pragma smetana_ortho
+skinparam linetype ortho
+
+' Every kind of container paints its title somewhere else.
+[Client]
+package "A package" {
+	[InPackage]
+}
+folder "A folder" {
+	[InFolder]
+}
+frame "A frame" {
+	[InFrame]
+}
+database "A database" {
+	[InDatabase]
+}
+node "A node" {
+	[InNode]
+}
+cloud "A cloud" {
+	[InCloud]
+}
+component "A component" {
+	[InComponent]
+}
+Client --> InPackage
+Client --> InFolder
+Client --> InFrame
+Client --> InDatabase
+Client --> InNode
+Client --> InCloud
+Client --> InComponent
+@enduml
