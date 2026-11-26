@@ -164,6 +164,12 @@ final class OrthogonalLabelPlacement {
 		return best == null ? placeNear(midpoint, dimension, null) : reserve(best);
 	}
 
+	// Keeps the position assigned by the layout, and other labels off it.
+	UTranslate keepLabel(UTranslate original, XDimension2D dimension) {
+		return reserve(new RectangleArea(original.getDx(), original.getDy(), original.getDx() + dimension.getWidth(),
+				original.getDy() + dimension.getHeight()));
+	}
+
 	UTranslate placeSplineLabel(DotPath path, UTranslate original, XDimension2D dimension) {
 		final RectangleArea area = new RectangleArea(original.getDx(), original.getDy(),
 				original.getDx() + dimension.getWidth(), original.getDy() + dimension.getHeight());
