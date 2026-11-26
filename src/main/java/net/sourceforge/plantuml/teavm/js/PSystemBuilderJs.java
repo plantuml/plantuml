@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ebnf.PSystemEbnfFactory;
+import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
@@ -64,6 +65,7 @@ import net.sourceforge.plantuml.gantt.GanttDiagramFactory;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
+import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
@@ -95,6 +97,7 @@ public class PSystemBuilderJs {
 	private PSystemFactory lastFactory;
 
 	private PSystemBuilderJs() {
+		factories.add(new PSystemColorsFactory());
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
@@ -121,6 +124,7 @@ public class PSystemBuilderJs {
 		factories.add(new PSystemEbnfFactory());
 		factories.add(new PSystemRegexFactory());
 		factories.add(new ChenEerDiagramFactory());
+		factories.add(new ListSpriteDiagramFactory());
 	}
 
 	public static PSystemBuilderJs getInstance() {
