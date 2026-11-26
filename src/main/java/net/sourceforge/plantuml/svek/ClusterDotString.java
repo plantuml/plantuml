@@ -132,7 +132,12 @@ public class ClusterDotString {
 
 		if (entityPositionsExceptNormal.size() > 0) {
 			printRanks(Cluster.RANK_SOURCE, withPosition(EntityPosition.getInputs()), sb, stringBounder);
-			printRanks(Cluster.RANK_SINK, withPosition(EntityPosition.getOutputs()), sb, stringBounder);
+			final List<SvekNode> outputs = withPosition(EntityPosition.getOutputs());
+			final List<SvekNode> normalContent = normalNodesOfSubtree();
+			if (normalContent.isEmpty() == false && containsPortout(outputs))
+				printRanksPortOut(outputs, normalContent, sb, stringBounder);
+			else
+				printRanks(Cluster.RANK_SINK, outputs, sb, stringBounder);
 			if (hasPort())
 				subgraphClusterNoLabel(sb, ID_EE);
 			else
@@ -247,6 +252,80 @@ public class ClusterDotString {
 	private void subgraphClusterWithLabel(StringBuilder sb, String id, String label) {
 		sb.append("subgraph " + cluster.getClusterId() + id + " {");
 		sb.append("label=" + label + ";");
+	}
+
+	// {rank=sink} is a version-dependent post-pass in graphviz: it can silently
+	// violate outgoing minlen edges (the last portout->za link), and older
+	// graphviz versions resolve that conflict differently, leaving portouts at
+	// an arbitrary height inside their container (issue #2457). For a cluster
+	// that really holds portouts over normal content, emit plain {rank=same}
+	// (the documented pattern: the chain only orders the ports left to right)
+	// plus invisible minlen edges from every normal node of the subtree: those
+	// have the same, unambiguous meaning on every graphviz version. The za link
+	// is dropped here: it was violated under rank=sink anyway, and honouring it
+	// would drag the title node below the ports. Clusters without normal
+	// content keep the historical emission untouched (zero diff on simple
+	// port-only diagrams such as SVG0005).
+	private void printRanksPortOut(List<? extends SvekNode> entries, List<SvekNode> normalContent, StringBuilder sb,
+			StringBounder stringBounder) {
+		if (entries.size() == 0)
+			return;
+
+		sb.append("{rank=same;");
+		for (SvekNode sh1 : entries)
+			sb.append(sh1.getUid() + ";");
+
+		sb.append("}");
+		SvekUtils.println(sb);
+		for (SvekNode sh2 : entries)
+			sh2.appendShape(sb, stringBounder);
+
+		SvekUtils.println(sb);
+		boolean arrow = false;
+		String node = null;
+		for (SvekNode sh : entries) {
+			if (arrow)
+				sb.append("->");
+
+			arrow = true;
+			node = sh.getUid();
+			sb.append(node);
+		}
+		if (arrow)
+			sb.append(" [arrowhead=none]");
+
+		sb.append(';');
+		SvekUtils.println(sb);
+		for (SvekNode content : normalContent)
+			for (SvekNode port : entries)
+				if (port.getEntityPosition() == EntityPosition.PORTOUT) {
+					sb.append(content.getUid() + "->" + port.getUid() + " [style=invis];");
+					SvekUtils.println(sb);
+				}
+
+	}
+
+	private static boolean containsPortout(List<SvekNode> entries) {
+		for (SvekNode sh : entries)
+			if (sh.getEntityPosition() == EntityPosition.PORTOUT)
+				return true;
+
+		return false;
+	}
+
+	private List<SvekNode> normalNodesOfSubtree() {
+		final List<SvekNode> result = new ArrayList<>();
+		collectNormalNodes(cluster, result);
+		return result;
+	}
+
+	private void collectNormalNodes(Cluster cl, List<SvekNode> result) {
+		for (SvekNode sh : cl.getNodes())
+			if (sh.getEntityPosition() == EntityPosition.NORMAL)
+				result.add(sh);
+
+		for (Cluster child : cl.getChildren())
+			collectNormalNodes(child, result);
 	}
 
 	private void printRanks(String rank, List<? extends SvekNode> entries, StringBuilder sb,

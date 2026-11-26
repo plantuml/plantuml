@@ -62,6 +62,7 @@ import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.EntityUtils;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -639,6 +640,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		}
 
+		addPortRankingEdges(zz, g);
+
 		if (nodes.values().isEmpty() && clusters.values().isEmpty())
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
@@ -655,6 +658,60 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final double canvasMargin = isNestedLayout() ? 0 : 6;
 		final TextBlock drawable = new Drawing(canvasMargin);
 		return drawable;
+	}
+
+	// Smetana has no {rank=source/sink} groups (unlike the dot pipeline), so a
+	// portout without an incoming link floats to the top rank instead of sitting
+	// on the bottom edge of its container (issue #2457). These invisible minlen
+	// edges force every portout strictly below the normal content of its own
+	// cluster. They are not registered in edges/smetanaPathes, so they only take
+	// part in ranking and are never drawn. Clusters holding only ports (no
+	// normal content) get no extra edge and keep their previous layout.
+	private void addPortRankingEdges(Globals zz, ST_Agraph_s graph) {
+		for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet()) {
+			final List<Entity> ports = new ArrayList<>();
+			final List<Entity> content = new ArrayList<>();
+			for (Entity leaf : ent.getKey().leafs()) {
+				if (leaf.getEntityPosition() == EntityPosition.PORTOUT)
+					ports.add(leaf);
+				else if (leaf.getEntityPosition() == EntityPosition.NORMAL)
+					content.add(leaf);
+
+			}
+			if (ports.isEmpty())
+				continue;
+
+			addNormalLeafs(ent.getKey(), content);
+			if (content.isEmpty())
+				continue;
+			for (Entity port : ports) {
+				final ST_Agnode_s portNode = nodes.get(port);
+				if (portNode == null)
+					continue;
+
+				for (Entity inside : content) {
+					final ST_Agnode_s contentNode = nodes.get(inside);
+					if (contentNode == null)
+						continue;
+
+					final ST_Agedge_s e = agedge(zz, graph, contentNode, portNode, null, true);
+					agsafeset(zz, e, new CString("minlen"), new CString("1"), new CString(""));
+				}
+			}
+		}
+	}
+
+	private void addNormalLeafs(Entity group, List<Entity> content) {
+		for (Entity child : getChildrenGroups(group)) {
+			if (child.isRemoved())
+				continue;
+
+			for (Entity leaf : child.leafs())
+				if (leaf.getEntityPosition() == EntityPosition.NORMAL)
+					content.add(leaf);
+
+			addNormalLeafs(child, content);
+		}
 	}
 
 	private void exportGroups(Globals zz, ST_Agraph_s graph, Entity parent) {
