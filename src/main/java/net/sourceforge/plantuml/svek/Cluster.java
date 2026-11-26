@@ -49,6 +49,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.UnaryOperator;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.CucaNote;
@@ -322,21 +323,6 @@ public class Cluster implements Moveable {
 		if (fullName.startsWith("##") == false)
 			ug.draw(new UComment("cluster " + fullName));
 
-		final DiagramType diagramType = diagram.getDiagramType();
-		final Style style = getStyle();
-		final double shadowing = style.getShadowing();
-		HColor borderColor;
-		if (group.getColors().getColor(ColorType.LINE) != null)
-			borderColor = group.getColors().getColor(ColorType.LINE);
-		else
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		double rounded = style.value(PName.RoundCorner).asDouble();
-
-		if (skinParam.strictUmlStyle())
-			rounded = 0;
-
-		final double diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
-
 		// ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" +
 		// fullName));
 
@@ -354,36 +340,7 @@ public class Cluster implements Moveable {
 
 		try {
 			fitToEntryExitPoints(ug.getStringBounder());
-
-			if (skinParam.useSwimlanes(diagramType)) {
-				drawSwinLinesState(ug, borderColor);
-				return;
-			}
-			final boolean isState = diagramType == DiagramType.STATE;
-
-			if (isState && group.getUSymbol() == null) {
-				drawUState(ug, diagramType, rounded, shadowing);
-				return;
-			}
-			PackageStyle packageStyle = group.getPackageStyle();
-			if (packageStyle == null)
-				packageStyle = skinParam.packageStyle();
-
-			final UStroke stroke = getStrokeInternal(group, style);
-
-			HColor backColor = getBackColor(style);
-			backColor = getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(), group.getUSymbol(),
-					skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(), group.getGroupType());
-
-			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
-					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
-//			final HorizontalAlignment horizontalAlignment = skinParam
-//			.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
-			final HorizontalAlignment horizontalAlignment = clusterHeader.getTitleHorizontalAlignment();
-
-			decoration.drawU(ug, backColor, borderColor, shadowing, rounded, horizontalAlignment,
-					skinParam.getStereotypeAlignment(), diagonalCorner);
-
+			drawFrameAndHeader(ug, UnaryOperator.identity());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -391,6 +348,60 @@ public class Cluster implements Moveable {
 				ug.closeUrl();
 			ug.closeGroup();
 		}
+	}
+
+	/**
+	 * Draws the frame and the header of the cluster. This is the only place that
+	 * decides how a cluster looks, so drawU() and getHeaderAreas() cannot drift
+	 * apart: each header block (title, stereotype, state description) goes
+	 * through <code>header</code> before it is drawn, which lets
+	 * getHeaderAreas() measure exactly what drawU() paints.
+	 */
+	private void drawFrameAndHeader(UGraphic ug, UnaryOperator<TextBlock> header) {
+		final DiagramType diagramType = diagram.getDiagramType();
+		final Style style = getStyle();
+		final double shadowing = style.getShadowing();
+		HColor borderColor;
+		if (group.getColors().getColor(ColorType.LINE) != null)
+			borderColor = group.getColors().getColor(ColorType.LINE);
+		else
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		double rounded = style.value(PName.RoundCorner).asDouble();
+
+		if (skinParam.strictUmlStyle())
+			rounded = 0;
+
+		final double diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
+
+		final TextBlock title = header.apply(clusterHeader.getTitle());
+		if (skinParam.useSwimlanes(diagramType)) {
+			drawSwinLinesState(ug, borderColor, title);
+			return;
+		}
+		final boolean isState = diagramType == DiagramType.STATE;
+
+		if (isState && group.getUSymbol() == null) {
+			drawUState(ug, rounded, shadowing, title, header.apply(group.getStateDescription(skinParam)));
+			return;
+		}
+		PackageStyle packageStyle = group.getPackageStyle();
+		if (packageStyle == null)
+			packageStyle = skinParam.packageStyle();
+
+		final UStroke stroke = getStrokeInternal(group, style);
+
+		HColor backColor = getBackColor(style);
+		backColor = getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(), group.getUSymbol(),
+				skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(), group.getGroupType());
+
+		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), title,
+				header.apply(clusterHeader.getStereo()), rectangleArea, stroke);
+//		final HorizontalAlignment horizontalAlignment = skinParam
+//		.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
+		final HorizontalAlignment horizontalAlignment = clusterHeader.getTitleHorizontalAlignment();
+
+		decoration.drawU(ug, backColor, borderColor, shadowing, rounded, horizontalAlignment,
+				skinParam.getStereotypeAlignment(), diagonalCorner);
 	}
 
 	private Style getStyle() {
@@ -456,12 +467,9 @@ public class Cluster implements Moveable {
 		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);
 	}
 
-	private void drawSwimlaneTitle(UGraphic ug, TextBlock title) {
-		title.drawU(ug.apply(UTranslate.dx(xyTitle.x)));
-	}
-
-	private void drawSwinLinesState(UGraphic ug, HColor borderColor) {
-		drawSwimlaneTitle(ug, clusterHeader.getTitle());
+	private void drawSwinLinesState(UGraphic ug, HColor borderColor, TextBlock title) {
+		if (xyTitle != null)
+			title.drawU(ug.apply(UTranslate.dx(xyTitle.x)));
 
 		final ULine line = ULine.vline(rectangleArea.getHeight());
 		ug = ug.apply(borderColor);
@@ -472,7 +480,7 @@ public class Cluster implements Moveable {
 
 	// GroupPngMakerState
 
-	private void drawUState(UGraphic ug, DiagramType diagramType, double rounded, double shadowing) {
+	private void drawUState(UGraphic ug, double rounded, double shadowing, TextBlock title, TextBlock attribute) {
 
 		HColor borderColor = group.getColors().getColor(ColorType.LINE);
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
@@ -498,7 +506,6 @@ public class Cluster implements Moveable {
 					.value(PName.BackGroundColor).asColor(colorSet);
 		}
 
-		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
 		if (rectangleArea.getDimension().getWidth() == 0) {
 			System.err.println("Cluster::drawUState issue");
@@ -513,34 +520,27 @@ public class Cluster implements Moveable {
 
 		final double descriptionHeight = attributeHeight + (attributeHeight > 0 ? IEntityImage.MARGIN : 0);
 
-		final double nameHeight = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()
-				+ IEntityImage.MARGIN;
+		final double nameHeight = title.calculateDimension(ug.getStringBounder()).getHeight() + IEntityImage.MARGIN;
 
 		final RoundedContainer r = new RoundedContainer(borderColor, rectangleArea.getDimension(), nameHeight,
 				descriptionHeight, northBackcolor, centerBackColor, southBackcolor, stroke, rounded, shadowing);
 
 		r.drawU(ug.apply(rectangleArea.getPosition()));
 
-		drawStateHeader(ug, clusterHeader.getTitle(), attribute);
+		if (xyTitle != null)
+			clusterHeader.getTitleHorizontalAlignment().draw(
+					ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), title,
+					IEntityImage.MARGIN, 0, rectangleArea.getWidth());
+
+		if (attributeHeight > 0)
+			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,
+					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));
 
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 		if (withSymbol)
 			EntityImageState.drawSymbol(ug.apply(borderColor), rectangleArea.getMaxX(), rectangleArea.getMaxY());
 
-	}
-
-	private void drawStateHeader(UGraphic ug, TextBlock title, TextBlock attribute) {
-		final StringBounder stringBounder = ug.getStringBounder();
-		final double nameHeight = title.calculateDimension(stringBounder).getHeight() + IEntityImage.MARGIN;
-
-		clusterHeader.getTitleHorizontalAlignment().draw(
-				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), title,
-				IEntityImage.MARGIN, 0, rectangleArea.getWidth());
-
-		if (attribute.calculateDimension(stringBounder).getHeight() > 0)
-			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,
-					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));
 	}
 
 	public void setPosition(XPoint2D min, XPoint2D max) {
@@ -767,26 +767,9 @@ public class Cluster implements Moveable {
 
 		final HeaderFinder finder = new HeaderFinder(stringBounder, UTranslate.none(), result,
 				new AtomicReference<LimitFinder>());
-		final TextBlock title = finder.probe(clusterHeader.getTitle());
-		if (skinParam.useSwimlanes(diagram.getDiagramType())) {
-			if (xyTitle != null)
-				drawSwimlaneTitle(finder, title);
-			return result;
-		}
-		if (diagram.getDiagramType() == DiagramType.STATE && group.getUSymbol() == null) {
-			if (xyTitle != null)
-				drawStateHeader(finder, title, finder.probe(group.getStateDescription(skinParam)));
-			return result;
-		}
-		PackageStyle packageStyle = group.getPackageStyle();
-		if (packageStyle == null)
-			packageStyle = skinParam.packageStyle();
-
-		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), title,
-				finder.probe(clusterHeader.getStereo()), rectangleArea, UStroke.simple());
+		// The frame is already fitted to its entry and exit points: only replay the drawing.
 		try {
-			decoration.drawU(finder, HColors.BLACK, HColors.BLACK, 0, 0, clusterHeader.getTitleHorizontalAlignment(),
-					skinParam.getStereotypeAlignment(), 0);
+			drawFrameAndHeader(finder, finder::probe);
 		} catch (UnsupportedOperationException e) {
 			// A package style without a symbol draws no frame and no header either.
 		}
