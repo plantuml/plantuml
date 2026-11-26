@@ -87,6 +87,7 @@ import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.RoleLabels;
 import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
+import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
@@ -142,35 +143,30 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 			final Style styleLine = getStyle();
 
 			final Rainbow rainbow = Rainbow.build(styleLine, skinParam.getIHtmlColorSet());
+			HColor arrowHeadColor = rainbow.getArrowHeadColor();
 			HColor color = rainbow.getColor();
 
+			// A color set on the link itself applies to its decorations as well.
 			if (this.link.getColors() != null) {
 				final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
-				if (newColor != null)
+				if (newColor != null) {
 					color = newColor;
-			} else if (this.link.getSpecificColor() != null)
+					arrowHeadColor = color;
+				}
+			} else if (this.link.getSpecificColor() != null) {
 				color = this.link.getSpecificColor();
+				arrowHeadColor = color;
+			}
 
 			ug = ug.apply(HColors.none().bg()).apply(color);
-			final LinkType linkType = link.getType();
 			final UStroke stroke = getLineStroke(styleLine);
 
 			final Url url = link.getUrl();
 			if (url != null)
 				ug.startUrl(url);
 
-			// Filled arrowheads inherit the connector color as their fill.
-			// Hollow decorations use the transparent background set above.
-			UGraphic ugStart = ug.apply(color);
-			if (linkType.getDecor2().isFill())
-				ugStart = ugStart.apply(color.bg());
-
-			UGraphic ugEnd = ug.apply(color);
-			if (linkType.getDecor1().isFill())
-				ugEnd = ugEnd.apply(color.bg());
-
-			printExtremityAtStart(dotPath, ugStart);
-			printExtremityAtEnd(dotPath, ugEnd);
+			printExtremityAtStart(dotPath, ug, stroke, color, arrowHeadColor);
+			printExtremityAtEnd(dotPath, ug, stroke, color, arrowHeadColor);
 			ug.apply(stroke).apply(color).draw(dotPath);
 
 			if (url != null)
@@ -437,7 +433,31 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		return pt;
 	}
 
-	private void printExtremityAtStart(DotPath dotPath, UGraphic ug) {
+	// Same rules as SvekEdge. The style of the arrow can give the decorations
+	// their own color, and a transparent one leaves only the line of an arrow.
+	private void drawExtremity(UGraphic ug, Extremity extremity, LinkDecor decor, UStroke stroke, HColor color,
+			HColor headColor) {
+		if (headColor.isTransparent()) {
+			// Only arrows get here, see isHidden().
+			((ExtremityArrow) extremity).drawLineIfTransparent(ug.apply(color).apply(stroke.onlyThickness()));
+			return;
+		}
+		// Filled decorations take the connector color as their fill.
+		// Hollow ones keep the transparent background of the connector.
+		UGraphic ugHead = ug.apply(headColor);
+		if (decor.isFill())
+			ugHead = ugHead.apply(color.bg());
+		extremity.drawU(ugHead);
+	}
+
+	// A transparent decoration other than an arrow paints nothing, so the
+	// connector keeps its full length instead of making room for it.
+	private boolean isHidden(Extremity extremity, HColor headColor) {
+		return headColor.isTransparent() && extremity instanceof ExtremityArrow == false;
+	}
+
+	private void printExtremityAtStart(DotPath dotPath, UGraphic ug, UStroke stroke, HColor color,
+			HColor headColor) {
 		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()
 				.getExtremityFactoryComplete(skinParam.getBackgroundColor());
 		if (extremityFactory2 == null)
@@ -448,12 +468,12 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		try {
 			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);
-			if (extremity2 != null) {
+			if (extremity2 != null && isHidden(extremity2, headColor) == false) {
 				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {
 					final double decorationLength = decorationLength(dotPath, extremity2, 0);
 					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));
 				}
-				extremity2.drawU(ug);
+				drawExtremity(ug, extremity2, link.getType().getDecor2(), stroke, color, headColor);
 			}
 
 		} catch (UnsupportedOperationException e) {
@@ -462,7 +482,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		}
 	}
 
-	private void printExtremityAtEnd(DotPath dotPath, UGraphic ug) {
+	private void printExtremityAtEnd(DotPath dotPath, UGraphic ug, UStroke stroke, HColor color, HColor headColor) {
 		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()
 				.getExtremityFactoryComplete(skinParam.getBackgroundColor());
 		if (extremityFactory1 == null)
@@ -473,12 +493,12 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		try {
 			final Extremity extremity1 = (Extremity) extremityFactory1.createUDrawable(p0, endAngle, null);
-			if (extremity1 != null) {
+			if (extremity1 != null && isHidden(extremity1, headColor) == false) {
 				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {
 					final double decorationLength = decorationLength(dotPath, extremity1, dotPath.getBeziers().size() - 1);
 					dotPath.moveEndPoint(new UTranslate(decorationLength, 0).rotate(endAngle - Math.PI));
 				}
-				extremity1.drawU(ug);
+				drawExtremity(ug, extremity1, link.getType().getDecor1(), stroke, color, headColor);
 			}
 
 		} catch (UnsupportedOperationException e) {
