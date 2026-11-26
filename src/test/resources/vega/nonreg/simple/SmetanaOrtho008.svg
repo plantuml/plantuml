@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="233px" preserveAspectRatio="none" style="width:228px;height:233px;background:#FFFFFF;" version="1.1" viewBox="0 0 228 233" width="228px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Composite-->
+    <g class="cluster" data-qualified-name="Composite" data-source-line="5" id="ent0001">
+      <rect fill="none" height="102" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="206" x="14" y="107"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="200" y="112"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="198" y="114"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="198" y="118"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="66.938" x="83.531" y="130.889">Composite</text>
+      <text fill="#000" font-size="14" font-weight="700" x="117" y="144.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" x="117" y="158.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" x="117" y="172.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" x="117" y="186.889"> </text>
+    </g>
+    <g class="entity" data-qualified-name="Composite.request" data-source-line="6" id="ent0002">
+      <text fill="#000" font-size="14" textLength="46.637" x="88.681" y="85.889">request</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="106" y="101"/>
+    </g>
+    <!--entity First-->
+    <g class="entity" data-qualified-name="Composite.First" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.213" x="30.5" y="149"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="77.713" y="154"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="75.713" y="156"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="75.713" y="160"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="45.5" y="179.889">First</text>
+    </g>
+    <!--entity Second-->
+    <g class="entity" data-qualified-name="Composite.Second" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.512" x="116" y="149"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="183.513" y="154"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="181.513" y="156"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="181.513" y="160"/>
+      <text fill="#000" font-size="14" textLength="47.512" x="131" y="179.889">Second</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="80.272,148.983,84.272,139.983,80.272,143.983,76.272,139.983,80.272,148.983" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M110,113 C110,113 110,117.889 110,117.889 C110,117.889 80.272,117.889 80.272,117.889 C80.272,117.889 80.272,143.983 80.272,143.983" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="143.728,148.983,147.728,139.983,143.728,143.983,139.728,139.983,143.728,148.983" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M114,113 C114,113 114,114.5 114,114.5 C114,114.5 150.969,114.5 150.969,114.5 C150.969,114.5 150.969,139.983 150.969,139.983 C150.969,139.983 143.728,139.983 143.728,139.983 C143.728,139.983 143.728,143.983 143.728,143.983" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>
