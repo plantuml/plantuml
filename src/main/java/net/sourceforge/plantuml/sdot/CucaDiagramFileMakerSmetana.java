@@ -47,6 +47,7 @@ import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -330,10 +331,20 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			}
 			final List<RectangleArea> clusterAreas = new ArrayList<>();
 			final List<RectangleArea> usedTracks = new ArrayList<>();
-			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet()) {
-				final Entity entity = ent.getKey();
-				final Cluster cluster = placeGroup(stringBounder, ymirror, entity, ent.getValue());
+			// Entry and exit points move the frame of their cluster, which also
+			// depends on the frames of the clusters inside it. The map lists outer
+			// clusters first, so place them all and fit the inner ones first.
+			final Map<Entity, Cluster> placed = new LinkedHashMap<>();
+			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet())
+				placed.put(ent.getKey(), placeGroup(stringBounder, ymirror, ent.getKey(), ent.getValue()));
+			final List<Cluster> innerFirst = new ArrayList<>(placed.values());
+			Collections.reverse(innerFirst);
+			for (Cluster cluster : innerFirst)
 				cluster.fitToEntryExitPoints(stringBounder);
+
+			for (Map.Entry<Entity, Cluster> ent : placed.entrySet()) {
+				final Entity entity = ent.getKey();
+				final Cluster cluster = ent.getValue();
 				nodeAreas.put(entity, cluster.getRectangleArea());
 				if (entity.isHidden())
 					continue;
