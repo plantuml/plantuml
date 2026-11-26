@@ -571,6 +571,11 @@ final class OrthogonalPath {
 		private boolean exhausted() {
 			return edge <= 0;
 		}
+
+		// Nothing is left for any further edge of the diagram.
+		boolean isSpent() {
+			return diagram <= 0;
+		}
 	}
 
 	private static final class Visit {
