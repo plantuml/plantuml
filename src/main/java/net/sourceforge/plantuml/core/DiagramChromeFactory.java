@@ -235,7 +235,7 @@ public final class DiagramChromeFactory {
 			UGraphic ugText = ug.apply(HColors.BLACK).apply(new UTranslate(10, 2));
 			for (Warning w : warnings) {
 				for (String s : w.getMessage()) {
-					final UText text = UText.build(s, WARNING_FC);
+					final UText text = warningLine(s);
 					final double height = text.calculateDimension(stringBounder).getHeight();
 					ugText = ugText.apply(UTranslate.dy(height));
 					ugText.draw(text);
@@ -244,13 +244,19 @@ public final class DiagramChromeFactory {
 			}
 		}
 
+		// A warning may quote the source ("'end<TAB>group' is deprecated", a label...), but a
+		// UText holds no tab: it is drawn as a space, the same way in both methods
+		private UText warningLine(String s) {
+			return UText.build(s.replace('\t', ' '), WARNING_FC);
+		}
+
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
 			double width = 0;
 			double height = 0;
 			for (Warning w : warnings) {
 				for (String s : w.getMessage()) {
-					final XDimension2D lineDim = UText.build(s, WARNING_FC).calculateDimension(stringBounder);
+					final XDimension2D lineDim = warningLine(s).calculateDimension(stringBounder);
 					width = Math.max(width, lineDim.getWidth());
 					height += lineDim.getHeight();
 				}
