@@ -119,6 +119,12 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		return ShapeType.ROUND_RECTANGLE;
 	}
 
+	@Override
+	public double getStraightBorderInset() {
+		// The rounded rectangle takes the diameter of its corners.
+		return getStyleState().value(PName.RoundCorner).asDouble() / 2;
+	}
+
 	final protected URectangle getShape(final XDimension2D dimTotal) {
 
 		final double corner = getStyleState().value(PName.RoundCorner).asDouble();

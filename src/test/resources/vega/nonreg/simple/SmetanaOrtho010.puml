@@ -1,0 +1,24 @@
+---
+output: svg
+expected-description: (5 entities)
+---
+@startuml
+!pragma layout smetana
+!pragma smetana_ortho
+skinparam linetype ortho
+
+' The layout aims all splines at the center of Registry. Orthogonal routes
+' should still run straight where the boxes overlap, and spread their
+' arrowheads along the side they share.
+class Registry {
+	+register(name: String, service: Service): void
+	+lookup(name: String): Service
+}
+class Logger
+class Storage
+class Network
+Logger --> Registry
+Storage --> Registry
+Network --> Registry
+Registry ..> Cache : fills
+@enduml

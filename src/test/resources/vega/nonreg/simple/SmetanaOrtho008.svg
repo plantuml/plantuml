@@ -34,12 +34,12 @@
       <text fill="#000" font-size="14" textLength="47.512" x="131" y="179.889">Second</text>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
-      <polygon fill="#181818" points="80.272,148.983,84.272,139.983,80.272,143.983,76.272,139.983,80.272,148.983" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M110,113 C110,113 110,117.889 110,117.889 C110,117.889 80.272,117.889 80.272,117.889 C80.272,117.889 80.272,143.983 80.272,143.983" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="75.521,148.983,79.521,139.983,75.521,143.983,71.521,139.983,75.521,148.983" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M106,109 C106,109 75.521,109 75.521,109 C75.521,109 75.521,143.983 75.521,143.983" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
-      <polygon fill="#181818" points="143.728,148.983,147.728,139.983,143.728,143.983,139.728,139.983,143.728,148.983" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M114,113 C114,113 114,114.5 114,114.5 C114,114.5 150.969,114.5 150.969,114.5 C150.969,114.5 150.969,139.983 150.969,139.983 C150.969,139.983 143.728,139.983 143.728,139.983 C143.728,139.983 143.728,143.983 143.728,143.983" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="158.479,148.983,162.479,139.983,158.479,143.983,154.479,139.983,158.479,148.983" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M118,109 C118,109 158.479,109 158.479,109 C158.479,109 158.479,143.983 158.479,143.983" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
   </g>
 </svg>

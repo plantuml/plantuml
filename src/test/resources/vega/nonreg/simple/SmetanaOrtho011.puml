@@ -1,0 +1,43 @@
+---
+output: svg
+expected-description: (9 entities)
+---
+@startuml
+!pragma layout smetana
+!pragma smetana_ortho
+skinparam linetype ortho
+
+' Several sources in one package feed tools in two others, and the tools
+' feed shared outputs. The layout aims the splines of each tool at its
+' center, so their arrowheads meet on one point unless the side is shared out.
+package "Sources" {
+	[Requirements] as req
+	[Architecture] as arch
+	[Fault trees] as fta
+	[Failure modes] as fm
+}
+package "Checks" {
+	[Linter] as lint
+	[Trace checker] as trace
+}
+package "Reports" {
+	[Assembler] as asm
+}
+[Summary] as sum
+[Index] as idx
+req --> lint
+arch --> lint
+fta --> lint
+fm --> lint
+req --> trace
+arch --> trace
+fm --> trace
+fta --> asm
+fm --> asm
+arch --> asm
+lint --> sum
+trace --> sum
+asm --> sum
+asm --> idx
+trace --> idx
+@enduml

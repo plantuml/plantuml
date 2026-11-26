@@ -1,0 +1,24 @@
+---
+output: svg
+expected-description: (6 entities)
+---
+@startuml
+!pragma layout smetana
+!pragma smetana_ortho
+skinparam linetype ortho
+skinparam roundcorner 80
+
+' Corners this round leave no straight border: the arrowheads have to reach
+' in to the painted outline, and would rather meet it in the middle of a side.
+class Target
+class A
+class B
+class C
+class D
+class E
+A --> Target
+B --> Target
+C --> Target
+D --> Target
+E --> Target
+@enduml

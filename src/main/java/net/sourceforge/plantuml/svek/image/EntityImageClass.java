@@ -258,6 +258,15 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	@Override
+	public double getStraightBorderInset() {
+		// Edges to a port keep the row of that port.
+		if (getShapeType() != ShapeType.RECTANGLE)
+			return -1;
+		// The rounded rectangle takes the diameter of its corners.
+		return roundCorner / 2;
+	}
+
+	@Override
 	public Margins getShield(StringBounder stringBounder) {
 		return getEntity().getMargins();
 	}

@@ -40,7 +40,7 @@
     </g>
     <g class="link" data-entity-1="ent0010" data-entity-2="ent0001" data-link-type="dependency" id="lnk12">
       <polygon fill="#181818" points="68.76,163.471,59.76,159.471,63.76,163.471,59.76,167.471,68.76,163.471" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M57.211,161.29 C57.211,161.29 59.76,161.29 59.76,161.29 C59.76,161.29 59.76,163.471 59.76,163.471 C59.76,163.471 63.76,163.471 63.76,163.471" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M57.211,163.471 C57.211,163.471 63.76,163.471 63.76,163.471" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0011" data-entity-2="ent0002" data-link-type="dependency" id="lnk13">
       <polygon fill="#181818" points="119.5,202.97,110.5,198.97,114.5,202.97,110.5,206.97,119.5,202.97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

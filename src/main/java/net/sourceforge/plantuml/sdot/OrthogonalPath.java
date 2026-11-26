@@ -55,13 +55,15 @@ import net.sourceforge.plantuml.klimt.shape.DotPath;
  */
 final class OrthogonalPath {
 	private static final double NODE_GAP = 4;
-	private static final double MIN_NODE_GAP = 0.5;
+	static final double MIN_NODE_GAP = 0.5;
 	private static final double BEND_COST = 18;
-	private static final double TRACK_GAP = 6;
+	static final double TRACK_GAP = 6;
 	private static final double ENDPOINT_TOLERANCE = 2;
 	private static final double STRAIGHT_TOLERANCE = 1.5;
 	private static final double LOCAL_SEARCH_MARGIN = 72;
 	private static final double OUTER_SEARCH_MARGIN = 24;
+	// A route with this many bends is a detour that another side may avoid.
+	private static final int DETOUR_BENDS = 3;
 	// Counted in scanned obstacles and tracks. A second handles about 200 million.
 	private static final long EDGE_BUDGET = 2_000_000;
 	// Dense diagrams of 150 to 200 edges need up to 300 million for all their routes.
@@ -78,16 +80,77 @@ final class OrthogonalPath {
 	}
 
 	/**
-	 * Finds an orthogonal route within the budget that all edges of a diagram share.
-	 * A null result leaves the original Smetana spline available to the caller.
+	 * Finds an orthogonal route within the budget that all edges of a diagram
+	 * share, between the attachments that {@link OrthogonalPorts} chose. These
+	 * keep their sides even where they moved close to a corner. A moved
+	 * attachment can leave a stem less room than the layout gave it: if no
+	 * route is found, the ends of the spline get a try within the same budget.
+	 * A route that the chosen sides force into a detour tries the sides next
+	 * to them. A null result leaves the original Smetana spline available to
+	 * the caller.
 	 */
-	static DotPath route(DotPath spline, Endpoint tail, Endpoint head, List<RectangleArea> nodes,
-			List<RectangleArea> usedTracks, SearchBudget budget) {
+	static DotPath route(DotPath spline, OrthogonalPorts.Attachment attachment, Endpoint tail, Endpoint head,
+			List<RectangleArea> nodes, List<RectangleArea> usedTracks, SearchBudget budget) {
 		budget.startEdge();
 		if (budget.exhausted())
 			return null;
-		final XPoint2D start = spline.getStartPoint();
-		final XPoint2D end = spline.getEndPoint();
+		DotPath path = between(spline, attachment, tail, head, nodes, usedTracks, budget);
+		if (path == null && budget.exhausted() == false && attachment.isAsLaidOut(spline) == false)
+			path = route(spline, spline.getStartPoint(), null, spline.getEndPoint(), null, tail, head, nodes,
+					usedTracks, budget);
+		if (path == null || bends(path) < DETOUR_BENDS)
+			return path;
+		// The other side has to save bends without making the route longer or
+		// crossing more of the earlier edges.
+		OrthogonalPorts.Attachment chosen = null;
+		int crossings = crossings(corners(path), usedTracks);
+		for (OrthogonalPorts.Attachment other : attachment.nextSides()) {
+			if (budget.exhausted())
+				break;
+			final DotPath shorter = between(spline, other, tail, head, nodes, usedTracks, budget);
+			if (shorter == null || bends(shorter) >= bends(path) || length(shorter) > length(path))
+				continue;
+			final int crossed = crossings(corners(shorter), usedTracks);
+			if (crossed <= crossings) {
+				path = shorter;
+				chosen = other;
+				crossings = crossed;
+			}
+		}
+		if (chosen != null)
+			chosen.use();
+		return path;
+	}
+
+	private static DotPath between(DotPath spline, OrthogonalPorts.Attachment attachment, Endpoint tail,
+			Endpoint head, List<RectangleArea> nodes, List<RectangleArea> usedTracks, SearchBudget budget) {
+		return route(spline, attachment.getStart(), attachment.getStartSide(), attachment.getEnd(),
+				attachment.getEndSide(), tail, head, nodes, usedTracks, budget);
+	}
+
+	private static int bends(DotPath path) {
+		return path.getBeziers().size() - 1;
+	}
+
+	private static double length(DotPath path) {
+		double length = 0;
+		for (XCubicCurve2D segment : path.getBeziers())
+			length += segment.getP1().distance(segment.getP2());
+		return length;
+	}
+
+	private static List<XPoint2D> corners(DotPath path) {
+		final List<XPoint2D> corners = new ArrayList<>();
+		corners.add(path.getStartPoint());
+		for (XCubicCurve2D segment : path.getBeziers())
+			corners.add(segment.getP2());
+		return corners;
+	}
+
+	// A null side is the one the spline leaves or enters through.
+	private static DotPath route(DotPath spline, XPoint2D start, Direction startSide, XPoint2D end,
+			Direction endSide, Endpoint tail, Endpoint head, List<RectangleArea> nodes,
+			List<RectangleArea> usedTracks, SearchBudget budget) {
 		final List<RectangleArea> obstacles = new ArrayList<>(nodes);
 		addEndpointObstacle(obstacles, tail.area, end);
 		addEndpointObstacle(obstacles, head.area, start);
@@ -95,14 +158,22 @@ final class OrthogonalPath {
 		final MinMax original = spline.getMinMax();
 		final RectangleArea originalBounds = new RectangleArea(original.getMinX(), original.getMinY(),
 				original.getMaxX(), original.getMaxY());
-		final List<Port> targets = head.ports(end, spline.getEndAngle() + Math.PI);
-		for (Port from : tail.ports(start, spline.getStartAngle()))
+		// A port can attach on any side: the one with the fewest bends wins, the
+		// side of the layout on a tie. A pair of sides that cannot do better than
+		// the best route so far is not searched.
+		DotPath best = null;
+		final List<Port> targets = head.ports(end, endSide, spline.getEndAngle() + Math.PI);
+		for (Port from : tail.ports(start, startSide, spline.getStartAngle()))
 			for (Port to : targets) {
+				if (best != null && fewestBends(from, to) >= bends(best))
+					continue;
 				final DotPath path = route(originalBounds, from, to, obstacles, usedTracks, budget);
-				if (path != null || budget.exhausted())
-					return path;
+				if (path != null && (best == null || bends(path) < bends(best)))
+					best = path;
+				if (budget.exhausted() || (best != null && bends(best) == 0))
+					return best;
 			}
-		return null;
+		return best;
 	}
 
 	private static DotPath route(RectangleArea originalBounds, Port from, Port to, List<RectangleArea> obstacles,
@@ -145,16 +216,27 @@ final class OrthogonalPath {
 		}
 		if (clear(start, end, obstacles, from.area, to.area, MIN_NODE_GAP)
 				&& overlapCost(RectangleArea.build(start, end), usedTracks) == 0)
-			return toPath(Arrays.asList(start, end));
+			return toPath(corners(Arrays.asList(start, end)));
 		return null;
 	}
 
 	private static DotPath search(RectangleArea bounds, Port from, Port to, List<RectangleArea> obstacles,
 			List<RectangleArea> usedTracks, SearchBudget budget) {
 		final double facingDistance = from.facingDistance(to);
+		// The first stem that works is usually the best. A stem that reaches
+		// past the turn the route needs costs extra bends, for example by
+		// making it run back towards its own node: shorter stems get a try then,
+		// and the fewest bends win, the longer stem on a tie.
+		final int fewest = fewestBends(from, to);
+		DotPath best = null;
+		int bestBends = Integer.MAX_VALUE;
+		boolean bestTurnsBack = false;
 		// Shorten the terminal runs before narrowing the clearance to half
 		// a pixel, the space needed on either side of a one-pixel stroke.
 		for (SearchAttempt attempt : SEARCH_ATTEMPTS) {
+			// Half a pixel beside a node is a last resort, not a way to save bends.
+			if (best != null && attempt.gap < NODE_GAP)
+				break;
 			// Checking both stems and building the grid scans every obstacle and track.
 			if (budget.spend(3 * obstacles.size() + usedTracks.size()) == false)
 				break;
@@ -173,15 +255,53 @@ final class OrthogonalPath {
 
 			final Grid grid = new Grid(bounds.merge(exit).merge(entry), exit, entry, obstacles, attempt.gap, usedTracks);
 			final List<XPoint2D> points = grid.find(from.outward, to.outward, budget);
-			if (points != null) {
-				points.add(0, from.point);
-				points.add(to.point);
-				final DotPath path = toPath(points);
-				if (path != null)
-					return path;
+			if (points == null)
+				continue;
+			points.add(0, from.point);
+			points.add(to.point);
+			final List<XPoint2D> corners = centerJog(corners(points), from, to, obstacles, usedTracks);
+			final DotPath path = toPath(corners);
+			if (path == null)
+				continue;
+			final int bends = corners.size() - 2;
+			final boolean turnsBack = turnsBack(corners);
+			if (bends < bestBends || (bends == bestBends && bestTurnsBack && turnsBack == false)) {
+				best = path;
+				bestBends = bends;
+				bestTurnsBack = turnsBack;
 			}
+			if (bestBends <= fewest && bestTurnsBack == false)
+				break;
 		}
-		return null;
+		return best;
+	}
+
+	// The fewest bends between two ports with nothing in the way.
+	private static int fewestBends(Port from, Port to) {
+		final Direction leaving = from.outward;
+		final Direction arriving = to.outward.opposite();
+		final double ahead = leaving.progress(from.point, to.point);
+		final double across = leaving.dx != 0 ? Math.abs(to.point.y - from.point.y)
+				: Math.abs(to.point.x - from.point.x);
+		if (leaving == arriving)
+			return ahead > STRAIGHT_TOLERANCE ? (across <= STRAIGHT_TOLERANCE ? 0 : 2) : 4;
+		if (leaving == arriving.opposite())
+			return across > STRAIGHT_TOLERANCE ? 2 : 4;
+		return ahead > STRAIGHT_TOLERANCE && arriving.progress(from.point, to.point) > STRAIGHT_TOLERANCE ? 1 : 3;
+	}
+
+	// Whether the route runs back towards an end right after its stem. A
+	// U-shaped route between two ends that face the same way does that only
+	// on its way into the other end.
+	private static boolean turnsBack(List<XPoint2D> corners) {
+		final int last = corners.size() - 1;
+		return last >= 4 && (reverses(corners.get(0), corners.get(1), corners.get(2), corners.get(3))
+				|| reverses(corners.get(last), corners.get(last - 1), corners.get(last - 2), corners.get(last - 3)));
+	}
+
+	// Whether the run c-d heads against the run a-b.
+	private static boolean reverses(XPoint2D a, XPoint2D b, XPoint2D c, XPoint2D d) {
+		return (b.x - a.x) * (d.x - c.x) + (b.y - a.y) * (d.y - c.y) < 0;
 	}
 
 	private static void addEndpointObstacle(List<RectangleArea> obstacles, RectangleArea area, XPoint2D other) {
@@ -211,7 +331,7 @@ final class OrthogonalPath {
 				area.getMaxY() + margin);
 	}
 
-	private static boolean overlaps(RectangleArea a, RectangleArea b, double gap) {
+	static boolean overlaps(RectangleArea a, RectangleArea b, double gap) {
 		// A horizontal or vertical segment has zero area. Strict comparisons let
 		// it run along the boundary of an expanded obstacle.
 		return a.getMinX() < b.getMaxX() + gap && a.getMaxX() > b.getMinX() - gap
@@ -242,24 +362,105 @@ final class OrthogonalPath {
 		return cost;
 	}
 
-	private static DotPath toPath(List<XPoint2D> points) {
-		// Merge consecutive straight segments so arrowhead shortening can use
-		// the full run up to the nearest bend.
-		final List<XCubicCurve2D> segments = new ArrayList<>();
+	// The ends and the bends of a route. Consecutive straight segments merge,
+	// so arrowhead shortening can use the full run up to the nearest bend.
+	private static List<XPoint2D> corners(List<XPoint2D> points) {
+		final List<XPoint2D> corners = new ArrayList<>();
 		XPoint2D start = points.get(0);
 		XPoint2D previous = start;
+		corners.add(start);
 		for (int i = 1; i < points.size(); i++) {
 			final XPoint2D next = points.get(i);
 			if (previous.equals(next))
 				continue;
 			if (start.equals(previous) == false && (start.x == previous.x) != (previous.x == next.x)) {
-				segments.add(line(start, previous));
+				corners.add(previous);
 				start = previous;
 			}
 			previous = next;
 		}
 		if (start.equals(previous) == false)
-			segments.add(line(start, previous));
+			corners.add(previous);
+		return corners;
+	}
+
+	/**
+	 * A* follows a run as far as it can before it turns, which leaves the jog of
+	 * a Z-shaped route right next to one of its ends. Moves the jog halfway
+	 * between the ends, or as close to that as the obstacles allow, unless it
+	 * would cross or run alongside more of the earlier edges there.
+	 */
+	private static List<XPoint2D> centerJog(List<XPoint2D> corners, Port from, Port to, List<RectangleArea> obstacles,
+			List<RectangleArea> usedTracks) {
+		if (corners.size() != 4)
+			return corners;
+		final XPoint2D a = corners.get(0);
+		final XPoint2D b = corners.get(1);
+		final XPoint2D c = corners.get(2);
+		final XPoint2D d = corners.get(3);
+		// The outer runs of a Z are parallel and head the same way.
+		final boolean vertical = a.x == b.x;
+		if (vertical ? c.x != d.x || (b.y - a.y) * (d.y - c.y) <= 0 : c.y != d.y || (b.x - a.x) * (d.x - c.x) <= 0)
+			return corners;
+		// The jog stays clear of both stems and their decorations. A route that
+		// only fits with less clearance than that keeps its jog where it is.
+		final double first = along(from.exit(0, NODE_GAP), vertical);
+		final double last = along(to.exit(0, NODE_GAP), vertical);
+		if ((last - first) * (along(d, vertical) - along(a, vertical)) < 0)
+			return corners;
+		final double low = Math.min(first, last);
+		final double high = Math.max(first, last);
+		final double current = along(b, vertical);
+		final double middle = Math.max(low, Math.min(high, (along(a, vertical) + along(d, vertical)) / 2));
+		final double cost = routeCost(corners, usedTracks);
+		final int crossings = crossings(corners, usedTracks);
+		for (double position : new double[] { middle, (middle + current) / 2 }) {
+			if (Math.abs(position - current) < 1)
+				break;
+			final XPoint2D b2 = vertical ? new XPoint2D(b.x, position) : new XPoint2D(position, b.y);
+			final XPoint2D c2 = vertical ? new XPoint2D(c.x, position) : new XPoint2D(position, c.y);
+			final List<XPoint2D> moved = Arrays.asList(a, b2, c2, d);
+			if (clear(a, b2, obstacles, from.area, to.area, NODE_GAP) && clear(b2, c2, obstacles, from.area, to.area, NODE_GAP)
+					&& clear(c2, d, obstacles, from.area, to.area, NODE_GAP) && routeCost(moved, usedTracks) <= cost
+					&& crossings(moved, usedTracks) <= crossings)
+				return moved;
+		}
+		return corners;
+	}
+
+	private static int crossings(List<XPoint2D> corners, List<RectangleArea> usedTracks) {
+		int count = 0;
+		for (int i = 1; i < corners.size(); i++) {
+			final RectangleArea span = RectangleArea.build(corners.get(i - 1), corners.get(i));
+			for (RectangleArea track : usedTracks)
+				if (crosses(span, track) || crosses(track, span))
+					count++;
+		}
+		return count;
+	}
+
+	// Whether a horizontal segment crosses a vertical one away from their ends.
+	private static boolean crosses(RectangleArea horizontal, RectangleArea vertical) {
+		return horizontal.getHeight() == 0 && vertical.getWidth() == 0 && horizontal.getMinX() < vertical.getMinX()
+				&& vertical.getMinX() < horizontal.getMaxX() && vertical.getMinY() < horizontal.getMinY()
+				&& horizontal.getMinY() < vertical.getMaxY();
+	}
+
+	private static double along(XPoint2D point, boolean vertical) {
+		return vertical ? point.y : point.x;
+	}
+
+	private static double routeCost(List<XPoint2D> corners, List<RectangleArea> usedTracks) {
+		double cost = 0;
+		for (int i = 1; i < corners.size(); i++)
+			cost += overlapCost(RectangleArea.build(corners.get(i - 1), corners.get(i)), usedTracks);
+		return cost;
+	}
+
+	private static DotPath toPath(List<XPoint2D> corners) {
+		final List<XCubicCurve2D> segments = new ArrayList<>();
+		for (int i = 1; i < corners.size(); i++)
+			segments.add(line(corners.get(i - 1), corners.get(i)));
 		return segments.isEmpty() ? null : DotPath.fromBeziers(segments);
 	}
 
@@ -277,11 +478,11 @@ final class OrthogonalPath {
 		}
 	}
 
-	private enum Direction {
+	enum Direction {
 		RIGHT(1, 0), DOWN(0, 1), LEFT(-1, 0), UP(0, -1);
 
-		private final int dx;
-		private final int dy;
+		final int dx;
+		final int dy;
 
 		Direction(int dx, int dy) {
 			this.dx = dx;
@@ -307,24 +508,67 @@ final class OrthogonalPath {
 
 	private static final Direction[] DIRECTIONS = Direction.values();
 
+	/** The side of the area that an attachment at the point leaves through. */
+	static Direction side(XPoint2D point, double angle, RectangleArea area) {
+		return Port.outward(point, angle, area);
+	}
+
 	static final class Endpoint {
 		enum Shape {
-			FIXED, BOX, CIRCLE
+			// Attaches where the layout put it.
+			FIXED,
+			// A rectangular node: the attachment may move along the side the layout chose.
+			SIDE,
+			// A port (portin, portout) or an entry or exit point: the attachment
+			// may use any side of its box or circle.
+			BOX, CIRCLE
 		}
 
 		private final RectangleArea area;
 		private final Shape shape;
 		private final double decoration;
+		private final double decorationHalfWidth;
+		private final double straightBorderInset;
 
 		Endpoint(RectangleArea area, Shape shape, double decoration) {
+			this(area, shape, decoration, 0, 0);
+		}
+
+		private Endpoint(RectangleArea area, Shape shape, double decoration, double decorationHalfWidth,
+				double straightBorderInset) {
 			this.area = area;
 			this.shape = shape;
 			this.decoration = decoration;
+			this.decorationHalfWidth = decorationHalfWidth;
+			this.straightBorderInset = straightBorderInset;
 		}
 
-		private List<Port> ports(XPoint2D point, double angle) {
-			final Direction preferred = Port.outward(point, angle, area);
-			if (shape == Shape.FIXED || area == null)
+		/** A node whose border runs straight from this far off each corner. */
+		static Endpoint side(RectangleArea area, double decoration, double decorationHalfWidth,
+				double straightBorderInset) {
+			return new Endpoint(area, Shape.SIDE, decoration, decorationHalfWidth, straightBorderInset);
+		}
+
+		RectangleArea area() {
+			return area;
+		}
+
+		boolean slidesAlongSide() {
+			return shape == Shape.SIDE && area != null;
+		}
+
+		double straightBorderInset() {
+			return straightBorderInset;
+		}
+
+		// How far the decoration reaches to either side of the line, at least the stroke.
+		double decorationHalfWidth() {
+			return Math.max(1, decorationHalfWidth);
+		}
+
+		private List<Port> ports(XPoint2D point, Direction side, double angle) {
+			final Direction preferred = side == null ? Port.outward(point, angle, area) : side;
+			if (shape == Shape.FIXED || shape == Shape.SIDE || area == null)
 				return Collections.singletonList(new Port(point, area, preferred, decoration));
 
 			// The layout side is usually best. A boundary symbol can also
@@ -571,6 +815,15 @@ final class OrthogonalPath {
 
 		private boolean exhausted() {
 			return edge <= 0;
+		}
+
+		// Work done for all edges together, before any of them is routed. It may
+		// only take a small share of what is left, so that the routes get the rest.
+		boolean spendBeforeRouting(long amount) {
+			if (amount > diagram / 10)
+				return false;
+			diagram -= amount;
+			return true;
 		}
 
 		// Nothing is left for any further edge of the diagram.
