@@ -1767,12 +1767,12 @@ try {
 	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {
 		if ((ND_order(aghead(f)) - ND_order(aghead(e)))
 			 * (ED_tail_port(f).p.x - ED_tail_port(e).p.x) < 0)
-UNSUPPORTED("bw8rwv11yqzss88pad7ljil8a"); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);
+		    cross += ED_xpenalty(e) * ED_xpenalty(f); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);
 	} else
 	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {
-UNSUPPORTED("bza83c6rmihrkzyllwf0jm4tn"); // 		if ((ND_order(agtail(f)) - ND_order(agtail(e)))
-UNSUPPORTED("csrxg0y1azmvde7t833lm13sp"); // 			* (ED_head_port(f).p.x - ED_head_port(e).p.x) < 0)
-UNSUPPORTED("bw8rwv11yqzss88pad7ljil8a"); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);
+		if ((ND_order(agtail(f)) - ND_order(agtail(e))) // 		if ((ND_order(agtail(f)) - ND_order(agtail(e)))
+			* (ED_head_port(f).p.x - ED_head_port(e).p.x) < 0) // 			* (ED_head_port(f).p.x - ED_head_port(e).p.x) < 0)
+		    cross += ED_xpenalty(e) * ED_xpenalty(f); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);
 	    }
     }
     return cross;

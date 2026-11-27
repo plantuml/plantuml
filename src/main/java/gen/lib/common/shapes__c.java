@@ -48,6 +48,7 @@ import static gen.lib.cgraph.attr__c.agget;
 import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.common.geom__c.ccwrotatepf;
 import static gen.lib.common.geom__c.cwrotatepf;
+import static gen.lib.common.splines__c.bezier_clip;
 import static gen.lib.common.htmltable__c.html_port;
 import static gen.lib.common.labels__c.make_label;
 import static gen.lib.common.utils__c.late_double;
@@ -102,6 +103,7 @@ import gen.annotation.Reviewed;
 import gen.annotation.Unused;
 import h.EN_shape_kind;
 import h.ST_Agnode_s;
+import h.ST_Agraph_s;
 import h.ST_boxf;
 import h.ST_field_t;
 import h.ST_inside_t;
@@ -802,49 +804,49 @@ public static int invflip_side(int side, int rankdir) {
     case 0:
 	break;
     case 2:
-UNSUPPORTED("o4wjkq58uh9dgs94m2vxettc"); // 	switch (side) {
-UNSUPPORTED("a0zo28ne6fq7qm9hko3jwrsie"); // 	case (1<<2):
-UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = 1<<0;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("5uxczmgv9jelovrky9lyqmqxn"); // 	case (1<<0):
-UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = 1<<2;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("1drv0xz8hp34qnf72b4jpprg2"); // 	default:
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
+	switch (side) { // 	switch (side) {
+	case TOP: // 	case TOP:
+	    side = BOTTOM; // 	    side = BOTTOM;
+	    break; // 	    break;
+	case BOTTOM: // 	case BOTTOM:
+	    side = TOP; // 	    side = TOP;
+	    break; // 	    break;
+	default: // 	default:
+	    break; // 	    break;
+	} // 	}
+	break; // 	break;
     case 1:
-UNSUPPORTED("o4wjkq58uh9dgs94m2vxettc"); // 	switch (side) {
-UNSUPPORTED("a0zo28ne6fq7qm9hko3jwrsie"); // 	case (1<<2):
-UNSUPPORTED("csyxlzh6yvg14dkwm5h0q8l4e"); // 	    side = 1<<1;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("5uxczmgv9jelovrky9lyqmqxn"); // 	case (1<<0):
-UNSUPPORTED("6ob9sb98jfamphtvv99f9nny7"); // 	    side = 1<<3;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("3vvicpwbia6xzcxsn2qnkbzq8"); // 	case (1<<3):
-UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = 1<<2;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("ad90yo3mu0ffjurb9egult4pi"); // 	case (1<<1):
-UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = 1<<0;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
+	switch (side) { // 	switch (side) {
+	case TOP: // 	case TOP:
+	    side = RIGHT; // 	    side = RIGHT;
+	    break; // 	    break;
+	case BOTTOM: // 	case BOTTOM:
+	    side = LEFT; // 	    side = LEFT;
+	    break; // 	    break;
+	case LEFT: // 	case LEFT:
+	    side = TOP; // 	    side = TOP;
+	    break; // 	    break;
+	case RIGHT: // 	case RIGHT:
+	    side = BOTTOM; // 	    side = BOTTOM;
+	    break; // 	    break;
+	} // 	}
+	break; // 	break;
     case 3:
-UNSUPPORTED("o4wjkq58uh9dgs94m2vxettc"); // 	switch (side) {
-UNSUPPORTED("a0zo28ne6fq7qm9hko3jwrsie"); // 	case (1<<2):
-UNSUPPORTED("csyxlzh6yvg14dkwm5h0q8l4e"); // 	    side = 1<<1;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("5uxczmgv9jelovrky9lyqmqxn"); // 	case (1<<0):
-UNSUPPORTED("6ob9sb98jfamphtvv99f9nny7"); // 	    side = 1<<3;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("3vvicpwbia6xzcxsn2qnkbzq8"); // 	case (1<<3):
-UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = 1<<0;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("ad90yo3mu0ffjurb9egult4pi"); // 	case (1<<1):
-UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = 1<<2;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
+	switch (side) { // 	switch (side) {
+	case TOP: // 	case TOP:
+	    side = RIGHT; // 	    side = RIGHT;
+	    break; // 	    break;
+	case BOTTOM: // 	case BOTTOM:
+	    side = LEFT; // 	    side = LEFT;
+	    break; // 	    break;
+	case LEFT: // 	case LEFT:
+	    side = BOTTOM; // 	    side = BOTTOM;
+	    break; // 	    break;
+	case RIGHT: // 	case RIGHT:
+	    side = TOP; // 	    side = TOP;
+	    break; // 	    break;
+	} // 	}
+	break; // 	break;
     }
     return side;
 }
@@ -861,33 +863,33 @@ public static double invflip_angle(double angle, int rankdir) {
     case 0:
 	break;
     case 2:
-UNSUPPORTED("e7qgsf2gzf7fv8r5lpdfqp2gp"); // 	angle *= -1;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
+	angle *= -1; // 	angle *= -1;
+	break; // 	break;
     case 1:
-UNSUPPORTED("b5wrpw5rvhjh7999v3sqqlbo3"); // 	angle -= M_PI * 0.5;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
+	angle -= M_PI * 0.5; // 	angle -= M_PI * 0.5;
+	break; // 	break;
     case 3:
-UNSUPPORTED("536aocvem6ko7h9t50pllxla0"); // 	if (angle == M_PI)
-UNSUPPORTED("kxow9q31jmisg5yv60fj9z3g"); // 	    angle = -0.5 * M_PI;
-UNSUPPORTED("3hy3z7oxc494l61va60rwh9k3"); // 	else if (angle == M_PI * 0.75)
-UNSUPPORTED("76t0zkyxc3q2wnpcajih9mf65"); // 	    angle = -0.25 * M_PI;
-UNSUPPORTED("bd02ns5pweyapa70g9ozio3m4"); // 	else if (angle == M_PI * 0.5)
-UNSUPPORTED("a0pp5xd6lligtfp0riunw38t3"); // 	    angle = 0;
-UNSUPPORTED("8cqf9j5edmb4u2xnd8lkahkht"); // /* clang complains about self assignment of double
-UNSUPPORTED("205i7xisgiaz1vhn9p93tsw5a"); // 	else if (angle == M_PI * 0.25)
-UNSUPPORTED("76g7hlyzy67q9n7p5l89y4gxw"); // 	    angle = angle;
-UNSUPPORTED("e5xwyhh2l2jm6g9w2ofnktaf6"); //  */
-UNSUPPORTED("8pqjflzypl5wbdev1h4r6ee0e"); // 	else if (angle == 0)
-UNSUPPORTED("3uy8u4gjki2ksohuj3gn6ewkj"); // 	    angle = M_PI * 0.5;
-UNSUPPORTED("bqlwd51jj33yedz7tuck5hukd"); // 	else if (angle == M_PI * -0.25)
-UNSUPPORTED("3s431nqj2tfm95djdmjfjig6h"); // 	    angle = M_PI * 0.75;
-UNSUPPORTED("tl121swu8uuow1dlzumo1pyi"); // 	else if (angle == M_PI * -0.5)
-UNSUPPORTED("aa92obzwij392if7nnjch6dtz"); // 	    angle = M_PI;
-UNSUPPORTED("8cqf9j5edmb4u2xnd8lkahkht"); // /* clang complains about self assignment of double
-UNSUPPORTED("2waz5md3krpirny5m7gagynkc"); // 	else if (angle == M_PI * -0.75)
-UNSUPPORTED("76g7hlyzy67q9n7p5l89y4gxw"); // 	    angle = angle;
-UNSUPPORTED("e5xwyhh2l2jm6g9w2ofnktaf6"); //  */
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
+	if (angle == M_PI) // 	if (angle == M_PI)
+	    angle = -0.5 * M_PI; // 	    angle = -0.5 * M_PI;
+	else if (angle == M_PI * 0.75) // 	else if (angle == M_PI * 0.75)
+	    angle = -0.25 * M_PI; // 	    angle = -0.25 * M_PI;
+	else if (angle == M_PI * 0.5) // 	else if (angle == M_PI * 0.5)
+	    angle = 0; // 	    angle = 0;
+	/* clang complains about self assignment of double
+	else if (angle == M_PI * 0.25)
+	    angle = angle;
+	 */
+	else if (angle == 0) // 	else if (angle == 0)
+	    angle = M_PI * 0.5; // 	    angle = M_PI * 0.5;
+	else if (angle == M_PI * -0.25) // 	else if (angle == M_PI * -0.25)
+	    angle = M_PI * 0.75; // 	    angle = M_PI * 0.75;
+	else if (angle == M_PI * -0.5) // 	else if (angle == M_PI * -0.5)
+	    angle = M_PI; // 	    angle = M_PI;
+	/* clang complains about self assignment of double
+	else if (angle == M_PI * -0.75)
+	    angle = angle;
+	 */
+	break; // 	break;
     }
     return angle;
 }
@@ -899,28 +901,29 @@ UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 // static pointf compassPoint(inside_t * ictxt, double y, double x) 
 @Unused
 @Original(version="2.38.0", path="lib/common/shapes.c", name="compassPoint", key="54t5x4hsq6ie4hn83dix0fi3g", definition="static pointf compassPoint(inside_t * ictxt, double y, double x)")
-public static Object compassPoint(Object... arg) {
-UNSUPPORTED("1owp098dshhw9x2d86x61ho3n"); // static pointf compassPoint(inside_t * ictxt, double y, double x)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("5jw267n0iigspndf3p51uuoyt"); //     pointf curve[4];		/* bezier control points for a straight line */
-UNSUPPORTED("2ol68djy9gbphj8kdfml5q1ej"); //     node_t *n = ictxt->s.n;
-UNSUPPORTED("f121hhzfkpb97hn84g46lhxdh"); //     graph_t* g = agraphof(n);
-UNSUPPORTED("347leky6wh51yiydoij5od0h2"); //     int rd = GD_rankdir(g);
-UNSUPPORTED("2bghyit203pd6xw2ihhenzyn8"); //     pointf p;
-UNSUPPORTED("saqn1396zzjkeo01vp1tskia"); //     p.x = x;
-UNSUPPORTED("5jdhcgi82gtmvn690v78zmkpe"); //     p.y = y;
-UNSUPPORTED("2imvfuepadgxdlfwq3qmsatju"); //     if (rd)
-UNSUPPORTED("8gcpvoawmbrjuiq80lglpl2bn"); // 	p = cwrotatepf(p, 90 * rd);
-UNSUPPORTED("b4ktwkbs8awubvwfgfeqzhlx0"); //     curve[0].x = curve[0].y = 0;
-UNSUPPORTED("dcqc3vt7dwuvg73lixbbwd3dj"); //     curve[1] = curve[0];
-UNSUPPORTED("ahj7ruzql6g6cm5nvomizsgcz"); //     curve[3] = curve[2] = p;
-UNSUPPORTED("6wkk7v0v7iyai22oyhq16dcno"); //     bezier_clip(ictxt, ND_shape(n)->fns->insidefn, curve, 1);
-UNSUPPORTED("2imvfuepadgxdlfwq3qmsatju"); //     if (rd)
-UNSUPPORTED("ip6d55dog3nmeksqauqb1fyo"); // 	curve[0] = ccwrotatepf(curve[0], 90 * rd);
-UNSUPPORTED("7jlv4v811jdfr56u2h3wdxxbm"); //     return curve[0];
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static ST_pointf compassPoint(Globals zz, ST_inside_t ictxt, double y, double x) {
+ENTERING("54t5x4hsq6ie4hn83dix0fi3g","compassPoint");
+try {
+    final CArray<ST_pointf> curve = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf); //     pointf curve[4];		/* bezier control points for a straight line */
+    ST_Agnode_s n = ictxt.s_n; //     node_t *n = ictxt->s.n;
+    ST_Agraph_s g = agraphof(n); //     graph_t* g = agraphof(n);
+    int rd = GD_rankdir(g); //     int rd = GD_rankdir(g);
+    ST_pointf p = new ST_pointf(); //     pointf p;
+    p.x = x; //     p.x = x;
+    p.y = y; //     p.y = y;
+    if (rd!=0) //     if (rd)
+	p = cwrotatepf(p, 90 * rd); // 	p = cwrotatepf(p, 90 * rd);
+    curve.get__(0).x = curve.get__(0).y = 0; //     curve[0].x = curve[0].y = 0;
+    curve.get__(1).___(curve.get__(0)); //     curve[1] = curve[0];
+    curve.get__(3).___(p); //     curve[3] = curve[2] = p;
+    curve.get__(2).___(p);
+    bezier_clip(zz, ictxt, ND_shape(n).fns.insidefn, curve, true); //     bezier_clip(ictxt, ND_shape(n)->fns->insidefn, curve, 1);
+    if (rd!=0) //     if (rd)
+	curve.get__(0).___(ccwrotatepf(curve.get__(0), 90 * rd)); // 	curve[0] = ccwrotatepf(curve[0], 90 * rd);
+    return curve.get__(0).copy(); //     return curve[0];
+} finally {
+LEAVING("54t5x4hsq6ie4hn83dix0fi3g","compassPoint");
+}
 }
 
 
@@ -930,7 +933,7 @@ throw new UnsupportedOperationException();
 // static int compassPort(node_t * n, boxf * bp, port * pp, char *compass, int sides, 	    inside_t * ictxt) 
 @Unused
 @Original(version="2.38.0", path="lib/common/shapes.c", name="compassPort", key="4oj0c3dwqqjei7u5u2ik9yyw1", definition="static int compassPort(node_t * n, boxf * bp, port * pp, char *compass, int sides, 	    inside_t * ictxt)")
-public static boolean compassPort(ST_Agnode_s n, ST_boxf bp, ST_port pp, CString compass, int sides, ST_inside_t ictxt) {
+public static boolean compassPort(Globals zz, ST_Agnode_s n, ST_boxf bp, ST_port pp, CString compass, int sides, ST_inside_t ictxt) {
     final ST_boxf b = new ST_boxf();
     final ST_pointf p = new ST_pointf(), ctr = new ST_pointf();
     int rv = 0;
@@ -948,10 +951,10 @@ public static boolean compassPort(ST_Agnode_s n, ST_boxf bp, ST_port pp, CString
     } else {
 	p.x = p.y = 0.;
 	if (GD_flip(agraphof(n))) {
-UNSUPPORTED("e21k9f24vr25zdbgo37m5er48"); // 	    b.UR.x = ND_ht(n) / 2.;
-UNSUPPORTED("1i4y4dgrig36gh0dq2jn8kde"); // 	    b.LL.x = -b.UR.x;
-UNSUPPORTED("7luuqd8n7bpffoa8v27jp7tn3"); // 	    b.UR.y = ND_lw(n);
-UNSUPPORTED("922vazdrkwhoxxy4yw5axu6i7"); // 	    b.LL.y = -b.UR.y;
+	    b.UR.x = ND_ht(n) / 2.; // 	    b.UR.x = ND_ht(n) / 2.;
+	    b.LL.x = -b.UR.x; // 	    b.LL.x = -b.UR.x;
+	    b.UR.y = ND_lw(n); // 	    b.UR.y = ND_lw(n);
+	    b.LL.y = -b.UR.y; // 	    b.LL.y = -b.UR.y;
 	} else {
 	    b.UR.y = ND_ht(n) / 2.;
 	    b.LL.y = -b.UR.y;
@@ -969,10 +972,10 @@ UNSUPPORTED("922vazdrkwhoxxy4yw5axu6i7"); // 	    b.LL.y = -b.UR.y;
     switch (TMP) {
 	case 'e':
 	    if (compass.charAt(0)!=0)
-UNSUPPORTED("en0rarvkx5srsxnlqpf6ja1us"); // 		rv = 1;
+		rv = 1; // 		rv = 1;
 	    else {
                 if (ictxt!=null)
-UNSUPPORTED("8whok6jl4olniblvibxhrbbre"); //                     p = compassPoint(ictxt, ctr.y, maxv);
+                    p.___(compassPoint(zz, ictxt, ctr.y, maxv)); //                     p = compassPoint(ictxt, ctr.y, maxv);
                 else
 		    p.x = b.UR.x;
 		theta = 0.0;
@@ -991,35 +994,35 @@ UNSUPPORTED("8whok6jl4olniblvibxhrbbre"); //                     p = compassPoin
 		theta = -M_PI * 0.5;
 		defined = true;
                 if (ictxt!=null)
-UNSUPPORTED("2iohu3tvlkzx2emq04ycxkhta"); //                     p = compassPoint(ictxt, -maxv, ctr.x);
+                    p.___(compassPoint(zz, ictxt, -maxv, ctr.x)); //                     p = compassPoint(ictxt, -maxv, ctr.x);
                 else
                     p.x = ctr.x;
 		side = sides & BOTTOM;
 		break;
 	    case 'e':
-UNSUPPORTED("avfplp4wadl774qo2yrqn2btg"); // 		theta = -M_PI * 0.25;
-UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
-UNSUPPORTED("e1jqt6v7gkr0w7anohkdvwzuz"); // 		if (ictxt)
-UNSUPPORTED("4qnqhz6577yhq6u9919ve4tjb"); // 		    p = compassPoint(ictxt, -maxv, maxv);
-UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
-UNSUPPORTED("5f4jye7znkk6hbv6lv0l9l0hs"); // 		    p.x = b.UR.x;
-UNSUPPORTED("b0weojc8y88qjfkoujifnu9ag"); // 		side = sides & ((1<<0) | (1<<1));
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
+		theta = -M_PI * 0.25; // 		theta = -M_PI * 0.25;
+		defined = true; // 		defined = NOT(0);
+		if (ictxt!=null) // 		if (ictxt)
+		    p.___(compassPoint(zz, ictxt, -maxv, maxv)); // 		    p = compassPoint(ictxt, -maxv, maxv);
+		else // 		else
+		    p.x = b.UR.x; // 		    p.x = b.UR.x;
+		side = sides & (BOTTOM | RIGHT); // 		side = sides & (BOTTOM | RIGHT);
+		break; // 		break;
 	    case 'w':
-UNSUPPORTED("a6j042vifpt4pgkwczny2dy24"); // 		theta = -M_PI * 0.75;
-UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
-UNSUPPORTED("e1jqt6v7gkr0w7anohkdvwzuz"); // 		if (ictxt)
-UNSUPPORTED("c0hdr34iyaygjxcr6a65hns2g"); // 		    p = compassPoint(ictxt, -maxv, -maxv);
-UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
-UNSUPPORTED("e2vcgqbz5sfyjwfyadlmm3s7n"); // 		    p.x = b.LL.x;
-UNSUPPORTED("9yg4wc52hqtj6s3orou0nnbq4"); // 		side = sides & ((1<<0) | (1<<3));
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("bt2g0yhsy3c7keqyftf3c98ut"); // 	    default:
-UNSUPPORTED("c8if0ggdrakzyxyn4fwlc8z2j"); // 		p.y = ctr.y;
-UNSUPPORTED("30qndpdx39k6rmlgid0k16w53"); // 		constrain = 0;
-UNSUPPORTED("2uxoapmd0p84jvg4utlai18nj"); // 		clip = NOT(0);
-UNSUPPORTED("en0rarvkx5srsxnlqpf6ja1us"); // 		rv = 1;
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
+		theta = -M_PI * 0.75; // 		theta = -M_PI * 0.75;
+		defined = true; // 		defined = NOT(0);
+		if (ictxt!=null) // 		if (ictxt)
+		    p.___(compassPoint(zz, ictxt, -maxv, -maxv)); // 		    p = compassPoint(ictxt, -maxv, -maxv);
+		else // 		else
+		    p.x = b.LL.x; // 		    p.x = b.LL.x;
+		side = sides & (BOTTOM | LEFT); // 		side = sides & (BOTTOM | LEFT);
+		break; // 		break;
+	    default: // 	    default:
+		p.y = ctr.y; // 		p.y = ctr.y;
+		constrain = false; // 		constrain = 0;
+		clip = true; // 		clip = NOT(0);
+		rv = 1; // 		rv = 1;
+		break; // 		break;
 	    }
 	    break;
 	case 'w':
@@ -1027,7 +1030,7 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 		rv = 1;
 	    else {
                 if (ictxt!=null)
-UNSUPPORTED("dkdxl90pni5x4m9rsi9l4fkml"); //                     p = compassPoint(ictxt, ctr.y, -maxv);
+                    p.___(compassPoint(zz, ictxt, ctr.y, -maxv)); //                     p = compassPoint(ictxt, ctr.y, -maxv);
                 else
 		    p.x = b.LL.x;
 		theta = M_PI;
@@ -1046,35 +1049,35 @@ UNSUPPORTED("dkdxl90pni5x4m9rsi9l4fkml"); //                     p = compassPoin
 		defined = true;
 		theta = M_PI * 0.5;
                 if (ictxt!=null)
-UNSUPPORTED("6l60lhko2eg8jry5mf4wpknho"); //                     p = compassPoint(ictxt, maxv, ctr.x);
+                    p.___(compassPoint(zz, ictxt, maxv, ctr.x)); //                     p = compassPoint(ictxt, maxv, ctr.x);
                 else
                     p.x = ctr.x;
 		side = sides & TOP;
 		break;
 	    case 'e':
-UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
-UNSUPPORTED("dpfvfzmxj8yxv0s9b2jrvy1dt"); // 		theta = M_PI * 0.25;
-UNSUPPORTED("e1jqt6v7gkr0w7anohkdvwzuz"); // 		if (ictxt)
-UNSUPPORTED("eaiok8sr9qt2m9t35bj1n33vk"); // 		    p = compassPoint(ictxt, maxv, maxv);
-UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
-UNSUPPORTED("5f4jye7znkk6hbv6lv0l9l0hs"); // 		    p.x = b.UR.x;
-UNSUPPORTED("7eo9yj1faco0zq3n56ljnckjl"); // 		side = sides & ((1<<2) | (1<<1));
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
+		defined = true; // 		defined = NOT(0);
+		theta = M_PI * 0.25; // 		theta = M_PI * 0.25;
+		if (ictxt!=null) // 		if (ictxt)
+		    p.___(compassPoint(zz, ictxt, maxv, maxv)); // 		    p = compassPoint(ictxt, maxv, maxv);
+		else // 		else
+		    p.x = b.UR.x; // 		    p.x = b.UR.x;
+		side = sides & (TOP | RIGHT); // 		side = sides & (TOP | RIGHT);
+		break; // 		break;
 	    case 'w':
-UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
-UNSUPPORTED("b4rydjq1y842ljagzj3esvilf"); // 		theta = M_PI * 0.75;
-UNSUPPORTED("e1jqt6v7gkr0w7anohkdvwzuz"); // 		if (ictxt)
-UNSUPPORTED("aftpsq12rdaiypy81n10uki6g"); // 		    p = compassPoint(ictxt, maxv, -maxv);
-UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
-UNSUPPORTED("e2vcgqbz5sfyjwfyadlmm3s7n"); // 		    p.x = b.LL.x;
-UNSUPPORTED("46gsms8looi57wty5vza2s5el"); // 		side = sides & ((1<<2) | (1<<3));
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
+		defined = true; // 		defined = NOT(0);
+		theta = M_PI * 0.75; // 		theta = M_PI * 0.75;
+		if (ictxt!=null) // 		if (ictxt)
+		    p.___(compassPoint(zz, ictxt, maxv, -maxv)); // 		    p = compassPoint(ictxt, maxv, -maxv);
+		else // 		else
+		    p.x = b.LL.x; // 		    p.x = b.LL.x;
+		side = sides & (TOP | LEFT); // 		side = sides & (TOP | LEFT);
+		break; // 		break;
 	    default:
-UNSUPPORTED("c8if0ggdrakzyxyn4fwlc8z2j"); // 		p.y = ctr.y;
-UNSUPPORTED("30qndpdx39k6rmlgid0k16w53"); // 		constrain = 0;
-UNSUPPORTED("2uxoapmd0p84jvg4utlai18nj"); // 		clip = NOT(0);
-UNSUPPORTED("en0rarvkx5srsxnlqpf6ja1us"); // 		rv = 1;
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
+		p.y = ctr.y; // 		p.y = ctr.y;
+		constrain = false; // 		constrain = 0;
+		clip = true; // 		clip = NOT(0);
+		rv = 1; // 		rv = 1;
+		break; // 		break;
 	    }
 	    break;
 	case '_':
@@ -1082,7 +1085,7 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 	    side = sides;
 	    break;
 	case 'c':
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
+	    break; // 	    break;
 	default:
 	    rv = 1;
 	    break;
@@ -1163,11 +1166,11 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 	if (IS_BOX(zz, n))
 	    ictxtp = null;
 	else {
-UNSUPPORTED("17pbmb7rfq2rdapm13ww6pefz"); // 	    ictxt.s.n = n;
-UNSUPPORTED("etss3zom716xdeasxnytjb8db"); // 	    ictxt.s.bp = NULL;
-UNSUPPORTED("89cj6b362bd80f627mp67yjh0"); // 	    ictxtp = &ictxt;
+	    ictxt.s_n = n; // 	    ictxt.s.n = n;
+	    ictxt.s_bp = null; // 	    ictxt.s.bp = NULL;
+	    ictxtp = ictxt; // 	    ictxtp = &ictxt;
 	}
-	if (compassPort(n, null, rv, portname, sides[0], ictxtp))
+	if (compassPort(zz, n, null, rv, portname, sides[0], ictxtp))
 		unrecognized(n, portname);
     }
 
@@ -1892,12 +1895,12 @@ public static ST_port record_port(Globals zz, ST_Agnode_s n, CString portname, C
 	compass = new CString("_");
     f = (ST_field_t) ND_shape_info(n);
     if ((subf = map_rec_port(f, portname))!=null) {
-	if (compassPort(n, subf.b, rv, compass, subf.sides, null)) {
+	if (compassPort(zz, n, subf.b, rv, compass, subf.sides, null)) {
 UNSUPPORTED("cw5grwj6gbj94jcztvnp2ooyj"); // 	    agerr(AGWARN,
 UNSUPPORTED("en2xpqtprfng8gmc77dzq7klv"); // 		  "node %s, port %s, unrecognized compass point '%s' - ignored\n",
 UNSUPPORTED("cmo03yl2q1wgn0c1r45y1ay5e"); // 		  agnameof(n), portname, compass);
 	}
-    } else if (compassPort(n, f.b, rv, portname, sides, null)) {
+    } else if (compassPort(zz, n, f.b, rv, portname, sides, null)) {
     	unrecognized(n, portname);
     }
     return rv;
@@ -2423,7 +2426,8 @@ try {
     CString compass = closestSide(n, other, oldport);
     /* transfer name pointer; all other necessary fields will be regenerated */
     rv.name = oldport.name;
-    compassPort(n, oldport.bp, rv, compass, oldport.side, null);
+    // No inside context: compassPort does not reach compassPoint, Globals is not needed
+    compassPort(null, n, oldport.bp, rv, compass, oldport.side, null);
     return rv;
 } finally {
 LEAVING("ckbg1dyu9jzx7g0c9dbriez7r","resolvePort");

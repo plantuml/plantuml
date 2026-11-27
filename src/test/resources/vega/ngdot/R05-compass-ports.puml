@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  node [shape=box];
+  c [label="center"];
+  n; ne; e; se; s; sw; w; nw;
+  n -> c:n; ne -> c:ne; e -> c:e; se -> c:se;
+  c:s -> s; c:sw -> sw; c:w -> w; c:nw -> nw;
+  o [shape=ellipse, label="ellipse"];
+  c -> o:n;
+  o:e -> e2; o:w -> w2; o:s -> s2;
+  p [label="name:compass"];
+  p:anything:se -> s2;
+}
+@enddot

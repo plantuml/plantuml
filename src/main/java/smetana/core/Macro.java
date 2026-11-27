@@ -409,6 +409,10 @@ final public class Macro {
 		return ((ST_Agraphinfo_t) g.data).maxset;
 	}
 
+	public static void GD_maxset(ST_Agraph_s g, ST_Agnode_s v) {
+		((ST_Agraphinfo_t) g.data).maxset = v;
+	}
+
 	// #define GD_minrank(g) (((Agraphinfo_t*)AGDATA(g))->minrank)
 	public static int GD_minrank(ST_Agraph_s g) {
 		return ((ST_Agraphinfo_t) g.data).minrank;
@@ -421,6 +425,10 @@ final public class Macro {
 	// #define GD_minset(g) (((Agraphinfo_t*)AGDATA(g))->minset)
 	public static __ptr__ GD_minset(ST_Agraph_s g) {
 		return ((ST_Agraphinfo_t) g.data).minset;
+	}
+
+	public static void GD_minset(ST_Agraph_s g, ST_Agnode_s v) {
+		((ST_Agraphinfo_t) g.data).minset = v;
 	}
 
 	// #define GD_minrep(g) (((Agraphinfo_t*)AGDATA(g))->minrep)

@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  subgraph cluster_a {
+    label="A";
+    x -> y;
+    z;
+    {rank=same; y; z}
+    y -> z;
+  }
+  w -> x;
+  {rank=same; w; v}
+}
+@enddot

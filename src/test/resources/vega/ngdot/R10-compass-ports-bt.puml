@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  rankdir=BT;
+  a -> b [tailport=n, headport=s];
+  b -> c [tailport=e, headport=w];
+  {rank=same; c; d}
+  c -> d;
+}
+@enddot

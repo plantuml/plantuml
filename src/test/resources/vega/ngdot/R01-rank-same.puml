@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  a -> b; a -> c; c -> d; d -> e;
+  {rank=same; b; d}
+  b -> d [label="flat"];
+  d -> b [color=red];
+  {rank=same; a; f}
+  f -> e;
+}
+@enddot

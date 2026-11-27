@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  subgraph cluster_ports { label="ports"; a1 -> b1 [tailport=n, headport=s]; a1 -> c1 [tailport=s, headport=n] }
+  a1 -> a2 [style=invis];
+  a2 -> b2 [tailport=e, headport=w];
+  a2 -> c2 [tailport=w, headport=e];
+}
+@enddot

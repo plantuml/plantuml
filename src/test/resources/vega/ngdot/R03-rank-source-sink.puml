@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  a -> b -> c;
+  x -> b;
+  {rank=source; x}
+  a -> y;
+  {rank=sink; y}
+}
+@enddot

@@ -353,15 +353,15 @@ try {
 	ND_UF_parent(u, u);
 	ND_UF_size(u, 1);
     } else
-    UNSUPPORTED("35c97tyk6tzw1g527j6rp6xoo"); // 	u = UF_find(u);
+	u = UF_find(u); // 	u = UF_find(u);
     if (ND_UF_parent(v) == null) {
 	ND_UF_parent(v, v);
 	ND_UF_size(v, 1);
     } else
 	v = UF_find(v);
     if (ND_id(u) > ND_id(v)) {
-	UNSUPPORTED("2igr3ntnkm6svji4pbnjlp54e"); // 	ND_UF_parent(u) = v;
-	UNSUPPORTED("3lht90i6tvxbr10meir8nvcic"); // 	ND_UF_size(v) += ND_UF_size(u);
+	ND_UF_parent(u, v); // 	ND_UF_parent(u) = v;
+	ND_UF_size(v, ND_UF_size(v) + ND_UF_size(u)); // 	ND_UF_size(v) += ND_UF_size(u);
     } else {
 	ND_UF_parent(v, u);
 	ND_UF_size(u, ND_UF_size(u) + ND_UF_size(v));

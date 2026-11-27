@@ -63,16 +63,19 @@ import static gen.lib.common.utils__c.UF_singleton;
 import static gen.lib.common.utils__c.UF_union;
 import static gen.lib.common.utils__c.maptoken;
 import static gen.lib.dotgen.acyclic__c.acyclic_;
+import static gen.lib.dotgen.acyclic__c.reverse_edge;
 import static gen.lib.dotgen.aspect__c.rank3;
 import static gen.lib.dotgen.class1__c.class1_;
 import static gen.lib.dotgen.decomp__c.decompose;
 import static gen.lib.dotgen.dotinit__c.dot_root;
+import static gen.lib.dotgen.fastgr__c.virtual_edge;
 import static smetana.core.JUtils.strncmp;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.EDGE_LABEL;
 import static smetana.core.Macro.ED_minlen;
 import static smetana.core.Macro.ED_to_orig;
 import static smetana.core.Macro.ED_to_virt;
+import static smetana.core.Macro.ED_weight;
 import static smetana.core.Macro.GD_clust;
 import static smetana.core.Macro.GD_comp;
 import static smetana.core.Macro.GD_flags;
@@ -235,46 +238,45 @@ LEAVING("bxjf5g7g953ii1hfodl1j0y4u","edgelabel_ranks");
 // static void  collapse_rankset(graph_t * g, graph_t * subg, int kind) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="collapse_rankset", key="9kjpoxcxoy3nhqd9rflwclo7c", definition="static void  collapse_rankset(graph_t * g, graph_t * subg, int kind)")
-public static Object collapse_rankset(Object... arg_) {
-UNSUPPORTED("59dl3yc4jbcy2pb7j1njhlybi"); // static void 
-UNSUPPORTED("8hizp29cxh1rnp84yrlv4nl8x"); // collapse_rankset(graph_t * g, graph_t * subg, int kind)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("5yrhx4blosxo5xnc1nh1kzhfs"); //     node_t *u, *v;
-UNSUPPORTED("nbvmqthk0lqbm00ekylf0l0g"); //     u = v = agfstnode(subg);
-UNSUPPORTED("5q27ub494lpst2s18bizunri0"); //     if (u) {
-UNSUPPORTED("97vrl7utckj5ct78d81xyhhjl"); // 	ND_ranktype(u) = kind;
-UNSUPPORTED("99ruvdyom1mcyir0v7i8zq8eh"); // 	while ((v = agnxtnode(subg, v))) {
-UNSUPPORTED("7f9cf0wfrirgdoty4qy5pfuj9"); // 	    UF_union(u, v);
-UNSUPPORTED("5jt25she9etuqjk6nrkrt3059"); // 	    ND_ranktype(v) = ND_ranktype(u);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("9ty5l2g646lrkxz43tcnhcsk8"); // 	switch (kind) {
-UNSUPPORTED("b8vgbvwzllfs4lrqmmqyr1spk"); // 	case 2:
-UNSUPPORTED("1640m8as34e90xhvvtl877cmo"); // 	case 3:
-UNSUPPORTED("2crlxhvtrgd5ohsriopqywv1m"); // 	    if (GD_minset(g) == NULL)
-UNSUPPORTED("9py54j3v52y5qevrsi1omdoq7"); // 		GD_minset(g) = u;
-UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
-UNSUPPORTED("1cqwn2xb41g0dsm2oltj15dsd"); // 		GD_minset(g) = UF_union(GD_minset(g), u);
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("495y0cnvj5vci19wsufg88rrq"); // 	case 4:
-UNSUPPORTED("1wjv2f7dql1ddky1us3a7q5jq"); // 	case 5:
-UNSUPPORTED("1myv9cwrp9n535g9xsalgmg7n"); // 	    if (GD_maxset(g) == NULL)
-UNSUPPORTED("45gr04d25a1qxrh4hm1kiip5v"); // 		GD_maxset(g) = u;
-UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
-UNSUPPORTED("d5a4ohz8nh8xso8ovij23zsxi"); // 		GD_maxset(g) = UF_union(GD_maxset(g), u);
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("9ty5l2g646lrkxz43tcnhcsk8"); // 	switch (kind) {
-UNSUPPORTED("1640m8as34e90xhvvtl877cmo"); // 	case 3:
-UNSUPPORTED("j5ay8vao16zse2bq0etmlhua"); // 	    ND_ranktype(GD_minset(g)) = kind;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("1wjv2f7dql1ddky1us3a7q5jq"); // 	case 5:
-UNSUPPORTED("9dtrubjv4hiv1k3dq24skxdb8"); // 	    ND_ranktype(GD_maxset(g)) = kind;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static void collapse_rankset(Globals zz, ST_Agraph_s g, ST_Agraph_s subg, int kind) {
+ENTERING("9kjpoxcxoy3nhqd9rflwclo7c","collapse_rankset");
+try {
+    ST_Agnode_s u, v; //     node_t *u, *v;
+    u = v = agfstnode(zz, subg); //     u = v = agfstnode(subg);
+    if (u!=null) { //     if (u) {
+	ND_ranktype(u, kind); // 	ND_ranktype(u) = kind;
+	while ((v = agnxtnode(zz, subg, v))!=null) { // 	while ((v = agnxtnode(subg, v))) {
+	    UF_union(u, v); // 	    UF_union(u, v);
+	    ND_ranktype(v, ND_ranktype(u)); // 	    ND_ranktype(v) = ND_ranktype(u);
+	} // 	}
+	switch (kind) { // 	switch (kind) {
+	case MINRANK: // 	case 2:
+	case SOURCERANK: // 	case 3:
+	    if (GD_minset(g) == null) // 	    if (GD_minset(g) == NULL)
+		GD_minset(g, u); // 		GD_minset(g) = u;
+	    else // 	    else
+		GD_minset(g, UF_union((ST_Agnode_s) GD_minset(g), u)); // 		GD_minset(g) = UF_union(GD_minset(g), u);
+	    break; // 	    break;
+	case MAXRANK: // 	case 4:
+	case SINKRANK: // 	case 5:
+	    if (GD_maxset(g) == null) // 	    if (GD_maxset(g) == NULL)
+		GD_maxset(g, u); // 		GD_maxset(g) = u;
+	    else // 	    else
+		GD_maxset(g, UF_union((ST_Agnode_s) GD_maxset(g), u)); // 		GD_maxset(g) = UF_union(GD_maxset(g), u);
+	    break; // 	    break;
+	} // 	}
+	switch (kind) { // 	switch (kind) {
+	case SOURCERANK: // 	case 3:
+	    ND_ranktype((ST_Agnode_s) GD_minset(g), kind); // 	    ND_ranktype(GD_minset(g)) = kind;
+	    break; // 	    break;
+	case SINKRANK: // 	case 5:
+	    ND_ranktype((ST_Agnode_s) GD_maxset(g), kind); // 	    ND_ranktype(GD_maxset(g)) = kind;
+	    break; // 	    break;
+	} // 	}
+    } //     }
+} finally {
+LEAVING("9kjpoxcxoy3nhqd9rflwclo7c","collapse_rankset");
+}
 }
 
 
@@ -440,7 +442,7 @@ try {
 	    if ((c == CLUSTER) && zz.CL_type == LOCAL)
 		collapse_cluster(zz, rg, subg);
 	    else
-		collapse_rankset(rg, subg, c);
+		collapse_rankset(zz, rg, subg, c);
 	}
 	else collapse_sets(zz, rg, subg);
 	
@@ -513,28 +515,28 @@ try {
     slen.x = slen.y = 0;
     if ((GD_maxset(g) == null) && (GD_minset(g) == null))
 	return slen;
-UNSUPPORTED("d0tnzm7aw9504y1w1oqoesw64"); //     if ((((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset) != NULL)
-UNSUPPORTED("9esfh1bqntzgyk7zcq16k9f96"); // 	(((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset) = UF_find((((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset));
-UNSUPPORTED("2szhe8u8hvuy7p23r4p4zcb83"); //     if ((((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxset) != NULL)
-UNSUPPORTED("tufrhwafgfvg5vepfqo9dpwg"); // 	(((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxset) = UF_find((((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxset));
-UNSUPPORTED("3num56yubfb33g0m56jntiy0x"); //     if ((n = (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxset))) {
-UNSUPPORTED("d60rrtpfeuylcbp2490sojfjq"); // 	slen.y = ((((Agnodeinfo_t*)(((Agobj_t*)((((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxset)))->data))->ranktype) == 5);
-UNSUPPORTED("79ls52ss65f22xrsubkcofzz"); // 	while ((e = (((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->out).list[0])) {
-UNSUPPORTED("chd9prkphze2z32e98mbxhqyd"); // 	    assert(((((((Agobj_t*)(e))->tag).objtype) == 2? (e): ((e)-1))->node) == UF_find(((((((Agobj_t*)(e))->tag).objtype) == 2? (e): ((e)-1))->node)));
-UNSUPPORTED("829yx3b7rjn7ptz89mz4dj5yo"); // 	    reverse_edge(e);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("8us4psjv2ebkgcp54fvjbuhj8"); //     if ((n = (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset))) {
-UNSUPPORTED("7uri9lp9wjgo20ram4gfo974w"); // 	slen.x = ((((Agnodeinfo_t*)(((Agobj_t*)((((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset)))->data))->ranktype) == 3);
-UNSUPPORTED("5up69q1rp9ts32jvunwg9hlrr"); // 	while ((e = (((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->in).list[0])) {
-UNSUPPORTED("4t476gsg37fhfa2fdrokupx2c"); // 	    assert(((((((Agobj_t*)(e))->tag).objtype) == 3? (e): ((e)+1))->node) == UF_find(((((((Agobj_t*)(e))->tag).objtype) == 3? (e): ((e)+1))->node)));
-UNSUPPORTED("829yx3b7rjn7ptz89mz4dj5yo"); // 	    reverse_edge(e);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("erz19oifq072tdfzgz6dxa9i4"); //     return slen;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    if (GD_minset(g) != null) //     if (GD_minset(g) != NULL)
+	GD_minset(g, UF_find((ST_Agnode_s) GD_minset(g))); // 	GD_minset(g) = UF_find(GD_minset(g));
+    if (GD_maxset(g) != null) //     if (GD_maxset(g) != NULL)
+	GD_maxset(g, UF_find((ST_Agnode_s) GD_maxset(g))); // 	GD_maxset(g) = UF_find(GD_maxset(g));
+    if ((n = (ST_Agnode_s) GD_maxset(g))!=null) { //     if ((n = GD_maxset(g))) {
+	slen.y = (ND_ranktype((ST_Agnode_s) GD_maxset(g)) == SINKRANK) ? 1 : 0; // 	slen.y = (ND_ranktype(GD_maxset(g)) == SINKRANK);
+	// The C list is NULL terminated: "while ((e = ND_out(n).list[0]))" loops until it is empty
+	while (ND_out(n).size > 0) { // 	while ((e = ND_out(n).list[0])) {
+	    e = ND_out(n).list.get_(0);
+	    // 	    assert(agtail(e) == UF_find(agtail(e)));
+	    reverse_edge(e); // 	    reverse_edge(e);
+	} // 	}
+    } //     }
+    if ((n = (ST_Agnode_s) GD_minset(g))!=null) { //     if ((n = GD_minset(g))) {
+	slen.x = (ND_ranktype((ST_Agnode_s) GD_minset(g)) == SOURCERANK) ? 1 : 0; // 	slen.x = (ND_ranktype(GD_minset(g)) == SOURCERANK);
+	while (ND_in(n).size > 0) { // 	while ((e = ND_in(n).list[0])) {
+	    e = ND_in(n).list.get_(0);
+	    // 	    assert(aghead(e) == UF_find(aghead(e)));
+	    reverse_edge(e); // 	    reverse_edge(e);
+	} // 	}
+    } //     }
+    return slen; //     return slen;
 } finally {
 LEAVING("3bcr1748gqnu8ogb73jeja7ly","minmax_edges");
 }
@@ -545,30 +547,30 @@ LEAVING("3bcr1748gqnu8ogb73jeja7ly","minmax_edges");
 
 @Reviewed(when = "14/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="minmax_edges2", key="1rmlm1wo3t94wyet9rlwrmith", definition="static int  minmax_edges2(graph_t * g, point slen)")
-public static boolean minmax_edges2(ST_Agraph_s g, final ST_point slen) {
+public static boolean minmax_edges2(Globals zz, ST_Agraph_s g, final ST_point slen) {
 // WARNING!! STRUCT
-return minmax_edges2_w_(g, (ST_point) slen.copy());
+return minmax_edges2_w_(zz, g, (ST_point) slen.copy());
 }
-private static boolean minmax_edges2_w_(ST_Agraph_s g, final ST_point slen) {
+private static boolean minmax_edges2_w_(Globals zz, ST_Agraph_s g, final ST_point slen) {
 ENTERING("1rmlm1wo3t94wyet9rlwrmith","minmax_edges2");
 try {
     ST_Agnode_s n;
     ST_Agedge_s e = null;
     if ((GD_maxset(g)!=null) || (GD_minset(g)!=null)) {
-UNSUPPORTED("attp4bsjqe99xnhi7lr7pszar"); // 	for (n = agfstnode(g); n; n = agnxtnode(g, n)) {
-UNSUPPORTED("8y47p29z0c2f1xpkrsb8w8re8"); // 	    if (n != UF_find(n))
-UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
-UNSUPPORTED("49yt5gs5xlk2yzmiulvp7iqrd"); // 	    if (((((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->out).size == 0) && (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxset) && (n != (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxset))) {
-UNSUPPORTED("9ksut17itonzpk3hp57jn4d1s"); // 		e = virtual_edge(n, (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxset), NULL);
-UNSUPPORTED("7dlot3nkpploeywkumjt3erop"); // 		(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->minlen) = slen.y;
-UNSUPPORTED("5ddkb181unkbg63gxqjx85fzq"); // 		(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->weight) = 0;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("5b66s1jsuwe7l2e8p6o1xpnab"); // 	    if (((((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->in).size == 0) && (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset) && (n != (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset))) {
-UNSUPPORTED("c00g90uqqonkk08nncvi45c8f"); // 		e = virtual_edge((((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset), n, NULL);
-UNSUPPORTED("cxdsqlq2h35nyz65uc4eifchp"); // 		(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->minlen) = slen.x;
-UNSUPPORTED("5ddkb181unkbg63gxqjx85fzq"); // 		(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->weight) = 0;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
+	for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) { // 	for (n = agfstnode(g); n; n = agnxtnode(g, n)) {
+	    if (n != UF_find(n)) // 	    if (n != UF_find(n))
+		continue; // 		continue;
+	    if ((ND_out(n).size == 0) && (GD_maxset(g)!=null) && (n != GD_maxset(g))) { // 	    if ((ND_out(n).size == 0) && GD_maxset(g) && (n != GD_maxset(g))) {
+		e = virtual_edge(n, (ST_Agnode_s) GD_maxset(g), null); // 		e = virtual_edge(n, GD_maxset(g), NULL);
+		ED_minlen(e, slen.y); // 		ED_minlen(e) = slen.y;
+		ED_weight(e, 0); // 		ED_weight(e) = 0;
+	    } // 	    }
+	    if ((ND_in(n).size == 0) && (GD_minset(g)!=null) && (n != GD_minset(g))) { // 	    if ((ND_in(n).size == 0) && GD_minset(g) && (n != GD_minset(g))) {
+		e = virtual_edge((ST_Agnode_s) GD_minset(g), n, null); // 		e = virtual_edge(GD_minset(g), n, NULL);
+		ED_minlen(e, slen.x); // 		ED_minlen(e) = slen.x;
+		ED_weight(e, 0); // 		ED_weight(e) = 0;
+	    } // 	    }
+	} // 	}
     }
     return (e != null);
 } finally {
@@ -684,8 +686,8 @@ try {
 	UNSUPPORTED("45nxv6kczal9hnytkfcyt2jk8"); // 	asp = NULL;
     }
     acyclic_(g);
-    if (minmax_edges2(g, p))
-    UNSUPPORTED("800vpyk6y4hcx2txwyrr2boxu"); // 	decompose(g, 0);
+    if (minmax_edges2(zz, g, p))
+	decompose(zz, g, 0); // 	decompose(g, 0);
     if (asp!=null)
 	rank3(g, asp);
     else

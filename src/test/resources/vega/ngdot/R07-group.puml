@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  a [group=g]; b [group=g]; c [group=g]; d [group=g];
+  a -> b -> c -> d;
+  a -> x1 -> x2 -> d;
+  a -> y1; y1 -> c;
+  b -> z1; z1 -> d;
+}
+@enddot

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="247px" preserveAspectRatio="none" style="width:297px;height:247px;background:#FFFFFF;" version="1.1" viewBox="0 0 297 247" width="297px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="146" style="stroke:#181818;stroke-width:1;" width="142" x="22" y="22"/>
+    <text fill="#000" font-size="14" textLength="31.063" x="77.469" y="36.889">ports</text>
+    <path d="M129,51 C129,38.992 147.668,43.353 156,52 C167.102,63.521 163.983,74.134 156,88 C140.102,115.615 113.482,98.786 94,124 C83.847,137.14 97.032,149.708 84,160 C78.459,164.376 70.099,168.104 64.151,167.991" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="66.597,165.488,57,161,61.704,170.493" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M129,88 C129,100.058 129,105.3 129,114" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="125.5,114,129,124,132.5,114" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M229,142 C255.855,142 213.716,192.671 218.342,208.996" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="216.591,212.027,227,214,220.093,205.966" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M173,142 C160.532,142 178.414,185.688 179.363,205.002" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="176.214,203.475,175,214,182.512,206.529" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="129" cy="70" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="121.213" y="73.889">a1</text>
+    <ellipse cx="57" cy="142" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="49.213" y="145.889">b1</text>
+    <ellipse cx="129" cy="142" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="14.787" x="121.606" y="145.889">c1</text>
+    <ellipse cx="201" cy="142" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="193.213" y="145.889">a2</text>
+    <ellipse cx="255" cy="214" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="247.213" y="217.889">b2</text>
+    <ellipse cx="147" cy="214" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="14.787" x="139.606" y="217.889">c2</text>
+  </g>
+</svg>

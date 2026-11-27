@@ -76,6 +76,7 @@ import static gen.lib.dotgen.sameport__c.dot_sameports;
 import static gen.lib.pack.pack__c.getPack;
 import static gen.lib.pack.pack__c.getPackInfo;
 import static gen.lib.pack.pack__c.getPackModeInfo;
+import static smetana.core.Macro.CL_CROSS;
 import static smetana.core.Macro.CL_OFFSET;
 import static smetana.core.Macro.ED_count;
 import static smetana.core.Macro.ED_minlen;
@@ -195,8 +196,8 @@ try {
     ED_count(e, 1);
     ED_xpenalty(e, 1);
     if (tailgroup.charAt(0)!='\0' && (tailgroup.isSame(headgroup))) {
-	UNSUPPORTED("atjraranegsdjegclykesn5gx"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->xpenalty) = 1000;
-	UNSUPPORTED("5y0yunmvmngg67c9exlbn6jbk"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->weight) *= 100;
+	ED_xpenalty(e, CL_CROSS); // 	ED_xpenalty(e) = CL_CROSS;
+	ED_weight(e, ED_weight(e) * 100); // 	ED_weight(e) *= 100;
     }
     if (nonconstraint_edge(zz, e)) {
 	ED_xpenalty(e, 0);

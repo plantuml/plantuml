@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="284px" preserveAspectRatio="none" style="width:228px;height:284px;background:#FFFFFF;" version="1.1" viewBox="0 0 228 284" width="228px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M80.626,50.02 C77.274,60.648 72.875,74.618 69,87 C62.314,108.362 54.779,132.592 49.211,150.525" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="45.868,149.487,46.247,160.075,52.554,151.562" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M90.503,49.826 C92.685,57.979 95.358,67.97 97.813,77.141" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="94.431,78.046,100.398,86.802,101.194,76.237" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M111.162,122.826 C114.23,131.206 118.01,141.527 121.444,150.905" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="118.157,152.108,124.883,160.295,124.73,149.701" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M139.118,195.467 C143.389,204.132 148.72,214.945 153.505,224.653" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="150.366,226.2,157.926,233.622,156.644,223.105" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M68.003,178 C76.082,178 85.088,178 93.705,178" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="93.705,181.5,103.705,178,93.705,174.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M104.162,180.337 C100.09,180.612 95.936,180.849 92,181 C87.46,181.174 82.695,181.159 77.977,181.022" fill="none" style="stroke:#F00;stroke-width:1;"/>
+    <polygon fill="#F00" points="78.136,177.526,67.987,180.567,77.818,184.519" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M184.431,50.028 C180.976,87.505 172.691,177.4 168.508,222.793" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="165.022,222.472,167.59,232.751,171.993,223.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="86" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="82.106" y="35.889">a</text>
+    <ellipse cx="41" cy="178" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.106" y="181.889">b</text>
+    <ellipse cx="105" cy="105" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="101.5" y="108.889">c</text>
+    <ellipse cx="131" cy="178" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="127.106" y="181.889">d</text>
+    <ellipse cx="166" cy="251" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="162.106" y="254.889">e</text>
+    <ellipse cx="186" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="184.075" y="35.889">f</text>
+    <text fill="#000" font-size="13" textLength="17.306" x="77.347" y="172.111">flat</text>
+  </g>
+</svg>

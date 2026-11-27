@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  a -> a [tailport=w, headport=e];
+  a -> a [tailport=n, headport=n];
+  a -> b;
+}
+@enddot

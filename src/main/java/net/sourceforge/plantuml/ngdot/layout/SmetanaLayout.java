@@ -39,11 +39,14 @@ import static gen.lib.cgraph.attr__c.agsafeset;
 import static gen.lib.cgraph.edge__c.agedge;
 import static gen.lib.cgraph.graph__c.agopen;
 import static gen.lib.cgraph.node__c.agnode;
+import static gen.lib.cgraph.node__c.agsubnode;
+import static gen.lib.cgraph.subg__c.agparent;
 import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +94,9 @@ public final class SmetanaLayout {
 	// and no monitor in the TeaVM C build.
 	private static final Object LOCK = new Object();
 
+	private static final List<String> COMPASS_POINTS = Arrays.asList("n", "ne", "e", "se", "s", "sw", "w", "nw", "c",
+			"_");
+
 	private final DotGraph graph;
 	private final LayoutInput input;
 	private final Rankdir rankdir;
@@ -100,6 +106,7 @@ public final class SmetanaLayout {
 	private final Map<DotNode, ST_Agnode_s> nodes = new LinkedHashMap<DotNode, ST_Agnode_s>();
 	private final Map<DotEdge, ST_Agedge_s> edges = new LinkedHashMap<DotEdge, ST_Agedge_s>();
 	private final Map<DotSubgraph, ST_Agraph_s> clusters = new LinkedHashMap<DotSubgraph, ST_Agraph_s>();
+	private final Map<DotSubgraph, ST_Agraph_s> ranksets = new LinkedHashMap<DotSubgraph, ST_Agraph_s>();
 
 	private SmetanaLayout(DotGraph graph, LayoutInput input) {
 		this.graph = graph;
@@ -126,6 +133,7 @@ public final class SmetanaLayout {
 			setGraphAttributes();
 			createClusters(graph.getRoot(), root);
 			createNodes();
+			fillRanksets();
 			createEdges();
 			final ST_GVC_s gvc = gvContext(zz);
 			gvLayoutJobs(zz, gvc, root);
@@ -188,8 +196,43 @@ public final class SmetanaLayout {
 				}
 				createClusters(child, cluster);
 			} else {
+				final String rank = rankKind(child);
+				if (rank != null) {
+					final ST_Agraph_s rankset = agsubg(zz, smetanaParent, new CString("rank_" + ranksets.size()),
+							true);
+					set(rankset, "rank", rank);
+					ranksets.put(child, rankset);
+				}
 				createClusters(child, smetanaParent);
 			}
+		}
+	}
+
+	/**
+	 * The {@code rank} of a plain subgraph, when it is one that Graphviz knows
+	 * ({@code same}, {@code min}, {@code max}, {@code source}, {@code sink}).
+	 */
+	private static String rankKind(DotSubgraph subgraph) {
+		final String rank = subgraph.getAttributes().getString("rank");
+		if (rank == null)
+			return null;
+		final String s = rank.trim().toLowerCase();
+		if (s.equals("same") || s.equals("min") || s.equals("max") || s.equals("source") || s.equals("sink"))
+			return s;
+		return null;
+	}
+
+	/**
+	 * Puts the nodes of the {@code rank} subgraphs in their Smetana copy. As in
+	 * Graphviz, a rank set only works inside one cluster: a node that belongs to
+	 * another cluster than the one holding the subgraph is left out.
+	 */
+	private void fillRanksets() {
+		for (Map.Entry<DotSubgraph, ST_Agraph_s> ent : ranksets.entrySet()) {
+			final ST_Agraph_s parent = agparent(ent.getValue());
+			for (DotNode node : ent.getKey().getNodes())
+				if (ownerCluster(node) == parent)
+					agsubnode(zz, ent.getValue(), nodes.get(node), true);
 		}
 	}
 
@@ -230,6 +273,9 @@ public final class SmetanaLayout {
 			set(n, "fixedsize", "true");
 			set(n, "width", SvekUtils.pixelToInches(size.getWidth()));
 			set(n, "height", SvekUtils.pixelToInches(size.getHeight()));
+			final String group = node.getAttributes().getString("group");
+			if (group != null && group.length() > 0)
+				set(n, "group", group);
 		}
 	}
 
@@ -259,12 +305,45 @@ public final class SmetanaLayout {
 			if (label != null)
 				set(e, "label", labelDim(label));
 
+			// The ports of a loop would need selfTop/selfLeft/selfBottom, which are not
+			// ported yet: a loop is always drawn on the right of its node
+			if (edge.getTail() != edge.getHead()) {
+				final String tailport = compass(edge.getTailPort());
+				if (tailport != null)
+					set(e, "tailport", tailport);
+				final String headport = compass(edge.getHeadPort());
+				if (headport != null)
+					set(e, "headport", headport);
+			}
+
 			// Shapes unknown to Smetana: route up to the center, PlantUML clips
 			if (input.getContour(edge.getTail()) != null)
 				set(e, "tailclip", "false");
 			if (input.getContour(edge.getHead()) != null)
 				set(e, "headclip", "false");
 		}
+	}
+
+	/**
+	 * The compass point of a port ({@code "ne"}, {@code "p1:ne"}...), or
+	 * {@code null}. Port names (records, HTML labels) are not supported yet.
+	 * As BT and RL are computed as TB and LR then mirrored, their compass points
+	 * are mirrored first.
+	 */
+	private String compass(String port) {
+		if (port == null)
+			return null;
+		String s = port.trim().toLowerCase();
+		final int colon = s.lastIndexOf(':');
+		if (colon != -1)
+			s = s.substring(colon + 1);
+		if (COMPASS_POINTS.contains(s) == false)
+			return null;
+		if (rankdir == Rankdir.BT)
+			s = s.replace('n', 'x').replace('s', 'n').replace('x', 's');
+		else if (rankdir == Rankdir.RL)
+			s = s.replace('e', 'x').replace('w', 'e').replace('x', 'w');
+		return s;
 	}
 
 	// ------------------------------------------------------------------

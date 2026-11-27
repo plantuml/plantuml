@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="281px" preserveAspectRatio="none" style="width:155px;height:281px;background:#FFFFFF;" version="1.1" viewBox="0 0 155 281" width="155px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M41,50.303 C41,58.02 41,67.293 41,75.896" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="37.5,75.896,41,85.896,44.5,75.896" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M41,122.303 C41,130.02 41,139.293 41,147.896" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="37.5,147.896,41,157.896,44.5,147.896" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M41,229.896 C41,222.199 41,212.924 41,204.303" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="44.5,204.303,41,194.303,37.5,204.303" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="41" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.106" y="35.889">a</text>
+    <ellipse cx="41" cy="104" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.106" y="107.889">b</text>
+    <ellipse cx="41" cy="176" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.5" y="179.889">c</text>
+    <ellipse cx="113" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="109.106" y="35.889">d</text>
+    <ellipse cx="41" cy="248" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.106" y="251.889">e</text>
+  </g>
+</svg>

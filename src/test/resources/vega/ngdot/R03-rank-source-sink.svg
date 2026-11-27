@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="353px" preserveAspectRatio="none" style="width:138px;height:353px;background:#FFFFFF;" version="1.1" viewBox="0 0 138 353" width="138px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M84.066,120.189 C76.77,129.475 67.294,141.535 59.089,151.978" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="56.337,149.815,52.911,159.841,61.841,154.14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M41,194.303 C41,202.02 41,211.293 41,219.896" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="37.5,219.896,41,229.896,44.5,219.896" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M41,50.129 C41,74.387 41,118.999 41,147.811" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="37.5,147.811,41,157.811,44.5,147.811" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M96,122.151 C96,159.211 96,247.02 96,291.768" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="92.5,291.768,96,301.768,99.5,291.768" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="96" cy="104" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="92.106" y="107.889">a</text>
+    <ellipse cx="41" cy="176" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.106" y="179.889">b</text>
+    <ellipse cx="41" cy="248" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.5" y="251.889">c</text>
+    <ellipse cx="41" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.5" y="35.889">x</text>
+    <ellipse cx="96" cy="320" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="92.5" y="323.889">y</text>
+  </g>
+</svg>
