@@ -259,6 +259,16 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/mindmap-diagram" target="_top">
  Mindmap Diagram</a>.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.ngdot">net.sourceforge.plantuml.ngdot</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Diagrams written in the DOT language (<code>@startdot</code>), parsed by
+ PlantUML, laid out by Smetana (the Java port of Graphviz) and drawn with
+ UGraphic, without the Graphviz executable.</div>
+</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.ngdot.draw">net.sourceforge.plantuml.ngdot.draw</a></div>
+<div class="col-last even-row-color">
+<div class="block">Drawing of a laid out DOT graph with UGraphic.</div>
+</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.nwdiag">net.sourceforge.plantuml.nwdiag</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
@@ -2849,6 +2859,44 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">MindMapDiagram.</span><code><a href="../../../mindmap/MindMapDiagram.html#getTextBlock(int,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getTextBlock</a><wbr>(int&nbsp;num,
  <a href="../../../FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot">
+<h2>Uses of <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a> in <a href="../../../ngdot/package-summary.html">net.sourceforge.plantuml.ngdot</a></h2>
+<div class="caption"><span>Methods in <a href="../../../ngdot/package-summary.html">net.sourceforge.plantuml.ngdot</a> that return <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PSystemNgDot.</span><code><a href="../../../ngdot/PSystemNgDot.html#getTextBlock(int,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getTextBlock</a><wbr>(int&nbsp;num,
+ <a href="../../../FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot.draw">
+<h2>Uses of <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a> in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a></h2>
+<div class="caption"><span>Classes in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a> that implement <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../../ngdot/draw/DotLabel.html" class="type-name-link" title="class in net.sourceforge.plantuml.ngdot.draw">DotLabel</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A plain DOT label (not an HTML one), drawn line by line.</div>
+</div>
+<div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../ngdot/draw/DotRenderer.html" class="type-name-link" title="class in net.sourceforge.plantuml.ngdot.draw">DotRenderer</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Draws a <a href="../../../ngdot/model/DotGraph.html" title="class in net.sourceforge.plantuml.ngdot.model"><code>DotGraph</code></a>: the size of every node and label is measured with
+ the <a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font"><code>StringBounder</code></a>, the graph is laid out by Smetana
+ (<a href="../../../ngdot/layout/SmetanaLayout.html" title="class in net.sourceforge.plantuml.ngdot.layout"><code>SmetanaLayout</code></a>), then everything is drawn with UGraphic.</div>
+</div>
 </div>
 </section>
 </li>

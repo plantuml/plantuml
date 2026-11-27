@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DotLabel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.draw</a> &gt; <span class="el_source">DotLabel.java</span></div><h1>DotLabel.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.draw;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.ISkinSimple;
+
+/**
+ * A plain DOT label (not an HTML one), drawn line by line.
+ * &lt;p&gt;
+ * As in Graphviz ({@code make_simple_label}), {@code \n}, {@code \l} and
+ * {@code \r} end a line which is centered, left or right justified; a real
+ * newline counts as {@code \n}; {@code \\} is a backslash and any other
+ * escaped character stands for itself. The object escapes ({@code \N},
+ * {@code \G}...) are replaced beforehand, see {@link #substitute}. The text
+ * is never read as Creole.
+ */
+public final class DotLabel implements TextBlock {
+
+<span class="fc" id="L64">	enum Justification {</span>
+<span class="fc" id="L65">		LEFT, CENTER, RIGHT</span>
+	}
+
+<span class="fc" id="L68">	private final List&lt;TextBlock&gt; lines = new ArrayList&lt;TextBlock&gt;();</span>
+<span class="fc" id="L69">	private final List&lt;Justification&gt; justifications = new ArrayList&lt;Justification&gt;();</span>
+
+<span class="fc" id="L71">	private DotLabel() {</span>
+<span class="fc" id="L72">	}</span>
+
+	public static DotLabel create(String text, FontConfiguration font, ISkinSimple skinParam) {
+<span class="fc" id="L75">		final DotLabel result = new DotLabel();</span>
+<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (text == null || text.length() == 0)</span>
+<span class="nc" id="L77">			return result;</span>
+
+<span class="fc" id="L79">		final StringBuilder current = new StringBuilder();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L81">			final char c = text.charAt(i);</span>
+<span class="pc bpc" id="L82" title="1 of 4 branches missed.">			if (c == '\\' &amp;&amp; i + 1 &lt; text.length()) {</span>
+<span class="fc" id="L83">				final char next = text.charAt(++i);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">				if (next == 'n')</span>
+<span class="fc" id="L85">					result.addLine(current, Justification.CENTER, font, skinParam);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">				else if (next == 'l')</span>
+<span class="fc" id="L87">					result.addLine(current, Justification.LEFT, font, skinParam);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">				else if (next == 'r')</span>
+<span class="fc" id="L89">					result.addLine(current, Justification.RIGHT, font, skinParam);</span>
+				else
+<span class="nc" id="L91">					current.append(next);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">			} else if (c == '\n') {</span>
+<span class="nc" id="L93">				result.addLine(current, Justification.CENTER, font, skinParam);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			} else if (c != '\r') {</span>
+<span class="fc" id="L95">				current.append(c);</span>
+			}
+		}
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (current.length() &gt; 0)</span>
+<span class="fc" id="L99">			result.addLine(current, Justification.CENTER, font, skinParam);</span>
+<span class="fc" id="L100">		return result;</span>
+	}
+
+	private void addLine(StringBuilder text, Justification justification, FontConfiguration font,
+			ISkinSimple skinParam) {
+		// An empty line still takes the height of a line
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		final String s = text.length() == 0 ? &quot; &quot; : text.toString();</span>
+<span class="fc" id="L107">		lines.add(Display.create(s).create7(font, HorizontalAlignment.LEFT, skinParam, CreoleMode.NO_CREOLE));</span>
+<span class="fc" id="L108">		justifications.add(justification);</span>
+<span class="fc" id="L109">		text.setLength(0);</span>
+<span class="fc" id="L110">	}</span>
+
+	/**
+	 * Replaces the object escapes of a label: {@code \N} (node name), {@code \G}
+	 * (graph name), {@code \E} (edge name), {@code \T} and {@code \H} (tail and
+	 * head names). {@code \\} is kept for {@link #create}.
+	 */
+	public static String substitute(String text, String nodeName, String graphName, String tailName,
+			String headName, String edgeName) {
+<span class="fc bfc" id="L119" title="All 4 branches covered.">		if (text == null || text.indexOf('\\') == -1)</span>
+<span class="fc" id="L120">			return text;</span>
+<span class="fc" id="L121">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L123">			final char c = text.charAt(i);</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">			if (c == '\\' &amp;&amp; i + 1 &lt; text.length()) {</span>
+<span class="fc" id="L125">				final char next = text.charAt(++i);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">				if (next == 'N')</span>
+<span class="fc" id="L127">					appendNotNull(sb, nodeName);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">				else if (next == 'G')</span>
+<span class="fc" id="L129">					appendNotNull(sb, graphName);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">				else if (next == 'E')</span>
+<span class="fc" id="L131">					appendNotNull(sb, edgeName);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">				else if (next == 'T')</span>
+<span class="fc" id="L133">					appendNotNull(sb, tailName);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">				else if (next == 'H')</span>
+<span class="fc" id="L135">					appendNotNull(sb, headName);</span>
+				else
+<span class="fc" id="L137">					sb.append(c).append(next);</span>
+<span class="fc" id="L138">			} else {</span>
+<span class="fc" id="L139">				sb.append(c);</span>
+			}
+		}
+<span class="fc" id="L142">		return sb.toString();</span>
+	}
+
+	private static void appendNotNull(StringBuilder sb, String s) {
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (s != null)</span>
+<span class="fc" id="L147">			sb.append(s);</span>
+<span class="fc" id="L148">	}</span>
+
+	public boolean isEmpty() {
+<span class="fc" id="L151">		return lines.isEmpty();</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L156">		double width = 0;</span>
+<span class="fc" id="L157">		double height = 0;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (TextBlock line : lines) {</span>
+<span class="fc" id="L159">			final XDimension2D dim = line.calculateDimension(stringBounder);</span>
+<span class="fc" id="L160">			width = Math.max(width, dim.getWidth());</span>
+<span class="fc" id="L161">			height += dim.getHeight();</span>
+<span class="fc" id="L162">		}</span>
+<span class="fc" id="L163">		return new XDimension2D(width, height);</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L168">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L169">		final double width = calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L170">		double y = 0;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="fc" id="L172">			final TextBlock line = lines.get(i);</span>
+<span class="fc" id="L173">			final XDimension2D dim = line.calculateDimension(stringBounder);</span>
+<span class="fc" id="L174">			double x = 0;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (justifications.get(i) == Justification.CENTER)</span>
+<span class="fc" id="L176">				x = (width - dim.getWidth()) / 2;</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">			else if (justifications.get(i) == Justification.RIGHT)</span>
+<span class="fc" id="L178">				x = width - dim.getWidth();</span>
+<span class="fc" id="L179">			line.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="fc" id="L180">			y += dim.getHeight();</span>
+		}
+<span class="fc" id="L182">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

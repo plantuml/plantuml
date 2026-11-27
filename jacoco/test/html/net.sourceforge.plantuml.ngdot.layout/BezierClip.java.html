@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BezierClip.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.layout</a> &gt; <span class="el_source">BezierClip.java</span></div><h1>BezierClip.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.layout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+/**
+ * Shortens a piecewise cubic Bezier curve at one end, so that an arrow of a
+ * given length fits between the new end and the original one. This is what
+ * Graphviz does in {@code arrowEndClip} / {@code arrowStartClip}: the curve is
+ * cut where it leaves a circle centered on its end.
+ * &lt;p&gt;
+ * It is done here rather than by Smetana because Smetana only knows the
+ * {@code normal} arrow, and takes a single {@code arrowsize} for both ends.
+ */
+final class BezierClip {
+
+	private BezierClip() {
+	}
+
+	/**
+	 * Cuts the end of the curve.
+	 *
+	 * @param points {@code 1 + 3n} points
+	 * @param length the length to remove, measured as a straight distance from
+	 *               the original end
+	 * @return the new points; the original end is the arrow tip
+	 */
+	static List&lt;XPoint2D&gt; clipEnd(List&lt;XPoint2D&gt; points, double length) {
+<span class="fc" id="L66">		final int n = points.size();</span>
+<span class="pc bpc" id="L67" title="2 of 4 branches missed.">		if (n &lt; 4 || length &lt;= 0)</span>
+<span class="nc" id="L68">			return points;</span>
+
+<span class="fc" id="L70">		final XPoint2D end = points.get(n - 1);</span>
+		// Find the last segment that starts outside the circle
+<span class="fc" id="L72">		int start = n - 4;</span>
+<span class="fc bfc" id="L73" title="All 4 branches covered.">		while (start &gt; 0 &amp;&amp; points.get(start).distance(end) &lt; length)</span>
+<span class="fc" id="L74">			start -= 3;</span>
+
+<span class="fc" id="L76">		final XPoint2D p0 = points.get(start);</span>
+<span class="fc" id="L77">		final XPoint2D p1 = points.get(start + 1);</span>
+<span class="fc" id="L78">		final XPoint2D p2 = points.get(start + 2);</span>
+<span class="fc" id="L79">		final XPoint2D p3 = points.get(start + 3);</span>
+
+<span class="fc" id="L81">		double t = 0;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (p0.distance(end) &gt; length) {</span>
+<span class="fc" id="L83">			double lo = 0;</span>
+<span class="fc" id="L84">			double hi = 1;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			for (int i = 0; i &lt; 50; i++) {</span>
+<span class="fc" id="L86">				final double mid = (lo + hi) / 2;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">				if (eval(p0, p1, p2, p3, mid).distance(end) &gt; length)</span>
+<span class="fc" id="L88">					lo = mid;</span>
+				else
+<span class="fc" id="L90">					hi = mid;</span>
+			}
+<span class="fc" id="L92">			t = lo;</span>
+		}
+
+<span class="fc" id="L95">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;XPoint2D&gt;(points.subList(0, start));</span>
+<span class="fc" id="L96">		final XPoint2D[] left = splitLeft(p0, p1, p2, p3, t);</span>
+<span class="fc" id="L97">		result.add(left[0]);</span>
+<span class="fc" id="L98">		result.add(left[1]);</span>
+<span class="fc" id="L99">		result.add(left[2]);</span>
+<span class="fc" id="L100">		result.add(left[3]);</span>
+<span class="fc" id="L101">		return result;</span>
+	}
+
+	/**
+	 * Cuts the start of the curve.
+	 *
+	 * @see #clipEnd(List, double)
+	 */
+	static List&lt;XPoint2D&gt; clipStart(List&lt;XPoint2D&gt; points, double length) {
+<span class="fc" id="L110">		return reverse(clipEnd(reverse(points), length));</span>
+	}
+
+	/**
+	 * Cuts the end of the curve where it enters the contour of a node.
+	 *
+	 * @param center the center of the node
+	 */
+	static List&lt;XPoint2D&gt; clipEndToContour(List&lt;XPoint2D&gt; points, NodeContour contour, XPoint2D center) {
+<span class="fc" id="L119">		final int n = points.size();</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (n &lt; 4)</span>
+<span class="nc" id="L121">			return points;</span>
+		// The last segment that starts outside the node
+<span class="fc" id="L123">		int start = n - 4;</span>
+<span class="pc bpc" id="L124" title="2 of 4 branches missed.">		while (start &gt;= 0 &amp;&amp; inside(contour, center, points.get(start)))</span>
+<span class="nc" id="L125">			start -= 3;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (start &lt; 0)</span>
+<span class="nc" id="L127">			return points;</span>
+
+<span class="fc" id="L129">		final XPoint2D p0 = points.get(start);</span>
+<span class="fc" id="L130">		final XPoint2D p1 = points.get(start + 1);</span>
+<span class="fc" id="L131">		final XPoint2D p2 = points.get(start + 2);</span>
+<span class="fc" id="L132">		final XPoint2D p3 = points.get(start + 3);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (inside(contour, center, p3) == false)</span>
+<span class="nc" id="L134">			return points;</span>
+
+<span class="fc" id="L136">		double lo = 0;</span>
+<span class="fc" id="L137">		double hi = 1;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		for (int i = 0; i &lt; 50; i++) {</span>
+<span class="fc" id="L139">			final double mid = (lo + hi) / 2;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">			if (inside(contour, center, eval(p0, p1, p2, p3, mid)))</span>
+<span class="fc" id="L141">				hi = mid;</span>
+			else
+<span class="fc" id="L143">				lo = mid;</span>
+		}
+<span class="fc" id="L145">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;XPoint2D&gt;(points.subList(0, start));</span>
+<span class="fc" id="L146">		final XPoint2D[] left = splitLeft(p0, p1, p2, p3, hi);</span>
+<span class="fc" id="L147">		result.add(left[0]);</span>
+<span class="fc" id="L148">		result.add(left[1]);</span>
+<span class="fc" id="L149">		result.add(left[2]);</span>
+<span class="fc" id="L150">		result.add(left[3]);</span>
+<span class="fc" id="L151">		return result;</span>
+	}
+
+	/**
+	 * Cuts the start of the curve where it leaves the contour of a node.
+	 */
+	static List&lt;XPoint2D&gt; clipStartToContour(List&lt;XPoint2D&gt; points, NodeContour contour, XPoint2D center) {
+<span class="fc" id="L158">		return reverse(clipEndToContour(reverse(points), contour, center));</span>
+	}
+
+	private static boolean inside(NodeContour contour, XPoint2D center, XPoint2D pt) {
+<span class="fc" id="L162">		return contour.contains(pt.getX() - center.getX(), pt.getY() - center.getY());</span>
+	}
+
+	private static List&lt;XPoint2D&gt; reverse(List&lt;XPoint2D&gt; points) {
+<span class="fc" id="L166">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;XPoint2D&gt;(points.size());</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (int i = points.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc" id="L168">			result.add(points.get(i));</span>
+<span class="fc" id="L169">		return result;</span>
+	}
+
+	static XPoint2D eval(XPoint2D p0, XPoint2D p1, XPoint2D p2, XPoint2D p3, double t) {
+<span class="fc" id="L173">		final double u = 1 - t;</span>
+<span class="fc" id="L174">		final double a = u * u * u;</span>
+<span class="fc" id="L175">		final double b = 3 * u * u * t;</span>
+<span class="fc" id="L176">		final double c = 3 * u * t * t;</span>
+<span class="fc" id="L177">		final double d = t * t * t;</span>
+<span class="fc" id="L178">		return new XPoint2D(a * p0.getX() + b * p1.getX() + c * p2.getX() + d * p3.getX(),</span>
+<span class="fc" id="L179">				a * p0.getY() + b * p1.getY() + c * p2.getY() + d * p3.getY());</span>
+	}
+
+	private static XPoint2D lerp(XPoint2D a, XPoint2D b, double t) {
+<span class="fc" id="L183">		return new XPoint2D(a.getX() + (b.getX() - a.getX()) * t, a.getY() + (b.getY() - a.getY()) * t);</span>
+	}
+
+	/**
+	 * The part [0, t] of a cubic Bezier curve (de Casteljau).
+	 */
+	private static XPoint2D[] splitLeft(XPoint2D p0, XPoint2D p1, XPoint2D p2, XPoint2D p3, double t) {
+<span class="fc" id="L190">		final XPoint2D p01 = lerp(p0, p1, t);</span>
+<span class="fc" id="L191">		final XPoint2D p12 = lerp(p1, p2, t);</span>
+<span class="fc" id="L192">		final XPoint2D p23 = lerp(p2, p3, t);</span>
+<span class="fc" id="L193">		final XPoint2D p012 = lerp(p01, p12, t);</span>
+<span class="fc" id="L194">		final XPoint2D p123 = lerp(p12, p23, t);</span>
+<span class="fc" id="L195">		final XPoint2D p0123 = lerp(p012, p123, t);</span>
+<span class="fc" id="L196">		return new XPoint2D[] { p0, p01, p012, p0123 };</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

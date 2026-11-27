@@ -231,6 +231,14 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/mindmap-diagram" target="_top">
  Mindmap Diagram</a>.</div>
 </div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.ngdot.draw">net.sourceforge.plantuml.ngdot.draw</a></div>
+<div class="col-last even-row-color">
+<div class="block">Drawing of a laid out DOT graph with UGraphic.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.ngdot.layout">net.sourceforge.plantuml.ngdot.layout</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Layout of a DOT graph with Smetana, and its result as plain geometry.</div>
+</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.nwdiag.next">net.sourceforge.plantuml.nwdiag.next</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.openiconic">net.sourceforge.plantuml.openiconic</a></div>
@@ -1513,6 +1521,130 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">MindMap.</span><code><a href="../../../mindmap/MindMap.html#calculateDimensionSlow(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">calculateDimensionSlow</a><wbr>(<a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot.draw">
+<h2>Uses of <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a> in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a></h2>
+<div class="caption"><span>Methods in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a> that return <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DotLabel.</span><code><a href="../../../ngdot/draw/DotLabel.html#calculateDimension(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">calculateDimension</a><wbr>(<a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DotRenderer.</span><code><a href="../../../ngdot/draw/DotRenderer.html#calculateDimension(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">calculateDimension</a><wbr>(<a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NodeShape.</span><code><a href="../../../ngdot/draw/NodeShape.html#computeSize(net.sourceforge.plantuml.klimt.geom.XDimension2D,net.sourceforge.plantuml.ngdot.model.DotAttributes,boolean)" class="member-name-link">computeSize</a><wbr>(<a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;label,
+ <a href="../../../ngdot/model/DotAttributes.html" title="class in net.sourceforge.plantuml.ngdot.model">DotAttributes</a>&nbsp;attributes,
+ boolean&nbsp;squareByName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">The size of the inner outline of the node, following Graphviz
+ <code>poly_init</code>: the label is padded by its margin, the shapes other
+ than boxes grow so that the label fits inside them, then the result is at
+ least <code>width x height</code> (0.75 x 0.5 inch by default), or exactly that
+ with <code>fixedsize=true</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NodeShape.</span><code><a href="../../../ngdot/draw/NodeShape.html#withPeripheries(net.sourceforge.plantuml.klimt.geom.XDimension2D,int)" class="member-name-link">withPeripheries</a><wbr>(<a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;inner,
+ int&nbsp;peripheries)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">The size of the node once its extra peripheries are added.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a> with parameters of type <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NodeShape.</span><code><a href="../../../ngdot/draw/NodeShape.html#computeSize(net.sourceforge.plantuml.klimt.geom.XDimension2D,net.sourceforge.plantuml.ngdot.model.DotAttributes,boolean)" class="member-name-link">computeSize</a><wbr>(<a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;label,
+ <a href="../../../ngdot/model/DotAttributes.html" title="class in net.sourceforge.plantuml.ngdot.model">DotAttributes</a>&nbsp;attributes,
+ boolean&nbsp;squareByName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">The size of the inner outline of the node, following Graphviz
+ <code>poly_init</code>: the label is padded by its margin, the shapes other
+ than boxes grow so that the label fits inside them, then the result is at
+ least <code>width x height</code> (0.75 x 0.5 inch by default), or exactly that
+ with <code>fixedsize=true</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NodeShape.</span><code><a href="../../../ngdot/draw/NodeShape.html#contains(double,double,net.sourceforge.plantuml.klimt.geom.XDimension2D)" class="member-name-link">contains</a><wbr>(double&nbsp;dx,
+ double&nbsp;dy,
+ <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;size)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Tells whether a point, relative to the center of the node, is inside the
+ outline of a node of the given (outer) size.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NodeShape.</span><code><a href="../../../ngdot/draw/NodeShape.html#draw(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.geom.XDimension2D,int,boolean,boolean)" class="member-name-link">draw</a><wbr>(<a href="../../drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fill,
+ <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;outer,
+ int&nbsp;peripheries,
+ boolean&nbsp;rounded,
+ boolean&nbsp;diagonals)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Draws the node outlines, the top-left corner of the node at the origin of
+ <code>ug</code>, which carries the line color and the stroke.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NodeShape.</span><code><a href="../../../ngdot/draw/NodeShape.html#withPeripheries(net.sourceforge.plantuml.klimt.geom.XDimension2D,int)" class="member-name-link">withPeripheries</a><wbr>(<a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;inner,
+ int&nbsp;peripheries)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">The size of the node once its extra peripheries are added.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot.layout">
+<h2>Uses of <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a> in <a href="../../../ngdot/layout/package-summary.html">net.sourceforge.plantuml.ngdot.layout</a></h2>
+<div class="caption"><span>Methods in <a href="../../../ngdot/layout/package-summary.html">net.sourceforge.plantuml.ngdot.layout</a> that return <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutInput.</span><code><a href="../../../ngdot/layout/LayoutInput.html#getClusterLabel(net.sourceforge.plantuml.ngdot.model.DotSubgraph)" class="member-name-link">getClusterLabel</a><wbr>(<a href="../../../ngdot/model/DotSubgraph.html" title="class in net.sourceforge.plantuml.ngdot.model">DotSubgraph</a>&nbsp;cluster)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LayoutResult.</span><code><a href="../../../ngdot/layout/LayoutResult.html#getDimension()" class="member-name-link">getDimension</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutInput.</span><code><a href="../../../ngdot/layout/LayoutInput.html#getEdgeLabel(net.sourceforge.plantuml.ngdot.model.DotEdge)" class="member-name-link">getEdgeLabel</a><wbr>(<a href="../../../ngdot/model/DotEdge.html" title="class in net.sourceforge.plantuml.ngdot.model">DotEdge</a>&nbsp;edge)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LayoutInput.</span><code><a href="../../../ngdot/layout/LayoutInput.html#getNodeSize(net.sourceforge.plantuml.ngdot.model.DotNode)" class="member-name-link">getNodeSize</a><wbr>(<a href="../../../ngdot/model/DotNode.html" title="class in net.sourceforge.plantuml.ngdot.model">DotNode</a>&nbsp;node)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutResult.ClusterBox.</span><code><a href="../../../ngdot/layout/LayoutResult.ClusterBox.html#getSize()" class="member-name-link">getSize</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LayoutResult.NodeBox.</span><code><a href="../../../ngdot/layout/LayoutResult.NodeBox.html#getSize()" class="member-name-link">getSize</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../../ngdot/layout/package-summary.html">net.sourceforge.plantuml.ngdot.layout</a> with parameters of type <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutInput.</span><code><a href="../../../ngdot/layout/LayoutInput.html#setClusterLabel(net.sourceforge.plantuml.ngdot.model.DotSubgraph,net.sourceforge.plantuml.klimt.geom.XDimension2D)" class="member-name-link">setClusterLabel</a><wbr>(<a href="../../../ngdot/model/DotSubgraph.html" title="class in net.sourceforge.plantuml.ngdot.model">DotSubgraph</a>&nbsp;cluster,
+ <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;size)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LayoutInput.</span><code><a href="../../../ngdot/layout/LayoutInput.html#setEdgeLabel(net.sourceforge.plantuml.ngdot.model.DotEdge,net.sourceforge.plantuml.klimt.geom.XDimension2D)" class="member-name-link">setEdgeLabel</a><wbr>(<a href="../../../ngdot/model/DotEdge.html" title="class in net.sourceforge.plantuml.ngdot.model">DotEdge</a>&nbsp;edge,
+ <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;size)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutInput.</span><code><a href="../../../ngdot/layout/LayoutInput.html#setNode(net.sourceforge.plantuml.ngdot.model.DotNode,net.sourceforge.plantuml.klimt.geom.XDimension2D,net.sourceforge.plantuml.ngdot.layout.LayoutInput.Outline)" class="member-name-link">setNode</a><wbr>(<a href="../../../ngdot/model/DotNode.html" title="class in net.sourceforge.plantuml.ngdot.model">DotNode</a>&nbsp;node,
+ <a href="../XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;size,
+ <a href="../../../ngdot/layout/LayoutInput.Outline.html" title="enum class in net.sourceforge.plantuml.ngdot.layout">LayoutInput.Outline</a>&nbsp;outline)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

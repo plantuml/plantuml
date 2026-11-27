@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LayoutResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.layout</a> &gt; <span class="el_source">LayoutResult.java</span></div><h1>LayoutResult.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.layout;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.ngdot.model.DotEdge;
+import net.sourceforge.plantuml.ngdot.model.DotNode;
+import net.sourceforge.plantuml.ngdot.model.DotSubgraph;
+
+/**
+ * The geometry computed by Smetana, copied into plain Java objects so that the
+ * drawing does not depend on Smetana any more.
+ * &lt;p&gt;
+ * Coordinates are final drawing coordinates: origin at the top-left corner of
+ * the graph bounding box, Y going down, {@code rankdir} already applied.
+ */
+public final class LayoutResult {
+
+	private final XDimension2D dimension;
+<span class="fc" id="L59">	private final Map&lt;DotNode, NodeBox&gt; nodes = new LinkedHashMap&lt;DotNode, NodeBox&gt;();</span>
+<span class="fc" id="L60">	private final Map&lt;DotEdge, EdgeRoute&gt; edges = new LinkedHashMap&lt;DotEdge, EdgeRoute&gt;();</span>
+<span class="fc" id="L61">	private final Map&lt;DotSubgraph, ClusterBox&gt; clusters = new LinkedHashMap&lt;DotSubgraph, ClusterBox&gt;();</span>
+
+<span class="fc" id="L63">	LayoutResult(XDimension2D dimension) {</span>
+<span class="fc" id="L64">		this.dimension = dimension;</span>
+<span class="fc" id="L65">	}</span>
+
+	public XDimension2D getDimension() {
+<span class="fc" id="L68">		return dimension;</span>
+	}
+
+	public Map&lt;DotNode, NodeBox&gt; getNodes() {
+<span class="fc" id="L72">		return Collections.unmodifiableMap(nodes);</span>
+	}
+
+	public Map&lt;DotEdge, EdgeRoute&gt; getEdges() {
+<span class="fc" id="L76">		return Collections.unmodifiableMap(edges);</span>
+	}
+
+	public Map&lt;DotSubgraph, ClusterBox&gt; getClusters() {
+<span class="fc" id="L80">		return Collections.unmodifiableMap(clusters);</span>
+	}
+
+	void put(DotNode node, NodeBox box) {
+<span class="fc" id="L84">		nodes.put(node, box);</span>
+<span class="fc" id="L85">	}</span>
+
+	void put(DotEdge edge, EdgeRoute route) {
+<span class="fc" id="L88">		edges.put(edge, route);</span>
+<span class="fc" id="L89">	}</span>
+
+	void put(DotSubgraph cluster, ClusterBox box) {
+<span class="fc" id="L92">		clusters.put(cluster, box);</span>
+<span class="fc" id="L93">	}</span>
+
+	/**
+	 * A node: its center and its size.
+	 */
+	public static final class NodeBox {
+
+		private final XPoint2D center;
+		private final XDimension2D size;
+
+<span class="fc" id="L103">		NodeBox(XPoint2D center, XDimension2D size) {</span>
+<span class="fc" id="L104">			this.center = center;</span>
+<span class="fc" id="L105">			this.size = size;</span>
+<span class="fc" id="L106">		}</span>
+
+		public XPoint2D getCenter() {
+<span class="fc" id="L109">			return center;</span>
+		}
+
+		public XDimension2D getSize() {
+<span class="fc" id="L113">			return size;</span>
+		}
+
+		public XPoint2D getTopLeft() {
+<span class="fc" id="L117">			return new XPoint2D(center.getX() - size.getWidth() / 2, center.getY() - size.getHeight() / 2);</span>
+		}
+
+	}
+
+	/**
+	 * An edge: a piecewise cubic Bezier curve ({@code 1 + 3n} points), the tips
+	 * of its arrows when it has some, and the center of its label.
+	 * &lt;p&gt;
+	 * When an end has an arrow, the curve stops at the base of the arrow and the
+	 * tip is given apart, as in Graphviz.
+	 */
+	public static final class EdgeRoute {
+
+		private final List&lt;XPoint2D&gt; points;
+		private final XPoint2D tailTip;
+		private final XPoint2D headTip;
+		private final XPoint2D labelCenter;
+
+<span class="fc" id="L136">		EdgeRoute(List&lt;XPoint2D&gt; points, XPoint2D tailTip, XPoint2D headTip, XPoint2D labelCenter) {</span>
+<span class="fc" id="L137">			this.points = Collections.unmodifiableList(points);</span>
+<span class="fc" id="L138">			this.tailTip = tailTip;</span>
+<span class="fc" id="L139">			this.headTip = headTip;</span>
+<span class="fc" id="L140">			this.labelCenter = labelCenter;</span>
+<span class="fc" id="L141">		}</span>
+
+		public List&lt;XPoint2D&gt; getPoints() {
+<span class="fc" id="L144">			return points;</span>
+		}
+
+		/**
+		 * The tip of the arrow at the tail end, or {@code null}.
+		 */
+		public XPoint2D getTailTip() {
+<span class="fc" id="L151">			return tailTip;</span>
+		}
+
+		/**
+		 * The tip of the arrow at the head end, or {@code null}.
+		 */
+		public XPoint2D getHeadTip() {
+<span class="fc" id="L158">			return headTip;</span>
+		}
+
+		/**
+		 * The center of the label, or {@code null}.
+		 */
+		public XPoint2D getLabelCenter() {
+<span class="fc" id="L165">			return labelCenter;</span>
+		}
+
+	}
+
+	/**
+	 * A cluster: its bounding box and the center of its label.
+	 */
+	public static final class ClusterBox {
+
+		private final XPoint2D topLeft;
+		private final XDimension2D size;
+		private final XPoint2D labelCenter;
+
+<span class="fc" id="L179">		ClusterBox(XPoint2D topLeft, XDimension2D size, XPoint2D labelCenter) {</span>
+<span class="fc" id="L180">			this.topLeft = topLeft;</span>
+<span class="fc" id="L181">			this.size = size;</span>
+<span class="fc" id="L182">			this.labelCenter = labelCenter;</span>
+<span class="fc" id="L183">		}</span>
+
+		public XPoint2D getTopLeft() {
+<span class="fc" id="L186">			return topLeft;</span>
+		}
+
+		public XDimension2D getSize() {
+<span class="fc" id="L190">			return size;</span>
+		}
+
+		/**
+		 * The center of the label, or {@code null}.
+		 */
+		public XPoint2D getLabelCenter() {
+<span class="fc" id="L197">			return labelCenter;</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

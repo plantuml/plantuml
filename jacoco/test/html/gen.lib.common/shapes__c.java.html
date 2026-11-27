@@ -342,7 +342,7 @@ try {
     
     /* I don't know how to distort or skew ellipses in postscript */
     /* Convert request to a polygon with a large number of sides */
-<span class="pc bpc" id="L345" title="5 of 6 branches missed.">    if ((sides &lt;= 2) &amp;&amp; ((distortion != 0.) || (skew != 0.))) {</span>
+<span class="pc bpc" id="L345" title="2 of 6 branches missed.">    if ((sides &lt;= 2) &amp;&amp; ((distortion != 0.) || (skew != 0.))) {</span>
 <span class="nc" id="L346">	sides = 120;</span>
     }
     
@@ -356,11 +356,11 @@ try {
     
     
     
-<span class="pc bpc" id="L359" title="4 of 8 branches missed.">    isBox = (sides == 4 &amp;&amp; (ROUND(orientation) % 90) == 0</span>
+<span class="pc bpc" id="L359" title="3 of 8 branches missed.">    isBox = (sides == 4 &amp;&amp; (ROUND(orientation) % 90) == 0</span>
 	     &amp;&amp; distortion == 0. &amp;&amp; skew == 0.);
-<span class="pc bpc" id="L361" title="1 of 2 branches missed.">    if (isBox) {</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">    if (isBox) {</span>
 	/* for regular boxes the fit should be exact */
-<span class="nc bnc" id="L363" title="All 2 branches missed.">    } else if (ND_shape(n).polygon.vertices!=null) {</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">    } else if (ND_shape(n).polygon.vertices!=null) {</span>
 <span class="nc" id="L364">UNSUPPORTED(&quot;4adqsyjwqwzs50ggjp57ok6u7&quot;); // 	poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;shape)-&gt;polygon-&gt;vertices;</span>
 <span class="nc" id="L365">UNSUPPORTED(&quot;1fjwgzo5xkijo98ycmzhal8yv&quot;); // 	bb = pd-&gt;size_gen(bb);</span>
     } else {
@@ -368,17 +368,17 @@ try {
 	 * containing bb centered on the origin, and then pad for that.
 	 * We assume the ellipse is defined by a scaling up of bb.
 	 */
-<span class="nc" id="L371">	temp = bb.y * SQRT2;</span>
-<span class="nc bnc" id="L372" title="All 4 branches missed.">	if (height &gt; temp &amp;&amp; ND_label(n).valign == 'c') {</span>
+<span class="fc" id="L371">	temp = bb.y * SQRT2;</span>
+<span class="pc bpc" id="L372" title="2 of 4 branches missed.">	if (height &gt; temp &amp;&amp; ND_label(n).valign == 'c') {</span>
 	    /* if there is height to spare
 	     * and the label is centered vertically
 	     * then just pad x in proportion to the spare height */
-<span class="nc" id="L376">	    bb.x *= Math.sqrt(1. / (1. - SQR(bb.y / height)));</span>
+<span class="fc" id="L376">	    bb.x *= Math.sqrt(1. / (1. - SQR(bb.y / height)));</span>
 	} else {
 <span class="nc" id="L378">	    bb.x *= SQRT2;</span>
 <span class="nc" id="L379">	    bb.y = temp;</span>
 	}
-<span class="nc bnc" id="L381" title="All 2 branches missed.">	if (sides &gt; 2) {</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">	if (sides &gt; 2) {</span>
 <span class="nc" id="L382">	    temp = Math.cos(M_PI / sides);</span>
 <span class="nc" id="L383">	    bb.x /= temp;</span>
 <span class="nc" id="L384">	    bb.y /= temp;</span>
@@ -399,14 +399,14 @@ try {
 <span class="nc" id="L399">	bb.x = width;</span>
 <span class="nc" id="L400">	bb.y = height;</span>
 <span class="nc" id="L401">	poly.option |= FIXEDSHAPE;</span>
-<span class="pc bpc" id="L402" title="1 of 2 branches missed.">    } else if (mapbool(fxd)) {</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">    } else if (mapbool(fxd)) {</span>
 	/* check only label, as images we can scale to fit */
-<span class="nc bnc" id="L404" title="All 4 branches missed.">	if ((width &lt; ND_label(n).dimen.x) || (height &lt; ND_label(n).dimen.y))</span>
+<span class="pc bpc" id="L404" title="2 of 4 branches missed.">	if ((width &lt; ND_label(n).dimen.x) || (height &lt; ND_label(n).dimen.y))</span>
 <span class="nc" id="L405">	    System.err.println(</span>
 		  &quot;node '%s', graph '%s' size too small for label\n&quot;);
 		  //agnameof(n), agnameof(agraphof(n)));
-<span class="nc" id="L408">	bb.x = width;</span>
-<span class="nc" id="L409">	bb.y = height;</span>
+<span class="fc" id="L408">	bb.x = width;</span>
+<span class="fc" id="L409">	bb.y = height;</span>
     } else {
 <span class="fc" id="L411">	bb.x = width = Math.max(width, bb.x);</span>
 <span class="fc" id="L412">	bb.y = height = Math.max(height, bb.y);</span>
@@ -423,12 +423,12 @@ try {
     
     /* Compute space available for label.  Provides the justification borders */
 <span class="pc bpc" id="L425" title="1 of 2 branches missed.">    if (!mapbool(late_string(n, zz.N_nojustify, new CString(&quot;false&quot;)))) {</span>
-<span class="pc bpc" id="L426" title="1 of 2 branches missed.">	if (isBox) {</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">	if (isBox) {</span>
 <span class="fc" id="L427">	    ND_label(n).space.x = Math.max(dimen.x,bb.x) - spacex;</span>
 	}
-<span class="nc bnc" id="L429" title="All 2 branches missed.">	else if (dimen.y &lt; bb.y) {</span>
-<span class="nc" id="L430">	    temp = bb.x * Math.sqrt(1.0 - SQR(dimen.y) / SQR(bb.y));</span>
-<span class="nc" id="L431">	    ND_label(n).space.x = Math.max(dimen.x,temp) - spacex;</span>
+<span class="pc bpc" id="L429" title="1 of 2 branches missed.">	else if (dimen.y &lt; bb.y) {</span>
+<span class="fc" id="L430">	    temp = bb.x * Math.sqrt(1.0 - SQR(dimen.y) / SQR(bb.y));</span>
+<span class="fc" id="L431">	    ND_label(n).space.x = Math.max(dimen.x,temp) - spacex;</span>
         }
 	else
 <span class="nc" id="L434">	    ND_label(n).space.x = dimen.x - spacex;</span>
@@ -448,17 +448,17 @@ try {
 <span class="fc" id="L448">    outp = peripheries;</span>
 <span class="pc bpc" id="L449" title="1 of 2 branches missed.">    if (peripheries &lt; 1)</span>
 <span class="nc" id="L450">	outp = 1;</span>
-<span class="pc bpc" id="L451" title="1 of 2 branches missed.">    if (sides &lt; 3) {		/* ellipses */</span>
-<span class="nc" id="L452">	sides = 2;</span>
-<span class="nc" id="L453">	vertices = CArray.&lt;ST_pointf&gt; ALLOC__(outp * sides, ZType.ST_pointf);</span>
-<span class="nc" id="L454">	P.x = bb.x / 2.;</span>
-<span class="nc" id="L455">	P.y = bb.y / 2.;</span>
-<span class="nc" id="L456">	vertices.get__(0).x = -P.x;</span>
-<span class="nc" id="L457">	vertices.get__(0).y = -P.y;</span>
-<span class="nc" id="L458">	vertices.get__(1).___(P);</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">    if (sides &lt; 3) {		/* ellipses */</span>
+<span class="fc" id="L452">	sides = 2;</span>
+<span class="fc" id="L453">	vertices = CArray.&lt;ST_pointf&gt; ALLOC__(outp * sides, ZType.ST_pointf);</span>
+<span class="fc" id="L454">	P.x = bb.x / 2.;</span>
+<span class="fc" id="L455">	P.y = bb.y / 2.;</span>
+<span class="fc" id="L456">	vertices.get__(0).x = -P.x;</span>
+<span class="fc" id="L457">	vertices.get__(0).y = -P.y;</span>
+<span class="fc" id="L458">	vertices.get__(1).___(P);</span>
 //	vertices.plus(1).x = P.x;
 //	vertices.plus(1).y = P.y;
-<span class="nc bnc" id="L461" title="All 2 branches missed.">	if (peripheries &gt; 1) {</span>
+<span class="pc bpc" id="L461" title="1 of 2 branches missed.">	if (peripheries &gt; 1) {</span>
 <span class="nc" id="L462">UNSUPPORTED(&quot;4ofenmfgj7cgyf624qmugcx77&quot;); // 	    for (j = 1, i = 2; j &lt; peripheries; j++) {</span>
 <span class="nc" id="L463">UNSUPPORTED(&quot;458w3r6n3nidn2j2b154phpzt&quot;); // 		P.x += 4;</span>
 <span class="nc" id="L464">UNSUPPORTED(&quot;24bcrwtjsfswpmtwxnadf0cn1&quot;); // 		P.y += 4;</span>
@@ -731,8 +731,8 @@ try {
 <span class="fc bfc" id="L731" title="All 4 branches covered.">    if ((Math.abs(P.x) &gt; zz.box_URx) || (Math.abs(P.y) &gt; zz.box_URy))</span>
 <span class="fc" id="L732">	return false;</span>
     /* ellipses */
-<span class="pc bpc" id="L734" title="1 of 2 branches missed.">    if (zz.sides &lt;= 2)</span>
-<span class="nc bnc" id="L735" title="All 2 branches missed.">	return (hypot(P.x / zz.box_URx, P.y / zz.box_URy) &lt; 1.);</span>
+<span class="fc bfc" id="L734" title="All 2 branches covered.">    if (zz.sides &lt;= 2)</span>
+<span class="fc bfc" id="L735" title="All 2 branches covered.">	return (hypot(P.x / zz.box_URx, P.y / zz.box_URy) &lt; 1.);</span>
     
     /* use fast test in case we are converging on a segment */
 <span class="fc" id="L738">    i = zz.last % zz.sides;		/* in case last left over from larger polygon */</span>

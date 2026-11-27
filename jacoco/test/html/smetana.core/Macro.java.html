@@ -737,7 +737,7 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define ND_onstack(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;onstack)
 	public static boolean ND_onstack(ST_Agnode_s n) {
-<span class="pc bpc" id="L740" title="1 of 2 branches missed.">		return ((ST_Agnodeinfo_t) n.data).onstack != 0;</span>
+<span class="fc bfc" id="L740" title="All 2 branches covered.">		return ((ST_Agnodeinfo_t) n.data).onstack != 0;</span>
 	}
 
 	public static void ND_onstack(ST_Agnode_s n, int v) {
@@ -1680,7 +1680,7 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int SEARCHSIZE = 30;
 
 	public static ST_Agedge_s agfindedge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
-<span class="nc" id="L1683">		return agedge(zz, g, t, h, null, false);</span>
+<span class="fc" id="L1683">		return agedge(zz, g, t, h, null, false);</span>
 	}
 
 	public static int flatindex(ST_Agnode_s v) {

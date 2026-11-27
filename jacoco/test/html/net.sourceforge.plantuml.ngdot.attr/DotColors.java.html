@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DotColors.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.attr</a> &gt; <span class="el_source">DotColors.java</span></div><h1>DotColors.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.attr;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+
+/**
+ * Reading DOT colors.
+ * &lt;p&gt;
+ * Supported: {@code #rrggbb}, {@code #rrggbbaa}, the color names (looked up in
+ * {@link HColorSet}, with the X11 values of Graphviz where they differ from
+ * the CSS ones), {@code grayN}/{@code greyN} and the numbered X11 variants
+ * ({@code red3}, approximated from the base color), {@code transparent},
+ * {@code none} and {@code invis}. A color list ({@code &quot;red:blue&quot;},
+ * {@code &quot;red;0.3:blue&quot;}) is reduced to its first color for now.
+ * &lt;p&gt;
+ * Not supported, read as &quot;no color&quot; so that the theme applies: HSV values
+ * ({@code &quot;0.6 0.4 0.9&quot;}) and color schemes ({@code /blues9/3}).
+ */
+public final class DotColors {
+
+<span class="fc" id="L62">	private static final Map&lt;String, Integer&gt; X11 = new HashMap&lt;String, Integer&gt;();</span>
+
+	static {
+		// X11 names whose value differs from the CSS one, or that CSS does not have
+<span class="fc" id="L66">		X11.put(&quot;gray&quot;, 0xBEBEBE);</span>
+<span class="fc" id="L67">		X11.put(&quot;grey&quot;, 0xBEBEBE);</span>
+<span class="fc" id="L68">		X11.put(&quot;green&quot;, 0x00FF00);</span>
+<span class="fc" id="L69">		X11.put(&quot;maroon&quot;, 0xB03060);</span>
+<span class="fc" id="L70">		X11.put(&quot;purple&quot;, 0xA020F0);</span>
+<span class="fc" id="L71">		X11.put(&quot;lightgoldenrod&quot;, 0xEEDD82);</span>
+<span class="fc" id="L72">		X11.put(&quot;navyblue&quot;, 0x000080);</span>
+<span class="fc" id="L73">		X11.put(&quot;violetred&quot;, 0xD02090);</span>
+<span class="fc" id="L74">		X11.put(&quot;lightslateblue&quot;, 0x8470FF);</span>
+<span class="fc" id="L75">		X11.put(&quot;x11gray&quot;, 0xBEBEBE);</span>
+<span class="fc" id="L76">		X11.put(&quot;x11grey&quot;, 0xBEBEBE);</span>
+<span class="fc" id="L77">		X11.put(&quot;x11green&quot;, 0x00FF00);</span>
+<span class="fc" id="L78">		X11.put(&quot;x11maroon&quot;, 0xB03060);</span>
+<span class="fc" id="L79">		X11.put(&quot;x11purple&quot;, 0xA020F0);</span>
+	}
+
+	/** X11 numbered variants: 1 is the base color, 2, 3 and 4 are darker. */
+<span class="fc" id="L83">	private static final double[] VARIANT_FACTORS = { 1.0, 1.0, 238.0 / 255, 205.0 / 255, 139.0 / 255 };</span>
+
+	private DotColors() {
+	}
+
+	/**
+	 * Reads a DOT color.
+	 *
+	 * @return the color, {@code HColors.none()} for a transparent color, or
+	 *         {@code null} when the value is missing or not understood
+	 */
+	public static HColor parse(String value, HColorSet set) {
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (value == null)</span>
+<span class="fc" id="L96">			return null;</span>
+<span class="fc" id="L97">		String s = value.trim();</span>
+		// A color list: keep the first color, without its weight
+<span class="fc" id="L99">		final int colon = s.indexOf(':');</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (colon != -1)</span>
+<span class="fc" id="L101">			s = s.substring(0, colon);</span>
+<span class="fc" id="L102">		final int semicolon = s.indexOf(';');</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (semicolon != -1)</span>
+<span class="fc" id="L104">			s = s.substring(0, semicolon);</span>
+<span class="fc" id="L105">		s = s.trim();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (s.length() == 0)</span>
+<span class="fc" id="L107">			return null;</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (s.startsWith(&quot;#&quot;))</span>
+<span class="fc" id="L110">			return parseHex(s.substring(1));</span>
+
+		// A color scheme prefix (&quot;/x11/red&quot;): only the X11 scheme is known
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (s.startsWith(&quot;/&quot;)) {</span>
+<span class="fc" id="L114">			final int slash = s.lastIndexOf('/');</span>
+<span class="fc" id="L115">			final String scheme = s.substring(1, Math.max(1, slash));</span>
+<span class="pc bpc" id="L116" title="2 of 6 branches missed.">			if (slash == 0 || (scheme.length() &gt; 0 &amp;&amp; scheme.equalsIgnoreCase(&quot;x11&quot;) == false))</span>
+<span class="fc" id="L117">				return null;</span>
+<span class="fc" id="L118">			s = s.substring(slash + 1);</span>
+		}
+
+<span class="fc" id="L121">		final String name = s.toLowerCase();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (isName(name) == false)</span>
+<span class="fc" id="L123">			return null;</span>
+
+<span class="fc bfc" id="L125" title="All 6 branches covered.">		if (name.equals(&quot;transparent&quot;) || name.equals(&quot;none&quot;) || name.equals(&quot;invis&quot;))</span>
+<span class="fc" id="L126">			return HColors.none();</span>
+
+<span class="fc" id="L128">		final HColor known = named(name, set);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (known != null)</span>
+<span class="fc" id="L130">			return known;</span>
+
+		// grayN / greyN, N from 0 to 100
+<span class="fc bfc" id="L133" title="All 4 branches covered.">		if (name.startsWith(&quot;gray&quot;) || name.startsWith(&quot;grey&quot;)) {</span>
+<span class="fc" id="L134">			final Integer level = parseInt(name.substring(4));</span>
+<span class="pc bpc" id="L135" title="2 of 6 branches missed.">			if (level != null &amp;&amp; level &gt;= 0 &amp;&amp; level &lt;= 100) {</span>
+				// As in the X11 table: grey50 is #7F7F7F
+<span class="fc" id="L137">				final int v = (int) Math.round(level * 2.55);</span>
+<span class="fc" id="L138">				return HColors.simple(new XColor(v, v, v));</span>
+			}
+		}
+
+		// X11 numbered variants: red1 .. red4
+<span class="fc" id="L143">		final char last = name.charAt(name.length() - 1);</span>
+<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (last &gt;= '1' &amp;&amp; last &lt;= '4') {</span>
+<span class="fc" id="L145">			final HColor base = named(name.substring(0, name.length() - 1), set);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (base != null)</span>
+<span class="fc" id="L147">				return darker(base, VARIANT_FACTORS[last - '0']);</span>
+		}
+<span class="fc" id="L149">		return null;</span>
+	}
+
+	private static HColor named(String name, HColorSet set) {
+<span class="fc" id="L153">		final Integer x11 = X11.get(name);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (x11 != null)</span>
+<span class="fc" id="L155">			return HColors.simple(XColor.from(x11));</span>
+<span class="fc" id="L156">		return set.getColorOrNull(name);</span>
+	}
+
+	private static HColor darker(HColor color, double factor) {
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (factor == 1.0)</span>
+<span class="fc" id="L161">			return color;</span>
+<span class="fc" id="L162">		final XColor c = color.toColor(ColorMapper.IDENTITY);</span>
+<span class="fc" id="L163">		return HColors.simple(new XColor((int) Math.round(c.getRed() * factor),</span>
+<span class="fc" id="L164">				(int) Math.round(c.getGreen() * factor), (int) Math.round(c.getBlue() * factor)));</span>
+	}
+
+	private static HColor parseHex(String hex) {
+<span class="fc bfc" id="L168" title="All 4 branches covered.">		if (hex.length() != 6 &amp;&amp; hex.length() != 8)</span>
+<span class="fc" id="L169">			return null;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		for (int i = 0; i &lt; hex.length(); i++)</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (Character.digit(hex.charAt(i), 16) == -1)</span>
+<span class="fc" id="L172">				return null;</span>
+<span class="fc" id="L173">		final int r = Integer.parseInt(hex.substring(0, 2), 16);</span>
+<span class="fc" id="L174">		final int g = Integer.parseInt(hex.substring(2, 4), 16);</span>
+<span class="fc" id="L175">		final int b = Integer.parseInt(hex.substring(4, 6), 16);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (hex.length() == 6)</span>
+<span class="fc" id="L177">			return HColors.simple(new XColor(r, g, b));</span>
+<span class="fc" id="L178">		final int a = Integer.parseInt(hex.substring(6, 8), 16);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (a == 0)</span>
+<span class="fc" id="L180">			return HColors.none();</span>
+<span class="fc" id="L181">		return HColors.simple(new XColor(r, g, b, a));</span>
+	}
+
+	private static boolean isName(String s) {
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (Character.isLetter(s.charAt(0)) == false)</span>
+<span class="fc" id="L186">			return false;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L188">			final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L189" title="4 of 12 branches missed.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'z') == false &amp;&amp; (c &gt;= '0' &amp;&amp; c &lt;= '9') == false)</span>
+<span class="nc" id="L190">				return false;</span>
+		}
+<span class="fc" id="L192">		return true;</span>
+	}
+
+	private static Integer parseInt(String s) {
+<span class="pc bpc" id="L196" title="2 of 4 branches missed.">		if (s.length() == 0 || s.length() &gt; 3)</span>
+<span class="nc" id="L197">			return null;</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">			if (Character.isDigit(s.charAt(i)) == false)</span>
+<span class="nc" id="L200">				return null;</span>
+<span class="fc" id="L201">		return Integer.parseInt(s);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

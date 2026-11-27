@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DotParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.parser</a> &gt; <span class="el_source">DotParser.java</span></div><h1>DotParser.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.parser;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.ngdot.model.DotAttributes;
+import net.sourceforge.plantuml.ngdot.model.DotGraph;
+import net.sourceforge.plantuml.ngdot.model.DotGraphBuilder;
+import net.sourceforge.plantuml.ngdot.model.DotNode;
+import net.sourceforge.plantuml.ngdot.model.DotSubgraph;
+import net.sourceforge.plantuml.ngdot.model.DotValue;
+import net.sourceforge.plantuml.ngdot.parser.DotToken.IdKind;
+
+/**
+ * Recursive descent parser for the DOT language
+ * (https://graphviz.org/doc/info/lang.html):
+ *
+ * &lt;pre&gt;
+ * graph     : [strict] (graph|digraph) [ID] '{' stmt_list '}'
+ * stmt_list : [stmt [';'] stmt_list]
+ * stmt      : node_stmt | edge_stmt | attr_stmt | ID '=' ID | subgraph
+ * attr_stmt : (graph|node|edge) attr_list
+ * attr_list : '[' [a_list] ']' [attr_list]
+ * a_list    : ID ['=' ID] [(';'|',')] [a_list]
+ * edge_stmt : (node_id|subgraph) edgeRHS [attr_list]
+ * edgeRHS   : edgeop (node_id|subgraph) [edgeRHS]
+ * node_stmt : node_id [attr_list]
+ * node_id   : ID [':' ID [':' ID]]
+ * subgraph  : [subgraph [ID]] '{' stmt_list '}'
+ * ID        : ... | quoted_string ('+' quoted_string)*
+ * &lt;/pre&gt;
+ *
+ * An attribute written without a value ({@code [bold]}) is read as
+ * {@code bold=true}. The semantics (defaults, node creation, strict graphs) is
+ * delegated to {@link DotGraphBuilder}.
+ */
+public final class DotParser {
+
+	private final List&lt;DotToken&gt; tokens;
+	private int pos;
+	private DotGraphBuilder builder;
+
+<span class="fc" id="L78">	private DotParser(List&lt;DotToken&gt; tokens) {</span>
+<span class="fc" id="L79">		this.tokens = tokens;</span>
+<span class="fc" id="L80">	}</span>
+
+	public static DotGraph parse(String text) throws DotSyntaxException {
+<span class="fc" id="L83">		return new DotParser(DotLexer.tokenize(text)).graph();</span>
+	}
+
+	private DotToken peek() {
+<span class="fc" id="L87">		return tokens.get(pos);</span>
+	}
+
+	private DotToken peek(int offset) {
+<span class="fc" id="L91">		final int i = Math.min(pos + offset, tokens.size() - 1);</span>
+<span class="fc" id="L92">		return tokens.get(i);</span>
+	}
+
+	private boolean at(DotTokenType type) {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		return peek().getType() == type;</span>
+	}
+
+	private DotToken next() {
+<span class="fc" id="L100">		final DotToken result = tokens.get(pos);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (result.getType() != DotTokenType.EOF)</span>
+<span class="fc" id="L102">			pos++;</span>
+<span class="fc" id="L103">		return result;</span>
+	}
+
+	private boolean accept(DotTokenType type) {
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (at(type)) {</span>
+<span class="fc" id="L108">			next();</span>
+<span class="fc" id="L109">			return true;</span>
+		}
+<span class="fc" id="L111">		return false;</span>
+	}
+
+	private DotToken expect(DotTokenType type, String what) throws DotSyntaxException {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (at(type))</span>
+<span class="fc" id="L116">			return next();</span>
+<span class="fc" id="L117">		throw error(&quot;Expected &quot; + what + &quot; but found &quot; + peek().describe(), peek());</span>
+	}
+
+	private static DotSyntaxException error(String message, DotToken token) {
+<span class="fc" id="L121">		return new DotSyntaxException(message, token.getLine(), token.getColumn());</span>
+	}
+
+	private DotGraph graph() throws DotSyntaxException {
+<span class="fc" id="L125">		final boolean strict = accept(DotTokenType.STRICT);</span>
+		final boolean directed;
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (accept(DotTokenType.DIGRAPH))</span>
+<span class="fc" id="L128">			directed = true;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		else if (accept(DotTokenType.GRAPH))</span>
+<span class="fc" id="L130">			directed = false;</span>
+		else
+<span class="fc" id="L132">			throw error(&quot;Expected 'graph' or 'digraph' but found &quot; + peek().describe(), peek());</span>
+
+<span class="fc" id="L134">		String id = null;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (at(DotTokenType.ID))</span>
+<span class="fc" id="L136">			id = readId().getText();</span>
+
+<span class="fc" id="L138">		expect(DotTokenType.LBRACE, &quot;'{'&quot;);</span>
+<span class="fc" id="L139">		builder = new DotGraphBuilder(strict, directed, id);</span>
+<span class="fc" id="L140">		stmtList();</span>
+<span class="fc" id="L141">		expect(DotTokenType.RBRACE, &quot;'}'&quot;);</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (at(DotTokenType.EOF) == false)</span>
+<span class="fc" id="L143">			throw error(&quot;Only one graph is allowed, found &quot; + peek().describe() + &quot; after its closing '}'&quot;, peek());</span>
+
+<span class="fc" id="L145">		return builder.build();</span>
+	}
+
+	private void stmtList() throws DotSyntaxException {
+<span class="fc bfc" id="L149" title="All 4 branches covered.">		while (at(DotTokenType.RBRACE) == false &amp;&amp; at(DotTokenType.EOF) == false) {</span>
+<span class="fc" id="L150">			stmt();</span>
+<span class="fc" id="L151">			accept(DotTokenType.SEMICOLON);</span>
+		}
+<span class="fc" id="L153">	}</span>
+
+	private void stmt() throws DotSyntaxException {
+<span class="fc" id="L156">		final DotToken token = peek();</span>
+<span class="fc bfc" id="L157" title="All 4 branches covered.">		switch (token.getType()) {</span>
+		case GRAPH:
+		case NODE:
+		case EDGE:
+<span class="fc" id="L161">			attrStmt();</span>
+<span class="fc" id="L162">			return;</span>
+		case SUBGRAPH:
+		case LBRACE:
+<span class="fc" id="L165">			final DotSubgraph subgraph = subgraph();</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">			if (isEdgeOp())</span>
+<span class="fc" id="L167">				edgeStmt(new Endpoint(subgraph));</span>
+<span class="fc" id="L168">			return;</span>
+		case ID:
+<span class="fc bfc" id="L170" title="All 2 branches covered.">			if (peek(1).getType() == DotTokenType.EQUAL) {</span>
+<span class="fc" id="L171">				final String name = next().getText();</span>
+<span class="fc" id="L172">				next();</span>
+<span class="fc" id="L173">				builder.setGraphAttribute(name, readValue());</span>
+<span class="fc" id="L174">				return;</span>
+			}
+<span class="fc" id="L176">			final Endpoint first = nodeId();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">			if (isEdgeOp()) {</span>
+<span class="fc" id="L178">				edgeStmt(first);</span>
+			} else {
+<span class="fc" id="L180">				final DotAttributes attributes = attrListOptional();</span>
+<span class="fc" id="L181">				builder.setNodeAttributes(first.node, attributes);</span>
+			}
+<span class="fc" id="L183">			return;</span>
+		default:
+<span class="fc" id="L185">			throw error(&quot;Unexpected &quot; + token.describe(), token);</span>
+		}
+	}
+
+	private void attrStmt() throws DotSyntaxException {
+<span class="fc" id="L190">		final DotToken keyword = next();</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (at(DotTokenType.LBRACKET) == false)</span>
+<span class="fc" id="L192">			throw error(&quot;Expected '[' after '&quot; + keyword.getText() + &quot;' but found &quot; + peek().describe(), peek());</span>
+<span class="fc" id="L193">		final DotAttributes attributes = attrListOptional();</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		for (String name : attributes.names()) {</span>
+<span class="fc" id="L195">			final DotValue value = attributes.get(name);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">			if (keyword.getType() == DotTokenType.GRAPH)</span>
+<span class="fc" id="L197">				builder.setGraphAttribute(name, value);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">			else if (keyword.getType() == DotTokenType.NODE)</span>
+<span class="fc" id="L199">				builder.setNodeDefault(name, value);</span>
+			else
+<span class="fc" id="L201">				builder.setEdgeDefault(name, value);</span>
+<span class="fc" id="L202">		}</span>
+<span class="fc" id="L203">	}</span>
+
+	private DotAttributes attrListOptional() throws DotSyntaxException {
+<span class="fc" id="L206">		final DotAttributes result = new DotAttributes();</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		while (accept(DotTokenType.LBRACKET)) {</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">			while (accept(DotTokenType.RBRACKET) == false) {</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">				if (at(DotTokenType.ID) == false)</span>
+<span class="nc" id="L210">					throw error(&quot;Expected an attribute name but found &quot; + peek().describe(), peek());</span>
+<span class="fc" id="L211">				final String name = readId().getText();</span>
+				final DotValue value;
+<span class="fc bfc" id="L213" title="All 2 branches covered.">				if (accept(DotTokenType.EQUAL))</span>
+<span class="fc" id="L214">					value = readValue();</span>
+				else
+<span class="fc" id="L216">					value = DotValue.TRUE;</span>
+<span class="fc" id="L217">				result.put(name, value);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">				if (accept(DotTokenType.SEMICOLON) == false)</span>
+<span class="fc" id="L219">					accept(DotTokenType.COMMA);</span>
+<span class="fc" id="L220">			}</span>
+		}
+<span class="fc" id="L222">		return result;</span>
+	}
+
+	private DotSubgraph subgraph() throws DotSyntaxException {
+<span class="fc" id="L226">		String id = null;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (accept(DotTokenType.SUBGRAPH)) {</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">			if (at(DotTokenType.ID))</span>
+<span class="fc" id="L229">				id = readId().getText();</span>
+		}
+<span class="fc" id="L231">		expect(DotTokenType.LBRACE, &quot;'{'&quot;);</span>
+<span class="fc" id="L232">		final DotSubgraph result = builder.openSubgraph(id);</span>
+<span class="fc" id="L233">		stmtList();</span>
+<span class="fc" id="L234">		expect(DotTokenType.RBRACE, &quot;'}'&quot;);</span>
+<span class="fc" id="L235">		builder.closeSubgraph();</span>
+<span class="fc" id="L236">		return result;</span>
+	}
+
+	private boolean isEdgeOp() {
+<span class="fc bfc" id="L240" title="All 4 branches covered.">		return at(DotTokenType.ARROW) || at(DotTokenType.LINE);</span>
+	}
+
+	private void checkEdgeOp(DotToken op) throws DotSyntaxException {
+<span class="fc bfc" id="L244" title="All 4 branches covered.">		if (builder.isDirected() &amp;&amp; op.getType() == DotTokenType.LINE)</span>
+<span class="fc" id="L245">			throw error(&quot;'--' is not allowed in a digraph, use '-&gt;'&quot;, op);</span>
+<span class="fc bfc" id="L246" title="All 4 branches covered.">		if (builder.isDirected() == false &amp;&amp; op.getType() == DotTokenType.ARROW)</span>
+<span class="fc" id="L247">			throw error(&quot;'-&gt;' is not allowed in an undirected graph, use '--' (or declare a digraph)&quot;, op);</span>
+<span class="fc" id="L248">	}</span>
+
+	private void edgeStmt(Endpoint first) throws DotSyntaxException {
+<span class="fc" id="L251">		final List&lt;Endpoint&gt; endpoints = new ArrayList&lt;Endpoint&gt;();</span>
+<span class="fc" id="L252">		endpoints.add(first);</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		while (isEdgeOp()) {</span>
+<span class="fc" id="L254">			checkEdgeOp(next());</span>
+<span class="pc bpc" id="L255" title="1 of 4 branches missed.">			if (at(DotTokenType.SUBGRAPH) || at(DotTokenType.LBRACE))</span>
+<span class="fc" id="L256">				endpoints.add(new Endpoint(subgraph()));</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">			else if (at(DotTokenType.ID))</span>
+<span class="fc" id="L258">				endpoints.add(nodeId());</span>
+			else
+<span class="fc" id="L260">				throw error(&quot;Expected a node or a subgraph but found &quot; + peek().describe(), peek());</span>
+		}
+<span class="fc" id="L262">		final DotAttributes attributes = attrListOptional();</span>
+
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		for (int i = 0; i &lt; endpoints.size() - 1; i++) {</span>
+<span class="fc" id="L265">			final Endpoint tail = endpoints.get(i);</span>
+<span class="fc" id="L266">			final Endpoint head = endpoints.get(i + 1);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">			for (DotNode t : tail.nodes())</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">				for (DotNode h : head.nodes())</span>
+<span class="fc" id="L269">					builder.addEdge(t, tail.port, h, head.port, attributes);</span>
+		}
+<span class="fc" id="L271">	}</span>
+
+	private Endpoint nodeId() throws DotSyntaxException {
+<span class="fc" id="L274">		final DotToken id = readId();</span>
+<span class="fc" id="L275">		String port = null;</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">		if (accept(DotTokenType.COLON)) {</span>
+<span class="fc" id="L277">			port = expectId(&quot;a port name&quot;).getText();</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">			if (accept(DotTokenType.COLON))</span>
+<span class="fc" id="L279">				port = port + &quot;:&quot; + expectId(&quot;a compass point&quot;).getText();</span>
+		}
+<span class="fc" id="L281">		return new Endpoint(builder.mentionNode(id.getText()), port);</span>
+	}
+
+	private DotToken expectId(String what) throws DotSyntaxException {
+<span class="fc bfc" id="L285" title="All 2 branches covered.">		if (at(DotTokenType.ID))</span>
+<span class="fc" id="L286">			return readId();</span>
+<span class="fc" id="L287">		throw error(&quot;Expected &quot; + what + &quot; but found &quot; + peek().describe(), peek());</span>
+	}
+
+	private DotValue readValue() throws DotSyntaxException {
+<span class="fc" id="L291">		final DotToken token = expectId(&quot;a value&quot;);</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">		if (token.getIdKind() == IdKind.HTML)</span>
+<span class="fc" id="L293">			return DotValue.html(token.getText());</span>
+<span class="fc" id="L294">		return DotValue.of(token.getText());</span>
+	}
+
+	/**
+	 * Reads an ID, joining {@code &quot;a&quot; + &quot;b&quot;} concatenations.
+	 */
+	private DotToken readId() throws DotSyntaxException {
+<span class="fc" id="L301">		final DotToken first = next();</span>
+<span class="fc bfc" id="L302" title="All 4 branches covered.">		if (first.getIdKind() != IdKind.QUOTED || at(DotTokenType.PLUS) == false)</span>
+<span class="fc" id="L303">			return first;</span>
+
+<span class="fc" id="L305">		final StringBuilder sb = new StringBuilder(first.getText());</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">		while (accept(DotTokenType.PLUS)) {</span>
+<span class="fc" id="L307">			final DotToken other = peek();</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">			if (other.getIdKind() != IdKind.QUOTED)</span>
+<span class="fc" id="L309">				throw error(&quot;Expected a double-quoted string after '+' but found &quot; + other.describe(), other);</span>
+<span class="fc" id="L310">			sb.append(next().getText());</span>
+<span class="fc" id="L311">		}</span>
+<span class="fc" id="L312">		return new DotToken(DotTokenType.ID, sb.toString(), IdKind.QUOTED, first.getLine(), first.getColumn());</span>
+	}
+
+	/**
+	 * One side of an edge: a node (with an optional port) or a subgraph, which
+	 * stands for every node it contains when the edges are created.
+	 */
+	private static final class Endpoint {
+
+		private final DotNode node;
+		private final String port;
+		private final DotSubgraph subgraph;
+
+<span class="fc" id="L325">		Endpoint(DotNode node, String port) {</span>
+<span class="fc" id="L326">			this.node = node;</span>
+<span class="fc" id="L327">			this.port = port;</span>
+<span class="fc" id="L328">			this.subgraph = null;</span>
+<span class="fc" id="L329">		}</span>
+
+<span class="fc" id="L331">		Endpoint(DotSubgraph subgraph) {</span>
+<span class="fc" id="L332">			this.node = null;</span>
+<span class="fc" id="L333">			this.port = null;</span>
+<span class="fc" id="L334">			this.subgraph = subgraph;</span>
+<span class="fc" id="L335">		}</span>
+
+		List&lt;DotNode&gt; nodes() {
+<span class="fc bfc" id="L338" title="All 2 branches covered.">			if (subgraph != null)</span>
+<span class="fc" id="L339">				return subgraph.getNodes();</span>
+<span class="fc" id="L340">			final List&lt;DotNode&gt; result = new ArrayList&lt;DotNode&gt;();</span>
+<span class="fc" id="L341">			result.add(node);</span>
+<span class="fc" id="L342">			return result;</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

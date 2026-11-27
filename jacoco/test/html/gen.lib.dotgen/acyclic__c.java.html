@@ -74,18 +74,18 @@ import h.ST_Agraph_s;
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/acyclic.c&quot;, name=&quot;reverse_edge&quot;, key=&quot;9hm902ya6q6bq246ewuh67h38&quot;, definition=&quot;void reverse_edge(edge_t * e)&quot;)
 public static void reverse_edge(ST_Agedge_s e) {
-<span class="nc" id="L77">ENTERING(&quot;9hm902ya6q6bq246ewuh67h38&quot;,&quot;reverse_edge&quot;);</span>
+<span class="fc" id="L77">ENTERING(&quot;9hm902ya6q6bq246ewuh67h38&quot;,&quot;reverse_edge&quot;);</span>
 try {
     ST_Agedge_s f;
-<span class="nc" id="L80">    delete_fast_edge(e);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">    if ((f = find_fast_edge(aghead(e), agtail(e)))!=null)</span>
+<span class="fc" id="L80">    delete_fast_edge(e);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">    if ((f = find_fast_edge(aghead(e), agtail(e)))!=null)</span>
 <span class="nc" id="L82">	merge_oneway(e, f);</span>
     else
-<span class="nc" id="L84">	virtual_edge(aghead(e), agtail(e), e);</span>
+<span class="fc" id="L84">	virtual_edge(aghead(e), agtail(e), e);</span>
 } finally {
-<span class="nc" id="L86">LEAVING(&quot;9hm902ya6q6bq246ewuh67h38&quot;,&quot;reverse_edge&quot;);</span>
+<span class="fc" id="L86">LEAVING(&quot;9hm902ya6q6bq246ewuh67h38&quot;,&quot;reverse_edge&quot;);</span>
 }
-<span class="nc" id="L88">}</span>
+<span class="fc" id="L88">}</span>
 
 
 
@@ -105,9 +105,9 @@ try {
 <span class="fc" id="L105">    ND_onstack(n, 1);</span>
 <span class="fc bfc" id="L106" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(i))!=null; i++) {</span>
 <span class="fc" id="L107">	w = aghead(e);</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">	if (ND_onstack(w)) {</span>
-<span class="nc" id="L109">	    reverse_edge(e);</span>
-<span class="nc" id="L110">	    i--;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">	if (ND_onstack(w)) {</span>
+<span class="fc" id="L109">	    reverse_edge(e);</span>
+<span class="fc" id="L110">	    i--;</span>
 	} else {
 <span class="fc bfc" id="L112" title="All 2 branches covered.">	    if (ND_mark(w) == 0)</span>
 <span class="fc" id="L113">		dfs(w);</span>

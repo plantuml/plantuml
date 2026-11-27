@@ -101,6 +101,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.klimt.shape">net.sourceforge.plantuml.klimt.shape</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.ngdot.draw">net.sourceforge.plantuml.ngdot.draw</a></div>
+<div class="col-last even-row-color">
+<div class="block">Drawing of a laid out DOT graph with UGraphic.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.ngdot.layout">net.sourceforge.plantuml.ngdot.layout</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Layout of a DOT graph with Smetana, and its result as plain geometry.</div>
+</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.openiconic">net.sourceforge.plantuml.openiconic</a></div>
 <div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
@@ -799,6 +807,75 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../shape/UPolygon.html#%3Cinit%3E(java.util.List)" class="member-name-link">UPolygon</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&gt;&nbsp;points)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot.draw">
+<h2>Uses of <a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a> in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a></h2>
+<div class="caption"><span>Methods in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a> with parameters of type <a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ArrowShape.</span><code><a href="../../../ngdot/draw/ArrowShape.html#draw(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.geom.XPoint2D,net.sourceforge.plantuml.klimt.geom.XPoint2D,double)" class="member-name-link">draw</a><wbr>(<a href="../../drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fill,
+ <a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&nbsp;tip,
+ <a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&nbsp;base,
+ double&nbsp;arrowsize)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Draws the arrow.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot.layout">
+<h2>Uses of <a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a> in <a href="../../../ngdot/layout/package-summary.html">net.sourceforge.plantuml.ngdot.layout</a></h2>
+<div class="caption"><span>Methods in <a href="../../../ngdot/layout/package-summary.html">net.sourceforge.plantuml.ngdot.layout</a> that return <a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutResult.NodeBox.</span><code><a href="../../../ngdot/layout/LayoutResult.NodeBox.html#getCenter()" class="member-name-link">getCenter</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LayoutResult.EdgeRoute.</span><code><a href="../../../ngdot/layout/LayoutResult.EdgeRoute.html#getHeadTip()" class="member-name-link">getHeadTip</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">The tip of the arrow at the head end, or <code>null</code>.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutResult.ClusterBox.</span><code><a href="../../../ngdot/layout/LayoutResult.ClusterBox.html#getLabelCenter()" class="member-name-link">getLabelCenter</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">The center of the label, or <code>null</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LayoutResult.EdgeRoute.</span><code><a href="../../../ngdot/layout/LayoutResult.EdgeRoute.html#getLabelCenter()" class="member-name-link">getLabelCenter</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">The center of the label, or <code>null</code>.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutResult.EdgeRoute.</span><code><a href="../../../ngdot/layout/LayoutResult.EdgeRoute.html#getTailTip()" class="member-name-link">getTailTip</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">The tip of the arrow at the tail end, or <code>null</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LayoutResult.ClusterBox.</span><code><a href="../../../ngdot/layout/LayoutResult.ClusterBox.html#getTopLeft()" class="member-name-link">getTopLeft</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutResult.NodeBox.</span><code><a href="../../../ngdot/layout/LayoutResult.NodeBox.html#getTopLeft()" class="member-name-link">getTopLeft</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../../ngdot/layout/package-summary.html">net.sourceforge.plantuml.ngdot.layout</a> that return types with arguments of type <a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LayoutResult.EdgeRoute.</span><code><a href="../../../ngdot/layout/LayoutResult.EdgeRoute.html#getPoints()" class="member-name-link">getPoints</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

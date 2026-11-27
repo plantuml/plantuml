@@ -1243,19 +1243,26 @@ Total Classes: 4
 "net.sourceforge.plantuml.descdiagram.command" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.descdiagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.directdot" %lighten("red", 92) {
+class "net.sourceforge.plantuml.directdoc" %lighten("red", 50) {
+Total Classes: 1
+}
+"net.sourceforge.plantuml.directdoc" --> "java.io"
+
+class "net.sourceforge.plantuml.directdot" %lighten("red", 100) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.directdot" --> "java.io"
 "net.sourceforge.plantuml.directdot" --> "java.lang"
 "net.sourceforge.plantuml.directdot" --> "java.util"
-"net.sourceforge.plantuml.directdot" --> "java.util.regex"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.api"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.directdoc"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.dot"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.ngdot"
+"net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.security"
 
@@ -1494,7 +1501,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.error" --> "java.util"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.directdot"
+"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.ngdot"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.text"
@@ -2472,6 +2479,64 @@ Total Classes: 11
 "net.sourceforge.plantuml.mindmap" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.mindmap" --> "net.sourceforge.plantuml.utils"
 
+class "net.sourceforge.plantuml.ngdot" %lighten("red", 67) {
+Total Classes: 1
+}
+"net.sourceforge.plantuml.ngdot" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.ngdot" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.ngdot" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.ngdot" --> "net.sourceforge.plantuml.ngdot.draw"
+"net.sourceforge.plantuml.ngdot" --> "net.sourceforge.plantuml.ngdot.model"
+"net.sourceforge.plantuml.ngdot" --> "net.sourceforge.plantuml.preproc"
+
+class "net.sourceforge.plantuml.ngdot.attr" %lighten("red", 86) {
+Total Classes: 3
+}
+"net.sourceforge.plantuml.ngdot.attr" --> "java.lang"
+"net.sourceforge.plantuml.ngdot.attr" --> "java.util"
+"net.sourceforge.plantuml.ngdot.attr" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.ngdot.attr" --> "net.sourceforge.plantuml.klimt.awt"
+"net.sourceforge.plantuml.ngdot.attr" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.ngdot.attr" --> "net.sourceforge.plantuml.ngdot.model"
+
+class "net.sourceforge.plantuml.ngdot.draw" %lighten("red", 93) {
+Total Classes: 9
+}
+"net.sourceforge.plantuml.ngdot.draw" --> "java.lang"
+"net.sourceforge.plantuml.ngdot.draw" --> "java.util"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.klimt.creole"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.ngdot.attr"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.ngdot.layout"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.ngdot.model"
+"net.sourceforge.plantuml.ngdot.draw" --> "net.sourceforge.plantuml.style"
+
+class "net.sourceforge.plantuml.ngdot.layout" %lighten("red", 91) {
+Total Classes: 9
+}
+"net.sourceforge.plantuml.ngdot.layout" --> "java.lang"
+"net.sourceforge.plantuml.ngdot.layout" --> "java.util"
+"net.sourceforge.plantuml.ngdot.layout" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.ngdot.layout" --> "net.sourceforge.plantuml.ngdot.model"
+
+class "net.sourceforge.plantuml.ngdot.model" %lighten("red", 29) {
+Total Classes: 3
+}
+"net.sourceforge.plantuml.ngdot.model" --> "java.lang"
+"net.sourceforge.plantuml.ngdot.model" --> "java.util"
+
+class "net.sourceforge.plantuml.ngdot.parser" %lighten("red", 100) {
+Total Classes: 5
+}
+"net.sourceforge.plantuml.ngdot.parser" --> "java.lang"
+"net.sourceforge.plantuml.ngdot.parser" --> "java.util"
+"net.sourceforge.plantuml.ngdot.parser" --> "net.sourceforge.plantuml.ngdot.model"
+
 class "net.sourceforge.plantuml.nio" %lighten("red", 43.99999999999999) {
 Total Classes: 6
 }
@@ -3329,6 +3394,7 @@ Total Classes: 13
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.klimt.sprite"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.math"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.mindmap"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.ngdot"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.nwdiag"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.openiconic"

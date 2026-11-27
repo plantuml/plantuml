@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemNgDotFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot</a> &gt; <span class="el_source">PSystemNgDotFactory.java</span></div><h1>PSystemNgDotFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.ErrorUmlType;
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.command.PSystemAbstractFactory;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.explain.Explanation;
+import net.sourceforge.plantuml.ngdot.model.DotGraph;
+import net.sourceforge.plantuml.ngdot.parser.DotParser;
+import net.sourceforge.plantuml.ngdot.parser.DotSyntaxException;
+import net.sourceforge.plantuml.nio.PathSystem;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.StartUtils;
+import net.sourceforge.plantuml.version.IteratorCounter2;
+
+/**
+ * Builds a {@link PSystemNgDot} from a {@code @startdot} block: the whole
+ * block (already preprocessed) is parsed at once by {@link DotParser}, and a
+ * syntax error is reported on the faulty line.
+ */
+public class PSystemNgDotFactory extends PSystemAbstractFactory {
+
+	// ASCII classes only: the regular expressions of the TeaVM class library do not
+	// support \p{L} / \p{N}, and the pattern did not compile there (which broke the
+	// start of the TeaVM builds). A graph name with non ASCII letters must be quoted.
+<span class="fc" id="L71">	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(&quot;\\s*&quot; // optional leading whitespace</span>
+			+ &quot;(strict\\s+)?&quot; // optional 'strict'
+			+ &quot;(di)?&quot; // optional 'di'
+			+ &quot;graph\\s+&quot; // 'graph' keyword
+			+ &quot;(&quot; + &quot;[_a-zA-Z][_a-zA-Z0-9]*&quot; // identifier
+			+ &quot;|&quot; + &quot;-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)&quot; // number
+			+ &quot;|&quot; + &quot;\&quot;([^\&quot;\\\\]|\\\\\&quot;)*\&quot;&quot; // quoted string
+			+ &quot;)?&quot; + &quot;\\s*\\{\\s*&quot; // opening brace
+	);
+
+	public PSystemNgDotFactory() {
+<span class="fc" id="L82">		super(DiagramType.DOT);</span>
+<span class="fc" id="L83">	}</span>
+
+	@Override
+	public List&lt;Explanation&gt; explain(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+<span class="nc" id="L88">		throw new UnsupportedOperationException(&quot;wip &quot; + getClass());</span>
+	}
+
+	@Override
+	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+<span class="fc" id="L94">		source = source.removeInitialNoise();</span>
+<span class="fc" id="L95">		final IteratorCounter2 it = source.iterator2();</span>
+<span class="fc" id="L96">		final StringLocated startLine = it.next();</span>
+
+<span class="fc" id="L98">		final List&lt;StringLocated&gt; lines = new ArrayList&lt;StringLocated&gt;();</span>
+<span class="fc" id="L99">		StringLocated last = startLine;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="fc" id="L101">			final StringLocated s = it.next();</span>
+<span class="fc" id="L102">			last = s;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (StartUtils.isEndDirective(s.getString()))</span>
+<span class="fc" id="L104">				break;</span>
+<span class="fc" id="L105">			lines.add(s);</span>
+<span class="fc" id="L106">		}</span>
+
+<span class="fc" id="L108">		final StringBuilder text = new StringBuilder();</span>
+<span class="fc" id="L109">		boolean empty = true;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (StringLocated s : lines) {</span>
+<span class="fc" id="L111">			text.append(s.getString());</span>
+<span class="fc" id="L112">			text.append('\n');</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (s.getString().trim().length() &gt; 0)</span>
+<span class="fc" id="L114">				empty = false;</span>
+<span class="fc" id="L115">		}</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (empty)</span>
+<span class="nc" id="L117">			return buildEmptyError(source, last, it.getTrace(), preprocessing);</span>
+
+		try {
+<span class="fc" id="L120">			final DotGraph graph = DotParser.parse(text.toString());</span>
+<span class="fc" id="L121">			return new PSystemNgDot(source, graph, preprocessing);</span>
+<span class="fc" id="L122">		} catch (DotSyntaxException e) {</span>
+<span class="fc" id="L123">			final int index = Math.min(e.getLine(), lines.size() - 1);</span>
+<span class="fc" id="L124">			final StringLocated faulty = lines.get(index);</span>
+<span class="fc" id="L125">			final List&lt;StringLocated&gt; trace = new ArrayList&lt;StringLocated&gt;();</span>
+<span class="fc" id="L126">			trace.add(startLine);</span>
+<span class="fc" id="L127">			trace.addAll(lines.subList(0, index + 1));</span>
+<span class="fc" id="L128">			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, e.getMessage(), 0, faulty,</span>
+<span class="fc" id="L129">					getDiagramType());</span>
+<span class="fc" id="L130">			return PSystemErrorUtils.buildV2(source, err, null, trace, preprocessing);</span>
+		}
+	}
+
+	/**
+	 * Tells whether a line looks like the first line of a DOT graph. Used to
+	 * suggest {@code @startdot} when such a graph is written in
+	 * {@code @startuml}.
+	 */
+	public static boolean isGraphvizDotHeader(String line) {
+<span class="fc" id="L140">		final Matcher matcher = GRAPHVIZ_DOT_HEADER_PATTERN.matcher(line);</span>
+<span class="fc" id="L141">		return matcher.matches();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

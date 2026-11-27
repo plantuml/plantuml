@@ -34,56 +34,46 @@
  */
 package net.sourceforge.plantuml.directdot;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.ngdot.PSystemNgDotFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
+/**
+ * The historical {@code @startdot}: the DOT text is given as is to the
+ * Graphviz executable. Used on the JVM unless
+ * {@link net.sourceforge.plantuml.TitledDiagram#FORCE_SMETANA} is set, see
+ * {@link PSystemDotSelectorFactory}.
+ */
 public class PSystemDotFactory extends PSystemBasicFactory&lt;PSystemDot&gt; {
 
 	private StringBuilder data;
-<span class="fc" id="L48">	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(&quot;\\s*&quot; // optional leading whitespace</span>
-			+ &quot;(strict\\s+)?&quot; // optional 'strict'
-			+ &quot;(di)?&quot; // optional 'di'
-			+ &quot;graph\\s+&quot; // 'graph' keyword
-			+ &quot;(&quot; + &quot;[_\\p{L}][_\\p{L}\\p{N}]*&quot; // identifier
-			+ &quot;|&quot; + &quot;-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)&quot; // number
-			+ &quot;|&quot; + &quot;\&quot;([^\&quot;\\\\]|\\\\\&quot;)*\&quot;&quot; // quoted string
-			+ &quot;)?&quot; + &quot;\\s*\\{\\s*&quot; // opening brace
-	);
 
 	public PSystemDotFactory() {
-<span class="fc" id="L59">		super(DiagramType.DOT);</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L54">		super(DiagramType.DOT);</span>
+<span class="fc" id="L55">	}</span>
 
 	@Override
 	public PSystemDot initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L64">		data = null;</span>
-<span class="nc" id="L65">		return null;</span>
+<span class="nc" id="L59">		data = null;</span>
+<span class="nc" id="L60">		return null;</span>
 	}
 
 	@Override
 	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line,
 			PreprocessingArtifact preprocessing) {
-<span class="nc bnc" id="L71" title="All 4 branches missed.">		if (system == null &amp;&amp; isGraphvizDotHeader(line)) {</span>
-<span class="nc" id="L72">			data = new StringBuilder(line);</span>
-<span class="nc" id="L73">			data.append(&quot;\n&quot;);</span>
-<span class="nc" id="L74">			return new PSystemDot(source, data.toString(), preprocessing);</span>
+<span class="nc bnc" id="L66" title="All 4 branches missed.">		if (system == null &amp;&amp; PSystemNgDotFactory.isGraphvizDotHeader(line)) {</span>
+<span class="nc" id="L67">			data = new StringBuilder(line);</span>
+<span class="nc" id="L68">			data.append(&quot;\n&quot;);</span>
+<span class="nc" id="L69">			return new PSystemDot(source, data.toString(), preprocessing);</span>
 		}
-<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (data == null || system == null)</span>
-<span class="nc" id="L77">			return null;</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">		if (data == null || system == null)</span>
+<span class="nc" id="L72">			return null;</span>
 
-<span class="nc" id="L79">		data.append(line);</span>
-<span class="nc" id="L80">		data.append(&quot;\n&quot;);</span>
-<span class="nc" id="L81">		return new PSystemDot(source, data.toString(), preprocessing);</span>
-	}
-
-	public static boolean isGraphvizDotHeader(String line) {
-<span class="fc" id="L85">		final Matcher matcher = GRAPHVIZ_DOT_HEADER_PATTERN.matcher(line);</span>
-<span class="fc" id="L86">		return matcher.matches();</span>
+<span class="nc" id="L74">		data.append(line);</span>
+<span class="nc" id="L75">		data.append(&quot;\n&quot;);</span>
+<span class="nc" id="L76">		return new PSystemDot(source, data.toString(), preprocessing);</span>
 	}
 
 }

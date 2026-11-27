@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DotNumbers.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.attr</a> &gt; <span class="el_source">DotNumbers.java</span></div><h1>DotNumbers.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.attr;
+
+/**
+ * Reading numbers and booleans in DOT attribute values, as Graphviz does.
+ */
+public final class DotNumbers {
+
+	private DotNumbers() {
+	}
+
+	/**
+	 * Reads the number at the start of a value ({@code &quot;1.2 equally&quot;} gives
+	 * 1.2), or returns {@code null} if there is none.
+	 */
+	public static Double parseFirst(String value) {
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (value == null)</span>
+<span class="fc" id="L52">			return null;</span>
+<span class="fc" id="L53">		final String s = value.trim();</span>
+<span class="fc" id="L54">		int end = 0;</span>
+<span class="fc" id="L55">		boolean digit = false;</span>
+<span class="pc bpc" id="L56" title="2 of 6 branches missed.">		if (end &lt; s.length() &amp;&amp; (s.charAt(end) == '-' || s.charAt(end) == '+'))</span>
+<span class="fc" id="L57">			end++;</span>
+<span class="fc bfc" id="L58" title="All 4 branches covered.">		while (end &lt; s.length() &amp;&amp; Character.isDigit(s.charAt(end))) {</span>
+<span class="fc" id="L59">			end++;</span>
+<span class="fc" id="L60">			digit = true;</span>
+		}
+<span class="fc bfc" id="L62" title="All 4 branches covered.">		if (end &lt; s.length() &amp;&amp; s.charAt(end) == '.') {</span>
+<span class="fc" id="L63">			end++;</span>
+<span class="fc bfc" id="L64" title="All 4 branches covered.">			while (end &lt; s.length() &amp;&amp; Character.isDigit(s.charAt(end))) {</span>
+<span class="fc" id="L65">				end++;</span>
+<span class="fc" id="L66">				digit = true;</span>
+			}
+		}
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (digit == false)</span>
+<span class="fc" id="L70">			return null;</span>
+		try {
+<span class="fc" id="L72">			return Double.parseDouble(s.substring(0, end));</span>
+<span class="nc" id="L73">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L74">			return null;</span>
+		}
+	}
+
+	public static double parse(String value, double defaultValue) {
+<span class="fc" id="L79">		final Double result = parseFirst(value);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc" id="L81">			return defaultValue;</span>
+<span class="fc" id="L82">		return result;</span>
+	}
+
+	/**
+	 * Graphviz {@code mapbool}: {@code false}, {@code no} and numbers equal to 0
+	 * are false; {@code true}, {@code yes} and other numbers are true.
+	 *
+	 * @return the value, or {@code defaultValue} for {@code null} or an
+	 *         unrecognized value
+	 */
+	public static boolean parseBoolean(String value, boolean defaultValue) {
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (value == null)</span>
+<span class="fc" id="L94">			return defaultValue;</span>
+<span class="fc" id="L95">		final String s = value.trim();</span>
+<span class="fc bfc" id="L96" title="All 4 branches covered.">		if (s.equalsIgnoreCase(&quot;false&quot;) || s.equalsIgnoreCase(&quot;no&quot;))</span>
+<span class="fc" id="L97">			return false;</span>
+<span class="fc bfc" id="L98" title="All 4 branches covered.">		if (s.equalsIgnoreCase(&quot;true&quot;) || s.equalsIgnoreCase(&quot;yes&quot;))</span>
+<span class="fc" id="L99">			return true;</span>
+<span class="fc" id="L100">		final Double number = parseFirst(s);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (number != null)</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			return number.intValue() != 0;</span>
+<span class="fc" id="L103">		return defaultValue;</span>
+	}
+
+	public static boolean isFalse(String value) {
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		return parseBoolean(value, true) == false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

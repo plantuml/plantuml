@@ -908,13 +908,13 @@ public static void place_graph_label(ST_Agraph_s g) {
 try {
     int c;
 <span class="fc" id="L910">    final ST_pointf p = new ST_pointf(), d = new ST_pointf();</span>
-<span class="pc bpc" id="L911" title="2 of 6 branches missed.">    if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set == 0) {</span>
-<span class="pc bpc" id="L912" title="1 of 2 branches missed.">	if ((GD_label_pos(g) &amp; 1)!=0) {</span>
+<span class="pc bpc" id="L911" title="1 of 6 branches missed.">    if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set == 0) {</span>
+<span class="fc bfc" id="L912" title="All 2 branches covered.">	if ((GD_label_pos(g) &amp; 1)!=0) {</span>
 <span class="fc" id="L913">	    d.___(GD_border(g)[2]);</span>
 <span class="fc" id="L914">	    p.y = GD_bb(g).UR.y - d.y / 2;</span>
 	} else {
-<span class="nc" id="L916">UNSUPPORTED(&quot;1w38no4welthbwa0i10hei16b&quot;); // 	    d = GD_border(g)[0];</span>
-<span class="nc" id="L917">UNSUPPORTED(&quot;2xa4n9ca16xpf1kahaycmkl4r&quot;); // 	    p.y = GD_bb(g).LL.y + d.y / 2;</span>
+<span class="fc" id="L916">	    d.___(GD_border(g)[0]); // 	    d = GD_border(g)[0];</span>
+<span class="fc" id="L917">	    p.y = GD_bb(g).LL.y + d.y / 2; // 	    p.y = GD_bb(g).LL.y + d.y / 2;</span>
 	}
 <span class="pc bpc" id="L919" title="1 of 2 branches missed.">	if ((GD_label_pos(g) &amp; 4)!=0) {</span>
 <span class="nc" id="L920">UNSUPPORTED(&quot;cgv3bcg9c274cdwxi1y0sja3p&quot;); // 	    p.x = GD_bb(g).UR.x - d.x / 2;</span>

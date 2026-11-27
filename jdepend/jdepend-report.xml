@@ -1863,7 +1863,7 @@
                 <TotalClasses>38</TotalClasses>
                 <ConcreteClasses>26</ConcreteClasses>
                 <AbstractClasses>12</AbstractClasses>
-                <Ca>102</Ca>
+                <Ca>103</Ca>
                 <Ce>29</Ce>
                 <A>0.32</A>
                 <I>0.22</I>
@@ -2091,6 +2091,7 @@
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mcp</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
@@ -5637,10 +5638,10 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>80</Ca>
+                <Ca>81</Ca>
                 <Ce>22</Ce>
                 <A>0.18</A>
-                <I>0.22</I>
+                <I>0.21</I>
                 <D>0.6</D>
                 <V>1</V>
             </Stats>
@@ -5764,6 +5765,7 @@
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mcp</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
@@ -6654,16 +6656,16 @@
             </UsedBy>
         </Package>
 
-        <Package name="net.sourceforge.plantuml.directdot">
+        <Package name="net.sourceforge.plantuml.directdoc">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>12</Ce>
+                <Ce>1</Ce>
                 <A>0</A>
-                <I>0.92</I>
-                <D>0.08</D>
+                <I>0.5</I>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -6672,13 +6674,44 @@
 
             <ConcreteClasses>
                 <Class sourceFile="CounterOutputStream.java">
-                    net.sourceforge.plantuml.directdot.CounterOutputStream
+                    net.sourceforge.plantuml.directdoc.CounterOutputStream
                 </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.directdot</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.directdot">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>14</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
                 <Class sourceFile="PSystemDot.java">
                     net.sourceforge.plantuml.directdot.PSystemDot
                 </Class>
                 <Class sourceFile="PSystemDotFactory.java">
                     net.sourceforge.plantuml.directdot.PSystemDotFactory
+                </Class>
+                <Class sourceFile="PSystemDotSelectorFactory.java">
+                    net.sourceforge.plantuml.directdot.PSystemDotSelectorFactory
                 </Class>
             </ConcreteClasses>
 
@@ -6686,19 +6719,20 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
-                <Package>java.util.regex</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.api</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.directdoc</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
+                <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
             </DependsUpon>
 
             <UsedBy>
-                <Package>net.sourceforge.plantuml.error</Package>
             </UsedBy>
         </Package>
 
@@ -7582,7 +7616,7 @@
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
-                <Package>net.sourceforge.plantuml.directdot</Package>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
@@ -9585,7 +9619,7 @@
                 <TotalClasses>21</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
-                <Ca>84</Ca>
+                <Ca>86</Ca>
                 <Ce>19</Ce>
                 <A>0.48</A>
                 <I>0.18</I>
@@ -9743,6 +9777,8 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot.attr</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
@@ -9777,7 +9813,7 @@
                 <TotalClasses>4</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>29</Ca>
+                <Ca>30</Ca>
                 <Ce>4</Ce>
                 <A>0.25</A>
                 <I>0.12</I>
@@ -9829,6 +9865,7 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
+                <Package>net.sourceforge.plantuml.ngdot.attr</Package>
                 <Package>net.sourceforge.plantuml.openpdf</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
@@ -9848,7 +9885,7 @@
                 <TotalClasses>30</TotalClasses>
                 <ConcreteClasses>29</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>94</Ca>
+                <Ca>96</Ca>
                 <Ce>11</Ce>
                 <A>0.03</A>
                 <I>0.1</I>
@@ -10029,6 +10066,8 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot.attr</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
@@ -10140,7 +10179,7 @@
                 <TotalClasses>19</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>67</Ca>
+                <Ca>68</Ca>
                 <Ce>14</Ce>
                 <A>0.21</A>
                 <I>0.17</I>
@@ -10273,6 +10312,7 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
@@ -10593,7 +10633,7 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>81</Ca>
+                <Ca>82</Ca>
                 <Ce>14</Ce>
                 <A>0.36</A>
                 <I>0.15</I>
@@ -10724,6 +10764,7 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
@@ -11500,7 +11541,7 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>91</Ca>
+                <Ca>92</Ca>
                 <Ce>6</Ce>
                 <A>0.18</A>
                 <I>0.06</I>
@@ -11619,6 +11660,7 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
@@ -11656,7 +11698,7 @@
                 <TotalClasses>35</TotalClasses>
                 <ConcreteClasses>29</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>94</Ca>
+                <Ca>96</Ca>
                 <Ce>9</Ce>
                 <A>0.17</A>
                 <I>0.09</I>
@@ -11850,6 +11892,8 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
+                <Package>net.sourceforge.plantuml.ngdot.layout</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
@@ -11890,10 +11934,10 @@
                 <TotalClasses>41</TotalClasses>
                 <ConcreteClasses>38</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>87</Ca>
+                <Ca>89</Ca>
                 <Ce>16</Ce>
                 <A>0.07</A>
-                <I>0.16</I>
+                <I>0.15</I>
                 <D>0.77</D>
                 <V>1</V>
             </Stats>
@@ -12106,6 +12150,8 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
@@ -12644,12 +12690,303 @@
             </UsedBy>
         </Package>
 
+        <Package name="net.sourceforge.plantuml.ngdot">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>6</Ce>
+                <A>0</A>
+                <I>0.67</I>
+                <D>0.33</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="PSystemNgDot.java">
+                    net.sourceforge.plantuml.ngdot.PSystemNgDot
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>net.sourceforge.plantuml</Package>
+                <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
+                <Package>net.sourceforge.plantuml.ngdot.model</Package>
+                <Package>net.sourceforge.plantuml.preproc</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.directdot</Package>
+                <Package>net.sourceforge.plantuml.error</Package>
+                <Package>net.sourceforge.plantuml.teavm.c</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.ngdot.attr">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>6</Ce>
+                <A>0</A>
+                <I>0.86</I>
+                <D>0.14</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DotColors.java">
+                    net.sourceforge.plantuml.ngdot.attr.DotColors
+                </Class>
+                <Class sourceFile="DotNumbers.java">
+                    net.sourceforge.plantuml.ngdot.attr.DotNumbers
+                </Class>
+                <Class sourceFile="DotStyle.java">
+                    net.sourceforge.plantuml.ngdot.attr.DotStyle
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.ngdot.model</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.ngdot.draw">
+            <Stats>
+                <TotalClasses>9</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>13</Ce>
+                <A>0</A>
+                <I>0.93</I>
+                <D>0.07</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="ArrowShape.java">
+                    net.sourceforge.plantuml.ngdot.draw.ArrowShape$Type
+                </Class>
+                <Class sourceFile="DotLabel.java">
+                    net.sourceforge.plantuml.ngdot.draw.DotLabel
+                </Class>
+                <Class sourceFile="DotLabel.java">
+                    net.sourceforge.plantuml.ngdot.draw.DotLabel$Justification
+                </Class>
+                <Class sourceFile="DotRenderer.java">
+                    net.sourceforge.plantuml.ngdot.draw.DotRenderer$1
+                </Class>
+                <Class sourceFile="DotRenderer.java">
+                    net.sourceforge.plantuml.ngdot.draw.DotRenderer$ClusterLook
+                </Class>
+                <Class sourceFile="DotRenderer.java">
+                    net.sourceforge.plantuml.ngdot.draw.DotRenderer$EdgeLook
+                </Class>
+                <Class sourceFile="DotRenderer.java">
+                    net.sourceforge.plantuml.ngdot.draw.DotRenderer$Frame
+                </Class>
+                <Class sourceFile="DotRenderer.java">
+                    net.sourceforge.plantuml.ngdot.draw.DotRenderer$NodeLook
+                </Class>
+                <Class sourceFile="NodeShape.java">
+                    net.sourceforge.plantuml.ngdot.draw.NodeShape
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.ngdot.attr</Package>
+                <Package>net.sourceforge.plantuml.ngdot.layout</Package>
+                <Package>net.sourceforge.plantuml.ngdot.model</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.ngdot.layout">
+            <Stats>
+                <TotalClasses>9</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>4</Ce>
+                <A>0.11</A>
+                <I>0.8</I>
+                <D>0.09</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="NodeContour.java">
+                    net.sourceforge.plantuml.ngdot.layout.NodeContour
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="BezierClip.java">
+                    net.sourceforge.plantuml.ngdot.layout.BezierClip
+                </Class>
+                <Class sourceFile="LayoutInput.java">
+                    net.sourceforge.plantuml.ngdot.layout.LayoutInput
+                </Class>
+                <Class sourceFile="LayoutInput.java">
+                    net.sourceforge.plantuml.ngdot.layout.LayoutInput$Outline
+                </Class>
+                <Class sourceFile="LayoutResult.java">
+                    net.sourceforge.plantuml.ngdot.layout.LayoutResult
+                </Class>
+                <Class sourceFile="LayoutResult.java">
+                    net.sourceforge.plantuml.ngdot.layout.LayoutResult$ClusterBox
+                </Class>
+                <Class sourceFile="LayoutResult.java">
+                    net.sourceforge.plantuml.ngdot.layout.LayoutResult$EdgeRoute
+                </Class>
+                <Class sourceFile="LayoutResult.java">
+                    net.sourceforge.plantuml.ngdot.layout.LayoutResult$NodeBox
+                </Class>
+                <Class sourceFile="Rankdir.java">
+                    net.sourceforge.plantuml.ngdot.layout.Rankdir
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.ngdot.model</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.ngdot.model">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>5</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>0.29</I>
+                <D>0.71</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DotAttributes.java">
+                    net.sourceforge.plantuml.ngdot.model.DotAttributes
+                </Class>
+                <Class sourceFile="DotGraph.java">
+                    net.sourceforge.plantuml.ngdot.model.DotGraph
+                </Class>
+                <Class sourceFile="DotNode.java">
+                    net.sourceforge.plantuml.ngdot.model.DotNode
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
+                <Package>net.sourceforge.plantuml.ngdot.attr</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
+                <Package>net.sourceforge.plantuml.ngdot.layout</Package>
+                <Package>net.sourceforge.plantuml.ngdot.parser</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.ngdot.parser">
+            <Stats>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>3</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DotParser.java">
+                    net.sourceforge.plantuml.ngdot.parser.DotParser$1
+                </Class>
+                <Class sourceFile="DotParser.java">
+                    net.sourceforge.plantuml.ngdot.parser.DotParser$Endpoint
+                </Class>
+                <Class sourceFile="DotSyntaxException.java">
+                    net.sourceforge.plantuml.ngdot.parser.DotSyntaxException
+                </Class>
+                <Class sourceFile="DotToken.java">
+                    net.sourceforge.plantuml.ngdot.parser.DotToken$IdKind
+                </Class>
+                <Class sourceFile="DotTokenType.java">
+                    net.sourceforge.plantuml.ngdot.parser.DotTokenType
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.ngdot.model</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
         <Package name="net.sourceforge.plantuml.nio">
             <Stats>
                 <TotalClasses>6</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>40</Ca>
+                <Ca>41</Ca>
                 <Ce>5</Ce>
                 <A>0.33</A>
                 <I>0.11</I>
@@ -12701,6 +13038,7 @@
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
+                <Package>net.sourceforge.plantuml.directdot</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
@@ -13490,10 +13828,10 @@
                 <TotalClasses>17</TotalClasses>
                 <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>61</Ca>
+                <Ca>62</Ca>
                 <Ce>15</Ce>
                 <A>0.18</A>
-                <I>0.2</I>
+                <I>0.19</I>
                 <D>0.63</D>
                 <V>1</V>
             </Stats>
@@ -13610,6 +13948,7 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
@@ -15844,7 +16183,7 @@
                 <TotalClasses>22</TotalClasses>
                 <ConcreteClasses>17</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>69</Ca>
+                <Ca>70</Ca>
                 <Ce>21</Ce>
                 <A>0.23</A>
                 <I>0.23</I>
@@ -15993,6 +16332,7 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot.draw</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
@@ -17199,7 +17539,7 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>42</Ce>
+                <Ce>43</Ce>
                 <A>0</A>
                 <I>0.93</I>
                 <D>0.07</D>
@@ -17277,6 +17617,7 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
+                <Package>net.sourceforge.plantuml.ngdot</Package>
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
@@ -22467,6 +22808,35 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.mindmap">
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.ngdot">
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.ngdot.attr">
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.ngdot.draw">
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>com.plantuml.ubrex.builder</Package>
+            <Package>com.plantuml.ubrex</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.jaws</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.ngdot.layout">
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>

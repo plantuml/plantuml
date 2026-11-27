@@ -624,23 +624,23 @@ try {
 <span class="fc" id="L624">	    n = agtail(e0);</span>
 <span class="fc" id="L625">	    r = ND_rank(n);</span>
 <span class="fc bfc" id="L626" title="All 2 branches covered.">	    if (r == GD_maxrank(g)) {</span>
-<span class="pc bpc" id="L627" title="1 of 2 branches missed.">		if (r &gt; 0)</span>
-<span class="nc" id="L628">		    sizey = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">		if (r &gt; 0)</span>
+<span class="fc" id="L628">		    sizey = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);</span>
 		else
 <span class="fc" id="L630">		    sizey = (int) ND_ht(n);</span>
 	    }
-<span class="pc bpc" id="L632" title="1 of 2 branches missed.">	    else if (r == GD_minrank(g)) {</span>
+<span class="fc bfc" id="L632" title="All 2 branches covered.">	    else if (r == GD_minrank(g)) {</span>
 <span class="fc" id="L633">		sizey = (int)(ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);</span>
 	    }
 	    else {
-<span class="nc" id="L636">		int upy = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);</span>
-<span class="nc" id="L637">		int dwny = (int) (ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);</span>
-<span class="nc" id="L638">		sizey = Math.min(upy, dwny);</span>
+<span class="fc" id="L636">		int upy = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);</span>
+<span class="fc" id="L637">		int dwny = (int) (ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);</span>
+<span class="fc" id="L638">		sizey = Math.min(upy, dwny);</span>
 	    }
 <span class="fc" id="L640">	    makeSelfEdge(zz, P, edges, ind, cnt, sd.Multisep, sizey/2, zz.sinfo);</span>
 <span class="fc bfc" id="L641" title="All 2 branches covered.">	    for (b = 0; b &lt; cnt; b++) {</span>
 <span class="fc" id="L642">		e = edges.get_(ind+b);</span>
-<span class="pc bpc" id="L643" title="1 of 2 branches missed.">		if (ED_label(e)!=null)</span>
+<span class="fc bfc" id="L643" title="All 2 branches covered.">		if (ED_label(e)!=null)</span>
 <span class="fc" id="L644">		    updateBB(g, ED_label(e));</span>
 	    }
 <span class="fc" id="L646">	}</span>
@@ -770,7 +770,7 @@ try {
 <span class="fc" id="L770">	f2 = hint2;</span>
     else {
 <span class="fc bfc" id="L772" title="All 2 branches covered.">	if (f1 == 1)</span>
-<span class="pc bpc" id="L773" title="1 of 2 branches missed.">	    f2 = (ND_rank(agtail(e)) &lt; ND_rank(aghead(e))) ? 16 : 32;</span>
+<span class="fc bfc" id="L773" title="All 2 branches covered.">	    f2 = (ND_rank(agtail(e)) &lt; ND_rank(aghead(e))) ? 16 : 32;</span>
 <span class="fc bfc" id="L774" title="All 2 branches covered.">	else if (f1 == 2)</span>
 <span class="fc bfc" id="L775" title="All 2 branches covered.">	    f2 = (ND_order(agtail(e)) &lt; ND_order(aghead(e))) ?  16 : 32;</span>
 	else			/* f1 == SELF*EDGE */
@@ -1922,9 +1922,9 @@ try {
 <span class="fc" id="L1922">    clip_and_install(zz, fe, hn, zz.pointfs2, pointn[0], zz.sinfo);</span>
 <span class="fc bfc" id="L1923" title="All 2 branches covered.">    for (j = 1; j &lt; cnt; j++) {</span>
 <span class="fc" id="L1924">	e = edges.get_(ind + j);</span>
-<span class="pc bpc" id="L1925" title="1 of 2 branches missed.">	if ((ED_tree_index(e) &amp; 32)!=0) {</span>
-<span class="nc" id="L1926">	    MAKEFWDEDGE(fwdedge.out, e);</span>
-<span class="nc" id="L1927">	    e = fwdedge.out;</span>
+<span class="fc bfc" id="L1925" title="All 2 branches covered.">	if ((ED_tree_index(e) &amp; 32)!=0) {</span>
+<span class="fc" id="L1926">	    MAKEFWDEDGE(fwdedge.out, e);</span>
+<span class="fc" id="L1927">	    e = fwdedge.out;</span>
 	}
 <span class="fc bfc" id="L1929" title="All 2 branches covered.">	for (i = 1; i &lt; pointn[0] - 1; i++)</span>
 <span class="fc" id="L1930">	    zz.pointfs.get__(i).x = zz.pointfs.get__(i).x + sp.Multisep;</span>

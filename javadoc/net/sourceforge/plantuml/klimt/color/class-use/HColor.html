@@ -215,6 +215,14 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/mindmap-diagram" target="_top">
  Mindmap Diagram</a>.</div>
 </div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.ngdot.attr">net.sourceforge.plantuml.ngdot.attr</a></div>
+<div class="col-last even-row-color">
+<div class="block">Typed reading of DOT attribute values.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.ngdot.draw">net.sourceforge.plantuml.ngdot.draw</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Drawing of a laid out DOT graph with UGraphic.</div>
+</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.nwdiag.core">net.sourceforge.plantuml.nwdiag.core</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.nwdiag.next">net.sourceforge.plantuml.nwdiag.next</a></div>
@@ -2393,6 +2401,54 @@ loadScripts(document, 'script');</script>
  <a href="../../creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;label,
  <a href="../../../mindmap/IdeaShape.html" title="enum class in net.sourceforge.plantuml.mindmap">IdeaShape</a>&nbsp;shape)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot.attr">
+<h2>Uses of <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a> in <a href="../../../ngdot/attr/package-summary.html">net.sourceforge.plantuml.ngdot.attr</a></h2>
+<div class="caption"><span>Methods in <a href="../../../ngdot/attr/package-summary.html">net.sourceforge.plantuml.ngdot.attr</a> that return <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DotColors.</span><code><a href="../../../ngdot/attr/DotColors.html#parse(java.lang.String,net.sourceforge.plantuml.klimt.color.HColorSet)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+ <a href="../HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;set)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Reads a DOT color.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot.draw">
+<h2>Uses of <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a> in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a></h2>
+<div class="caption"><span>Methods in <a href="../../../ngdot/draw/package-summary.html">net.sourceforge.plantuml.ngdot.draw</a> with parameters of type <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ArrowShape.</span><code><a href="../../../ngdot/draw/ArrowShape.html#draw(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.geom.XPoint2D,net.sourceforge.plantuml.klimt.geom.XPoint2D,double)" class="member-name-link">draw</a><wbr>(<a href="../../drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fill,
+ <a href="../../geom/XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&nbsp;tip,
+ <a href="../../geom/XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&nbsp;base,
+ double&nbsp;arrowsize)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Draws the arrow.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NodeShape.</span><code><a href="../../../ngdot/draw/NodeShape.html#draw(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.geom.XDimension2D,int,boolean,boolean)" class="member-name-link">draw</a><wbr>(<a href="../../drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fill,
+ <a href="../../geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;outer,
+ int&nbsp;peripheries,
+ boolean&nbsp;rounded,
+ boolean&nbsp;diagonals)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Draws the node outlines, the top-left corner of the node at the origin of
+ <code>ug</code>, which carries the line color and the stroke.</div>
+</div>
 </div>
 </section>
 </li>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - testAllPumlFiles()[77][24]</title>
+<link href="../../../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../../../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../../../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<a class="breadcrumb" href="../../../index.html">all</a> &gt; 
+<a class="breadcrumb" href="../../index.html">test.vega.VegaTest</a> &gt; 
+<a class="breadcrumb" href="../index.html">testAllPumlFiles()</a> &gt; 
+<a class="breadcrumb" href="index.html">testAllPumlFiles()[77]</a> &gt; 
+<span class="breadcrumb">testAllPumlFiles()[77][24]</span>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="skippedGroup" href="#">Gradle Test Run :test</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Gradle Test Run :test</h2>
+<h1>R07.01-Range_Error1.puml</h1>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="" href="#">summary</a>
+</li>
+<li>
+<a class="" href="#">error output</a>
+</li>
+</ul>
+<div class="tab">
+<h2>summary</h2>
+<div>
+<div class="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">1</div>
+<p>skipped</p>
+</div>
+</td>
+<td>
+<div class="infoBox duration">
+<div class="counter">0.012s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox skipped successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="result-details">
+<h3>Skip details</h3>
+<span class="code">
+<div class="clipboard-copy-btn-container">
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-failure-testAllPumlFiles()[77][24]">Copy</button>
+</div>
+<pre id="root-0-test-failure-testAllPumlFiles()[77][24]">org.opentest4j.TestAbortedException: Known failure (allow-failure: true): src/test/resources/vega/packet/R07.01-Range_Error1.puml - No expected-exception declared in src/test/resources/vega/packet/R07.01-Range_Error1.puml IllegalArgumentException ==&gt; expected: not &lt;null&gt;
+	at test.vega.VegaInputFile.newKnownFailure(VegaInputFile.java:336)
+	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:310)
+	at test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:215)
+Caused by: java.lang.IllegalArgumentException
+	at net.sourceforge.plantuml.klimt.geom.XDimension2D.&lt;init&gt;(XDimension2D.java:50)
+	at net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:272)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:167)
+	at net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:170)
+	at net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:311)
+	at net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:171)
+	at net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:102)
+	at net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)
+	at test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:414)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:479)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Cause 1: java.lang.IllegalArgumentException
+	at net.sourceforge.plantuml.klimt.geom.XDimension2D.&lt;init&gt;(XDimension2D.java:50)
+	at net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:272)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:167)
+	at net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:170)
+	at net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:311)
+	at net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:171)
+	at net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:102)
+	at net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)
+	at test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:414)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:479)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+</pre>
+</span>
+</div>
+</div>
+</div>
+<div class="tab">
+<h2>error output</h2>
+<span class="code">
+<div class="clipboard-copy-btn-container">
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stderr-testAllPumlFiles()[77][24]">Copy</button>
+</div>
+<pre id="root-0-test-stderr-testAllPumlFiles()[77][24]">[Vega] Root cause for src/test/resources/vega/packet/R07.01-Range_Error1.puml:
+java.lang.IllegalArgumentException
+	at net.sourceforge.plantuml.klimt.geom.XDimension2D.&lt;init&gt;(XDimension2D.java:50)
+	at net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:272)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:167)
+	at net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:170)
+	at net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:311)
+	at net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:171)
+	at net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:102)
+	at net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)
+	at test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:414)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:479)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at org.junit.jupiter.api.AssertTimeoutPreemptively.lambda$assertTimeoutPreemptively$1(AssertTimeoutPreemptively.java:49)
+	at org.junit.jupiter.api.timeout.PreemptiveTimeoutUtils.lambda$submitTask$0(PreemptiveTimeoutUtils.java:82)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+</pre>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 27, 2026, 3:12:30 PM</p>
+</div>
+</div>
+</body>
+</html>

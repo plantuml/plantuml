@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NodeShape.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.draw</a> &gt; <span class="el_source">NodeShape.java</span></div><h1>NodeShape.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.draw;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.ngdot.attr.DotNumbers;
+import net.sourceforge.plantuml.ngdot.layout.LayoutInput.Outline;
+import net.sourceforge.plantuml.ngdot.model.DotAttributes;
+
+/**
+ * The {@code shape} of a node: how it is sized around its label and how it
+ * is drawn.
+ * &lt;p&gt;
+ * Smetana only knows boxes and ellipses: a {@link #DIAMOND} is laid out as an
+ * ellipse of the same size, and the edges are clipped on the real outline by
+ * PlantUML (see {@link #hasOwnContour()}).
+ */
+<span class="fc" id="L59">public enum NodeShape {</span>
+
+<span class="fc" id="L61">	BOX(Outline.BOX, false, 0), //</span>
+<span class="fc" id="L62">	ELLIPSE(Outline.ELLIPSE, false, 0), //</span>
+<span class="fc" id="L63">	CIRCLE(Outline.ELLIPSE, true, 0), //</span>
+<span class="fc" id="L64">	DOUBLECIRCLE(Outline.ELLIPSE, true, 0), //</span>
+<span class="fc" id="L65">	POINT(Outline.ELLIPSE, true, 0), //</span>
+<span class="fc" id="L66">	DIAMOND(Outline.ELLIPSE, false, 4), //</span>
+<span class="fc" id="L67">	PLAINTEXT(Outline.BOX, false, 0);</span>
+
+<span class="fc" id="L69">	private static final double SQRT2 = Math.sqrt(2);</span>
+
+	/** Graphviz GAP: the space between two peripheries. */
+	public static final double GAP = 4;
+
+	/** Graphviz DEF_POINT: the default size of a point, in inches. */
+	private static final double DEF_POINT = 0.05;
+
+	private final Outline outline;
+	private final boolean regular;
+	private final int sides;
+
+<span class="fc" id="L81">	private NodeShape(Outline outline, boolean regular, int sides) {</span>
+<span class="fc" id="L82">		this.outline = outline;</span>
+<span class="fc" id="L83">		this.regular = regular;</span>
+<span class="fc" id="L84">		this.sides = sides;</span>
+<span class="fc" id="L85">	}</span>
+
+	/**
+	 * The shape of a node. An unknown name gives {@code null}: the caller falls
+	 * back to {@link #ELLIPSE}, the Graphviz default.
+	 */
+	public static NodeShape fromName(String name) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (name == null)</span>
+<span class="fc" id="L93">			return ELLIPSE;</span>
+<span class="fc" id="L94">		final String s = name.trim().toLowerCase();</span>
+<span class="pc bpc" id="L95" title="1 of 8 branches missed.">		if (s.equals(&quot;box&quot;) || s.equals(&quot;rect&quot;) || s.equals(&quot;rectangle&quot;) || s.equals(&quot;square&quot;))</span>
+<span class="fc" id="L96">			return BOX;</span>
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">		if (s.equals(&quot;ellipse&quot;) || s.equals(&quot;oval&quot;))</span>
+<span class="fc" id="L98">			return ELLIPSE;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (s.equals(&quot;circle&quot;))</span>
+<span class="fc" id="L100">			return CIRCLE;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (s.equals(&quot;doublecircle&quot;))</span>
+<span class="fc" id="L102">			return DOUBLECIRCLE;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (s.equals(&quot;point&quot;))</span>
+<span class="fc" id="L104">			return POINT;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (s.equals(&quot;diamond&quot;))</span>
+<span class="fc" id="L106">			return DIAMOND;</span>
+<span class="pc bpc" id="L107" title="2 of 6 branches missed.">		if (s.equals(&quot;plaintext&quot;) || s.equals(&quot;plain&quot;) || s.equals(&quot;none&quot;))</span>
+<span class="fc" id="L108">			return PLAINTEXT;</span>
+<span class="fc" id="L109">		return null;</span>
+	}
+
+	public Outline getOutline() {
+<span class="fc" id="L113">		return outline;</span>
+	}
+
+	/**
+	 * {@code true} when Smetana does not know the real outline, so that the
+	 * edges must be clipped by PlantUML with {@link #contains}.
+	 */
+	public boolean hasOwnContour() {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		return this == DIAMOND;</span>
+	}
+
+	/**
+	 * Tells whether a point, relative to the center of the node, is inside the
+	 * outline of a node of the given (outer) size.
+	 */
+	public boolean contains(double dx, double dy, XDimension2D size) {
+<span class="fc" id="L129">		final double a = size.getWidth() / 2;</span>
+<span class="fc" id="L130">		final double b = size.getHeight() / 2;</span>
+<span class="pc bpc" id="L131" title="2 of 4 branches missed.">		if (a &lt;= 0 || b &lt;= 0)</span>
+<span class="nc" id="L132">			return false;</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (this == DIAMOND)</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			return Math.abs(dx) / a + Math.abs(dy) / b &lt;= 1;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (outline == Outline.BOX)</span>
+<span class="nc bnc" id="L136" title="All 4 branches missed.">			return Math.abs(dx) &lt;= a &amp;&amp; Math.abs(dy) &lt;= b;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		return (dx * dx) / (a * a) + (dy * dy) / (b * b) &lt;= 1;</span>
+	}
+
+	public boolean hasLabel() {
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		return this != POINT;</span>
+	}
+
+	/**
+	 * The number of outlines drawn by default: 2 for a double circle, 0 for
+	 * plain text.
+	 */
+	public int defaultPeripheries() {
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (this == DOUBLECIRCLE)</span>
+<span class="fc" id="L150">			return 2;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (this == PLAINTEXT)</span>
+<span class="fc" id="L152">			return 0;</span>
+<span class="fc" id="L153">		return 1;</span>
+	}
+
+	/**
+	 * The size of the inner outline of the node, following Graphviz
+	 * {@code poly_init}: the label is padded by its margin, the shapes other
+	 * than boxes grow so that the label fits inside them, then the result is at
+	 * least {@code width x height} (0.75 x 0.5 inch by default), or exactly that
+	 * with {@code fixedsize=true}. The extra peripheries are not included.
+	 */
+	public XDimension2D computeSize(XDimension2D label, DotAttributes attributes, boolean squareByName) {
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (this == POINT)</span>
+<span class="fc" id="L165">			return pointSize(attributes);</span>
+
+<span class="fc" id="L167">		final double minWidth = DotNumbers.parse(attributes.getString(&quot;width&quot;), 0.75) * 72;</span>
+<span class="fc" id="L168">		final double minHeight = DotNumbers.parse(attributes.getString(&quot;height&quot;), 0.5) * 72;</span>
+<span class="fc" id="L169">		final String fixedsize = attributes.getString(&quot;fixedsize&quot;);</span>
+<span class="fc bfc" id="L170" title="All 4 branches covered.">		final boolean square = regular || squareByName</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">				|| DotNumbers.parseBoolean(attributes.getString(&quot;regular&quot;), false);</span>
+
+<span class="pc bpc" id="L173" title="1 of 4 branches missed.">		if (fixedsize != null &amp;&amp; DotNumbers.parseBoolean(fixedsize, false)) {</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			if (square) {</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">				final double side = attributes.contains(&quot;width&quot;) ? minWidth</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">						: attributes.contains(&quot;height&quot;) ? minHeight : Math.min(minWidth, minHeight);</span>
+<span class="nc" id="L177">				return new XDimension2D(side, side);</span>
+			}
+<span class="fc" id="L179">			return new XDimension2D(minWidth, minHeight);</span>
+		}
+
+<span class="fc" id="L182">		double width = label.getWidth() + marginX(attributes);</span>
+<span class="fc" id="L183">		double height = label.getHeight() + marginY(attributes);</span>
+
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (outline == Outline.ELLIPSE) {</span>
+<span class="fc" id="L186">			final double temp = height * SQRT2;</span>
+<span class="fc bfc" id="L187" title="All 4 branches covered.">			if (minHeight &gt; temp &amp;&amp; regular == false) {</span>
+				// There is height to spare: only stretch the width
+<span class="fc" id="L189">				width *= Math.sqrt(1. / (1. - (height / minHeight) * (height / minHeight)));</span>
+			} else {
+<span class="fc" id="L191">				width *= SQRT2;</span>
+<span class="fc" id="L192">				height = temp;</span>
+			}
+<span class="fc bfc" id="L194" title="All 2 branches covered.">			if (sides &gt; 2) {</span>
+<span class="fc" id="L195">				final double cos = Math.cos(Math.PI / sides);</span>
+<span class="fc" id="L196">				width /= cos;</span>
+<span class="fc" id="L197">				height /= cos;</span>
+			}
+		}
+
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (square) {</span>
+<span class="fc" id="L202">			double min = Math.min(minWidth, minHeight);</span>
+<span class="pc bpc" id="L203" title="3 of 4 branches missed.">			if (attributes.contains(&quot;width&quot;) &amp;&amp; attributes.contains(&quot;height&quot;) == false)</span>
+<span class="nc" id="L204">				min = minWidth;</span>
+<span class="pc bpc" id="L205" title="3 of 4 branches missed.">			else if (attributes.contains(&quot;height&quot;) &amp;&amp; attributes.contains(&quot;width&quot;) == false)</span>
+<span class="nc" id="L206">				min = minHeight;</span>
+<span class="fc" id="L207">			final double side = Math.max(min, Math.max(width, height));</span>
+<span class="fc" id="L208">			return new XDimension2D(side, side);</span>
+		}
+<span class="fc" id="L210">		return new XDimension2D(Math.max(minWidth, width), Math.max(minHeight, height));</span>
+	}
+
+	private static XDimension2D pointSize(DotAttributes attributes) {
+<span class="fc" id="L214">		final Double width = DotNumbers.parseFirst(attributes.getString(&quot;width&quot;));</span>
+<span class="fc" id="L215">		final Double height = DotNumbers.parseFirst(attributes.getString(&quot;height&quot;));</span>
+<span class="fc" id="L216">		double size = DEF_POINT;</span>
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">		if (width != null &amp;&amp; height != null)</span>
+<span class="nc" id="L218">			size = Math.min(width, height);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		else if (width != null)</span>
+<span class="fc" id="L220">			size = width;</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		else if (height != null)</span>
+<span class="nc" id="L222">			size = height;</span>
+<span class="fc" id="L223">		size = Math.max(size, 0.0003) * 72;</span>
+<span class="fc" id="L224">		return new XDimension2D(size, size);</span>
+	}
+
+	// Graphviz default margin: 0.11 x 0.055 inch on each side, i.e. 16 x 8 points
+	// in total. A &quot;margin&quot; attribute gives the margin of each side, in inches.
+	private static double marginX(DotAttributes attributes) {
+<span class="fc" id="L230">		final String margin = attributes.getString(&quot;margin&quot;);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (margin == null)</span>
+<span class="fc" id="L232">			return 16;</span>
+<span class="nc" id="L233">		return 2 * 72 * DotNumbers.parse(margin, 0.11);</span>
+	}
+
+	private static double marginY(DotAttributes attributes) {
+<span class="fc" id="L237">		final String margin = attributes.getString(&quot;margin&quot;);</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (margin == null)</span>
+<span class="fc" id="L239">			return 8;</span>
+<span class="nc" id="L240">		final int comma = margin.indexOf(',');</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (comma == -1)</span>
+<span class="nc" id="L242">			return 2 * 72 * DotNumbers.parse(margin, 0.055);</span>
+<span class="nc" id="L243">		return 2 * 72 * DotNumbers.parse(margin.substring(comma + 1), 0.055);</span>
+	}
+
+	/**
+	 * The size of the node once its extra peripheries are added.
+	 */
+	public static XDimension2D withPeripheries(XDimension2D inner, int peripheries) {
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (peripheries &lt;= 1)</span>
+<span class="fc" id="L251">			return inner;</span>
+<span class="fc" id="L252">		final double more = 2 * GAP * (peripheries - 1);</span>
+<span class="fc" id="L253">		return new XDimension2D(inner.getWidth() + more, inner.getHeight() + more);</span>
+	}
+
+	/**
+	 * Draws the node outlines, the top-left corner of the node at the origin of
+	 * {@code ug}, which carries the line color and the stroke. Only the inner
+	 * outline is filled; with no periphery, only the fill is drawn.
+	 *
+	 * @param fill  the fill color, or {@code null} for none
+	 * @param outer the size of the node, peripheries included
+	 */
+	public void draw(UGraphic ug, HColor fill, XDimension2D outer, int peripheries, boolean rounded,
+			boolean diagonals) {
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		final HColor background = fill == null ? HColors.none() : fill;</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		if (peripheries &lt;= 0) {</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">			if (fill != null)</span>
+<span class="fc" id="L269">				drawOne(ug.apply(HColors.none()).apply(background.bg()), outer, 0, rounded, false);</span>
+<span class="fc" id="L270">			return;</span>
+		}
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		for (int i = peripheries - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L273">			final double offset = GAP * (peripheries - 1 - i);</span>
+<span class="fc" id="L274">			final XDimension2D size = new XDimension2D(outer.getWidth() - 2 * offset,</span>
+<span class="fc" id="L275">					outer.getHeight() - 2 * offset);</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">			final HColor bg = i == 0 ? background : HColors.none();</span>
+<span class="fc" id="L277">			drawOne(ug.apply(bg.bg()).apply(new UTranslate(offset, offset)), size, i, rounded, diagonals);</span>
+		}
+<span class="fc" id="L279">	}</span>
+
+	private void drawOne(UGraphic ug, XDimension2D size, int index, boolean rounded, boolean diagonals) {
+<span class="fc" id="L282">		final double w = size.getWidth();</span>
+<span class="fc" id="L283">		final double h = size.getHeight();</span>
+<span class="fc bfc" id="L284" title="All 3 branches covered.">		switch (this) {</span>
+		case BOX:
+		case PLAINTEXT:
+<span class="fc bfc" id="L287" title="All 2 branches covered.">			if (rounded)</span>
+<span class="fc" id="L288">				ug.draw(URectangle.build(size).rounded(Math.min(24, Math.min(w, h))));</span>
+			else
+<span class="fc" id="L290">				ug.draw(URectangle.build(size));</span>
+<span class="pc bpc" id="L291" title="1 of 4 branches missed.">			if (diagonals &amp;&amp; index == 0)</span>
+<span class="fc" id="L292">				drawDiagonals(ug, w, h);</span>
+			break;
+		case DIAMOND:
+<span class="fc" id="L295">			final UPolygon polygon = new UPolygon();</span>
+<span class="fc" id="L296">			polygon.addPoint(w / 2, 0);</span>
+<span class="fc" id="L297">			polygon.addPoint(w, h / 2);</span>
+<span class="fc" id="L298">			polygon.addPoint(w / 2, h);</span>
+<span class="fc" id="L299">			polygon.addPoint(0, h / 2);</span>
+<span class="fc" id="L300">			ug.draw(polygon);</span>
+<span class="fc" id="L301">			break;</span>
+		default:
+<span class="fc" id="L303">			ug.draw(UEllipse.build(w, h));</span>
+			break;
+		}
+<span class="fc" id="L306">	}</span>
+
+	/** Small lines cutting the corners, as Graphviz {@code diagonals}. */
+	private static void drawDiagonals(UGraphic ug, double w, double h) {
+<span class="fc" id="L310">		final double d = Math.min(12, Math.min(w, h) / 4);</span>
+<span class="fc" id="L311">		ug.apply(new UTranslate(0, d)).draw(new ULine(d, -d));</span>
+<span class="fc" id="L312">		ug.apply(new UTranslate(w - d, 0)).draw(new ULine(d, d));</span>
+<span class="fc" id="L313">		ug.apply(new UTranslate(w, h - d)).draw(new ULine(-d, d));</span>
+<span class="fc" id="L314">		ug.apply(new UTranslate(d, h)).draw(new ULine(-d, -d));</span>
+<span class="fc" id="L315">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

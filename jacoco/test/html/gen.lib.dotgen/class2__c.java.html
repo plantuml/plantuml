@@ -451,7 +451,7 @@ try {
 	    }
 	    
 	    /* forward edges */
-<span class="pc bpc" id="L454" title="1 of 2 branches missed.">	    if (ND_rank(aghead(e)) &gt; ND_rank(agtail(e))) {</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">	    if (ND_rank(aghead(e)) &gt; ND_rank(agtail(e))) {</span>
 <span class="fc" id="L455">		make_chain(g, agtail(e), aghead(e), e);</span>
 <span class="fc" id="L456">		prev = e;</span>
 <span class="fc" id="L457">		continue;</span>
@@ -460,24 +460,24 @@ try {
 	    else {
 		/*other_edge(e); */
 		/* avoid when opp==e in undirected graph */
-<span class="nc bnc" id="L463" title="All 4 branches missed.">		if ((opp = agfindedge(zz, g, aghead(e), agtail(e)))!=null &amp;&amp; (aghead(opp) != aghead(e))) {</span>
+<span class="pc bpc" id="L463" title="1 of 4 branches missed.">		if ((opp = agfindedge(zz, g, aghead(e), agtail(e)))!=null &amp;&amp; (aghead(opp) != aghead(e))) {</span>
 		    /* shadows a forward edge */
-<span class="nc bnc" id="L465" title="All 2 branches missed.">		    if (ED_to_virt(opp) == null)</span>
+<span class="pc bpc" id="L465" title="1 of 2 branches missed.">		    if (ED_to_virt(opp) == null)</span>
 <span class="nc" id="L466">			make_chain(g, agtail(opp), aghead(opp), opp);</span>
-<span class="nc bnc" id="L467" title="All 4 branches missed.">		    if ((ED_label(e) == null) &amp;&amp; (ED_label(opp) == null)</span>
-<span class="nc bnc" id="L468" title="All 2 branches missed.">			&amp;&amp; ports_eq(e, opp)) {</span>
-<span class="nc bnc" id="L469" title="All 2 branches missed.">			if (zz.Concentrate) {</span>
+<span class="pc bpc" id="L467" title="2 of 4 branches missed.">		    if ((ED_label(e) == null) &amp;&amp; (ED_label(opp) == null)</span>
+<span class="pc bpc" id="L468" title="1 of 2 branches missed.">			&amp;&amp; ports_eq(e, opp)) {</span>
+<span class="pc bpc" id="L469" title="1 of 2 branches missed.">			if (zz.Concentrate) {</span>
 <span class="nc" id="L470">			    ED_edge_type(e, IGNORED);</span>
 <span class="nc" id="L471">			    ED_conc_opp_flag(opp, true);</span>
 			} else {	/* see above.  this is getting out of hand */
-<span class="nc" id="L473">			    other_edge(e);</span>
-<span class="nc" id="L474">			    merge_chain(g, e, ED_to_virt(opp), true);</span>
+<span class="fc" id="L473">			    other_edge(e);</span>
+<span class="fc" id="L474">			    merge_chain(g, e, ED_to_virt(opp), true);</span>
 			}
-<span class="nc" id="L476">			continue;</span>
+<span class="fc" id="L476">			continue;</span>
 		    }
 		}
-<span class="nc" id="L479">		make_chain(g, aghead(e), agtail(e), e);</span>
-<span class="nc" id="L480">		prev = e;</span>
+<span class="fc" id="L479">		make_chain(g, aghead(e), agtail(e), e);</span>
+<span class="fc" id="L480">		prev = e;</span>
 	    }
 	}
 

@@ -374,7 +374,7 @@ try {
 <span class="fc" id="L374">	shape_clip0(zz, inside_context, tn, ps.plus_(start[0]), true);</span>
     } else
 <span class="fc" id="L376">	start[0] = 0;</span>
-<span class="pc bpc" id="L377" title="3 of 6 branches missed.">    if(clipHead &amp;&amp; ND_shape(hn)!=null &amp;&amp; ND_shape(hn).fns.insidefn!=null) {</span>
+<span class="pc bpc" id="L377" title="2 of 6 branches missed.">    if(clipHead &amp;&amp; ND_shape(hn)!=null &amp;&amp; ND_shape(hn).fns.insidefn!=null) {</span>
 <span class="fc" id="L378">	inside_context.s_n = hn;</span>
 <span class="fc" id="L379">	inside_context.s_bp = hbox;</span>
 <span class="pc bfc" id="L380" title="All 2 branches covered.">	for (end[0] = pn - 4; end[0] &gt; 0; end[0] -= 3) {</span>
@@ -385,7 +385,7 @@ try {
 	}
 <span class="fc" id="L386">	shape_clip0(zz, inside_context, hn, ps.plus_(end[0]), false);</span>
     } else
-<span class="nc" id="L388">	end[0] = pn - 4;</span>
+<span class="fc" id="L388">	end[0] = pn - 4;</span>
 <span class="pc bfc" id="L389" title="All 2 branches covered.">    for (; start[0] &lt; pn - 4; start[0] += 3) </span>
 <span class="pc bpc" id="L390" title="1 of 2 branches missed.">	if (!APPROXEQPT(ps.get__(start[0]), ps.get__(start[0] + 3), MILLIPOINT))</span>
 <span class="fc" id="L391">	    break;</span>
@@ -1222,10 +1222,10 @@ try {
 <span class="fc" id="L1222">        points.get__(pointn++).___(pointfof(np.x + dx, hp.y - dy));</span>
 <span class="fc" id="L1223">        points.get__(pointn++).___(pointfof(hp.x + hx / 3, hp.y - dy));</span>
 <span class="fc" id="L1224">        points.get__(pointn++).___(hp);</span>
-<span class="pc bpc" id="L1225" title="1 of 2 branches missed.">        if (ED_label(e)!=null) {</span>
-<span class="pc bpc" id="L1226" title="1 of 2 branches missed.">	    if (GD_flip(agraphof(agtail(e)))) {</span>
-<span class="nc" id="L1227">		width = ED_label(e).dimen.y;</span>
-<span class="nc" id="L1228">		height = ED_label(e).dimen.x;</span>
+<span class="fc bfc" id="L1225" title="All 2 branches covered.">        if (ED_label(e)!=null) {</span>
+<span class="fc bfc" id="L1226" title="All 2 branches covered.">	    if (GD_flip(agraphof(agtail(e)))) {</span>
+<span class="fc" id="L1227">		width = ED_label(e).dimen.y;</span>
+<span class="fc" id="L1228">		height = ED_label(e).dimen.x;</span>
 	    } else {
 <span class="fc" id="L1230">		width = ED_label(e).dimen.x;</span>
 <span class="fc" id="L1231">		height = ED_label(e).dimen.y;</span>
@@ -1233,7 +1233,7 @@ try {
 <span class="fc" id="L1233">	    ED_label(e).pos.x = ND_coord(n).x + dx + width / 2.0;</span>
 <span class="fc" id="L1234">	    ED_label(e).pos.y = ND_coord(n).y;</span>
 <span class="fc" id="L1235">	    ED_label(e).set= false ? 0 : 1;</span>
-<span class="pc bpc" id="L1236" title="1 of 2 branches missed.">	    if (width &gt; stepx)</span>
+<span class="fc bfc" id="L1236" title="All 2 branches covered.">	    if (width &gt; stepx)</span>
 <span class="fc" id="L1237">		dx += width - stepx;</span>
         }
 	if (false) SMETANA_TRACE(&quot;splines__c&quot;, &quot;selfRight: iter=&quot; + i + &quot; edgeIdentityHash=&quot; + System.identityHashCode(e)
@@ -1349,8 +1349,8 @@ try {
 <span class="nc bnc" id="L1349" title="All 2 branches missed.">          ((ED_tail_port(e).side &amp; ((1&lt;&lt;2)|(1&lt;&lt;0))) == 0))</span>
 		  )) {
 <span class="fc" id="L1351">	sw = 18;</span>
-<span class="pc bpc" id="L1352" title="1 of 2 branches missed.">	if (l!=null) {</span>
-<span class="pc bpc" id="L1353" title="1 of 2 branches missed.">	    label_width = GD_flip(agraphof(aghead(e))) ? l.dimen.y : l.dimen.x;</span>
+<span class="fc bfc" id="L1352" title="All 2 branches covered.">	if (l!=null) {</span>
+<span class="fc bfc" id="L1353" title="All 2 branches covered.">	    label_width = GD_flip(agraphof(aghead(e))) ? l.dimen.y : l.dimen.x;</span>
 <span class="fc" id="L1354">	    sw += label_width;</span>
     }
     }

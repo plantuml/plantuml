@@ -231,8 +231,8 @@ try {
 <span class="fc bfc" id="L231" title="All 2 branches covered.">    if (attr == null)</span>
 <span class="fc" id="L232">	return def;</span>
 <span class="fc" id="L233">    p = agxget(obj,attr);</span>
-<span class="pc bpc" id="L234" title="2 of 4 branches missed.">    if ((p) == null || p.length()==0)</span>
-<span class="nc" id="L235">	return def;</span>
+<span class="pc bpc" id="L234" title="1 of 4 branches missed.">    if ((p) == null || p.length()==0)</span>
+<span class="fc" id="L235">	return def;</span>
 <span class="fc" id="L236">    rv = strtol (p, endp, 10);</span>
 <span class="pc bpc" id="L237" title="1 of 2 branches missed.">    if (EQ_CSTRING(p, endp[0])) return def;  /* invalid int format */</span>
 <span class="pc bpc" id="L238" title="1 of 2 branches missed.">    if (rv &lt; low) return low;</span>
@@ -514,12 +514,12 @@ public static boolean mapBool(CString p, boolean dflt) {
 try {
 <span class="pc bpc" id="L515" title="1 of 4 branches missed.">    if ((p) == null || (p.charAt(0) == '\0'))</span>
 <span class="fc" id="L516">	return dflt;</span>
-<span class="pc bpc" id="L517" title="1 of 2 branches missed.">    if (strcasecmp(p, new CString(&quot;false&quot;)) == 0)</span>
+<span class="fc bfc" id="L517" title="All 2 branches covered.">    if (strcasecmp(p, new CString(&quot;false&quot;)) == 0)</span>
 <span class="fc" id="L518">	return false;</span>
-<span class="nc bnc" id="L519" title="All 2 branches missed.">    if (strcasecmp(p, new CString(&quot;no&quot;)) == 0)</span>
+<span class="pc bpc" id="L519" title="1 of 2 branches missed.">    if (strcasecmp(p, new CString(&quot;no&quot;)) == 0)</span>
 <span class="nc" id="L520">	return false;</span>
-<span class="nc bnc" id="L521" title="All 2 branches missed.">    if (strcasecmp(p, new CString(&quot;true&quot;)) == 0)</span>
-<span class="nc" id="L522">	return (true);</span>
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">    if (strcasecmp(p, new CString(&quot;true&quot;)) == 0)</span>
+<span class="fc" id="L522">	return (true);</span>
 <span class="nc bnc" id="L523" title="All 2 branches missed.">    if (strcasecmp(p, new CString(&quot;yes&quot;)) == 0)</span>
 <span class="nc" id="L524">	return (true);</span>
 <span class="nc bnc" id="L525" title="All 2 branches missed.">    if (isdigit(p.charAt(0)))</span>
@@ -704,10 +704,10 @@ try {
     CString str;
 <span class="fc" id="L705">    boolean		rv = false;</span>
     
-<span class="pc bpc" id="L707" title="1 of 2 branches missed.">    if (sym!=null) {	/* mapbool isn't a good fit, because we want &quot;&quot; to mean true */</span>
-<span class="nc" id="L708">	str = agxget(e,sym);</span>
-<span class="nc bnc" id="L709" title="All 6 branches missed.">	if (str!=null &amp;&amp; str.charAt(0)!='\0') rv = !mapbool(str);</span>
-<span class="nc" id="L710">	else rv = false;</span>
+<span class="fc bfc" id="L707" title="All 2 branches covered.">    if (sym!=null) {	/* mapbool isn't a good fit, because we want &quot;&quot; to mean true */</span>
+<span class="fc" id="L708">	str = agxget(e,sym);</span>
+<span class="pc bpc" id="L709" title="2 of 6 branches missed.">	if (str!=null &amp;&amp; str.charAt(0)!='\0') rv = !mapbool(str);</span>
+<span class="fc" id="L710">	else rv = false;</span>
     }
 <span class="fc" id="L712">    return rv;</span>
 } finally {
@@ -806,8 +806,8 @@ try {
 <span class="pc bpc" id="L806" title="1 of 4 branches missed.">    if (str!=null &amp;&amp; str.charAt(0)!='\0')</span>
 <span class="fc" id="L807">    ND_has_port(agtail(e), true);</span>
 <span class="fc" id="L808">    ED_tail_port(e, chkPort (zz, ND_shape(agtail(e)).fns.portfn, agtail(e), str));</span>
-<span class="pc bpc" id="L809" title="1 of 2 branches missed.">    if (noClip(e, zz.E_tailclip))</span>
-<span class="nc" id="L810">    UNSUPPORTED(&quot;cg4z67u0dm6h9nrcx8kkalnlt&quot;); // 	ED_tail_port(e).clip = FALSE;</span>
+<span class="fc bfc" id="L809" title="All 2 branches covered.">    if (noClip(e, zz.E_tailclip))</span>
+<span class="fc" id="L810">    ED_tail_port(e).clip = false; // 	ED_tail_port(e).clip = FALSE;</span>
 <span class="fc" id="L811">    str = agget(zz, e, HEAD_ID);</span>
     
     /* libgraph always defines tailport/headport; libcgraph doesn't */
@@ -815,8 +815,8 @@ try {
 <span class="pc bpc" id="L815" title="2 of 4 branches missed.">    if (str!=null &amp;&amp; str.charAt(0)!='\0')</span>
 <span class="nc" id="L816">    ND_has_port(aghead(e), true);</span>
 <span class="fc" id="L817">    ED_head_port(e, chkPort(zz, ND_shape(aghead(e)).fns.portfn, aghead(e), str));</span>
-<span class="pc bpc" id="L818" title="1 of 2 branches missed.">    if (noClip(e, zz.E_headclip))</span>
-<span class="nc" id="L819">    UNSUPPORTED(&quot;ayqscz30ekhcje94wh4ib1hcu&quot;); // 	ED_head_port(e).clip = FALSE;</span>
+<span class="fc bfc" id="L818" title="All 2 branches covered.">    if (noClip(e, zz.E_headclip))</span>
+<span class="fc" id="L819">    ED_head_port(e).clip = false; // 	ED_head_port(e).clip = FALSE;</span>
 <span class="fc" id="L820">    return r;</span>
 } finally {
 <span class="fc" id="L822">LEAVING(&quot;3aqh64lxwv4da2snfe7fvr45b&quot;,&quot;common_init_edge&quot;);</span>

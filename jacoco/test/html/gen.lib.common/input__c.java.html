@@ -454,8 +454,8 @@ try {
 	/* set label position */
 <span class="fc" id="L455">	pos = agget(zz, sg, new CString(&quot;labelloc&quot;));</span>
 <span class="pc bpc" id="L456" title="1 of 2 branches missed.">	if ((sg != agroot(sg))) {</span>
-<span class="pc bpc" id="L457" title="3 of 4 branches missed.">	    if (pos!=null &amp;&amp; (pos.charAt(0) == 'b'))</span>
-<span class="nc" id="L458">		pos_flag = LABEL_AT_BOTTOM;</span>
+<span class="fc bfc" id="L457" title="All 4 branches covered.">	    if (pos!=null &amp;&amp; (pos.charAt(0) == 'b'))</span>
+<span class="fc" id="L458">		pos_flag = LABEL_AT_BOTTOM;</span>
 	    else
 <span class="fc" id="L460">		pos_flag = LABEL_AT_TOP;</span>
 	} else {
@@ -484,10 +484,10 @@ try {
 <span class="fc" id="L484">	dimen.___(GD_label(sg).dimen);</span>
 <span class="fc" id="L485">	PAD(dimen);</span>
 <span class="fc bfc" id="L486" title="All 2 branches covered.">	if (!GD_flip(agroot(sg))) {</span>
-<span class="pc bpc" id="L487" title="1 of 2 branches missed.">	    if ((GD_label_pos(sg) &amp; LABEL_AT_TOP)!=0)</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">	    if ((GD_label_pos(sg) &amp; LABEL_AT_TOP)!=0)</span>
 <span class="fc" id="L488">		pos_ix = TOP_IX;</span>
 	    else
-<span class="nc" id="L490">		pos_ix = BOTTOM_IX;</span>
+<span class="fc" id="L490">		pos_ix = BOTTOM_IX;</span>
 <span class="fc" id="L491">	    GD_border(sg)[pos_ix].___(dimen);</span>
 	} else {
 	    /* when rotated, the labels will be restored to TOP or BOTTOM  */

@@ -445,24 +445,24 @@ try {
 <span class="fc" id="L445">    int id[] = new int[1];</span>
     int have_id;
 <span class="fc" id="L447">    have_id = agmapnametoid(zz, g, AGEDGE, name, id, false);</span>
-<span class="pc bpc" id="L448" title="4 of 8 branches missed.">    if (have_id!=0 || ((name == null) &amp;&amp; ((!cflag) || agisstrict(g)))) {</span>
+<span class="pc bpc" id="L448" title="3 of 8 branches missed.">    if (have_id!=0 || ((name == null) &amp;&amp; ((!cflag) || agisstrict(g)))) {</span>
 	/* probe for pre-existing edge */
-<span class="nc" id="L450">	final ST_Agtag_s key = new ST_Agtag_s();</span>
-<span class="nc" id="L451">	key.___(zz.Tag);</span>
-<span class="nc bnc" id="L452" title="All 2 branches missed.">	if (have_id!=0) {</span>
+<span class="fc" id="L450">	final ST_Agtag_s key = new ST_Agtag_s();</span>
+<span class="fc" id="L451">	key.___(zz.Tag);</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">	if (have_id!=0) {</span>
 <span class="nc" id="L453">	    key.id = id[0];</span>
 <span class="nc" id="L454">	    key.objtype = AGEDGE;</span>
 	} else {
-<span class="nc" id="L456">	    key.id = 0;</span>
-<span class="nc" id="L457">	    key.objtype = 0;</span>
+<span class="fc" id="L456">	    key.id = 0;</span>
+<span class="fc" id="L457">	    key.objtype = 0;</span>
 	}
 	/* might already exist locally */
-<span class="nc" id="L460">	e = agfindedge_by_key(zz, g, t, h, key);</span>
-<span class="nc bnc" id="L461" title="All 4 branches missed.">	if ((e == null &amp;&amp; agisundirected(g)))</span>
+<span class="fc" id="L460">	e = agfindedge_by_key(zz, g, t, h, key);</span>
+<span class="pc bpc" id="L461" title="1 of 4 branches missed.">	if ((e == null &amp;&amp; agisundirected(g)))</span>
 <span class="nc" id="L462">	    e = agfindedge_by_key(zz, g, h, t, key);</span>
-<span class="nc bnc" id="L463" title="All 2 branches missed.">	if (e!=null)</span>
-<span class="nc" id="L464">	    return e;</span>
-<span class="nc bnc" id="L465" title="All 2 branches missed.">	if (cflag) {</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">	if (e!=null)</span>
+<span class="fc" id="L464">	    return e;</span>
+<span class="pc bpc" id="L465" title="1 of 2 branches missed.">	if (cflag) {</span>
 <span class="nc" id="L466">	    e = agfindedge_by_key(zz, agroot(g), t, h, key);</span>
 <span class="nc bnc" id="L467" title="All 4 branches missed.">	    if ((e == null) &amp;&amp; agisundirected(g))</span>
 <span class="nc" id="L468">		e = agfindedge_by_key(zz, agroot(g), h, t, key);</span>
@@ -472,13 +472,13 @@ try {
 	    }
  	}
     }
-<span class="pc bpc" id="L475" title="2 of 4 branches missed.">    if (cflag &amp;&amp; ok_to_make_edge(zz, g, t, h)</span>
+<span class="pc bpc" id="L475" title="1 of 4 branches missed.">    if (cflag &amp;&amp; ok_to_make_edge(zz, g, t, h)</span>
 <span class="pc bpc" id="L476" title="1 of 2 branches missed.">	&amp;&amp; (agmapnametoid(zz, g, AGEDGE, name, id, (true)))!=0) { /* reserve id */</span>
 <span class="fc" id="L477">	e = newedge(zz, g, t, h, id[0]);</span>
 <span class="fc" id="L478">	agregister(zz, g, AGEDGE, e); /* register new object in external namespace */</span>
     }
     else
-<span class="nc" id="L481">	e = null;</span>
+<span class="fc" id="L481">	e = null;</span>
 <span class="fc" id="L482">    return e;</span>
 } finally {
 <span class="fc" id="L484">LEAVING(&quot;4361pvzr3ozft2ov0fgx6t8bo&quot;,&quot;agedge&quot;);</span>
@@ -539,8 +539,8 @@ try {
 <span class="fc" id="L539">    e1 = (ST_Agedge_s) arg_e1;</span>
 <span class="fc" id="L540">    v = e0.node.tag.id - e1.node.tag.id;</span>
 <span class="fc bfc" id="L541" title="All 2 branches covered.">    if (v == 0) {		/* same node */</span>
-<span class="pc bpc" id="L542" title="2 of 4 branches missed.">	if ((e0.tag.objtype == 0) || (e1.tag.objtype == 0))</span>
-<span class="nc" id="L543">	    v = 0;</span>
+<span class="pc bpc" id="L542" title="1 of 4 branches missed.">	if ((e0.tag.objtype == 0) || (e1.tag.objtype == 0))</span>
+<span class="fc" id="L543">	    v = 0;</span>
 	else
 <span class="fc" id="L545">	    v = e0.tag.id - e1.tag.id;</span>
     }

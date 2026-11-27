@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DotSubgraph.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.model</a> &gt; <span class="el_source">DotSubgraph.java</span></div><h1>DotSubgraph.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.model;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+/**
+ * A subgraph of a DOT graph, or the root graph itself.
+ * &lt;p&gt;
+ * Three sets of attributes live here, following Graphviz (cgraph):
+ * &lt;ul&gt;
+ * &lt;li&gt;the graph attributes of this subgraph ({@code graph [...]} or
+ * {@code name=value} statements). A new subgraph starts with a copy of the
+ * current graph attributes of its parent: this is why a {@code label} set at
+ * the top of a graph shows up on every cluster defined after it;&lt;/li&gt;
+ * &lt;li&gt;the node defaults and edge defaults written in this subgraph
+ * ({@code node [...]}, {@code edge [...]}). They are a view over the
+ * defaults of the parent: a lookup not found here goes up the chain, and it
+ * is done when a node or edge is created.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * Nodes and edges are listed in their global creation order, as cgraph
+ * iterates them, whatever the order in which they entered this subgraph.
+ */
+public final class DotSubgraph {
+
+	private final String id;
+	private final boolean anonymous;
+	private final DotSubgraph parent;
+<span class="fc" id="L66">	private final List&lt;DotSubgraph&gt; children = new ArrayList&lt;DotSubgraph&gt;();</span>
+
+	private final DotAttributes attributes;
+<span class="fc" id="L69">	private final DotAttributes nodeDefaults = new DotAttributes();</span>
+<span class="fc" id="L70">	private final DotAttributes edgeDefaults = new DotAttributes();</span>
+
+<span class="fc" id="L72">	private final Map&lt;Integer, DotNode&gt; nodes = new TreeMap&lt;Integer, DotNode&gt;();</span>
+<span class="fc" id="L73">	private final Map&lt;Integer, DotEdge&gt; edges = new TreeMap&lt;Integer, DotEdge&gt;();</span>
+
+<span class="fc" id="L75">	DotSubgraph(String id, boolean anonymous, DotSubgraph parent) {</span>
+<span class="fc" id="L76">		this.id = id;</span>
+<span class="fc" id="L77">		this.anonymous = anonymous;</span>
+<span class="fc" id="L78">		this.parent = parent;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (parent == null)</span>
+<span class="fc" id="L80">			this.attributes = new DotAttributes();</span>
+		else
+<span class="fc" id="L82">			this.attributes = new DotAttributes(parent.attributes);</span>
+<span class="fc" id="L83">	}</span>
+
+	/**
+	 * The name of the subgraph. An anonymous subgraph ({@code { a b }}) gets a
+	 * generated name starting with {@code %}, as in Graphviz. The root graph
+	 * may have a {@code null} id.
+	 */
+	public String getId() {
+<span class="fc" id="L91">		return id;</span>
+	}
+
+	public boolean isAnonymous() {
+<span class="fc" id="L95">		return anonymous;</span>
+	}
+
+	public boolean isRoot() {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		return parent == null;</span>
+	}
+
+	/**
+	 * A subgraph whose name starts with {@code cluster} is drawn as a box
+	 * around its nodes. The test is case-sensitive, as in Graphviz 2.38.
+	 */
+	public boolean isCluster() {
+<span class="pc bpc" id="L107" title="1 of 6 branches missed.">		return parent != null &amp;&amp; id != null &amp;&amp; id.startsWith(&quot;cluster&quot;);</span>
+	}
+
+	public DotSubgraph getParent() {
+<span class="fc" id="L111">		return parent;</span>
+	}
+
+	public List&lt;DotSubgraph&gt; getChildren() {
+<span class="fc" id="L115">		return Collections.unmodifiableList(children);</span>
+	}
+
+	public DotAttributes getAttributes() {
+<span class="fc" id="L119">		return attributes;</span>
+	}
+
+	/**
+	 * The node defaults written in this subgraph only (not inherited).
+	 */
+	public DotAttributes getLocalNodeDefaults() {
+<span class="fc" id="L126">		return nodeDefaults;</span>
+	}
+
+	/**
+	 * The edge defaults written in this subgraph only (not inherited).
+	 */
+	public DotAttributes getLocalEdgeDefaults() {
+<span class="fc" id="L133">		return edgeDefaults;</span>
+	}
+
+	/**
+	 * Every node of this subgraph, including the nodes of its own subgraphs.
+	 */
+	public List&lt;DotNode&gt; getNodes() {
+<span class="fc" id="L140">		return Collections.unmodifiableList(new ArrayList&lt;DotNode&gt;(nodes.values()));</span>
+	}
+
+	public boolean contains(DotNode node) {
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		return nodes.get(node.getIndex()) == node;</span>
+	}
+
+	/**
+	 * Every edge of this subgraph, including the edges of its own subgraphs.
+	 */
+	public List&lt;DotEdge&gt; getEdges() {
+<span class="fc" id="L151">		return Collections.unmodifiableList(new ArrayList&lt;DotEdge&gt;(edges.values()));</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L156">		return &quot;subgraph &quot; + id;</span>
+	}
+
+	// Package-private: used by DotGraphBuilder
+
+	void addChild(DotSubgraph child) {
+<span class="fc" id="L162">		children.add(child);</span>
+<span class="fc" id="L163">	}</span>
+
+	DotAttributes resolveNodeDefaults() {
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		final DotAttributes result = parent == null ? new DotAttributes() : parent.resolveNodeDefaults();</span>
+<span class="fc" id="L167">		result.putAll(nodeDefaults);</span>
+<span class="fc" id="L168">		return result;</span>
+	}
+
+	DotAttributes resolveEdgeDefaults() {
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		final DotAttributes result = parent == null ? new DotAttributes() : parent.resolveEdgeDefaults();</span>
+<span class="fc" id="L173">		result.putAll(edgeDefaults);</span>
+<span class="fc" id="L174">		return result;</span>
+	}
+
+	void addNode(DotNode node) {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (DotSubgraph s = this; s != null; s = s.parent)</span>
+<span class="fc" id="L179">			s.nodes.put(node.getIndex(), node);</span>
+<span class="fc" id="L180">	}</span>
+
+	void addEdge(DotEdge edge) {
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		for (DotSubgraph s = this; s != null; s = s.parent)</span>
+<span class="fc" id="L184">			s.edges.put(edge.getIndex(), edge);</span>
+<span class="fc" id="L185">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DotRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.draw</a> &gt; <span class="el_source">DotRenderer.java</span></div><h1>DotRenderer.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.draw;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.ngdot.attr.DotColors;
+import net.sourceforge.plantuml.ngdot.attr.DotNumbers;
+import net.sourceforge.plantuml.ngdot.attr.DotStyle;
+import net.sourceforge.plantuml.ngdot.layout.LayoutInput;
+import net.sourceforge.plantuml.ngdot.layout.LayoutResult.ClusterBox;
+import net.sourceforge.plantuml.ngdot.layout.LayoutResult.EdgeRoute;
+import net.sourceforge.plantuml.ngdot.layout.LayoutResult.NodeBox;
+import net.sourceforge.plantuml.ngdot.layout.LayoutResult;
+import net.sourceforge.plantuml.ngdot.layout.NodeContour;
+import net.sourceforge.plantuml.ngdot.layout.SmetanaLayout;
+import net.sourceforge.plantuml.ngdot.model.DotAttributes;
+import net.sourceforge.plantuml.ngdot.model.DotEdge;
+import net.sourceforge.plantuml.ngdot.model.DotGraph;
+import net.sourceforge.plantuml.ngdot.model.DotNode;
+import net.sourceforge.plantuml.ngdot.model.DotSubgraph;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
+
+/**
+ * Draws a {@link DotGraph}: the size of every node and label is measured with
+ * the {@link StringBounder}, the graph is laid out by Smetana
+ * ({@link SmetanaLayout}), then everything is drawn with UGraphic.
+ * &lt;p&gt;
+ * The look comes from the PlantUML style ({@code dotDiagram} in the style
+ * sheet); the DOT attributes that are supported override it.
+ */
+public final class DotRenderer implements TextBlock {
+
+	/** Graphviz &quot;pad&quot;: the space around the drawing. */
+	private static final double PAD = 4;
+
+	/** Graphviz PORT_LABEL_DISTANCE and PORT_LABEL_ANGLE, for head and tail labels. */
+	private static final double PORT_LABEL_DISTANCE = 10;
+	private static final double PORT_LABEL_ANGLE = -25;
+
+	/** Graphviz default fill of a filled cluster without any color. */
+<span class="fc" id="L96">	private static final HColor LIGHTGREY = HColors.simple(new XColor(0xD3, 0xD3, 0xD3));</span>
+
+	private final DotGraph graph;
+	private final ISkinParam skinParam;
+	private final Style nodeStyle;
+	private final Style edgeStyle;
+	private final Style clusterStyle;
+
+<span class="fc" id="L104">	private final Map&lt;DotNode, NodeLook&gt; nodeLooks = new HashMap&lt;DotNode, NodeLook&gt;();</span>
+<span class="fc" id="L105">	private final Map&lt;DotEdge, EdgeLook&gt; edgeLooks = new HashMap&lt;DotEdge, EdgeLook&gt;();</span>
+<span class="fc" id="L106">	private final Map&lt;DotSubgraph, ClusterLook&gt; clusterLooks = new HashMap&lt;DotSubgraph, ClusterLook&gt;();</span>
+	private DotLabel graphLabel;
+
+	private LayoutResult layout;
+	private Frame frame;
+
+<span class="fc" id="L112">	public DotRenderer(DotGraph graph, ISkinParam skinParam) {</span>
+<span class="fc" id="L113">		this.graph = graph;</span>
+<span class="fc" id="L114">		this.skinParam = skinParam;</span>
+<span class="fc" id="L115">		this.nodeStyle = style(SName.node);</span>
+<span class="fc" id="L116">		this.edgeStyle = style(SName.arrow);</span>
+<span class="fc" id="L117">		this.clusterStyle = style(SName.group);</span>
+<span class="fc" id="L118">	}</span>
+
+	private Style style(SName name) {
+<span class="fc" id="L121">		final StyleQuery query = StyleQueries.ELEMENT.add(SName.dotDiagram, name);</span>
+<span class="fc" id="L122">		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
+	}
+
+	private HColorSet colorSet() {
+<span class="fc" id="L126">		return skinParam.getIHtmlColorSet();</span>
+	}
+
+	private HColor color(DotAttributes attributes, String name) {
+<span class="fc" id="L130">		return DotColors.parse(attributes.getString(name), colorSet());</span>
+	}
+
+	private static HColor firstNotNull(HColor... colors) {
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		for (HColor c : colors)</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (c != null)</span>
+<span class="fc" id="L136">				return c;</span>
+<span class="nc" id="L137">		return null;</span>
+	}
+
+	private FontConfiguration font(Style style, DotAttributes attributes, String sizeName, String colorName) {
+<span class="fc" id="L141">		FontConfiguration result = style.getFontConfiguration(colorSet());</span>
+<span class="fc" id="L142">		Double fontsize = DotNumbers.parseFirst(attributes.getString(sizeName));</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">		if (fontsize == null &amp;&amp; sizeName.equals(&quot;fontsize&quot;) == false)</span>
+<span class="fc" id="L144">			fontsize = DotNumbers.parseFirst(attributes.getString(&quot;fontsize&quot;));</span>
+<span class="pc bpc" id="L145" title="1 of 4 branches missed.">		if (fontsize != null &amp;&amp; fontsize &gt; 0)</span>
+<span class="fc" id="L146">			result = result.changeSize(fontsize.floatValue());</span>
+<span class="fc" id="L147">		HColor fontcolor = color(attributes, colorName);</span>
+<span class="fc bfc" id="L148" title="All 4 branches covered.">		if (fontcolor == null &amp;&amp; colorName.equals(&quot;fontcolor&quot;) == false)</span>
+<span class="fc" id="L149">			fontcolor = color(attributes, &quot;fontcolor&quot;);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (fontcolor != null)</span>
+<span class="fc" id="L151">			result = result.changeColor(fontcolor);</span>
+<span class="fc" id="L152">		return result;</span>
+	}
+
+	private DotLabel label(String raw, FontConfiguration font) {
+<span class="pc bpc" id="L156" title="1 of 4 branches missed.">		if (raw == null || raw.length() == 0)</span>
+<span class="fc" id="L157">			return null;</span>
+<span class="fc" id="L158">		final DotLabel result = DotLabel.create(raw, font, skinParam);</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		return result.isEmpty() ? null : result;</span>
+	}
+
+	private String graphName() {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		return graph.getId() == null ? &quot;&quot; : graph.getId();</span>
+	}
+
+	// ------------------------------------------------------------------
+	// What is drawn for each element, once its attributes are resolved
+
+<span class="fc" id="L169">	static final class NodeLook {</span>
+		NodeShape shape;
+		DotLabel label;
+		int peripheries;
+		HColor line;
+		HColor fill;
+		UStroke stroke;
+		DotStyle style;
+	}
+
+<span class="fc" id="L179">	static final class EdgeLook {</span>
+		HColor line;
+		HColor fill;
+		UStroke stroke;
+		DotStyle style;
+		double arrowsize;
+		ArrowShape headArrow;
+		ArrowShape tailArrow;
+		DotLabel label;
+		DotLabel headLabel;
+		DotLabel tailLabel;
+	}
+
+<span class="fc" id="L192">	static final class ClusterLook {</span>
+		HColor line;
+		HColor fill;
+		UStroke stroke;
+		DotStyle style;
+		DotLabel label;
+		char labeljust;
+	}
+
+	// ------------------------------------------------------------------
+	// Layout
+
+	private LayoutResult getLayout(StringBounder stringBounder) {
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (layout == null)</span>
+<span class="fc" id="L206">			layout = SmetanaLayout.layout(graph, prepare(stringBounder));</span>
+<span class="fc" id="L207">		return layout;</span>
+	}
+
+	private LayoutInput prepare(StringBounder stringBounder) {
+<span class="fc" id="L211">		final LayoutInput input = new LayoutInput();</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		for (DotNode node : graph.getNodes())</span>
+<span class="fc" id="L213">			prepareNode(input, node, stringBounder);</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		for (DotEdge edge : graph.getEdges())</span>
+<span class="fc" id="L215">			prepareEdge(input, edge, stringBounder);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		for (DotSubgraph subgraph : graph.getAllSubgraphs())</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">			if (subgraph.isCluster())</span>
+<span class="fc" id="L218">				prepareCluster(input, subgraph, stringBounder);</span>
+
+<span class="fc" id="L220">		final DotAttributes attributes = graph.getAttributes();</span>
+<span class="fc" id="L221">		graphLabel = label(DotLabel.substitute(attributes.getString(&quot;label&quot;), null, graphName(), null, null, null),</span>
+<span class="fc" id="L222">				font(clusterStyle, attributes, &quot;fontsize&quot;, &quot;fontcolor&quot;));</span>
+<span class="fc" id="L223">		return input;</span>
+	}
+
+	private void prepareNode(LayoutInput input, DotNode node, StringBounder stringBounder) {
+<span class="fc" id="L227">		final DotAttributes attributes = node.getAttributes();</span>
+<span class="fc" id="L228">		final NodeLook look = new NodeLook();</span>
+<span class="fc" id="L229">		final String shapeName = attributes.getString(&quot;shape&quot;);</span>
+<span class="fc" id="L230">		look.shape = NodeShape.fromName(shapeName);</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		if (look.shape == null)</span>
+<span class="fc" id="L232">			look.shape = NodeShape.ELLIPSE;</span>
+<span class="fc" id="L233">		look.style = DotStyle.of(attributes);</span>
+
+<span class="fc" id="L235">		XDimension2D labelDim = new XDimension2D(0, 0);</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		if (look.shape.hasLabel()) {</span>
+<span class="fc" id="L237">			final String text = DotLabel.substitute(attributes.getString(&quot;label&quot;, &quot;\\N&quot;), node.getId(), graphName(),</span>
+					null, null, null);
+<span class="fc" id="L239">			look.label = label(text, font(nodeStyle, attributes, &quot;fontsize&quot;, &quot;fontcolor&quot;));</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">			if (look.label != null)</span>
+<span class="fc" id="L241">				labelDim = look.label.calculateDimension(stringBounder);</span>
+		}
+
+<span class="fc" id="L244">		final Double peripheries = DotNumbers.parseFirst(attributes.getString(&quot;peripheries&quot;));</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		look.peripheries = peripheries == null ? look.shape.defaultPeripheries()</span>
+<span class="fc" id="L246">				: Math.max(0, (int) Math.round(peripheries));</span>
+
+		// Colors: the theme, overridden by &quot;color&quot; (outline) and, when filled,
+		// by &quot;fillcolor&quot; (or &quot;color&quot; if there is no fillcolor)
+<span class="fc" id="L250">		final HColor color = color(attributes, &quot;color&quot;);</span>
+<span class="fc" id="L251">		look.line = firstNotNull(color, nodeStyle.value(PName.LineColor).asColor(colorSet()));</span>
+<span class="fc" id="L252">		final HColor themeFill = nodeStyle.value(PName.BackGroundColor).asColor(colorSet());</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		if (look.shape == NodeShape.POINT)</span>
+<span class="fc" id="L254">			look.fill = firstNotNull(color(attributes, &quot;fillcolor&quot;), color, look.line);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		else if (look.style.isFilled())</span>
+<span class="fc" id="L256">			look.fill = firstNotNull(color(attributes, &quot;fillcolor&quot;), color, themeFill);</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		else if (look.shape == NodeShape.PLAINTEXT)</span>
+<span class="fc" id="L258">			look.fill = null;</span>
+		else
+<span class="fc" id="L260">			look.fill = themeFill;</span>
+<span class="fc" id="L261">		look.stroke = look.style.getStroke(nodeStyle.getStroke());</span>
+<span class="fc" id="L262">		nodeLooks.put(node, look);</span>
+
+<span class="fc" id="L264">		final boolean square = &quot;square&quot;.equalsIgnoreCase(shapeName);</span>
+<span class="fc" id="L265">		final XDimension2D inner = look.shape.computeSize(labelDim, attributes, square);</span>
+<span class="fc" id="L266">		final XDimension2D outer = NodeShape.withPeripheries(inner, look.peripheries);</span>
+<span class="fc" id="L267">		input.setNode(node, outer, look.shape.getOutline());</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">		if (look.shape.hasOwnContour()) {</span>
+<span class="fc" id="L269">			final NodeShape shape = look.shape;</span>
+<span class="fc" id="L270">			input.setContour(node, new NodeContour() {</span>
+				public boolean contains(double dx, double dy) {
+<span class="fc" id="L272">					return shape.contains(dx, dy, outer);</span>
+				}
+			});
+		}
+<span class="fc" id="L276">	}</span>
+
+	private void prepareEdge(LayoutInput input, DotEdge edge, StringBounder stringBounder) {
+<span class="fc" id="L279">		final DotAttributes attributes = edge.getAttributes();</span>
+<span class="fc" id="L280">		final EdgeLook look = new EdgeLook();</span>
+<span class="fc" id="L281">		look.style = DotStyle.of(attributes);</span>
+<span class="fc" id="L282">		final HColor color = color(attributes, &quot;color&quot;);</span>
+<span class="fc" id="L283">		look.line = firstNotNull(color, edgeStyle.value(PName.LineColor).asColor(colorSet()));</span>
+<span class="fc" id="L284">		look.fill = firstNotNull(color(attributes, &quot;fillcolor&quot;), look.line);</span>
+<span class="fc" id="L285">		look.stroke = look.style.getStroke(edgeStyle.getStroke());</span>
+<span class="fc" id="L286">		final double arrowsize = DotNumbers.parse(attributes.getString(&quot;arrowsize&quot;), 1);</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		look.arrowsize = arrowsize &gt; 0 ? arrowsize : 1;</span>
+
+<span class="fc" id="L289">		final String dir = dir(edge);</span>
+<span class="fc bfc" id="L290" title="All 4 branches covered.">		if (dir.equals(&quot;forward&quot;) || dir.equals(&quot;both&quot;))</span>
+<span class="fc" id="L291">			look.headArrow = arrow(attributes.getString(&quot;arrowhead&quot;));</span>
+<span class="fc bfc" id="L292" title="All 4 branches covered.">		if (dir.equals(&quot;back&quot;) || dir.equals(&quot;both&quot;))</span>
+<span class="fc" id="L293">			look.tailArrow = arrow(attributes.getString(&quot;arrowtail&quot;));</span>
+
+<span class="fc" id="L295">		final String tail = edge.getTail().getId();</span>
+<span class="fc" id="L296">		final String head = edge.getHead().getId();</span>
+<span class="fc" id="L297">		final FontConfiguration labelFont = font(edgeStyle, attributes, &quot;fontsize&quot;, &quot;fontcolor&quot;);</span>
+<span class="fc" id="L298">		look.label = label(DotLabel.substitute(attributes.getString(&quot;label&quot;), null, graphName(), tail, head,</span>
+<span class="fc" id="L299">				edgeName(edge)), labelFont);</span>
+<span class="fc" id="L300">		final FontConfiguration portFont = font(edgeStyle, attributes, &quot;labelfontsize&quot;, &quot;labelfontcolor&quot;);</span>
+<span class="fc" id="L301">		look.headLabel = label(DotLabel.substitute(attributes.getString(&quot;headlabel&quot;), null, graphName(), tail, head,</span>
+<span class="fc" id="L302">				edgeName(edge)), portFont);</span>
+<span class="fc" id="L303">		look.tailLabel = label(DotLabel.substitute(attributes.getString(&quot;taillabel&quot;), null, graphName(), tail, head,</span>
+<span class="fc" id="L304">				edgeName(edge)), portFont);</span>
+<span class="fc" id="L305">		edgeLooks.put(edge, look);</span>
+
+<span class="fc bfc" id="L307" title="All 2 branches covered.">		if (look.label != null)</span>
+<span class="fc" id="L308">			input.setEdgeLabel(edge, look.label.calculateDimension(stringBounder));</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">		if (look.headArrow != null)</span>
+<span class="fc" id="L310">			input.setHeadArrow(edge, look.headArrow.getLength(look.arrowsize));</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">		if (look.tailArrow != null)</span>
+<span class="fc" id="L312">			input.setTailArrow(edge, look.tailArrow.getLength(look.arrowsize));</span>
+<span class="fc" id="L313">	}</span>
+
+	private static ArrowShape arrow(String name) {
+<span class="fc" id="L316">		final ArrowShape result = ArrowShape.parse(name);</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">		return result.isNone() ? null : result;</span>
+	}
+
+	private void prepareCluster(LayoutInput input, DotSubgraph cluster, StringBounder stringBounder) {
+<span class="fc" id="L321">		final DotAttributes attributes = cluster.getAttributes();</span>
+<span class="fc" id="L322">		final ClusterLook look = new ClusterLook();</span>
+<span class="fc" id="L323">		look.style = DotStyle.of(attributes);</span>
+<span class="fc" id="L324">		final HColor color = color(attributes, &quot;color&quot;);</span>
+<span class="fc" id="L325">		look.line = firstNotNull(color(attributes, &quot;pencolor&quot;), color,</span>
+<span class="fc" id="L326">				clusterStyle.value(PName.LineColor).asColor(colorSet()));</span>
+<span class="fc" id="L327">		final HColor bgcolor = color(attributes, &quot;bgcolor&quot;);</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (look.style.isFilled())</span>
+<span class="fc" id="L329">			look.fill = firstNotNull(color(attributes, &quot;fillcolor&quot;), color, bgcolor, LIGHTGREY);</span>
+		else
+<span class="fc" id="L331">			look.fill = firstNotNull(bgcolor, clusterStyle.value(PName.BackGroundColor).asColor(colorSet()));</span>
+<span class="fc" id="L332">		look.stroke = look.style.getStroke(clusterStyle.getStroke());</span>
+<span class="fc" id="L333">		look.labeljust = firstChar(attributes.getString(&quot;labeljust&quot;), 'c');</span>
+<span class="fc" id="L334">		look.label = label(DotLabel.substitute(attributes.getString(&quot;label&quot;), null, graphName(), null, null, null),</span>
+<span class="fc" id="L335">				font(clusterStyle, attributes, &quot;fontsize&quot;, &quot;fontcolor&quot;));</span>
+<span class="fc" id="L336">		clusterLooks.put(cluster, look);</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">		if (look.label != null)</span>
+<span class="fc" id="L338">			input.setClusterLabel(cluster, look.label.calculateDimension(stringBounder));</span>
+<span class="fc" id="L339">	}</span>
+
+	private static char firstChar(String value, char defaultValue) {
+<span class="pc bpc" id="L342" title="1 of 4 branches missed.">		if (value == null || value.trim().length() == 0)</span>
+<span class="fc" id="L343">			return defaultValue;</span>
+<span class="fc" id="L344">		return Character.toLowerCase(value.trim().charAt(0));</span>
+	}
+
+	private String edgeName(DotEdge edge) {
+<span class="fc bfc" id="L348" title="All 2 branches covered.">		return edge.getTail().getId() + (graph.isDirected() ? &quot;-&gt;&quot; : &quot;--&quot;) + edge.getHead().getId();</span>
+	}
+
+	private String dir(DotEdge edge) {
+<span class="fc" id="L352">		final String result = edge.getAttributes().getString(&quot;dir&quot;);</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">			return graph.isDirected() ? &quot;forward&quot; : &quot;none&quot;;</span>
+<span class="fc" id="L355">		return result.trim().toLowerCase();</span>
+	}
+
+	// ------------------------------------------------------------------
+	// The frame: what is outside the layout box (head and tail labels, graph
+	// label) and where the layout box goes
+
+<span class="fc" id="L362">	static final class Frame {</span>
+		double offsetX;
+		double offsetY;
+		XDimension2D dimension;
+		XPoint2D graphLabelTopLeft;
+<span class="fc" id="L367">		final Map&lt;DotEdge, XPoint2D&gt; headLabels = new HashMap&lt;DotEdge, XPoint2D&gt;();</span>
+<span class="fc" id="L368">		final Map&lt;DotEdge, XPoint2D&gt; tailLabels = new HashMap&lt;DotEdge, XPoint2D&gt;();</span>
+	}
+
+	private Frame getFrame(StringBounder stringBounder) {
+<span class="fc bfc" id="L372" title="All 2 branches covered.">		if (frame != null)</span>
+<span class="fc" id="L373">			return frame;</span>
+<span class="fc" id="L374">		final LayoutResult result = getLayout(stringBounder);</span>
+<span class="fc" id="L375">		final Frame f = new Frame();</span>
+<span class="fc" id="L376">		double minX = 0;</span>
+<span class="fc" id="L377">		double minY = 0;</span>
+<span class="fc" id="L378">		double maxX = result.getDimension().getWidth();</span>
+<span class="fc" id="L379">		double maxY = result.getDimension().getHeight();</span>
+
+<span class="fc bfc" id="L381" title="All 2 branches covered.">		for (Map.Entry&lt;DotEdge, EdgeRoute&gt; ent : result.getEdges().entrySet()) {</span>
+<span class="fc" id="L382">			final EdgeLook look = edgeLooks.get(ent.getKey());</span>
+<span class="fc" id="L383">			final DotAttributes attributes = ent.getKey().getAttributes();</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">			for (int side = 0; side &lt; 2; side++) {</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">				final boolean head = side == 0;</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">				final DotLabel label = head ? look.headLabel : look.tailLabel;</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">				if (label == null)</span>
+<span class="fc" id="L388">					continue;</span>
+<span class="fc" id="L389">				final XPoint2D center = portLabelCenter(ent.getValue(), head, attributes);</span>
+<span class="fc" id="L390">				final XDimension2D dim = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L391">				final XPoint2D topLeft = new XPoint2D(center.getX() - dim.getWidth() / 2,</span>
+<span class="fc" id="L392">						center.getY() - dim.getHeight() / 2);</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">				(head ? f.headLabels : f.tailLabels).put(ent.getKey(), topLeft);</span>
+<span class="fc" id="L394">				minX = Math.min(minX, topLeft.getX());</span>
+<span class="fc" id="L395">				minY = Math.min(minY, topLeft.getY());</span>
+<span class="fc" id="L396">				maxX = Math.max(maxX, topLeft.getX() + dim.getWidth());</span>
+<span class="fc" id="L397">				maxY = Math.max(maxY, topLeft.getY() + dim.getHeight());</span>
+			}
+<span class="fc" id="L399">		}</span>
+
+<span class="fc bfc" id="L401" title="All 2 branches covered.">		if (graphLabel != null) {</span>
+<span class="fc" id="L402">			final XDimension2D dim = graphLabel.calculateDimension(stringBounder);</span>
+<span class="fc" id="L403">			final DotAttributes attributes = graph.getAttributes();</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">			final boolean top = firstChar(attributes.getString(&quot;labelloc&quot;), 'b') == 't';</span>
+<span class="fc" id="L405">			final char just = firstChar(attributes.getString(&quot;labeljust&quot;), 'c');</span>
+<span class="fc" id="L406">			final double extra = dim.getWidth() - (maxX - minX);</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">			if (extra &gt; 0) {</span>
+<span class="fc" id="L408">				minX -= extra / 2;</span>
+<span class="fc" id="L409">				maxX += extra / 2;</span>
+			}
+			final double x;
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">			if (just == 'l')</span>
+<span class="nc" id="L413">				x = minX;</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">			else if (just == 'r')</span>
+<span class="fc" id="L415">				x = maxX - dim.getWidth();</span>
+			else
+<span class="nc" id="L417">				x = (minX + maxX - dim.getWidth()) / 2;</span>
+			final double y;
+<span class="pc bpc" id="L419" title="1 of 2 branches missed.">			if (top) {</span>
+<span class="fc" id="L420">				minY -= dim.getHeight();</span>
+<span class="fc" id="L421">				y = minY;</span>
+			} else {
+<span class="nc" id="L423">				y = maxY;</span>
+<span class="nc" id="L424">				maxY += dim.getHeight();</span>
+			}
+<span class="fc" id="L426">			f.graphLabelTopLeft = new XPoint2D(x, y);</span>
+		}
+
+<span class="fc" id="L429">		f.offsetX = PAD - minX;</span>
+<span class="fc" id="L430">		f.offsetY = PAD - minY;</span>
+<span class="fc" id="L431">		f.dimension = new XDimension2D(maxX - minX + 2 * PAD, maxY - minY + 2 * PAD);</span>
+<span class="fc" id="L432">		frame = f;</span>
+<span class="fc" id="L433">		return f;</span>
+	}
+
+	/**
+	 * Where Graphviz puts a head or tail label ({@code place_portlabel}): at
+	 * {@code labeldistance * 10} from the end of the edge, turned by
+	 * {@code labelangle} (-25 degrees by default) from the edge direction.
+	 */
+	private static XPoint2D portLabelCenter(EdgeRoute route, boolean head, DotAttributes attributes) {
+<span class="fc" id="L442">		final List&lt;XPoint2D&gt; points = route.getPoints();</span>
+		final XPoint2D pe;
+		final XPoint2D pf;
+<span class="fc bfc" id="L445" title="All 2 branches covered.">		if (head) {</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">			if (route.getHeadTip() != null) {</span>
+<span class="fc" id="L447">				pe = route.getHeadTip();</span>
+<span class="fc" id="L448">				pf = points.get(points.size() - 1);</span>
+			} else {
+<span class="fc" id="L450">				final int n = points.size();</span>
+<span class="fc" id="L451">				pe = points.get(n - 1);</span>
+<span class="fc" id="L452">				pf = bezier(points.get(n - 4), points.get(n - 3), points.get(n - 2), pe, 0.9);</span>
+<span class="fc" id="L453">			}</span>
+		} else {
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">			if (route.getTailTip() != null) {</span>
+<span class="nc" id="L456">				pe = route.getTailTip();</span>
+<span class="nc" id="L457">				pf = points.get(0);</span>
+			} else {
+<span class="fc" id="L459">				pe = points.get(0);</span>
+<span class="fc" id="L460">				pf = bezier(pe, points.get(1), points.get(2), points.get(3), 0.1);</span>
+			}
+		}
+		// Graphviz works with Y going up
+<span class="fc" id="L464">		final double angle = Math.atan2(-(pf.getY() - pe.getY()), pf.getX() - pe.getX())</span>
+<span class="fc" id="L465">				+ Math.toRadians(DotNumbers.parse(attributes.getString(&quot;labelangle&quot;), PORT_LABEL_ANGLE));</span>
+<span class="fc" id="L466">		final double dist = PORT_LABEL_DISTANCE * Math.max(0, DotNumbers.parse(attributes.getString(&quot;labeldistance&quot;), 1));</span>
+<span class="fc" id="L467">		return new XPoint2D(pe.getX() + dist * Math.cos(angle), pe.getY() - dist * Math.sin(angle));</span>
+	}
+
+	private static XPoint2D bezier(XPoint2D p0, XPoint2D p1, XPoint2D p2, XPoint2D p3, double t) {
+<span class="fc" id="L471">		final double u = 1 - t;</span>
+<span class="fc" id="L472">		final double a = u * u * u;</span>
+<span class="fc" id="L473">		final double b = 3 * u * u * t;</span>
+<span class="fc" id="L474">		final double c = 3 * u * t * t;</span>
+<span class="fc" id="L475">		final double d = t * t * t;</span>
+<span class="fc" id="L476">		return new XPoint2D(a * p0.getX() + b * p1.getX() + c * p2.getX() + d * p3.getX(),</span>
+<span class="fc" id="L477">				a * p0.getY() + b * p1.getY() + c * p2.getY() + d * p3.getY());</span>
+	}
+
+	// ------------------------------------------------------------------
+	// TextBlock
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L485">		return getFrame(stringBounder).dimension;</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L490">		final Frame f = getFrame(ug.getStringBounder());</span>
+<span class="fc" id="L491">		final LayoutResult result = getLayout(ug.getStringBounder());</span>
+
+<span class="fc" id="L493">		final HColor bgcolor = color(graph.getAttributes(), &quot;bgcolor&quot;);</span>
+<span class="fc bfc" id="L494" title="All 2 branches covered.">		if (bgcolor != null)</span>
+<span class="fc" id="L495">			ug.apply(HColors.none()).apply(bgcolor.bg()).draw(URectangle.build(f.dimension));</span>
+
+<span class="fc bfc" id="L497" title="All 2 branches covered.">		if (graphLabel != null)</span>
+<span class="fc" id="L498">			graphLabel.drawU(ug.apply(new UTranslate(f.graphLabelTopLeft.getX() + f.offsetX,</span>
+<span class="fc" id="L499">					f.graphLabelTopLeft.getY() + f.offsetY)));</span>
+
+<span class="fc" id="L501">		ug = ug.apply(new UTranslate(f.offsetX, f.offsetY));</span>
+
+<span class="fc bfc" id="L503" title="All 2 branches covered.">		for (Map.Entry&lt;DotSubgraph, ClusterBox&gt; ent : result.getClusters().entrySet())</span>
+<span class="fc" id="L504">			drawCluster(ug, clusterLooks.get(ent.getKey()), ent.getValue());</span>
+
+<span class="fc bfc" id="L506" title="All 2 branches covered.">		for (Map.Entry&lt;DotEdge, EdgeRoute&gt; ent : result.getEdges().entrySet())</span>
+<span class="fc" id="L507">			drawEdge(ug, edgeLooks.get(ent.getKey()), ent.getValue());</span>
+
+<span class="fc bfc" id="L509" title="All 2 branches covered.">		for (Map.Entry&lt;DotNode, NodeBox&gt; ent : result.getNodes().entrySet())</span>
+<span class="fc" id="L510">			drawNode(ug, nodeLooks.get(ent.getKey()), ent.getValue());</span>
+
+<span class="fc bfc" id="L512" title="All 2 branches covered.">		for (Map.Entry&lt;DotEdge, EdgeRoute&gt; ent : result.getEdges().entrySet())</span>
+<span class="fc" id="L513">			drawEdgeLabels(ug, f, ent.getKey(), ent.getValue());</span>
+<span class="fc" id="L514">	}</span>
+
+	private void drawCluster(UGraphic ug, ClusterLook look, ClusterBox box) {
+<span class="pc bpc" id="L517" title="1 of 4 branches missed.">		if (look == null || look.style.isInvisible())</span>
+<span class="fc" id="L518">			return;</span>
+<span class="fc" id="L519">		final UGraphic ugBox = ug.apply(look.line).apply(look.fill.bg()).apply(look.stroke)</span>
+<span class="fc" id="L520">				.apply(new UTranslate(box.getTopLeft().getX(), box.getTopLeft().getY()));</span>
+<span class="fc bfc" id="L521" title="All 2 branches covered.">		if (look.style.isRounded())</span>
+<span class="fc" id="L522">			ugBox.draw(URectangle.build(box.getSize()).rounded(24));</span>
+		else
+<span class="fc" id="L524">			ugBox.draw(URectangle.build(box.getSize()));</span>
+
+<span class="pc bpc" id="L526" title="1 of 4 branches missed.">		if (look.label == null || box.getLabelCenter() == null)</span>
+<span class="fc" id="L527">			return;</span>
+<span class="fc" id="L528">		final XDimension2D dim = look.label.calculateDimension(ug.getStringBounder());</span>
+		// Smetana centers the label (at the top or at the bottom, see labelloc in
+		// SmetanaLayout); labeljust moves it
+<span class="fc" id="L531">		double x = box.getLabelCenter().getX() - dim.getWidth() / 2;</span>
+<span class="fc" id="L532">		final double y = box.getLabelCenter().getY() - dim.getHeight() / 2;</span>
+<span class="fc" id="L533">		final double margin = NodeShape.GAP * 2;</span>
+<span class="fc bfc" id="L534" title="All 2 branches covered.">		if (look.labeljust == 'l')</span>
+<span class="fc" id="L535">			x = box.getTopLeft().getX() + margin;</span>
+<span class="fc bfc" id="L536" title="All 2 branches covered.">		else if (look.labeljust == 'r')</span>
+<span class="fc" id="L537">			x = box.getTopLeft().getX() + box.getSize().getWidth() - margin - dim.getWidth();</span>
+<span class="fc" id="L538">		look.label.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="fc" id="L539">	}</span>
+
+	private void drawNode(UGraphic ug, NodeLook look, NodeBox box) {
+<span class="fc bfc" id="L542" title="All 2 branches covered.">		if (look.style.isInvisible())</span>
+<span class="fc" id="L543">			return;</span>
+<span class="fc" id="L544">		final XPoint2D topLeft = box.getTopLeft();</span>
+<span class="fc" id="L545">		look.shape.draw(ug.apply(look.line).apply(look.stroke).apply(new UTranslate(topLeft.getX(), topLeft.getY())),</span>
+<span class="fc" id="L546">				look.fill, box.getSize(), look.peripheries, look.style.isRounded(), look.style.isDiagonals());</span>
+<span class="fc bfc" id="L547" title="All 2 branches covered.">		if (look.label != null)</span>
+<span class="fc" id="L548">			drawCentered(ug, look.label, box.getCenter());</span>
+<span class="fc" id="L549">	}</span>
+
+	private void drawEdge(UGraphic ug, EdgeLook look, EdgeRoute route) {
+<span class="fc bfc" id="L552" title="All 2 branches covered.">		if (look.style.isInvisible())</span>
+<span class="fc" id="L553">			return;</span>
+<span class="fc" id="L554">		final UGraphic ugLine = ug.apply(look.line).apply(HColors.none().bg()).apply(look.stroke);</span>
+
+<span class="fc" id="L556">		final List&lt;XPoint2D&gt; points = route.getPoints();</span>
+<span class="fc" id="L557">		final UPath path = UPath.none();</span>
+<span class="fc" id="L558">		path.moveTo(points.get(0));</span>
+<span class="fc bfc" id="L559" title="All 2 branches covered.">		for (int i = 1; i + 2 &lt; points.size(); i += 3)</span>
+<span class="fc" id="L560">			path.cubicTo(points.get(i), points.get(i + 1), points.get(i + 2));</span>
+<span class="fc" id="L561">		ugLine.draw(path);</span>
+
+		// Graphviz draws the arrows with a solid pen
+<span class="fc" id="L564">		final UGraphic ugArrow = ug.apply(look.line).apply(UStroke.withThickness(look.stroke.getThickness()));</span>
+<span class="pc bpc" id="L565" title="1 of 4 branches missed.">		if (look.headArrow != null &amp;&amp; route.getHeadTip() != null)</span>
+<span class="fc" id="L566">			look.headArrow.draw(ugArrow, look.fill, route.getHeadTip(), points.get(points.size() - 1),</span>
+					look.arrowsize);
+<span class="pc bpc" id="L568" title="1 of 4 branches missed.">		if (look.tailArrow != null &amp;&amp; route.getTailTip() != null)</span>
+<span class="fc" id="L569">			look.tailArrow.draw(ugArrow, look.fill, route.getTailTip(), points.get(0), look.arrowsize);</span>
+<span class="fc" id="L570">	}</span>
+
+	private void drawEdgeLabels(UGraphic ug, Frame f, DotEdge edge, EdgeRoute route) {
+<span class="fc" id="L573">		final EdgeLook look = edgeLooks.get(edge);</span>
+<span class="fc bfc" id="L574" title="All 2 branches covered.">		if (look.style.isInvisible())</span>
+<span class="fc" id="L575">			return;</span>
+<span class="pc bpc" id="L576" title="1 of 4 branches missed.">		if (look.label != null &amp;&amp; route.getLabelCenter() != null)</span>
+<span class="fc" id="L577">			drawCentered(ug, look.label, route.getLabelCenter());</span>
+<span class="fc" id="L578">		final XPoint2D head = f.headLabels.get(edge);</span>
+<span class="fc bfc" id="L579" title="All 2 branches covered.">		if (head != null)</span>
+<span class="fc" id="L580">			look.headLabel.drawU(ug.apply(new UTranslate(head.getX(), head.getY())));</span>
+<span class="fc" id="L581">		final XPoint2D tail = f.tailLabels.get(edge);</span>
+<span class="fc bfc" id="L582" title="All 2 branches covered.">		if (tail != null)</span>
+<span class="fc" id="L583">			look.tailLabel.drawU(ug.apply(new UTranslate(tail.getX(), tail.getY())));</span>
+<span class="fc" id="L584">	}</span>
+
+	private void drawCentered(UGraphic ug, TextBlock block, XPoint2D center) {
+<span class="fc" id="L587">		final XDimension2D dim = block.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L588">		block.drawU(ug.apply(new UTranslate(center.getX() - dim.getWidth() / 2, center.getY() - dim.getHeight() / 2)));</span>
+<span class="fc" id="L589">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

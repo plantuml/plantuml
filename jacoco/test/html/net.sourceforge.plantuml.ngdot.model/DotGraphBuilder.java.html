@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DotGraphBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.model</a> &gt; <span class="el_source">DotGraphBuilder.java</span></div><h1>DotGraphBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.model;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Builds a {@link DotGraph} statement after statement, applying the DOT
+ * semantics of Graphviz (cgraph and its grammar):
+ * &lt;ul&gt;
+ * &lt;li&gt;a node is created at its first mention, with the node defaults visible
+ * at that moment in the current subgraph; mentioning it again inside another
+ * subgraph only adds it to that subgraph;&lt;/li&gt;
+ * &lt;li&gt;an edge gets the edge defaults visible in the current subgraph, then
+ * the attributes of its statement;&lt;/li&gt;
+ * &lt;li&gt;in a {@code strict} graph, a second edge between the same two nodes (in
+ * either direction for an undirected graph) is the same edge: only its
+ * attributes are merged;&lt;/li&gt;
+ * &lt;li&gt;reopening a named subgraph in the same parent continues it.&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+public final class DotGraphBuilder {
+
+	private final boolean strict;
+	private final boolean directed;
+	private final DotSubgraph root;
+	private DotSubgraph current;
+
+<span class="fc" id="L66">	private final List&lt;DotNode&gt; nodes = new ArrayList&lt;DotNode&gt;();</span>
+<span class="fc" id="L67">	private final Map&lt;String, DotNode&gt; nodesById = new HashMap&lt;String, DotNode&gt;();</span>
+<span class="fc" id="L68">	private final List&lt;DotEdge&gt; edges = new ArrayList&lt;DotEdge&gt;();</span>
+<span class="fc" id="L69">	private final Map&lt;String, DotEdge&gt; strictEdges = new HashMap&lt;String, DotEdge&gt;();</span>
+<span class="fc" id="L70">	private final Map&lt;DotSubgraph, Map&lt;String, DotSubgraph&gt;&gt; namedChildren = new HashMap&lt;DotSubgraph, Map&lt;String, DotSubgraph&gt;&gt;();</span>
+	private int anonymousCounter;
+
+<span class="fc" id="L73">	public DotGraphBuilder(boolean strict, boolean directed, String id) {</span>
+<span class="fc" id="L74">		this.strict = strict;</span>
+<span class="fc" id="L75">		this.directed = directed;</span>
+<span class="fc" id="L76">		this.root = new DotSubgraph(id, false, null);</span>
+<span class="fc" id="L77">		this.current = root;</span>
+<span class="fc" id="L78">	}</span>
+
+	public boolean isDirected() {
+<span class="fc" id="L81">		return directed;</span>
+	}
+
+	public DotSubgraph getCurrent() {
+<span class="nc" id="L85">		return current;</span>
+	}
+
+	/**
+	 * Enters a subgraph. With a {@code null} id, a new anonymous subgraph is
+	 * created. With an id already used by a child of the current subgraph, that
+	 * child is reopened.
+	 */
+	public DotSubgraph openSubgraph(String id) {
+<span class="fc" id="L94">		DotSubgraph result = null;</span>
+<span class="fc" id="L95">		Map&lt;String, DotSubgraph&gt; byName = namedChildren.get(current);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (byName == null) {</span>
+<span class="fc" id="L97">			byName = new LinkedHashMap&lt;String, DotSubgraph&gt;();</span>
+<span class="fc" id="L98">			namedChildren.put(current, byName);</span>
+		}
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (id != null)</span>
+<span class="fc" id="L101">			result = byName.get(id);</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			final boolean anonymous = id == null;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			final String name = anonymous ? &quot;%&quot; + (++anonymousCounter) : id;</span>
+<span class="fc" id="L106">			result = new DotSubgraph(name, anonymous, current);</span>
+<span class="fc" id="L107">			current.addChild(result);</span>
+<span class="fc" id="L108">			byName.put(name, result);</span>
+		}
+<span class="fc" id="L110">		current = result;</span>
+<span class="fc" id="L111">		return result;</span>
+	}
+
+	public void closeSubgraph() {
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (current.getParent() == null)</span>
+<span class="nc" id="L116">			throw new IllegalStateException();</span>
+<span class="fc" id="L117">		current = current.getParent();</span>
+<span class="fc" id="L118">	}</span>
+
+	public void setGraphAttribute(String name, DotValue value) {
+<span class="fc" id="L121">		current.getAttributes().put(name, value);</span>
+<span class="fc" id="L122">	}</span>
+
+	public void setNodeDefault(String name, DotValue value) {
+<span class="fc" id="L125">		current.getLocalNodeDefaults().put(name, value);</span>
+<span class="fc" id="L126">	}</span>
+
+	public void setEdgeDefault(String name, DotValue value) {
+<span class="fc" id="L129">		current.getLocalEdgeDefaults().put(name, value);</span>
+<span class="fc" id="L130">	}</span>
+
+	/**
+	 * Mentions a node in the current subgraph, creating it if needed.
+	 */
+	public DotNode mentionNode(String id) {
+<span class="fc" id="L136">		DotNode result = nodesById.get(id);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L138">			result = new DotNode(id, nodes.size(), current, current.resolveNodeDefaults());</span>
+<span class="fc" id="L139">			nodes.add(result);</span>
+<span class="fc" id="L140">			nodesById.put(id, result);</span>
+		}
+<span class="fc" id="L142">		current.addNode(result);</span>
+<span class="fc" id="L143">		return result;</span>
+	}
+
+	public void setNodeAttributes(DotNode node, DotAttributes attributes) {
+<span class="fc" id="L147">		node.getAttributes().putAll(attributes);</span>
+<span class="fc" id="L148">	}</span>
+
+	/**
+	 * Creates (or, in a strict graph, finds) the edge {@code tail -&gt; head} in
+	 * the current subgraph.
+	 *
+	 * @param tailPort the port written after the tail node, or {@code null}
+	 * @param headPort the port written after the head node, or {@code null}
+	 */
+	public DotEdge addEdge(DotNode tail, String tailPort, DotNode head, String headPort, DotAttributes attributes) {
+<span class="fc" id="L158">		DotEdge result = null;</span>
+<span class="fc" id="L159">		final String key = strictKey(tail, head);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (strict)</span>
+<span class="fc" id="L161">			result = strictEdges.get(key);</span>
+
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L164">			result = new DotEdge(tail, head, edges.size(), current, current.resolveEdgeDefaults());</span>
+<span class="fc" id="L165">			edges.add(result);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">			if (strict)</span>
+<span class="fc" id="L167">				strictEdges.put(key, result);</span>
+		}
+<span class="fc" id="L169">		result.getAttributes().putAll(attributes);</span>
+		// As in Graphviz, the ports written in the statement win over the attributes
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (tailPort != null)</span>
+<span class="fc" id="L172">			result.getAttributes().put(&quot;tailport&quot;, DotValue.of(tailPort));</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (headPort != null)</span>
+<span class="fc" id="L174">			result.getAttributes().put(&quot;headport&quot;, DotValue.of(headPort));</span>
+
+<span class="fc" id="L176">		current.addEdge(result);</span>
+<span class="fc" id="L177">		return result;</span>
+	}
+
+	private String strictKey(DotNode tail, DotNode head) {
+<span class="fc" id="L181">		int a = tail.getIndex();</span>
+<span class="fc" id="L182">		int b = head.getIndex();</span>
+<span class="fc bfc" id="L183" title="All 4 branches covered.">		if (directed == false &amp;&amp; a &gt; b) {</span>
+<span class="fc" id="L184">			final int tmp = a;</span>
+<span class="fc" id="L185">			a = b;</span>
+<span class="fc" id="L186">			b = tmp;</span>
+		}
+<span class="fc" id="L188">		return a + &quot;/&quot; + b;</span>
+	}
+
+	public DotGraph build() {
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (current != root)</span>
+<span class="nc" id="L193">			throw new IllegalStateException(&quot;Unclosed subgraph &quot; + current.getId());</span>
+<span class="fc" id="L194">		return new DotGraph(strict, directed, root, nodes, nodesById, edges);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

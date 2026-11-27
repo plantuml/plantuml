@@ -79,36 +79,40 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.klimt.shape">net.sourceforge.plantuml.klimt.shape</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.skin">net.sourceforge.plantuml.skin</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.ngdot.attr">net.sourceforge.plantuml.ngdot.attr</a></div>
 <div class="col-last even-row-color">
+<div class="block">Typed reading of DOT attribute values.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.skin">net.sourceforge.plantuml.skin</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage Skin and 
  <a href="https://plantuml.com/skinparam" target="_top">
  Skinparameter</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.skin.rose">net.sourceforge.plantuml.skin.rose</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.style">net.sourceforge.plantuml.style</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.skin.rose">net.sourceforge.plantuml.skin.rose</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style">net.sourceforge.plantuml.style</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/style-evolution" target="_top">
  Style</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/svek" target="_top">
  PlantUML Svek Architecture</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek.image">net.sourceforge.plantuml.svek.image</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.timingdiagram">net.sourceforge.plantuml.timingdiagram</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek.image">net.sourceforge.plantuml.svek.image</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.timingdiagram">net.sourceforge.plantuml.timingdiagram</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/timing-diagram" target="_top">
  Timing Diagram</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.timingdiagram.graphic">net.sourceforge.plantuml.timingdiagram.graphic</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.timingdiagram.graphic">net.sourceforge.plantuml.timingdiagram.graphic</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -322,6 +326,37 @@ loadScripts(document, 'script');</script>
  double&nbsp;y,
  <a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a>&nbsp;defaultStroke)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.ngdot.attr">
+<h2>Uses of <a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a> in <a href="../../ngdot/attr/package-summary.html">net.sourceforge.plantuml.ngdot.attr</a></h2>
+<div class="caption"><span>Methods in <a href="../../ngdot/attr/package-summary.html">net.sourceforge.plantuml.ngdot.attr</a> that return <a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DotStyle.</span><code><a href="../../ngdot/attr/DotStyle.html#getStroke(net.sourceforge.plantuml.klimt.UStroke)" class="member-name-link">getStroke</a><wbr>(<a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a>&nbsp;themeStroke)</code></div>
+<div class="col-last even-row-color">
+<div class="block">The stroke to use, starting from the one of the theme: <code>penwidth</code>
+ (or <code>bold</code>) sets the thickness, <code>dashed</code> and <code>dotted</code>
+ set the dashes, as in the SVG output of Graphviz.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../ngdot/attr/package-summary.html">net.sourceforge.plantuml.ngdot.attr</a> with parameters of type <a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DotStyle.</span><code><a href="../../ngdot/attr/DotStyle.html#getStroke(net.sourceforge.plantuml.klimt.UStroke)" class="member-name-link">getStroke</a><wbr>(<a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a>&nbsp;themeStroke)</code></div>
+<div class="col-last even-row-color">
+<div class="block">The stroke to use, starting from the one of the theme: <code>penwidth</code>
+ (or <code>bold</code>) sets the thickness, <code>dashed</code> and <code>dotted</code>
+ set the dashes, as in the SVG output of Graphviz.</div>
+</div>
 </div>
 </section>
 </li>

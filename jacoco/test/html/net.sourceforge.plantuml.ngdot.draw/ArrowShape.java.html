@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrowShape.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ngdot.draw</a> &gt; <span class="el_source">ArrowShape.java</span></div><h1>ArrowShape.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ngdot.draw;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+
+/**
+ * A DOT arrow ({@code arrowhead}, {@code arrowtail}), following
+ * {@code lib/common/arrows.c} of Graphviz 2.38.
+ * &lt;p&gt;
+ * An arrow name is a sequence of up to four shapes, the first one at the
+ * node. Each shape is a base name ({@code normal inv vee crow tee box diamond
+ * dot curve icurve none}) with optional modifiers: {@code o} (open, not
+ * filled), {@code l} or {@code r} (only the left or right half). The
+ * synonyms {@code empty}, {@code invempty}, {@code open}, {@code halfopen}
+ * and {@code ediamond} are known. {@code none} alone means no arrow; inside a
+ * sequence, it is a gap.
+ */
+public final class ArrowShape {
+
+	/** Graphviz ARROW_LENGTH. */
+	private static final double ARROW_LENGTH = 10;
+
+<span class="fc" id="L68">	enum Type {</span>
+<span class="fc" id="L69">		NORMAL(1.0), CROW(1.0), TEE(0.5), BOX(1.0), DIAMOND(1.2), DOT(0.8), CURVE(1.0), GAP(0.5);</span>
+
+		private final double lenfact;
+
+<span class="fc" id="L73">		private Type(double lenfact) {</span>
+<span class="fc" id="L74">			this.lenfact = lenfact;</span>
+<span class="fc" id="L75">		}</span>
+	}
+
+	static final class Part {
+		final Type type;
+		final boolean inv;
+		final boolean open;
+		final boolean left;
+		final boolean right;
+
+<span class="fc" id="L85">		Part(Type type, boolean inv, boolean open, boolean left, boolean right) {</span>
+<span class="fc" id="L86">			this.type = type;</span>
+<span class="fc" id="L87">			this.inv = inv;</span>
+<span class="fc" id="L88">			this.open = open;</span>
+<span class="fc" id="L89">			this.left = left;</span>
+<span class="fc" id="L90">			this.right = right;</span>
+<span class="fc" id="L91">		}</span>
+
+		@Override
+		public String toString() {
+<span class="fc bfc" id="L95" title="All 8 branches covered.">			return (open ? &quot;o&quot; : &quot;&quot;) + (left ? &quot;l&quot; : &quot;&quot;) + (right ? &quot;r&quot; : &quot;&quot;) + (inv ? &quot;inv-&quot; : &quot;&quot;) + type;</span>
+		}
+	}
+
+<span class="fc" id="L99">	public static final ArrowShape NONE = new ArrowShape(Collections.&lt;Part&gt;emptyList(), true);</span>
+<span class="fc" id="L100">	public static final ArrowShape NORMAL = new ArrowShape(</span>
+<span class="fc" id="L101">			Collections.singletonList(new Part(Type.NORMAL, false, false, false, false)), true);</span>
+
+	private final List&lt;Part&gt; parts;
+	private final boolean known;
+
+<span class="fc" id="L106">	private ArrowShape(List&lt;Part&gt; parts, boolean known) {</span>
+<span class="fc" id="L107">		this.parts = parts;</span>
+<span class="fc" id="L108">		this.known = known;</span>
+<span class="fc" id="L109">	}</span>
+
+	List&lt;Part&gt; getParts() {
+<span class="fc" id="L112">		return parts;</span>
+	}
+
+	/**
+	 * {@code false} when the name was not understood: the arrow is then a
+	 * {@code normal} one, as Graphviz does.
+	 */
+	public boolean isKnown() {
+<span class="fc" id="L120">		return known;</span>
+	}
+
+	public boolean isNone() {
+<span class="fc" id="L124">		return parts.isEmpty();</span>
+	}
+
+<span class="fc" id="L127">	private static final String[][] SYNONYMS = { { &quot;invempty&quot;, &quot;oinv&quot; }, { &quot;halfopen&quot;, &quot;lvee&quot; }, { &quot;ediamond&quot;, &quot;odiamond&quot; },</span>
+			{ &quot;empty&quot;, &quot;onormal&quot; }, { &quot;open&quot;, &quot;vee&quot; } };
+
+<span class="fc" id="L130">	private static final String[] NAMES = { &quot;normal&quot;, &quot;icurve&quot;, &quot;curve&quot;, &quot;crow&quot;, &quot;tee&quot;, &quot;box&quot;, &quot;diamond&quot;, &quot;dot&quot;,</span>
+			&quot;none&quot;, &quot;inv&quot;, &quot;vee&quot; };
+
+	public static ArrowShape parse(String name) {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (name == null)</span>
+<span class="fc" id="L135">			return NORMAL;</span>
+<span class="fc" id="L136">		String s = name.trim().toLowerCase();</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
+<span class="nc" id="L138">			return NORMAL;</span>
+
+<span class="fc" id="L140">		final List&lt;Part&gt; result = new ArrayList&lt;Part&gt;();</span>
+<span class="fc bfc" id="L141" title="All 4 branches covered.">		while (s.length() &gt; 0 &amp;&amp; result.size() &lt; 4) {</span>
+<span class="fc" id="L142">			boolean replaced = false;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">			for (String[] synonym : SYNONYMS)</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">				if (s.startsWith(synonym[0])) {</span>
+<span class="fc" id="L145">					s = synonym[1] + s.substring(synonym[0].length());</span>
+<span class="fc" id="L146">					replaced = true;</span>
+<span class="fc" id="L147">					break;</span>
+				}
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (replaced)</span>
+<span class="fc" id="L150">				continue;</span>
+
+<span class="fc" id="L152">			boolean open = false;</span>
+<span class="fc" id="L153">			boolean left = false;</span>
+<span class="fc" id="L154">			boolean right = false;</span>
+<span class="fc" id="L155">			String base = null;</span>
+<span class="pc bpc" id="L156" title="2 of 4 branches missed.">			while (base == null &amp;&amp; s.length() &gt; 0) {</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">				for (String n : NAMES)</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">					if (s.startsWith(n)) {</span>
+<span class="fc" id="L159">						base = n;</span>
+<span class="fc" id="L160">						break;</span>
+					}
+<span class="fc bfc" id="L162" title="All 2 branches covered.">				if (base != null)</span>
+<span class="fc" id="L163">					break;</span>
+<span class="fc" id="L164">				final char c = s.charAt(0);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">				if (c == 'o')</span>
+<span class="fc" id="L166">					open = true;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">				else if (c == 'l')</span>
+<span class="fc" id="L168">					left = true;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">				else if (c == 'r')</span>
+<span class="fc" id="L170">					right = true;</span>
+				else
+<span class="fc" id="L172">					return new ArrowShape(NORMAL.parts, false);</span>
+<span class="fc" id="L173">				s = s.substring(1);</span>
+<span class="fc" id="L174">			}</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			if (base == null)</span>
+<span class="nc" id="L176">				return new ArrowShape(NORMAL.parts, false);</span>
+<span class="fc" id="L177">			s = s.substring(base.length());</span>
+<span class="fc" id="L178">			result.add(createPart(base, open, left, right));</span>
+<span class="fc" id="L179">		}</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (s.length() &gt; 0)</span>
+<span class="fc" id="L181">			return new ArrowShape(NORMAL.parts, false);</span>
+
+		// &quot;none&quot; alone means no arrow at all
+<span class="fc bfc" id="L184" title="All 4 branches covered.">		if (result.size() == 1 &amp;&amp; result.get(0).type == Type.GAP)</span>
+<span class="fc" id="L185">			return NONE;</span>
+<span class="fc" id="L186">		return new ArrowShape(result, true);</span>
+	}
+
+	private static Part createPart(String base, boolean open, boolean left, boolean right) {
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (base.equals(&quot;normal&quot;))</span>
+<span class="fc" id="L191">			return new Part(Type.NORMAL, false, open, left, right);</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (base.equals(&quot;inv&quot;))</span>
+<span class="fc" id="L193">			return new Part(Type.NORMAL, true, open, left, right);</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (base.equals(&quot;crow&quot;))</span>
+<span class="fc" id="L195">			return new Part(Type.CROW, false, open, left, right);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (base.equals(&quot;vee&quot;))</span>
+<span class="fc" id="L197">			return new Part(Type.CROW, true, open, left, right);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (base.equals(&quot;tee&quot;))</span>
+<span class="fc" id="L199">			return new Part(Type.TEE, false, open, left, right);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (base.equals(&quot;box&quot;))</span>
+<span class="fc" id="L201">			return new Part(Type.BOX, false, open, left, right);</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (base.equals(&quot;diamond&quot;))</span>
+<span class="fc" id="L203">			return new Part(Type.DIAMOND, false, open, left, right);</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (base.equals(&quot;dot&quot;))</span>
+<span class="fc" id="L205">			return new Part(Type.DOT, false, open, left, right);</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (base.equals(&quot;curve&quot;))</span>
+<span class="nc" id="L207">			return new Part(Type.CURVE, false, open, left, right);</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (base.equals(&quot;icurve&quot;))</span>
+<span class="nc" id="L209">			return new Part(Type.CURVE, true, open, left, right);</span>
+<span class="fc" id="L210">		return new Part(Type.GAP, false, open, left, right);</span>
+	}
+
+	/**
+	 * The distance between the tip of the arrow and the point where the edge
+	 * curve stops.
+	 */
+	public double getLength(double arrowsize) {
+<span class="fc" id="L218">		double lenfact = 0;</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		for (Part part : parts)</span>
+<span class="fc" id="L220">			lenfact += part.type.lenfact;</span>
+<span class="fc" id="L221">		return ARROW_LENGTH * arrowsize * lenfact;</span>
+	}
+
+	/**
+	 * Draws the arrow.
+	 *
+	 * @param ug        carries the line color and the stroke
+	 * @param fill      the color of the filled shapes
+	 * @param tip       the point on the node
+	 * @param base      the point where the curve stops
+	 * @param arrowsize the {@code arrowsize} attribute
+	 */
+	public void draw(UGraphic ug, HColor fill, XPoint2D tip, XPoint2D base, double arrowsize) {
+<span class="fc" id="L234">		double dx = base.getX() - tip.getX();</span>
+<span class="fc" id="L235">		double dy = base.getY() - tip.getY();</span>
+<span class="fc" id="L236">		final double norm = Math.sqrt(dx * dx + dy * dy);</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">		if (norm &lt; 1e-9)</span>
+<span class="nc" id="L238">			return;</span>
+<span class="fc" id="L239">		dx /= norm;</span>
+<span class="fc" id="L240">		dy /= norm;</span>
+
+<span class="fc" id="L242">		XPoint2D p = tip;</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		for (Part part : parts) {</span>
+<span class="fc" id="L244">			final double len = ARROW_LENGTH * arrowsize * part.type.lenfact;</span>
+<span class="fc" id="L245">			final XPoint2D u = new XPoint2D(dx * len, dy * len);</span>
+<span class="fc" id="L246">			drawPart(ug, fill, part, p, u);</span>
+<span class="fc" id="L247">			p = add(p, u, 1);</span>
+<span class="fc" id="L248">		}</span>
+<span class="fc" id="L249">	}</span>
+
+	private static XPoint2D add(XPoint2D p, XPoint2D u, double k) {
+<span class="fc" id="L252">		return new XPoint2D(p.getX() + u.getX() * k, p.getY() + u.getY() * k);</span>
+	}
+
+	private static XPoint2D perp(XPoint2D u, double k) {
+<span class="fc" id="L256">		return new XPoint2D(-u.getY() * k, u.getX() * k);</span>
+	}
+
+	private static void polygon(UGraphic ug, HColor fill, boolean filled, XPoint2D... points) {
+<span class="fc" id="L260">		final UPolygon polygon = new UPolygon();</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		for (XPoint2D pt : points)</span>
+<span class="fc" id="L262">			polygon.addPoint(pt);</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		ug.apply(filled ? fill.bg() : HColors.none().bg()).draw(polygon);</span>
+<span class="fc" id="L264">	}</span>
+
+	private static void line(UGraphic ug, XPoint2D a, XPoint2D b) {
+<span class="fc" id="L267">		ug.apply(new UTranslate(a.getX(), a.getY())).draw(new ULine(b.getX() - a.getX(), b.getY() - a.getY()));</span>
+<span class="fc" id="L268">	}</span>
+
+	private void drawPart(UGraphic ug, HColor fill, Part part, XPoint2D p, XPoint2D u) {
+<span class="fc" id="L271">		final XPoint2D q = add(p, u, 1);</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		final boolean filled = part.open == false;</span>
+<span class="pc bpc" id="L273" title="3 of 9 branches missed.">		switch (part.type) {</span>
+		case NORMAL: {
+<span class="fc" id="L275">			final XPoint2D v = perp(u, 0.35);</span>
+			final XPoint2D[] a;
+<span class="fc bfc" id="L277" title="All 2 branches covered.">			if (part.inv)</span>
+<span class="fc" id="L278">				a = new XPoint2D[] { p, add(p, v, -1), q, add(p, v, 1), p };</span>
+			else
+<span class="fc" id="L280">				a = new XPoint2D[] { q, add(q, v, -1), p, add(q, v, 1), q };</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">			if (part.left)</span>
+<span class="nc" id="L282">				polygon(ug, fill, filled, a[0], a[1], a[2]);</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">			else if (part.right)</span>
+<span class="nc" id="L284">				polygon(ug, fill, filled, a[2], a[3], a[4]);</span>
+			else
+<span class="fc" id="L286">				polygon(ug, fill, filled, a[1], a[2], a[3]);</span>
+<span class="fc" id="L287">			break;</span>
+		}
+		case CROW: {
+<span class="fc" id="L290">			final XPoint2D v = perp(u, 0.45);</span>
+<span class="fc" id="L291">			final XPoint2D m = add(p, u, 0.5);</span>
+			final XPoint2D[] a;
+<span class="fc bfc" id="L293" title="All 2 branches covered.">			if (part.inv)</span>
+<span class="fc" id="L294">				a = new XPoint2D[] { p, add(q, v, -1), m, q, q, q, m, add(q, v, 1), p };</span>
+			else
+<span class="fc" id="L296">				a = new XPoint2D[] { q, add(p, v, -1), m, p, p, p, m, add(p, v, 1), q };</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">			if (part.left)</span>
+<span class="fc" id="L298">				polygon(ug, fill, filled, a[0], a[1], a[2], a[3], a[4], a[5]);</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">			else if (part.right)</span>
+<span class="nc" id="L300">				polygon(ug, fill, filled, a[3], a[4], a[5], a[6], a[7], a[8]);</span>
+			else
+<span class="fc" id="L302">				polygon(ug, fill, filled, a);</span>
+<span class="fc" id="L303">			break;</span>
+		}
+		case TEE: {
+<span class="fc" id="L306">			final XPoint2D v = perp(u, 1);</span>
+<span class="fc" id="L307">			final XPoint2D m = add(p, u, 0.2);</span>
+<span class="fc" id="L308">			final XPoint2D n = add(p, u, 0.6);</span>
+<span class="fc" id="L309">			XPoint2D a0 = add(m, v, 1);</span>
+<span class="fc" id="L310">			XPoint2D a1 = add(m, v, -1);</span>
+<span class="fc" id="L311">			XPoint2D a2 = add(n, v, -1);</span>
+<span class="fc" id="L312">			XPoint2D a3 = add(n, v, 1);</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">			if (part.left) {</span>
+<span class="fc" id="L314">				a0 = m;</span>
+<span class="fc" id="L315">				a3 = n;</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">			} else if (part.right) {</span>
+<span class="nc" id="L317">				a1 = m;</span>
+<span class="nc" id="L318">				a2 = n;</span>
+			}
+<span class="fc" id="L320">			polygon(ug, fill, true, a0, a1, a2, a3);</span>
+<span class="fc" id="L321">			line(ug, p, q);</span>
+<span class="fc" id="L322">			break;</span>
+		}
+		case BOX: {
+<span class="fc" id="L325">			final XPoint2D v = perp(u, 0.4);</span>
+<span class="fc" id="L326">			final XPoint2D m = add(p, u, 0.8);</span>
+<span class="fc" id="L327">			XPoint2D a0 = add(p, v, 1);</span>
+<span class="fc" id="L328">			XPoint2D a1 = add(p, v, -1);</span>
+<span class="fc" id="L329">			XPoint2D a2 = add(m, v, -1);</span>
+<span class="fc" id="L330">			XPoint2D a3 = add(m, v, 1);</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">			if (part.left) {</span>
+<span class="nc" id="L332">				a0 = p;</span>
+<span class="nc" id="L333">				a3 = m;</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">			} else if (part.right) {</span>
+<span class="nc" id="L335">				a1 = p;</span>
+<span class="nc" id="L336">				a2 = m;</span>
+			}
+<span class="fc" id="L338">			polygon(ug, fill, filled, a0, a1, a2, a3);</span>
+<span class="fc" id="L339">			line(ug, m, q);</span>
+<span class="fc" id="L340">			break;</span>
+		}
+		case DIAMOND: {
+<span class="fc" id="L343">			final XPoint2D v = perp(u, 1.0 / 3);</span>
+<span class="fc" id="L344">			final XPoint2D r = add(p, u, 0.5);</span>
+<span class="fc" id="L345">			final XPoint2D[] a = { q, add(r, v, 1), p, add(r, v, -1), q };</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">			if (part.left)</span>
+<span class="fc" id="L347">				polygon(ug, fill, filled, a[2], a[3], a[4]);</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">			else if (part.right)</span>
+<span class="nc" id="L349">				polygon(ug, fill, filled, a[0], a[1], a[2]);</span>
+			else
+<span class="fc" id="L351">				polygon(ug, fill, filled, a[0], a[1], a[2], a[3]);</span>
+<span class="fc" id="L352">			break;</span>
+		}
+		case DOT: {
+<span class="fc" id="L355">			final double r = Math.sqrt(u.getX() * u.getX() + u.getY() * u.getY()) / 2;</span>
+<span class="fc" id="L356">			final XPoint2D center = add(p, u, 0.5);</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">			ug.apply(filled ? fill.bg() : HColors.none().bg())</span>
+<span class="fc" id="L358">					.apply(new UTranslate(center.getX() - r, center.getY() - r)).draw(UEllipse.build(2 * r, 2 * r));</span>
+<span class="fc" id="L359">			break;</span>
+		}
+		case CURVE:
+<span class="nc" id="L362">			line(ug, p, q);</span>
+<span class="nc" id="L363">			break;</span>
+		case GAP:
+<span class="nc" id="L365">			line(ug, p, q);</span>
+			break;
+		}
+<span class="fc" id="L368">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L372">		return parts.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

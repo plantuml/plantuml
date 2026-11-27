@@ -70,6 +70,7 @@ net.sourceforge.plantuml.dedication
 net.sourceforge.plantuml.definition
 net.sourceforge.plantuml.descdiagram
 net.sourceforge.plantuml.descdiagram.command
+net.sourceforge.plantuml.directdoc
 net.sourceforge.plantuml.directdot
 net.sourceforge.plantuml.ditaa
 net.sourceforge.plantuml.donors
@@ -148,6 +149,12 @@ net.sourceforge.plantuml.math
 net.sourceforge.plantuml.mcp
 net.sourceforge.plantuml.mda
 net.sourceforge.plantuml.mindmap
+net.sourceforge.plantuml.ngdot
+net.sourceforge.plantuml.ngdot.attr
+net.sourceforge.plantuml.ngdot.draw
+net.sourceforge.plantuml.ngdot.layout
+net.sourceforge.plantuml.ngdot.model
+net.sourceforge.plantuml.ngdot.parser
 net.sourceforge.plantuml.nio
 net.sourceforge.plantuml.nwdiag
 net.sourceforge.plantuml.nwdiag.core

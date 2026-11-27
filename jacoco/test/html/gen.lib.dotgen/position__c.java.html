@@ -1636,7 +1636,7 @@ try {
     
     /* account for a possible cluster label in clusters */
     /* room for root graph label is handled in dotneato_postprocess */
-<span class="pc bpc" id="L1639" title="1 of 4 branches missed.">    if ((g != dot_root(g)) &amp;&amp; GD_label(g)!=null) {</span>
+<span class="fc bfc" id="L1639" title="All 4 branches covered.">    if ((g != dot_root(g)) &amp;&amp; GD_label(g)!=null) {</span>
 <span class="fc" id="L1640">	haveClustLabel = 1;</span>
 <span class="fc bfc" id="L1641" title="All 2 branches covered.">	if (!GD_flip(agroot(g))) {</span>
 <span class="fc" id="L1642">	    ht1 += GD_border(g)[BOTTOM_IX].y;</span>
@@ -1689,7 +1689,7 @@ try {
 <span class="fc bfc" id="L1689" title="All 2 branches covered.">	    if (ND_other(n).list!=null)</span>
 <span class="fc bfc" id="L1690" title="All 2 branches covered.">		for (j = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(j))!=null; j++) {</span>
 <span class="fc bfc" id="L1691" title="All 2 branches covered.">		    if (agtail(e) == aghead(e)) {</span>
-<span class="pc bpc" id="L1692" title="1 of 2 branches missed.">			if (ED_label(e)!=null)</span>
+<span class="fc bfc" id="L1692" title="All 2 branches covered.">			if (ED_label(e)!=null)</span>
 <span class="fc" id="L1693">			    ht2 = Math.max(ht2, ED_label(e).dimen.y / 2);</span>
 		    }
 		}

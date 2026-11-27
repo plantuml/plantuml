@@ -292,13 +292,16 @@ import net.sourceforge.plantuml.style.SName;
 <span class="fc bfc" id="L292" title="All 2 branches covered.">		if (this == PACKET)</span>
 <span class="fc" id="L293">			return SName.packetdiagDiagram;</span>
 
-<span class="fc" id="L295">		return SName.activityDiagram;</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		if (this == DOT)</span>
+<span class="fc" id="L296">			return SName.dotDiagram;</span>
+
+<span class="fc" id="L298">		return SName.activityDiagram;</span>
 	}
 
 	public String humanReadableName() {
-<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		if (this == DESCRIPTION)</span>
-<span class="nc" id="L300">			return &quot;component&quot;;</span>
-<span class="fc" id="L301">		return name().toLowerCase();</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (this == DESCRIPTION)</span>
+<span class="nc" id="L303">			return &quot;component&quot;;</span>
+<span class="fc" id="L304">		return name().toLowerCase();</span>
 	}
 
 }
