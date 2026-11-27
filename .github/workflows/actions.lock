@@ -59,6 +59,9 @@ workflows:
         - 'actions/setup-node@v7.1.0'
         - 'actions/upload-artifact@v7.0.2'
         - 'gradle/actions@v6.4.0'
+    '.github/workflows/plumber.yml':
+        - 'actions/checkout@v7.0.1'
+        - 'getplumber/plumber@v0.7.23'
     '.github/workflows/super-linter.yml':
         - 'actions/checkout@v7.0.1'
     '.github/workflows/teavm-c.yml':
@@ -109,6 +112,11 @@ dependencies:
         commit: 'sha1-949feb2413d6458794dcd2491c4babbbce0c15c1'
         owner_id: 44036562
         repo_id: 189476904
+    'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9':
+        ref: 'v7.0.2'
+        commit: 'sha1-cf430e030ddbb5b0abf93d22962f4752f3646cd9'
+        owner_id: 44036562
+        repo_id: 192625955
     'actions/upload-artifact@v7.0.2':
         ref: 'v7.0.2'
         commit: 'sha1-cf430e030ddbb5b0abf93d22962f4752f3646cd9'
@@ -134,6 +142,19 @@ dependencies:
         commit: 'sha1-f87e5991a6d7451dcb8d9637bfbc97413f497069'
         owner_id: 5429470
         repo_id: 288485773
+    'getplumber/plumber@v0.7.23':
+        ref: 'v0.7.23'
+        commit: 'sha1-ec8cb3a7edd6a324b33e85109b627b2df6023d94'
+        owner_id: 255179076
+        repo_id: 1137327132
+        uses:
+            - 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9'
+            - 'github/codeql-action@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee'
+    'github/codeql-action@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee':
+        ref: 'v4.39.0'
+        commit: 'sha1-6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee'
+        owner_id: 9919
+        repo_id: 259445878
     'github/codeql-action@v4.39.4':
         ref: 'v4.39.4'
         commit: 'sha1-1bd86f2fdb4b86187fa4059f16f31a3202acc9ea'
