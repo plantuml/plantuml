@@ -30,61 +30,70 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.directdot;
+package net.sourceforge.plantuml.ngdot.model;
 
-import java.io.IOException;
-import java.io.OutputStream;
+/**
+ * An edge of a DOT graph.
+ * <p>
+ * The ports written in an edge statement ({@code a:p1:n -> b}) are stored as
+ * the {@code tailport} and {@code headport} attributes, as Graphviz does.
+ */
+public final class DotEdge {
 
-public class CounterOutputStream extends OutputStream {
-	private int length;
-	private final OutputStream os;
+	private final DotNode tail;
+	private final DotNode head;
+	private final int index;
+	private final DotSubgraph owner;
+	private final DotAttributes attributes;
 
-	public CounterOutputStream(OutputStream os) {
-		this.os = os;
+	DotEdge(DotNode tail, DotNode head, int index, DotSubgraph owner, DotAttributes attributes) {
+		this.tail = tail;
+		this.head = head;
+		this.index = index;
+		this.owner = owner;
+		this.attributes = attributes;
+	}
+
+	public DotNode getTail() {
+		return tail;
+	}
+
+	public DotNode getHead() {
+		return head;
 	}
 
 	/**
-	 * Writes to nowhere
+	 * Creation order of the edge in the whole graph, starting at 0.
 	 */
-	@Override
-	public void write(int b) throws IOException {
-		os.write(b);
-		length++;
+	public int getIndex() {
+		return index;
 	}
 
 	/**
-	 * Overridden for performance reason
+	 * The subgraph in which the edge statement was written.
 	 */
-	@Override
-	public void write(byte b[]) throws IOException {
-		os.write(b);
-		length += b.length;
+	public DotSubgraph getOwner() {
+		return owner;
 	}
 
-	/**
-	 * Overridden for performance reason
-	 */
-	@Override
-	public void write(byte b[], int off, int len) throws IOException {
-		os.write(b, off, len);
-		length += len;
+	public DotAttributes getAttributes() {
+		return attributes;
 	}
 
-	public int getLength() {
-		return length;
+	public String getTailPort() {
+		return attributes.getString("tailport");
+	}
+
+	public String getHeadPort() {
+		return attributes.getString("headport");
 	}
 
 	@Override
-	public void flush() throws IOException {
-		os.flush();
-	}
-
-	@Override
-	public void close() throws IOException {
-		os.close();
+	public String toString() {
+		return tail + "->" + head;
 	}
 
 }

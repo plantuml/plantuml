@@ -45,8 +45,8 @@ import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.ngdot.PSystemNgDotFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -62,7 +62,7 @@ public class PSystemErrorUtils {
 			// Detect misuse of @startuml for DOT or DITAA diagrams and
 			// return a helpful error
 			final String secondLine = source.get(1).getString();
-			if (!TeaVM.isTeaVM() && PSystemDotFactory.isGraphvizDotHeader(secondLine)) {
+			if (PSystemNgDotFactory.isGraphvizDotHeader(secondLine)) {
 				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
 						"This looks like a DOT diagram. Please use @startdot instead of @startuml.", 100, source.get(1),
 						DiagramType.SEQUENCE);

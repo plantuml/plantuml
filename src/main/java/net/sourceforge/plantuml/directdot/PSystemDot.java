@@ -46,14 +46,15 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.directdoc.CounterOutputStream;
 import net.sourceforge.plantuml.dot.ExeState;
 import net.sourceforge.plantuml.dot.Graphviz;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SecurityUtils;
 

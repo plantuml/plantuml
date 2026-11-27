@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="173px" preserveAspectRatio="none" style="width:96px;height:173px;background:#FFFFFF;" version="1.1" viewBox="0 0 96 173" width="96px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFFFF0" height="152" style="stroke:none;" width="75.05" x="10" y="10"/>
+    <text fill="#006400" font-size="18" textLength="66.038" x="14.506" y="28">Top right</text>
+    <text fill="#006400" font-size="18" textLength="67.05" x="14" y="46">label of G</text>
+    <path d="M47.525,86.303 C47.525,94.02 47.525,103.293 47.525,111.896" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="44.025,111.896,47.525,121.896,51.025,111.896" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="47.525" cy="68" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="43.631" y="71.889">a</text>
+    <ellipse cx="47.525" cy="140" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="43.631" y="143.889">b</text>
+  </g>
+</svg>

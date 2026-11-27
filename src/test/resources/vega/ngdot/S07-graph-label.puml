@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph G {
+  label="Top right\nlabel of \G"; labelloc=t; labeljust=r; fontsize=18; fontcolor=darkgreen;
+  bgcolor=ivory;
+  a -> b;
+}
+@enddot

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="223px" preserveAspectRatio="none" style="width:227px;height:223px;background:#FFFFFF;" version="1.1" viewBox="0 0 227 223" width="227px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M55.57,47.368 C65.839,57.494 79.764,71.226 91.331,82.632" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="88.874,85.124,98.451,89.653,93.789,80.14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M113,50.187 C113,58.223 113,67.982 113,76.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="109.5,76.971,113,86.971,116.5,76.971" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M170.43,47.368 C160.161,57.494 146.236,71.226 134.669,82.632" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="132.211,80.14,127.549,89.653,137.126,85.124" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M113,123.198 C113,134.346 113,149.108 113,161.824" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="109.5,161.824,113,171.824,116.5,161.824" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="41" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.106" y="35.889">a</text>
+    <ellipse cx="113" cy="105" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="101.319" y="108.889">hub</text>
+    <ellipse cx="113" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="109.106" y="35.889">b</text>
+    <ellipse cx="185" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="181.5" y="35.889">c</text>
+    <ellipse cx="113" cy="190" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="100.531" y="193.889">sink</text>
+    <text fill="#000" font-size="13" textLength="37.619" x="113.191" y="151.111">legacy</text>
+  </g>
+</svg>

@@ -34,26 +34,21 @@
  */
 package net.sourceforge.plantuml.directdot;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.ngdot.PSystemNgDotFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
+/**
+ * The historical {@code @startdot}: the DOT text is given as is to the
+ * Graphviz executable. Used on the JVM unless
+ * {@link net.sourceforge.plantuml.TitledDiagram#FORCE_SMETANA} is set, see
+ * {@link PSystemDotSelectorFactory}.
+ */
 public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 
 	private StringBuilder data;
-	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile("\\s*" // optional leading whitespace
-			+ "(strict\\s+)?" // optional 'strict'
-			+ "(di)?" // optional 'di'
-			+ "graph\\s+" // 'graph' keyword
-			+ "(" + "[_\\p{L}][_\\p{L}\\p{N}]*" // identifier
-			+ "|" + "-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)" // number
-			+ "|" + "\"([^\"\\\\]|\\\\\")*\"" // quoted string
-			+ ")?" + "\\s*\\{\\s*" // opening brace
-	);
 
 	public PSystemDotFactory() {
 		super(DiagramType.DOT);
@@ -68,7 +63,7 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 	@Override
 	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line,
 			PreprocessingArtifact preprocessing) {
-		if (system == null && isGraphvizDotHeader(line)) {
+		if (system == null && PSystemNgDotFactory.isGraphvizDotHeader(line)) {
 			data = new StringBuilder(line);
 			data.append("\n");
 			return new PSystemDot(source, data.toString(), preprocessing);
@@ -79,11 +74,6 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 		data.append(line);
 		data.append("\n");
 		return new PSystemDot(source, data.toString(), preprocessing);
-	}
-
-	public static boolean isGraphvizDotHeader(String line) {
-		final Matcher matcher = GRAPHVIZ_DOT_HEADER_PATTERN.matcher(line);
-		return matcher.matches();
 	}
 
 }

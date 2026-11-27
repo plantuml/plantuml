@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="278px" preserveAspectRatio="none" style="width:336px;height:278px;background:#FFFFFF;" version="1.1" viewBox="0 0 336 278" width="336px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M43.5,50.09 C43.5,62.166 43.5,78.6 43.5,92.446" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="40,92.446,43.5,102.446,47,92.446" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M43.5,138.756 C43.5,151.925 43.5,170.584 43.5,187.268" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="40,187.268,43.5,197.268,47,187.268" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M125.5,50.09 C125.5,57.592 125.5,66.778 125.5,75.979" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="122,75.979,125.5,85.979,129,75.979" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M125.5,155.14 C125.5,169.263 125.5,185.472 125.5,198.821" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="122,198.821,125.5,208.821,129,198.821" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M249.5,50.09 C249.5,64.287 249.5,84.509 249.5,99.466" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="246,99.466,249.5,109.466,253,99.466" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M249.5,131.52 C249.5,142.989 249.5,162.567 249.5,180.937" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="246,180.937,249.5,190.937,253,180.937" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#F1F1F1" height="36" style="stroke:#181818;stroke-width:0.5;" width="54" x="16.5" y="14"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="32.213" y="35.889">box</text>
+    <rect fill="#F1F1F1" height="36" style="stroke:#181818;stroke-width:0.5;" width="54" x="16.5" y="102.5"/>
+    <text fill="#000" font-size="14" textLength="23.275" x="31.862" y="124.389">rect</text>
+    <rect fill="#F1F1F1" height="59" style="stroke:#181818;stroke-width:0.5;" width="59" x="14" y="197.5"/>
+    <text fill="#000" font-size="14" textLength="42.787" x="22.106" y="230.889">square</text>
+    <ellipse cx="125.5" cy="32" fill="#F1F1F1" rx="35.5" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="39.813" x="105.594" y="35.889">ellipse</text>
+    <ellipse cx="125.5" cy="120.5" fill="#F1F1F1" rx="34.5" ry="34.5" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="109.138" y="124.389">circle</text>
+    <text fill="#000" font-size="14" textLength="52.15" x="99.425" y="230.889">plaintext</text>
+    <ellipse cx="249.5" cy="32" fill="#F1F1F1" rx="45.5" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="56.088" x="221.456" y="35.889">unknown</text>
+    <rect fill="#F1F1F1" height="22" style="stroke:#181818;stroke-width:0.5;" width="108" x="195.5" y="109.5"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="234.713" y="124.389">fixed</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="144" x="177.5" y="191"/>
+    <text fill="#000" font-size="14" textLength="18.725" x="240.138" y="230.889">big</text>
+  </g>
+</svg>

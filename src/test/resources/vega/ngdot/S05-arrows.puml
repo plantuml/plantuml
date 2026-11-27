@@ -1,0 +1,25 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  rankdir=LR;
+  node [shape=point];
+  edge [arrowsize=1.2];
+  a1 -> b1 [arrowhead=vee, label=vee];
+  a2 -> b2 [arrowhead=odot, label=odot];
+  a3 -> b3 [arrowhead=diamond, label=diamond];
+  a4 -> b4 [arrowhead=ediamond, label=ediamond];
+  a5 -> b5 [arrowhead=tee, label=tee];
+  a6 -> b6 [arrowhead=obox, label=obox];
+  a7 -> b7 [arrowhead=crow, label=crow];
+  a8 -> b8 [arrowhead=inv, label=inv];
+  a9 -> b9 [arrowhead=empty, label=empty];
+  a10 -> b10 [arrowhead=lteeoldiamond, label=lteeoldiamond];
+  a11 -> b11 [arrowhead=halfopen, label=halfopen];
+  a12 -> b12 [arrowhead=nosuch, label="unknown=normal"];
+  a13 -> b13 [dir=both, arrowtail=invdot, arrowhead=dotvee, label=both];
+  a14 -> b14 [arrowhead=normal, arrowsize=2.5, label=big];
+}
+@enddot

@@ -1,0 +1,10 @@
+---
+output: utxt
+expected-status: 400
+---
+@startdot
+digraph G {
+  a -> b
+  b -- c
+}
+@enddot

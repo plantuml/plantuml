@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.directdot.PSystemDot;
+import net.sourceforge.plantuml.ngdot.PSystemNgDot;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.log.Logme;
@@ -132,7 +133,7 @@ public class StatsUtilsIncrement {
 		if (type.getSimpleName().equals("PSystemSudoku")) {
 			return "Sudoku";
 		}
-		if (type == PSystemDot.class) {
+		if (type == PSystemDot.class || type == PSystemNgDot.class) {
 			return "Dot";
 		}
 		if (type == PSystemWelcome.class) {

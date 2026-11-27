@@ -1,0 +1,10 @@
+[From string (line 6) ]
+
+@startdot
+digraph G {
+  a -> b
+  subgraph cluster_x {
+    c
+}
+^
+ Expected '}' but found end of text (Assumed diagram type: dot)

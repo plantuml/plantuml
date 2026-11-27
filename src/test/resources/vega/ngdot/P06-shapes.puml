@@ -1,0 +1,20 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  box [shape=box];
+  rect [shape=rect];
+  square [shape=square];
+  ellipse [shape=ellipse];
+  circle [shape=circle];
+  plaintext [shape=plaintext];
+  unknown [shape=nosuchshape];
+  fixed [shape=box, fixedsize=true, width=1.5, height=0.3];
+  big [shape=box, width=2, height=1];
+  box -> rect -> square;
+  ellipse -> circle -> plaintext;
+  unknown -> fixed -> big;
+}
+@enddot

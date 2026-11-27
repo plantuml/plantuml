@@ -1,0 +1,8 @@
+[From string (line 4) ]
+
+@startdot
+digraph G {
+  a -> b
+  b -- c
+  ^^^^^^
+ '--' is not allowed in a digraph, use '->' (Assumed diagram type: dot)

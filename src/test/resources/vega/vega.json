@@ -3786,6 +3786,188 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "ngdot/E01-wrong-edge-operator.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "ngdot/E02-unclosed-graph.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "ngdot/P01-simple.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P02-rankdir-lr.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P03-rankdir-bt.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P04-rankdir-rl.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P05-undirected.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P06-shapes.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P07-cluster.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P08-label-justification.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P09-nodesep-ranksep.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P10-edge-attributes.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P11-preprocessor.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P12-dark.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P13-strict-and-ports.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P14-empty.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/P15-fontsize.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S01-colors.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S02-styles.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S03-shapes.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S04-diamond-clip.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S05-arrows.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S06-port-labels.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S07-graph-label.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S08-cluster-styles.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/S09-state-machine.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
       "file": "nonreg/activity-color-prefix/color_before_fork.puml",
       "folder": "nonreg/activity-color-prefix",
       "status": "pass",
@@ -10825,8 +11007,8 @@
     }
   ],
   "summary": {
-    "total": 1509,
-    "passed": 1504,
+    "total": 1535,
+    "passed": 1530,
     "failed": 0,
     "skipped": 5
   }

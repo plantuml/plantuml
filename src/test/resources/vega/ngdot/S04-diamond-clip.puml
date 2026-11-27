@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  d [shape=diamond, style=filled, fillcolor=gold];
+  a -> d; b -> d; c -> d;
+  d -> e; d -> f; d -> g;
+  d -> d [label="loop"];
+  d -> h [dir=both, arrowtail=dot];
+  e2 [shape=diamond]; f -> e2 [dir=back];
+}
+@enddot

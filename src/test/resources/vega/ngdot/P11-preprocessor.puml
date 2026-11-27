@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+!$target = "sink"
+!sources = ["a", "b", "c"]
+digraph {
+!for s in sources:
+  !{s} -> hub;
+hub -> $target [label="legacy"];
+}
+@enddot

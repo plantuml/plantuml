@@ -913,8 +913,8 @@ try {
 	    d.___(GD_border(g)[2]);
 	    p.y = GD_bb(g).UR.y - d.y / 2;
 	} else {
-UNSUPPORTED("1w38no4welthbwa0i10hei16b"); // 	    d = GD_border(g)[0];
-UNSUPPORTED("2xa4n9ca16xpf1kahaycmkl4r"); // 	    p.y = GD_bb(g).LL.y + d.y / 2;
+	    d.___(GD_border(g)[0]); // 	    d = GD_border(g)[0];
+	    p.y = GD_bb(g).LL.y + d.y / 2; // 	    p.y = GD_bb(g).LL.y + d.y / 2;
 	}
 	if ((GD_label_pos(g) & 4)!=0) {
 UNSUPPORTED("cgv3bcg9c274cdwxi1y0sja3p"); // 	    p.x = GD_bb(g).UR.x - d.x / 2;

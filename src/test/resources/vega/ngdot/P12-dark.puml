@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Dot)
+dark: true
+---
+@startdot
+digraph {
+  subgraph cluster_x { label="X"; a -> b }
+  b -> c [label="edge"];
+}
+@enddot

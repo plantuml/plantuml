@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+strict digraph {
+  a:n -> b:s;
+  a -> b [label="merged"];
+  "%name" -> "two words";
+}
+@enddot

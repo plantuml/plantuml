@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  subgraph cluster_filled { label="filled color"; style=filled; color=lightgrey; node [style=filled, color=white]; a1 -> a2 }
+  subgraph cluster_fill { label="fillcolor + pencolor"; style=filled; fillcolor=lightyellow; pencolor=red; b1 -> b2 }
+  subgraph cluster_bg { label="bgcolor, left"; labeljust=l; bgcolor=lightcyan; c1 -> c2 }
+  subgraph cluster_round { label="rounded dashed, right"; labeljust=r; style="rounded,dashed"; color=blue; d1 -> d2 }
+  subgraph cluster_bottom { label="label at bottom"; labelloc=b; style=bold; e1 -> e2 }
+  subgraph cluster_hidden { label="invisible"; style=invis; f1 -> f2 }
+  subgraph cluster_default { style=filled; g1 -> g2 }
+  a2 -> b1; c2 -> d1; e2 -> f1; f2 -> g1;
+}
+@enddot

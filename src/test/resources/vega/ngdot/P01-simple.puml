@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph G {
+  a -> b -> c;
+  a -> c [label="shortcut"];
+}
+@enddot

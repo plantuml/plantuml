@@ -49,7 +49,7 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
 
-import net.sourceforge.plantuml.directdot.CounterOutputStream;
+import net.sourceforge.plantuml.directdoc.CounterOutputStream;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 

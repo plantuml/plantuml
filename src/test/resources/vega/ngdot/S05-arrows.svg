@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="512px" preserveAspectRatio="none" style="width:173px;height:512px;background:#FFFFFF;" version="1.1" viewBox="0 0 173 512" width="173px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M18.55,495 C30.599,495 109.676,495 141.634,495" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="153.634,495,141.634,500.4,147.634,495,141.634,495,141.634,495,141.634,495,147.634,495,141.634,489.6,153.634,495" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M18.55,459 C30.913,459 113.842,459 144.034,459" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="148.834" cy="459" fill="none" rx="4.8" ry="4.8" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M18.55,423 C30.307,423 105.89,423 139.234,423" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="139.234,423,146.434,418.2,153.634,423,146.434,427.8" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M18.55,387 C30.307,387 105.89,387 139.234,387" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="none" points="139.234,387,146.434,382.2,153.634,387,146.434,391.8" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M18.55,351 C31.445,351 121.122,351 147.634,351" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="152.434,345,152.434,357,150.034,357,150.034,345" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="153.634" x2="147.634" y1="351" y2="351"/>
+    <path d="M18.55,315 C30.599,315 109.676,315 141.634,315" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="none" points="153.634,310.2,153.634,319.8,144.034,319.8,144.034,310.2" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="144.034" x2="141.634" y1="315" y2="315"/>
+    <path d="M18.55,279 C30.599,279 109.676,279 141.634,279" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="141.634,279,153.634,284.4,147.634,279,153.634,279,153.634,279,153.634,279,147.634,279,153.634,273.6,141.634,279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M18.55,243 C30.599,243 109.676,243 141.634,243" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="153.634,247.2,141.634,243,153.634,238.8" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M18.55,207 C30.599,207 109.676,207 141.634,207" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="none" points="141.634,211.2,153.634,207,141.634,202.8" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M18.55,171 C29.647,171 97.6,171 133.234,171" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="152.434,171,152.434,177,150.034,177,150.034,171" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="153.634" x2="147.634" y1="171" y2="171"/>
+    <polygon fill="none" points="147.634,171,140.434,175.8,133.234,171" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M18.55,135 C30.599,135 109.676,135 141.634,135" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="153.634,135,141.634,140.4,147.634,135,141.634,135,141.634,135,141.634,135" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M18.55,99 C30.599,99 109.676,99 141.634,99" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="141.634,103.2,153.634,99,141.634,94.8" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M40.15,63 C65.697,63 106.561,63 132.034,63" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="148.834" cy="63" fill="#181818" rx="4.8" ry="4.8" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="144.034,63,132.034,68.4,138.034,63,132.034,63,132.034,63,132.034,63,138.034,63,132.034,57.6,144.034,63" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#181818" points="18.55,58.8,30.55,63,18.55,67.2" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="35.35" cy="63" fill="#181818" rx="4.8" ry="4.8" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M18.55,27 C29.186,27 92.055,27 128.634,27" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="128.634,35.75,153.634,27,128.634,18.25" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="16" cy="495" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="495" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="459" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="459" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="423" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="423" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="387" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="387" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="351" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="351" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="315" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="315" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="279" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="279" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="243" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="243" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="207" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="207" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="171" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="171" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="135" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="135" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="99" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="99" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="63" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="63" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="16" cy="27" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="156" cy="27" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="20.963" x="75.519" y="492.111">vee</text>
+    <text fill="#000" font-size="13" textLength="25.269" x="73.366" y="456.111">odot</text>
+    <text fill="#000" font-size="13" textLength="49.887" x="61.056" y="420.111">diamond</text>
+    <text fill="#000" font-size="13" textLength="57.119" x="57.441" y="384.111">ediamond</text>
+    <text fill="#000" font-size="13" textLength="18.038" x="76.981" y="348.111">tee</text>
+    <text fill="#000" font-size="13" textLength="28.194" x="71.903" y="312.111">obox</text>
+    <text fill="#000" font-size="13" textLength="27.463" x="72.269" y="276.111">crow</text>
+    <text fill="#000" font-size="13" textLength="16.656" x="77.672" y="240.111">inv</text>
+    <text fill="#000" font-size="13" textLength="35.344" x="68.328" y="204.111">empty</text>
+    <text fill="#000" font-size="13" textLength="81.006" x="45.497" y="168.111">lteeoldiamond</text>
+    <text fill="#000" font-size="13" textLength="49.887" x="61.056" y="132.111">halfopen</text>
+    <text fill="#000" font-size="13" textLength="99.45" x="36.275" y="96.111">unknown=normal</text>
+    <text fill="#000" font-size="13" textLength="25.269" x="73.366" y="60.111">both</text>
+    <text fill="#000" font-size="13" textLength="17.388" x="77.306" y="24.111">big</text>
+  </g>
+</svg>

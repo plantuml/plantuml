@@ -1,0 +1,19 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  rankdir=LR;
+  start [shape=point];
+  bigpoint [shape=point, width=0.3, color=red];
+  double [shape=doublecircle];
+  diamond [shape=diamond];
+  wide [shape=diamond, label="a long decision label"];
+  p0 [shape=box, peripheries=0, style=filled, fillcolor=lightgrey];
+  p2 [shape=box, peripheries=2];
+  p3 [shape=ellipse, peripheries=3];
+  start -> double -> diamond -> wide;
+  bigpoint -> p0 -> p2 -> p3;
+}
+@enddot

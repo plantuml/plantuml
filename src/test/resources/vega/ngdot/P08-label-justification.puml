@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  node [shape=box];
+  a [label="centered\nline\lleft\lright\rlast"];
+  b [label="\N in \G"];
+  a -> b [label="\T to \H"];
+}
+@enddot

@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+graph {
+  a -- b -- c -- a;
+  c -- d [label="x"];
+}
+@enddot

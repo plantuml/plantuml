@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  a -> b [minlen=2];
+  a -> c [weight=10];
+  c -> a [constraint=false];
+  b -> d [dir=both];
+  c -> d [dir=back];
+  d -> e [dir=none];
+  e -> f [arrowhead=none];
+  e -> g [arrowsize=2];
+  f -> f;
+  g -> f; g -> f;
+}
+@enddot

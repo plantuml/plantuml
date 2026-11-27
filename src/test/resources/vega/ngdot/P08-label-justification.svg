@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="192px" preserveAspectRatio="none" style="width:99px;height:192px;background:#FFFFFF;" version="1.1" viewBox="0 0 99 192" width="99px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M49,92.135 C49,104.956 49,118.99 49,130.797" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="45.5,130.797,49,140.797,52.5,130.797" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#F1F1F1" height="78" style="stroke:#181818;stroke-width:0.5;" width="70" x="14" y="14"/>
+    <text fill="#000" font-size="14" textLength="54.425" x="21.788" y="28.889">centered</text>
+    <text fill="#000" font-size="14" textLength="21.875" x="21.788" y="42.889">line</text>
+    <text fill="#000" font-size="14" textLength="18.637" x="21.788" y="56.889">left</text>
+    <text fill="#000" font-size="14" textLength="27.213" x="49" y="70.889">right</text>
+    <text fill="#000" font-size="14" textLength="21.787" x="38.106" y="84.889">last</text>
+    <rect fill="#F1F1F1" height="36" style="stroke:#181818;stroke-width:0.5;" width="54" x="22" y="141"/>
+    <text fill="#000" font-size="14" textLength="18.725" x="39.638" y="162.889">b in</text>
+    <text fill="#000" font-size="13" textLength="25.269" x="49.366" y="120.111">a to b</text>
+  </g>
+</svg>

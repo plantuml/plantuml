@@ -292,6 +292,9 @@ public enum DiagramType {
 		if (this == PACKET)
 			return SName.packetdiagDiagram;
 
+		if (this == DOT)
+			return SName.dotDiagram;
+
 		return SName.activityDiagram;
 	}
 

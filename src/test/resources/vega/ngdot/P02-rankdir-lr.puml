@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph G {
+  rankdir=LR;
+  a -> b -> c;
+  a -> c [label="shortcut"];
+}
+@enddot

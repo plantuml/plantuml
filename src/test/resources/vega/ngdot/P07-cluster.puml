@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph G {
+  subgraph cluster_0 { label="process #1"; a0 -> a1 -> a2 -> a3 }
+  subgraph cluster_1 { label="process #2"; b0 -> b1 -> b2 -> b3 }
+  start -> a0; start -> b0;
+  a1 -> b3; b2 -> a3; a3 -> a0;
+  a3 -> end; b3 -> end;
+}
+@enddot

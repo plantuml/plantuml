@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="181px" preserveAspectRatio="none" style="width:609px;height:181px;background:#FFFFFF;" version="1.1" viewBox="0 0 609 181" width="609px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M27.011,121 C30.898,121 45.486,121 61.758,121" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="61.758,124.5,71.758,121,61.758,117.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M162.383,121 C170.619,121 179.41,121 188.213,121" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="188.213,124.5,198.213,121,188.213,117.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M322.787,121 C331.187,121 340.051,121 349.106,121" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="349.106,124.5,359.106,121,349.106,117.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M36.324,40 C46.929,40 64.052,40 79.711,40" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="79.711,43.5,89.711,40,79.711,36.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M144.283,40 C165.381,40 195.349,40 219.433,40" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="219.433,43.5,229.433,40,219.433,36.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M291.707,40 C328.078,40 389.47,40 431.201,40" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="431.201,43.5,441.201,40,431.201,36.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="25" cy="121" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="25" cy="40" fill="#F00" rx="11" ry="11" style="stroke:#F00;stroke-width:0.5;"/>
+    <ellipse cx="117" cy="121" fill="none" rx="45" ry="45" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="117" cy="121" fill="#F1F1F1" rx="41" ry="41" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="42.088" x="95.956" y="124.889">double</text>
+    <polygon fill="#F1F1F1" points="260.5,103,323,121,260.5,139,198,121" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" textLength="53.725" x="233.638" y="124.889">diamond</text>
+    <polygon fill="#F1F1F1" points="476.5,103,594,121,476.5,139,359,121" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" textLength="115.413" x="418.794" y="124.889">a long decision label</text>
+    <rect fill="#D3D3D3" height="36" style="stroke:none;" width="54" x="90" y="22"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="109.213" y="43.889">p0</text>
+    <rect fill="none" height="44" style="stroke:#181818;stroke-width:0.5;" width="62" x="229.5" y="18"/>
+    <rect fill="#F1F1F1" height="36" style="stroke:#181818;stroke-width:0.5;" width="54" x="233.5" y="22"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="252.713" y="43.889">p2</text>
+    <ellipse cx="476.5" cy="40" fill="none" rx="35" ry="26" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="476.5" cy="40" fill="none" rx="31" ry="22" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="476.5" cy="40" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="468.713" y="43.889">p3</text>
+  </g>
+</svg>

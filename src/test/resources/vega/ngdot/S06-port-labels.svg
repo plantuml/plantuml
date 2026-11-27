@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="209px" preserveAspectRatio="none" style="width:155px;height:209px;background:#FFFFFF;" version="1.1" viewBox="0 0 155 209" width="155px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M68.65,49.235 C64.264,57.764 58.793,68.402 53.878,77.96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="50.765,76.359,49.304,86.853,56.99,79.561" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M85.35,49.235 C89.736,57.764 95.207,68.402 100.122,77.96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="97.01,79.561,104.696,86.853,103.235,76.359" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M113,122.303 C113,133.154 113,147.083 113,157.896" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="77" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="73.106" y="35.889">a</text>
+    <ellipse cx="41" cy="104" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.106" y="107.889">b</text>
+    <ellipse cx="113" cy="104" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="109.5" y="107.889">c</text>
+    <ellipse cx="113" cy="176" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="109.106" y="179.889">d</text>
+    <text fill="#000" font-size="13" textLength="28.925" x="42.745" y="84.337">head</text>
+    <text fill="#000" font-size="13" textLength="16.656" x="52.419" y="58.973">tail</text>
+    <text fill="#F00" font-size="10" x="82.87" y="83.522">h</text>
+    <text fill="#F00" font-size="10" x="103.019" y="58.122">t</text>
+    <text fill="#000" font-size="13" textLength="19.419" x="107.517" y="152.444">0..*</text>
+    <text fill="#000" font-size="13" x="105.158" y="134.978">1</text>
+  </g>
+</svg>

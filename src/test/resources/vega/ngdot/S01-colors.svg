@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="235px" preserveAspectRatio="none" style="width:410px;height:235px;background:#FFFFFF;" version="1.1" viewBox="0 0 410 235" width="410px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M51,50.198 C51,61.346 51,76.108 51,88.824" fill="none" style="stroke:#F00;stroke-width:1;"/>
+    <polygon fill="#F00" points="47.5,88.824,51,98.824,54.5,88.824" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M51,135.198 C51,146.346 51,161.108 51,173.824" fill="none" style="stroke:#F00;stroke-width:1;"/>
+    <polygon fill="#F00" points="47.5,173.824,51,183.824,54.5,173.824" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M148,50.198 C148,61.346 148,76.108 148,88.824" fill="none" style="stroke:#0A0;stroke-width:1;"/>
+    <polygon fill="#0A0" points="144.5,88.824,148,98.824,151.5,88.824" style="stroke:#0A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M148,135.198 C148,146.346 148,161.108 148,173.824" fill="none" style="stroke:#0A0;stroke-width:1;"/>
+    <polygon fill="#0A0" points="144.5,173.824,148,183.824,151.5,173.824" style="stroke:#0A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M240,50.198 C240,61.346 240,76.108 240,88.824" fill="none" style="stroke:#00F;stroke-width:1;"/>
+    <polygon fill="#00F" points="236.5,88.824,240,98.824,243.5,88.824" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M240,135.198 C240,146.346 240,161.108 240,173.824" fill="none" style="stroke:#00F;stroke-width:1;"/>
+    <polygon fill="#00F" points="236.5,173.824,240,183.824,243.5,173.824" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M340,50.198 C340,61.346 340,76.108 340,88.824" fill="none" style="stroke:#0000FF80;stroke-width:1;"/>
+    <polygon fill="#00F" fill-opacity="0.502" points="336.5,88.824,340,98.824,343.5,88.824" style="stroke:#0000FF80;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M340,135.198 C340,146.346 340,161.108 340,173.824" fill="none" style="stroke:#0000FF80;stroke-width:1;"/>
+    <polygon fill="#00F" fill-opacity="0.502" points="336.5,173.824,340,183.824,343.5,173.824" style="stroke:#0000FF80;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="51" cy="32" fill="#ADD8E6" rx="37" ry="18" style="stroke:#000080;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="42.788" x="29.606" y="35.889">named</text>
+    <ellipse cx="51" cy="117" fill="#FC0" rx="27" ry="18" style="stroke:#900;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="39.713" y="120.889">hex</text>
+    <ellipse cx="51" cy="202" fill="#F00" fill-opacity="0.251" rx="32" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="34.3" x="33.85" y="205.889">alpha</text>
+    <ellipse cx="148" cy="32" fill="#BEBEBE" rx="41.5" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="49.787" x="123.106" y="35.889">x11gray</text>
+    <ellipse cx="148" cy="117" fill="#0F0" rx="47" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="58.362" x="118.819" y="120.889">x11green</text>
+    <ellipse cx="148" cy="202" fill="#7F7F7F" rx="37" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="42.788" x="126.606" y="205.889">gray50</text>
+    <ellipse cx="240" cy="32" fill="#CD0000" rx="28" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="28" x="226" y="35.889">red3</text>
+    <ellipse cx="240" cy="117" fill="#FF0" rx="27" ry="18" style="stroke:#F00;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="231.425" y="120.889">list</text>
+    <ellipse cx="240" cy="202" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="21.787" x="229.106" y="205.889">hsv</text>
+    <ellipse cx="340" cy="32" fill="#F1F1F1" rx="45.5" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="56.088" x="311.956" y="35.889">unknown</text>
+    <ellipse cx="340" cy="117" fill="none" rx="55" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="70.7" x="304.65" y="120.889">transparent</text>
+    <ellipse cx="340" cy="202" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#DC143C" font-size="14" textLength="23.275" x="328.363" y="205.889">font</text>
+    <text fill="#00F" font-size="13" textLength="24.619" x="240.191" y="78.111">blue</text>
+    <text fill="#00F" font-size="13" textLength="24.619" x="240.191" y="163.111">blue</text>
+  </g>
+</svg>

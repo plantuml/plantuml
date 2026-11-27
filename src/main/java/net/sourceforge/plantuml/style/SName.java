@@ -87,6 +87,7 @@ public enum SName {
 	diamond, //
 	digital, //
 	document, //
+	dotDiagram, //
 	ebnf, //
 	element, //
 	entity, //

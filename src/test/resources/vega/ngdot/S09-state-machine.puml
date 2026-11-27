@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph finite_state_machine {
+  rankdir=LR;
+  node [shape=doublecircle]; S0 S3;
+  node [shape=circle];
+  S0 -> S1 [label="a"];
+  S1 -> S2 [label="b"];
+  S2 -> S3 [label="c"];
+  S1 -> S1 [label="a"];
+  S2 -> S0 [label="reset"];
+  S3 -> S1 [label="a"];
+}
+@enddot

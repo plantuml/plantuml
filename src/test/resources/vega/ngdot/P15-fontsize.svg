@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="147px" preserveAspectRatio="none" style="width:83px;height:147px;background:#FFFFFF;" version="1.1" viewBox="0 0 83 147" width="83px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M41,50.359 C41,60.753 41,74.189 41,85.95" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="37.5,85.95,41,95.95,44.5,85.95" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#F1F1F1" height="36" style="stroke:#181818;stroke-width:0.5;" width="54" x="14" y="14"/>
+    <text fill="#000" font-size="24" x="34.325" y="38.667">a</text>
+    <ellipse cx="41" cy="114" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="8" x="38.775" y="115.222">b</text>
+    <text fill="#000" font-size="9" textLength="21.038" x="41.481" y="75">small</text>
+  </g>
+</svg>

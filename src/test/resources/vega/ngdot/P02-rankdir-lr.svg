@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="96px" preserveAspectRatio="none" style="width:265px;height:96px;background:#FFFFFF;" version="1.1" viewBox="0 0 265 96" width="265px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M65.384,54.855 C75.455,51.347 87.405,47.185 98.329,43.38" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="99.48,46.685,107.772,40.09,97.178,40.075" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M156.384,40.145 C166.455,43.653 178.405,47.815 189.329,51.62" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="188.178,54.925,198.772,54.91,190.48,48.315" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M67.354,67.459 C78.812,69.258 92.547,71.115 105,72 C128.94,73.701 135.06,73.701 159,72 C168.03,71.358 177.734,70.205 186.755,68.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="187.271,72.396,196.646,67.459,186.239,65.472" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="41" cy="63" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="37.106" y="66.889">a</text>
+    <ellipse cx="132" cy="32" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="128.106" y="35.889">b</text>
+    <ellipse cx="223" cy="63" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="219.5" y="66.889">c</text>
+    <text fill="#000" font-size="13" textLength="46.15" x="108.925" y="69.111">shortcut</text>
+  </g>
+</svg>

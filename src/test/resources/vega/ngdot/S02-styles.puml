@@ -1,0 +1,25 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  filled [style=filled, fillcolor=lightyellow];
+  dashed [style=dashed];
+  dotted [style=dotted];
+  bold [style=bold];
+  thick [penwidth=4];
+  rounded [shape=box, style=rounded];
+  roundedfilled [shape=box, style="rounded,filled", fillcolor=pink];
+  diagonals [shape=box, style=diagonals];
+  oldwidth [shape=box, style="setlinewidth(3)"];
+  invisible [style=invis];
+  filled -> dashed [style=dashed];
+  dashed -> dotted [style=dotted];
+  dotted -> bold [style=bold];
+  bold -> thick [penwidth=3];
+  rounded -> roundedfilled -> diagonals -> oldwidth;
+  oldwidth -> invisible;
+  thick -> invisible [style=invis, label="hidden"];
+}
+@enddot

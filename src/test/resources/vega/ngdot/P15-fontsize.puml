@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  a [fontsize=24, shape=box];
+  b [fontsize=8];
+  a -> b [label="small", fontsize=9];
+}
+@enddot

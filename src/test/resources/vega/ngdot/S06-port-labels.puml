@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  a -> b [headlabel="head", taillabel="tail"];
+  a -> c [headlabel="h", taillabel="t", labelangle=45, labeldistance=2, labelfontcolor=red, labelfontsize=10];
+  c -> d [headlabel="0..*", taillabel="1", arrowhead=none];
+}
+@enddot

@@ -1,0 +1,11 @@
+---
+output: utxt
+expected-status: 400
+---
+@startdot
+digraph G {
+  a -> b
+  subgraph cluster_x {
+    c
+}
+@enddot

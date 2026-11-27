@@ -1,0 +1,25 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  node [style=filled];
+  named [fillcolor=lightblue, color=navy];
+  hex [fillcolor="#ffcc00", color="#990000"];
+  alpha [fillcolor="#ff000040"];
+  x11gray [fillcolor=gray];
+  x11green [fillcolor=green];
+  gray50 [fillcolor=gray50];
+  red3 [fillcolor=red3];
+  list [fillcolor="yellow:blue", color="red;0.3:green"];
+  hsv [fillcolor="0.6 0.4 0.9"];
+  unknown [fillcolor=nosuchcolor];
+  transparent [fillcolor=transparent];
+  font [fontcolor=crimson];
+  named -> hex -> alpha [color=red];
+  x11gray -> x11green -> gray50 [color="#00aa00"];
+  red3 -> list -> hsv [color=blue, fontcolor=blue, label="blue"];
+  unknown -> transparent -> font [color="#0000ff80"];
+}
+@enddot

@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Dot)
+---
+@startdot
+digraph {
+  nodesep=1; ranksep="1.5 equally";
+  a -> b; a -> c; a -> d;
+}
+@enddot

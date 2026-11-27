@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DOT" height="442px" preserveAspectRatio="none" style="width:217px;height:442px;background:#FFFFFF;" version="1.1" viewBox="0 0 217 442" width="217px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M53,50.187 C53,58.223 53,67.982 53,76.971" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,2;"/>
+    <polygon fill="#181818" points="49.5,76.971,53,86.971,56.5,76.971" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M53,123.187 C53,131.223 53,140.982 53,149.971" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,5;"/>
+    <polygon fill="#181818" points="49.5,149.971,53,159.971,56.5,149.971" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M55.663,196.187 C56.913,204.258 58.433,214.067 59.831,223.089" fill="none" style="stroke:#181818;stroke-width:2;"/>
+    <polygon fill="#181818" points="56.372,223.625,61.362,232.971,63.289,222.553" style="stroke:#181818;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M64.484,269.187 C64.711,277.224 64.985,286.985 65.239,295.975" fill="none" style="stroke:#181818;stroke-width:3;"/>
+    <polygon fill="#181818" points="61.74,296.074,65.52,305.971,68.737,295.877" style="stroke:#181818;stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M154,123.187 C154,131.223 154,140.982 154,149.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="150.5,149.971,154,159.971,157.5,149.971" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M152.548,196.187 C151.868,204.233 151.042,214.007 150.281,223.007" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="146.794,222.712,149.439,232.971,153.769,223.301" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M147.516,269.187 C147.289,277.224 147.015,286.985 146.761,295.975" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="143.263,295.877,146.48,305.971,150.26,296.074" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M138.126,342.198 C132.862,353.696 125.838,369.039 119.896,382.016" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="116.714,380.559,115.734,391.108,123.079,383.473" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="53" cy="32" fill="#FFFFE0" rx="28.5" ry="18" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="28.875" x="38.563" y="35.889">filled</text>
+    <ellipse cx="53" cy="105" fill="#F1F1F1" rx="39" ry="18" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,2;"/>
+    <text fill="#000" font-size="14" textLength="45.938" x="30.031" y="108.889">dashed</text>
+    <ellipse cx="53" cy="178" fill="#F1F1F1" rx="34.5" ry="18" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:1,5;"/>
+    <text fill="#000" font-size="14" textLength="38.85" x="33.575" y="181.889">dotted</text>
+    <ellipse cx="64" cy="251" fill="#F1F1F1" rx="27" ry="18" style="stroke:#181818;stroke-width:2;"/>
+    <text fill="#000" font-size="14" textLength="26.513" x="50.744" y="254.889">bold</text>
+    <ellipse cx="66" cy="324" fill="#F1F1F1" rx="28.5" ry="18" style="stroke:#181818;stroke-width:4;"/>
+    <text fill="#000" font-size="14" textLength="28.788" x="51.606" y="327.889">thick</text>
+    <rect fill="#F1F1F1" height="36" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;" width="67" x="120.5" y="87"/>
+    <text fill="#000" font-size="14" textLength="51.363" x="128.319" y="108.889">rounded</text>
+    <rect fill="#FFC0CB" height="36" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;" width="96" x="106" y="160"/>
+    <text fill="#000" font-size="14" textLength="80.237" x="113.881" y="181.889">roundedfilled</text>
+    <rect fill="#F1F1F1" height="36" style="stroke:#181818;stroke-width:0.5;" width="76" x="110" y="233"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="119" y1="242" y2="233"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="177" x2="186" y1="233" y2="242"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="186" x2="177" y1="260" y2="269"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="119" x2="110" y1="269" y2="260"/>
+    <text fill="#000" font-size="14" textLength="60.025" x="117.988" y="254.889">diagonals</text>
+    <rect fill="#F1F1F1" height="36" style="stroke:#181818;stroke-width:3;" width="67" x="112.5" y="306"/>
+    <text fill="#000" font-size="14" textLength="51.45" x="120.275" y="327.889">oldwidth</text>
+  </g>
+</svg>

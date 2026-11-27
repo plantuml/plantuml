@@ -78,6 +78,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
+import net.sourceforge.plantuml.ngdot.PSystemNgDotFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
@@ -109,6 +110,7 @@ public class PSystemBuilderC {
 		factories.add(new GanttDiagramFactory());
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
+		factories.add(new PSystemNgDotFactory());
 		factories.add(new NwDiagramFactory());
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		factories.add(new PSystemSudokuFactory());
