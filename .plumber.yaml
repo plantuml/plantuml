@@ -1,0 +1,17 @@
+# Plumber configuration, read by .github/workflows/plumber.yml.
+# Every check keeps its default, with the two changes below.
+extends: plumber:default
+
+github:
+  controls:
+    githubActionMustComeFromAuthorizedSources:
+      includePlumberDefaults: true
+      # Third-party actions the workflows use, on top of the default trust list
+      trustedGithubActions:
+        # Publishes the Javadoc and Jacoco site to GitHub Pages (ci.yml)
+        - peaceiris/actions-gh-pages
+    # master has no protection rule. That is a repository setting, which no change
+    # to a file can fix, so the check is off. Remove this block once master has a
+    # rule or a ruleset and the check comes back on.
+    branchMustBeProtected:
+      enabled: false

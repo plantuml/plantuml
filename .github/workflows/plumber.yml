@@ -1,0 +1,42 @@
+name: Plumber
+
+# Scans the workflows of this repository with the Plumber CLI on each change:
+# token scopes, secrets handed to called workflows, checkouts that keep the job
+# token, actions and images that are not locked.
+#
+# The job fails under 85 points out of 100. The settings are in .plumber.yaml.
+#
+# https://github.com/getplumber/plumber
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Scan the workflows
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Plumber reads the workflow states and one run log to work out what the job tokens can do
+      actions: read
+      # The findings are listed under code scanning
+      security-events: write
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Scan the workflows
+        uses: getplumber/plumber@v0.7.23
+        with:
+          # Fail under 85 points out of 100, not on any single finding
+          min-points: 85
+          # A pull request from a fork gets a read-only token: no code scanning upload there, the scan still runs
+          upload-sarif: ${{ github.event.pull_request.head.repo.fork != true }}
