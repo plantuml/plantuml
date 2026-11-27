@@ -353,15 +353,15 @@ try {
 <span class="fc" id="L353">	ND_UF_parent(u, u);</span>
 <span class="fc" id="L354">	ND_UF_size(u, 1);</span>
     } else
-<span class="nc" id="L356">    UNSUPPORTED(&quot;35c97tyk6tzw1g527j6rp6xoo&quot;); // 	u = UF_find(u);</span>
+<span class="nc" id="L356">	u = UF_find(u); // 	u = UF_find(u);</span>
 <span class="fc bfc" id="L357" title="All 2 branches covered.">    if (ND_UF_parent(v) == null) {</span>
 <span class="fc" id="L358">	ND_UF_parent(v, v);</span>
 <span class="fc" id="L359">	ND_UF_size(v, 1);</span>
     } else
 <span class="fc" id="L361">	v = UF_find(v);</span>
 <span class="pc bpc" id="L362" title="1 of 2 branches missed.">    if (ND_id(u) &gt; ND_id(v)) {</span>
-<span class="nc" id="L363">	UNSUPPORTED(&quot;2igr3ntnkm6svji4pbnjlp54e&quot;); // 	ND_UF_parent(u) = v;</span>
-<span class="nc" id="L364">	UNSUPPORTED(&quot;3lht90i6tvxbr10meir8nvcic&quot;); // 	ND_UF_size(v) += ND_UF_size(u);</span>
+<span class="nc" id="L363">	ND_UF_parent(u, v); // 	ND_UF_parent(u) = v;</span>
+<span class="nc" id="L364">	ND_UF_size(v, ND_UF_size(v) + ND_UF_size(u)); // 	ND_UF_size(v) += ND_UF_size(u);</span>
     } else {
 <span class="fc" id="L366">	ND_UF_parent(v, u);</span>
 <span class="fc" id="L367">	ND_UF_size(u, ND_UF_size(u) + ND_UF_size(v));</span>
@@ -496,8 +496,8 @@ try {
     int i;
     CString q;
 <span class="fc bfc" id="L498" title="All 2 branches covered.">    for (i = 0; (q = name[i]) != null; i++)</span>
-<span class="pc bpc" id="L499" title="3 of 4 branches missed.">	if (p!=null &amp;&amp; (strcmp(p,q) == 0))</span>
-<span class="nc" id="L500">	    break;</span>
+<span class="fc bfc" id="L499" title="All 4 branches covered.">	if (p!=null &amp;&amp; (strcmp(p,q) == 0))</span>
+<span class="fc" id="L500">	    break;</span>
 <span class="fc" id="L501">    return val[i];</span>
 } finally {
 <span class="fc" id="L503">LEAVING(&quot;2ihv17oajyaaaycirwsbgz1m7&quot;,&quot;maptoken&quot;);</span>
@@ -811,9 +811,9 @@ try {
 <span class="fc" id="L811">    str = agget(zz, e, HEAD_ID);</span>
     
     /* libgraph always defines tailport/headport; libcgraph doesn't */
-<span class="pc bpc" id="L814" title="1 of 2 branches missed.">    if ((str) == null) str = new CString(&quot;&quot;);</span>
-<span class="pc bpc" id="L815" title="2 of 4 branches missed.">    if (str!=null &amp;&amp; str.charAt(0)!='\0')</span>
-<span class="nc" id="L816">    ND_has_port(aghead(e), true);</span>
+<span class="fc bfc" id="L814" title="All 2 branches covered.">    if ((str) == null) str = new CString(&quot;&quot;);</span>
+<span class="pc bpc" id="L815" title="1 of 4 branches missed.">    if (str!=null &amp;&amp; str.charAt(0)!='\0')</span>
+<span class="fc" id="L816">    ND_has_port(aghead(e), true);</span>
 <span class="fc" id="L817">    ED_head_port(e, chkPort(zz, ND_shape(aghead(e)).fns.portfn, aghead(e), str));</span>
 <span class="fc bfc" id="L818" title="All 2 branches covered.">    if (noClip(e, zz.E_headclip))</span>
 <span class="fc" id="L819">    ED_head_port(e).clip = false; // 	ED_head_port(e).clip = FALSE;</span>

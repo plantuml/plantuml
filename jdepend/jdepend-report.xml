@@ -7721,11 +7721,11 @@
                 <TotalClasses>8</TotalClasses>
                 <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>0</Ca>
+                <Ca>1</Ca>
                 <Ce>25</Ce>
                 <A>0</A>
-                <I>1</I>
-                <D>0</D>
+                <I>0.96</I>
+                <D>0.04</D>
                 <V>1</V>
             </Stats>
 
@@ -7788,6 +7788,7 @@
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.teavm.c</Package>
             </UsedBy>
         </Package>
 
@@ -17539,10 +17540,10 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>43</Ce>
+                <Ce>44</Ce>
                 <A>0</A>
-                <I>0.93</I>
-                <D>0.07</D>
+                <I>0.94</I>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
@@ -17609,6 +17610,7 @@
                 <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.error</Package>
                 <Package>net.sourceforge.plantuml.explain</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.jaws</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>

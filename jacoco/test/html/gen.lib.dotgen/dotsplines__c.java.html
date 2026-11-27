@@ -573,7 +573,7 @@ try {
  	boolean havePorts;
 <span class="fc" id="L574">	ind = i;</span>
 <span class="fc" id="L575">	le0 = getmainedge((e0 = edges.get_(i++)));</span>
-<span class="pc bpc" id="L576" title="1 of 4 branches missed.">	if (ED_tail_port(e0).defined || ED_head_port(e0).defined) {</span>
+<span class="fc bfc" id="L576" title="All 4 branches covered.">	if (ED_tail_port(e0).defined || ED_head_port(e0).defined) {</span>
 <span class="fc" id="L577">	    havePorts = true;</span>
 <span class="fc" id="L578">	    ea = e0;</span>
 	} else {
@@ -882,7 +882,7 @@ try {
 <span class="fc" id="L882">    e0 = ptr0.get_(0);</span>
 <span class="fc" id="L883">    e1 = ptr1.get_(0);</span>
 <span class="pc bpc" id="L884" title="1 of 2 branches missed.">    if (ED_label(e0)!=null) {</span>
-<span class="pc bpc" id="L885" title="1 of 2 branches missed.">	if (ED_label(e1)!=null) {</span>
+<span class="fc bfc" id="L885" title="All 2 branches covered.">	if (ED_label(e1)!=null) {</span>
 <span class="fc" id="L886">	    sz0.___(ED_label(e0).dimen);</span>
 <span class="fc" id="L887">	    sz1.___(ED_label(e1).dimen);</span>
 <span class="fc bfc" id="L888" title="All 2 branches covered.">	    if (sz0.x &gt; sz1.x) return -1;</span>
@@ -892,7 +892,7 @@ try {
 <span class="fc" id="L892">	    else return 0;</span>
 	}
 	else
-<span class="nc" id="L895">	    return -1;</span>
+<span class="fc" id="L895">	    return -1;</span>
     }
 <span class="nc bnc" id="L897" title="All 2 branches missed.">    else if (ED_label(e1)!=null) {</span>
 <span class="nc" id="L898"> 	return 1;</span>
@@ -1017,28 +1017,28 @@ try {
     }
     
     /* edges with no labels */
-<span class="pc bpc" id="L1020" title="1 of 2 branches missed.">    for (; i &lt; cnt; i++) {</span>
-<span class="nc" id="L1021">	e = earray.get_(i);</span>
-<span class="nc bnc" id="L1022" title="All 2 branches missed.">	if (i%2!=0) {  /* down */</span>
-<span class="nc bnc" id="L1023" title="All 2 branches missed.">	    if (i == 1) {</span>
-<span class="nc" id="L1024">		lminx = (2*leftend + rightend)/3.0;</span>
-<span class="nc" id="L1025">		lmaxx = (leftend + 2*rightend)/3.0;</span>
+<span class="fc bfc" id="L1020" title="All 2 branches covered.">    for (; i &lt; cnt; i++) {</span>
+<span class="fc" id="L1021">	e = earray.get_(i);</span>
+<span class="pc bpc" id="L1022" title="1 of 2 branches missed.">	if (i%2!=0) {  /* down */</span>
+<span class="pc bpc" id="L1023" title="1 of 2 branches missed.">	    if (i == 1) {</span>
+<span class="fc" id="L1024">		lminx = (2*leftend + rightend)/3.0;</span>
+<span class="fc" id="L1025">		lmaxx = (leftend + 2*rightend)/3.0;</span>
 	    }
-<span class="nc" id="L1027">	    miny -= 6;</span>
-<span class="nc" id="L1028">	    points.get__(0).___(tp);</span>
-<span class="nc" id="L1029">	    points.get__(1).x = tp.x;</span>
-<span class="nc" id="L1030">	    points.get__(1).y = miny - 6;</span>
-<span class="nc" id="L1031">	    points.get__(2).x = hp.x;</span>
-<span class="nc" id="L1032">	    points.get__(2).y = points.get__(1).y;</span>
-<span class="nc" id="L1033">	    points.get__(3).___(hp);</span>
-<span class="nc" id="L1034">	    points.get__(4).x = lmaxx;</span>
-<span class="nc" id="L1035">	    points.get__(4).y = hp.y;</span>
-<span class="nc" id="L1036">	    points.get__(5).x = lmaxx;</span>
-<span class="nc" id="L1037">	    points.get__(5).y = miny;</span>
-<span class="nc" id="L1038">	    points.get__(6).x = lminx;</span>
-<span class="nc" id="L1039">	    points.get__(6).y = miny;</span>
-<span class="nc" id="L1040">	    points.get__(7).x = lminx;</span>
-<span class="nc" id="L1041">	    points.get__(7).y = tp.y;</span>
+<span class="fc" id="L1027">	    miny -= 6;</span>
+<span class="fc" id="L1028">	    points.get__(0).___(tp);</span>
+<span class="fc" id="L1029">	    points.get__(1).x = tp.x;</span>
+<span class="fc" id="L1030">	    points.get__(1).y = miny - 6;</span>
+<span class="fc" id="L1031">	    points.get__(2).x = hp.x;</span>
+<span class="fc" id="L1032">	    points.get__(2).y = points.get__(1).y;</span>
+<span class="fc" id="L1033">	    points.get__(3).___(hp);</span>
+<span class="fc" id="L1034">	    points.get__(4).x = lmaxx;</span>
+<span class="fc" id="L1035">	    points.get__(4).y = hp.y;</span>
+<span class="fc" id="L1036">	    points.get__(5).x = lmaxx;</span>
+<span class="fc" id="L1037">	    points.get__(5).y = miny;</span>
+<span class="fc" id="L1038">	    points.get__(6).x = lminx;</span>
+<span class="fc" id="L1039">	    points.get__(6).y = miny;</span>
+<span class="fc" id="L1040">	    points.get__(7).x = lminx;</span>
+<span class="fc" id="L1041">	    points.get__(7).y = tp.y;</span>
 	}
 	else {   /* up */
 <span class="nc" id="L1044">	    points.get__(0).___(tp);</span>
@@ -1058,11 +1058,11 @@ try {
 <span class="nc" id="L1058">	    points.get__(7).y = maxy + 6;</span>
 <span class="nc" id="L1059">	    maxy += + 6;</span>
 	}
-<span class="nc" id="L1061">	poly.pn = 8;</span>
-<span class="nc" id="L1062">	poly.ps = points;</span>
-<span class="nc bnc" id="L1063" title="All 2 branches missed.">	ps = simpleSplineRoute (zz, tp, hp, poly, pn, et == (3 &lt;&lt; 1));</span>
-<span class="nc bnc" id="L1064" title="All 2 branches missed.">	if (pn[0] == 0) return;</span>
-<span class="nc" id="L1065">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
+<span class="fc" id="L1061">	poly.pn = 8;</span>
+<span class="fc" id="L1062">	poly.ps = points;</span>
+<span class="pc bpc" id="L1063" title="1 of 2 branches missed.">	ps = simpleSplineRoute (zz, tp, hp, poly, pn, et == (3 &lt;&lt; 1));</span>
+<span class="pc bpc" id="L1064" title="1 of 2 branches missed.">	if (pn[0] == 0) return;</span>
+<span class="fc" id="L1065">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
     }
     
 <span class="fc" id="L1068">    Memory.free (earray);</span>
@@ -1799,8 +1799,8 @@ try {
 <span class="fc" id="L1799">	b.LL.y = tend.boxes[tend.boxn[0] - 1].LL.y;</span>
 <span class="fc" id="L1800">	b.___(makeregularend(b, BOTTOM,</span>
 <span class="fc" id="L1801">	    	   ND_coord(tn).y - GD_rank(g).get__(ND_rank(tn)).ht1));</span>
-<span class="pc bpc" id="L1802" title="2 of 4 branches missed.">	if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
-<span class="nc" id="L1803">	    tend.boxes[tend.boxn[0]++].___(b);</span>
+<span class="pc bpc" id="L1802" title="1 of 4 branches missed.">	if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+<span class="fc" id="L1803">	    tend.boxes[tend.boxn[0]++].___(b);</span>
 <span class="fc" id="L1804">	longedge = 0;</span>
 <span class="fc" id="L1805">	smode = false; si = -1;</span>
 <span class="pc bpc" id="L1806" title="1 of 4 branches missed.">	while (ND_node_type(hn) == VIRTUAL &amp;&amp; !((Boolean)zz.sinfo.splineMerge.exe(zz, hn)).booleanValue()) {</span>

@@ -39,11 +39,14 @@ import static gen.lib.cgraph.attr__c.agsafeset;
 import static gen.lib.cgraph.edge__c.agedge;
 import static gen.lib.cgraph.graph__c.agopen;
 import static gen.lib.cgraph.node__c.agnode;
+import static gen.lib.cgraph.node__c.agsubnode;
+import static gen.lib.cgraph.subg__c.agparent;
 import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +92,10 @@ public final class SmetanaLayout {
 
 	// Same reason as in CucaDiagramFileMakerSmetana: layout runs are serialized,
 	// and no monitor in the TeaVM C build.
-<span class="fc" id="L92">	private static final Object LOCK = new Object();</span>
+<span class="fc" id="L95">	private static final Object LOCK = new Object();</span>
+
+<span class="fc" id="L97">	private static final List&lt;String&gt; COMPASS_POINTS = Arrays.asList(&quot;n&quot;, &quot;ne&quot;, &quot;e&quot;, &quot;se&quot;, &quot;s&quot;, &quot;sw&quot;, &quot;w&quot;, &quot;nw&quot;, &quot;c&quot;,</span>
+			&quot;_&quot;);
 
 	private final DotGraph graph;
 	private final LayoutInput input;
@@ -97,74 +103,76 @@ public final class SmetanaLayout {
 
 	private Globals zz;
 	private ST_Agraph_s root;
-<span class="fc" id="L100">	private final Map&lt;DotNode, ST_Agnode_s&gt; nodes = new LinkedHashMap&lt;DotNode, ST_Agnode_s&gt;();</span>
-<span class="fc" id="L101">	private final Map&lt;DotEdge, ST_Agedge_s&gt; edges = new LinkedHashMap&lt;DotEdge, ST_Agedge_s&gt;();</span>
-<span class="fc" id="L102">	private final Map&lt;DotSubgraph, ST_Agraph_s&gt; clusters = new LinkedHashMap&lt;DotSubgraph, ST_Agraph_s&gt;();</span>
+<span class="fc" id="L106">	private final Map&lt;DotNode, ST_Agnode_s&gt; nodes = new LinkedHashMap&lt;DotNode, ST_Agnode_s&gt;();</span>
+<span class="fc" id="L107">	private final Map&lt;DotEdge, ST_Agedge_s&gt; edges = new LinkedHashMap&lt;DotEdge, ST_Agedge_s&gt;();</span>
+<span class="fc" id="L108">	private final Map&lt;DotSubgraph, ST_Agraph_s&gt; clusters = new LinkedHashMap&lt;DotSubgraph, ST_Agraph_s&gt;();</span>
+<span class="fc" id="L109">	private final Map&lt;DotSubgraph, ST_Agraph_s&gt; ranksets = new LinkedHashMap&lt;DotSubgraph, ST_Agraph_s&gt;();</span>
 
-<span class="fc" id="L104">	private SmetanaLayout(DotGraph graph, LayoutInput input) {</span>
-<span class="fc" id="L105">		this.graph = graph;</span>
-<span class="fc" id="L106">		this.input = input;</span>
-<span class="fc" id="L107">		this.rankdir = Rankdir.fromString(graph.getAttributes().getString(&quot;rankdir&quot;));</span>
-<span class="fc" id="L108">	}</span>
+<span class="fc" id="L111">	private SmetanaLayout(DotGraph graph, LayoutInput input) {</span>
+<span class="fc" id="L112">		this.graph = graph;</span>
+<span class="fc" id="L113">		this.input = input;</span>
+<span class="fc" id="L114">		this.rankdir = Rankdir.fromString(graph.getAttributes().getString(&quot;rankdir&quot;));</span>
+<span class="fc" id="L115">	}</span>
 
 	public static LayoutResult layout(DotGraph graph, LayoutInput input) {
-<span class="fc" id="L111">		final SmetanaLayout layout = new SmetanaLayout(graph, input);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (TeaVM.isC())</span>
-<span class="nc" id="L113">			return layout.run();</span>
-<span class="fc" id="L114">		synchronized (LOCK) {</span>
-<span class="fc" id="L115">			return layout.run();</span>
+<span class="fc" id="L118">		final SmetanaLayout layout = new SmetanaLayout(graph, input);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L120">			return layout.run();</span>
+<span class="fc" id="L121">		synchronized (LOCK) {</span>
+<span class="fc" id="L122">			return layout.run();</span>
 		}
 	}
 
 	private LayoutResult run() {
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (graph.getNodes().size() == 0)</span>
-<span class="fc" id="L121">			return new LayoutResult(new XDimension2D(0, 0));</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (graph.getNodes().size() == 0)</span>
+<span class="fc" id="L128">			return new LayoutResult(new XDimension2D(0, 0));</span>
 
-<span class="fc" id="L123">		zz = Globals.open();</span>
+<span class="fc" id="L130">		zz = Globals.open();</span>
 		try {
-<span class="fc" id="L125">			root = agopen(zz, new CString(&quot;g&quot;), zz.Agdirected, null);</span>
-<span class="fc" id="L126">			setGraphAttributes();</span>
-<span class="fc" id="L127">			createClusters(graph.getRoot(), root);</span>
-<span class="fc" id="L128">			createNodes();</span>
-<span class="fc" id="L129">			createEdges();</span>
-<span class="fc" id="L130">			final ST_GVC_s gvc = gvContext(zz);</span>
-<span class="fc" id="L131">			gvLayoutJobs(zz, gvc, root);</span>
-<span class="fc" id="L132">			return extract();</span>
+<span class="fc" id="L132">			root = agopen(zz, new CString(&quot;g&quot;), zz.Agdirected, null);</span>
+<span class="fc" id="L133">			setGraphAttributes();</span>
+<span class="fc" id="L134">			createClusters(graph.getRoot(), root);</span>
+<span class="fc" id="L135">			createNodes();</span>
+<span class="fc" id="L136">			fillRanksets();</span>
+<span class="fc" id="L137">			createEdges();</span>
+<span class="fc" id="L138">			final ST_GVC_s gvc = gvContext(zz);</span>
+<span class="fc" id="L139">			gvLayoutJobs(zz, gvc, root);</span>
+<span class="fc" id="L140">			return extract();</span>
 		} finally {
-<span class="fc" id="L134">			Globals.close();</span>
+<span class="fc" id="L142">			Globals.close();</span>
 		}
 	}
 
 	private void set(ST_Agraph_s g, String name, String value) {
-<span class="fc" id="L139">		agsafeset(zz, g, new CString(name), new CString(value), new CString(&quot;&quot;));</span>
-<span class="fc" id="L140">	}</span>
-
-	private void set(ST_Agnode_s n, String name, String value) {
-<span class="fc" id="L143">		agsafeset(zz, n, new CString(name), new CString(value), new CString(&quot;&quot;));</span>
-<span class="fc" id="L144">	}</span>
-
-	private void set(ST_Agedge_s e, String name, String value) {
-<span class="fc" id="L147">		agsafeset(zz, e, new CString(name), new CString(value), new CString(&quot;&quot;));</span>
+<span class="fc" id="L147">		agsafeset(zz, g, new CString(name), new CString(value), new CString(&quot;&quot;));</span>
 <span class="fc" id="L148">	}</span>
 
+	private void set(ST_Agnode_s n, String name, String value) {
+<span class="fc" id="L151">		agsafeset(zz, n, new CString(name), new CString(value), new CString(&quot;&quot;));</span>
+<span class="fc" id="L152">	}</span>
+
+	private void set(ST_Agedge_s e, String name, String value) {
+<span class="fc" id="L155">		agsafeset(zz, e, new CString(name), new CString(value), new CString(&quot;&quot;));</span>
+<span class="fc" id="L156">	}</span>
+
 	private static String labelDim(XDimension2D dim) {
-<span class="fc" id="L151">		return Macro.createHackInitDimensionFromLabel((int) Math.ceil(dim.getWidth()), (int) Math.ceil(dim.getHeight()))</span>
-<span class="fc" id="L152">				.getContent();</span>
+<span class="fc" id="L159">		return Macro.createHackInitDimensionFromLabel((int) Math.ceil(dim.getWidth()), (int) Math.ceil(dim.getHeight()))</span>
+<span class="fc" id="L160">				.getContent();</span>
 	}
 
 	private void setGraphAttributes() {
-<span class="fc" id="L156">		final DotAttributes attributes = graph.getAttributes();</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (rankdir.isHorizontal())</span>
-<span class="fc" id="L158">			set(root, &quot;rankdir&quot;, &quot;LR&quot;);</span>
+<span class="fc" id="L164">		final DotAttributes attributes = graph.getAttributes();</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (rankdir.isHorizontal())</span>
+<span class="fc" id="L166">			set(root, &quot;rankdir&quot;, &quot;LR&quot;);</span>
 
-<span class="fc" id="L160">		final Double nodesep = DotNumbers.parseFirst(attributes.getString(&quot;nodesep&quot;));</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (nodesep != null)</span>
-<span class="fc" id="L162">			set(root, &quot;nodesep&quot;, SvekUtils.pixelToInches(Math.max(0.02, nodesep) * 72));</span>
+<span class="fc" id="L168">		final Double nodesep = DotNumbers.parseFirst(attributes.getString(&quot;nodesep&quot;));</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (nodesep != null)</span>
+<span class="fc" id="L170">			set(root, &quot;nodesep&quot;, SvekUtils.pixelToInches(Math.max(0.02, nodesep) * 72));</span>
 
-<span class="fc" id="L164">		final Double ranksep = DotNumbers.parseFirst(attributes.getString(&quot;ranksep&quot;));</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (ranksep != null)</span>
-<span class="fc" id="L166">			set(root, &quot;ranksep&quot;, SvekUtils.pixelToInches(Math.max(0.02, ranksep) * 72));</span>
-<span class="fc" id="L167">	}</span>
+<span class="fc" id="L172">		final Double ranksep = DotNumbers.parseFirst(attributes.getString(&quot;ranksep&quot;));</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (ranksep != null)</span>
+<span class="fc" id="L174">			set(root, &quot;ranksep&quot;, SvekUtils.pixelToInches(Math.max(0.02, ranksep) * 72));</span>
+<span class="fc" id="L175">	}</span>
 
 	/**
 	 * Only clusters are given to Smetana: the other subgraphs are a way to group
@@ -173,99 +181,170 @@ public final class SmetanaLayout {
 	 * cluster.
 	 */
 	private void createClusters(DotSubgraph parent, ST_Agraph_s smetanaParent) {
-<span class="fc bfc" id="L176" title="All 2 branches covered.">		for (DotSubgraph child : parent.getChildren()) {</span>
-<span class="pc bpc" id="L177" title="2 of 4 branches missed.">			if (child.isCluster() &amp;&amp; child.getNodes().size() &gt; 0) {</span>
-<span class="fc" id="L178">				final ST_Agraph_s cluster = agsubg(zz, smetanaParent, new CString(&quot;cluster_&quot; + clusters.size()), true);</span>
-<span class="fc" id="L179">				clusters.put(child, cluster);</span>
-<span class="fc" id="L180">				final XDimension2D label = input.getClusterLabel(child);</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">				if (label != null) {</span>
-<span class="fc" id="L182">					set(cluster, &quot;label&quot;, labelDim(label));</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		for (DotSubgraph child : parent.getChildren()) {</span>
+<span class="pc bpc" id="L185" title="1 of 4 branches missed.">			if (child.isCluster() &amp;&amp; child.getNodes().size() &gt; 0) {</span>
+<span class="fc" id="L186">				final ST_Agraph_s cluster = agsubg(zz, smetanaParent, new CString(&quot;cluster_&quot; + clusters.size()), true);</span>
+<span class="fc" id="L187">				clusters.put(child, cluster);</span>
+<span class="fc" id="L188">				final XDimension2D label = input.getClusterLabel(child);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">				if (label != null) {</span>
+<span class="fc" id="L190">					set(cluster, &quot;label&quot;, labelDim(label));</span>
 					// Smetana reserves the space of the label at the top or at the bottom;
 					// labeljust is not ported and is handled by the drawing
-<span class="fc" id="L185">					final String labelloc = child.getAttributes().getString(&quot;labelloc&quot;);</span>
-<span class="pc bpc" id="L186" title="1 of 4 branches missed.">					if (labelloc != null &amp;&amp; labelloc.trim().toLowerCase().startsWith(&quot;b&quot;))</span>
-<span class="fc" id="L187">						set(cluster, &quot;labelloc&quot;, &quot;b&quot;);</span>
+<span class="fc" id="L193">					final String labelloc = child.getAttributes().getString(&quot;labelloc&quot;);</span>
+<span class="pc bpc" id="L194" title="1 of 4 branches missed.">					if (labelloc != null &amp;&amp; labelloc.trim().toLowerCase().startsWith(&quot;b&quot;))</span>
+<span class="fc" id="L195">						set(cluster, &quot;labelloc&quot;, &quot;b&quot;);</span>
 				}
-<span class="fc" id="L189">				createClusters(child, cluster);</span>
-<span class="fc" id="L190">			} else {</span>
-<span class="nc" id="L191">				createClusters(child, smetanaParent);</span>
+<span class="fc" id="L197">				createClusters(child, cluster);</span>
+<span class="fc" id="L198">			} else {</span>
+<span class="fc" id="L199">				final String rank = rankKind(child);</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">				if (rank != null) {</span>
+<span class="fc" id="L201">					final ST_Agraph_s rankset = agsubg(zz, smetanaParent, new CString(&quot;rank_&quot; + ranksets.size()),</span>
+							true);
+<span class="fc" id="L203">					set(rankset, &quot;rank&quot;, rank);</span>
+<span class="fc" id="L204">					ranksets.put(child, rankset);</span>
+				}
+<span class="fc" id="L206">				createClusters(child, smetanaParent);</span>
 			}
-<span class="fc" id="L193">		}</span>
-<span class="fc" id="L194">	}</span>
+<span class="fc" id="L208">		}</span>
+<span class="fc" id="L209">	}</span>
+
+	/**
+	 * The {@code rank} of a plain subgraph, when it is one that Graphviz knows
+	 * ({@code same}, {@code min}, {@code max}, {@code source}, {@code sink}).
+	 */
+	private static String rankKind(DotSubgraph subgraph) {
+<span class="fc" id="L216">		final String rank = subgraph.getAttributes().getString(&quot;rank&quot;);</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (rank == null)</span>
+<span class="nc" id="L218">			return null;</span>
+<span class="fc" id="L219">		final String s = rank.trim().toLowerCase();</span>
+<span class="pc bpc" id="L220" title="1 of 10 branches missed.">		if (s.equals(&quot;same&quot;) || s.equals(&quot;min&quot;) || s.equals(&quot;max&quot;) || s.equals(&quot;source&quot;) || s.equals(&quot;sink&quot;))</span>
+<span class="fc" id="L221">			return s;</span>
+<span class="nc" id="L222">		return null;</span>
+	}
+
+	/**
+	 * Puts the nodes of the {@code rank} subgraphs in their Smetana copy. As in
+	 * Graphviz, a rank set only works inside one cluster: a node that belongs to
+	 * another cluster than the one holding the subgraph is left out.
+	 */
+	private void fillRanksets() {
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		for (Map.Entry&lt;DotSubgraph, ST_Agraph_s&gt; ent : ranksets.entrySet()) {</span>
+<span class="fc" id="L232">			final ST_Agraph_s parent = agparent(ent.getValue());</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">			for (DotNode node : ent.getKey().getNodes())</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">				if (ownerCluster(node) == parent)</span>
+<span class="fc" id="L235">					agsubnode(zz, ent.getValue(), nodes.get(node), true);</span>
+<span class="fc" id="L236">		}</span>
+<span class="fc" id="L237">	}</span>
 
 	/**
 	 * A node belongs to at most one cluster chain: as in Graphviz, a node listed
 	 * in two sibling clusters stays in the first one.
 	 */
 	private ST_Agraph_s ownerCluster(DotNode node) {
-<span class="fc" id="L201">		ST_Agraph_s result = root;</span>
-<span class="fc" id="L202">		DotSubgraph current = null;</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		for (Map.Entry&lt;DotSubgraph, ST_Agraph_s&gt; ent : clusters.entrySet()) {</span>
-<span class="fc" id="L204">			final DotSubgraph cluster = ent.getKey();</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">			if (cluster.contains(node) == false)</span>
-<span class="fc" id="L206">				continue;</span>
-<span class="pc bpc" id="L207" title="3 of 4 branches missed.">			if (current == null || isAncestor(current, cluster)) {</span>
-<span class="fc" id="L208">				current = cluster;</span>
-<span class="fc" id="L209">				result = ent.getValue();</span>
+<span class="fc" id="L244">		ST_Agraph_s result = root;</span>
+<span class="fc" id="L245">		DotSubgraph current = null;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		for (Map.Entry&lt;DotSubgraph, ST_Agraph_s&gt; ent : clusters.entrySet()) {</span>
+<span class="fc" id="L247">			final DotSubgraph cluster = ent.getKey();</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">			if (cluster.contains(node) == false)</span>
+<span class="fc" id="L249">				continue;</span>
+<span class="pc bpc" id="L250" title="3 of 4 branches missed.">			if (current == null || isAncestor(current, cluster)) {</span>
+<span class="fc" id="L251">				current = cluster;</span>
+<span class="fc" id="L252">				result = ent.getValue();</span>
 			}
-<span class="fc" id="L211">		}</span>
-<span class="fc" id="L212">		return result;</span>
+<span class="fc" id="L254">		}</span>
+<span class="fc" id="L255">		return result;</span>
 	}
 
 	private static boolean isAncestor(DotSubgraph ancestor, DotSubgraph child) {
-<span class="nc bnc" id="L216" title="All 2 branches missed.">		for (DotSubgraph s = child.getParent(); s != null; s = s.getParent())</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (s == ancestor)</span>
-<span class="nc" id="L218">				return true;</span>
-<span class="nc" id="L219">		return false;</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">		for (DotSubgraph s = child.getParent(); s != null; s = s.getParent())</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">			if (s == ancestor)</span>
+<span class="nc" id="L261">				return true;</span>
+<span class="nc" id="L262">		return false;</span>
 	}
 
 	private void createNodes() {
-<span class="fc bfc" id="L223" title="All 2 branches covered.">		for (DotNode node : graph.getNodes()) {</span>
-<span class="fc" id="L224">			final ST_Agnode_s n = agnode(zz, ownerCluster(node), new CString(&quot;n&quot; + nodes.size()), true);</span>
-<span class="fc" id="L225">			nodes.put(node, n);</span>
-<span class="fc" id="L226">			final XDimension2D size = input.getNodeSize(node);</span>
-<span class="fc bfc" id="L227" title="All 2 branches covered.">			set(n, &quot;shape&quot;, input.getNodeOutline(node) == LayoutInput.Outline.BOX ? &quot;box&quot; : &quot;ellipse&quot;);</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		for (DotNode node : graph.getNodes()) {</span>
+<span class="fc" id="L267">			final ST_Agnode_s n = agnode(zz, ownerCluster(node), new CString(&quot;n&quot; + nodes.size()), true);</span>
+<span class="fc" id="L268">			nodes.put(node, n);</span>
+<span class="fc" id="L269">			final XDimension2D size = input.getNodeSize(node);</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">			set(n, &quot;shape&quot;, input.getNodeOutline(node) == LayoutInput.Outline.BOX ? &quot;box&quot; : &quot;ellipse&quot;);</span>
 			// Without an explicit empty label, Smetana sizes the node for its name
-<span class="fc" id="L229">			set(n, &quot;label&quot;, &quot;&quot;);</span>
-<span class="fc" id="L230">			set(n, &quot;fixedsize&quot;, &quot;true&quot;);</span>
-<span class="fc" id="L231">			set(n, &quot;width&quot;, SvekUtils.pixelToInches(size.getWidth()));</span>
-<span class="fc" id="L232">			set(n, &quot;height&quot;, SvekUtils.pixelToInches(size.getHeight()));</span>
-<span class="fc" id="L233">		}</span>
-<span class="fc" id="L234">	}</span>
+<span class="fc" id="L272">			set(n, &quot;label&quot;, &quot;&quot;);</span>
+<span class="fc" id="L273">			set(n, &quot;fixedsize&quot;, &quot;true&quot;);</span>
+<span class="fc" id="L274">			set(n, &quot;width&quot;, SvekUtils.pixelToInches(size.getWidth()));</span>
+<span class="fc" id="L275">			set(n, &quot;height&quot;, SvekUtils.pixelToInches(size.getHeight()));</span>
+<span class="fc" id="L276">			final String group = node.getAttributes().getString(&quot;group&quot;);</span>
+<span class="pc bpc" id="L277" title="1 of 4 branches missed.">			if (group != null &amp;&amp; group.length() &gt; 0)</span>
+<span class="fc" id="L278">				set(n, &quot;group&quot;, group);</span>
+<span class="fc" id="L279">		}</span>
+<span class="fc" id="L280">	}</span>
 
 	private void createEdges() {
-<span class="fc bfc" id="L237" title="All 2 branches covered.">		for (DotEdge edge : graph.getEdges()) {</span>
-<span class="fc" id="L238">			final ST_Agedge_s e = agedge(zz, root, nodes.get(edge.getTail()), nodes.get(edge.getHead()), null, true);</span>
-<span class="fc" id="L239">			edges.put(edge, e);</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">		for (DotEdge edge : graph.getEdges()) {</span>
+<span class="fc" id="L284">			final ST_Agedge_s e = agedge(zz, root, nodes.get(edge.getTail()), nodes.get(edge.getHead()), null, true);</span>
+<span class="fc" id="L285">			edges.put(edge, e);</span>
 			// The arrows are clipped by BezierClip and drawn by PlantUML. Both ends must
 			// be set: Smetana's arrow_flags puts a normal arrow at both ends by default.
-<span class="fc" id="L242">			set(e, &quot;arrowhead&quot;, &quot;none&quot;);</span>
-<span class="fc" id="L243">			set(e, &quot;arrowtail&quot;, &quot;none&quot;);</span>
+<span class="fc" id="L288">			set(e, &quot;arrowhead&quot;, &quot;none&quot;);</span>
+<span class="fc" id="L289">			set(e, &quot;arrowtail&quot;, &quot;none&quot;);</span>
 
-<span class="fc" id="L245">			final DotAttributes attributes = edge.getAttributes();</span>
-<span class="fc" id="L246">			final Double weight = DotNumbers.parseFirst(attributes.getString(&quot;weight&quot;));</span>
-<span class="fc bfc" id="L247" title="All 2 branches covered.">			if (weight != null)</span>
-<span class="fc" id="L248">				set(e, &quot;weight&quot;, &quot;&quot; + Math.max(0, Math.round(weight)));</span>
+<span class="fc" id="L291">			final DotAttributes attributes = edge.getAttributes();</span>
+<span class="fc" id="L292">			final Double weight = DotNumbers.parseFirst(attributes.getString(&quot;weight&quot;));</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">			if (weight != null)</span>
+<span class="fc" id="L294">				set(e, &quot;weight&quot;, &quot;&quot; + Math.max(0, Math.round(weight)));</span>
 
-<span class="fc" id="L250">			final Double minlen = DotNumbers.parseFirst(attributes.getString(&quot;minlen&quot;));</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">			if (minlen != null)</span>
-<span class="fc" id="L252">				set(e, &quot;minlen&quot;, &quot;&quot; + Math.max(0, Math.round(minlen)));</span>
+<span class="fc" id="L296">			final Double minlen = DotNumbers.parseFirst(attributes.getString(&quot;minlen&quot;));</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">			if (minlen != null)</span>
+<span class="fc" id="L298">				set(e, &quot;minlen&quot;, &quot;&quot; + Math.max(0, Math.round(minlen)));</span>
 
-<span class="fc" id="L254">			final String constraint = attributes.getString(&quot;constraint&quot;);</span>
-<span class="pc bpc" id="L255" title="1 of 4 branches missed.">			if (constraint != null &amp;&amp; DotNumbers.isFalse(constraint))</span>
-<span class="fc" id="L256">				set(e, &quot;constraint&quot;, &quot;false&quot;);</span>
+<span class="fc" id="L300">			final String constraint = attributes.getString(&quot;constraint&quot;);</span>
+<span class="pc bpc" id="L301" title="1 of 4 branches missed.">			if (constraint != null &amp;&amp; DotNumbers.isFalse(constraint))</span>
+<span class="fc" id="L302">				set(e, &quot;constraint&quot;, &quot;false&quot;);</span>
 
-<span class="fc" id="L258">			final XDimension2D label = input.getEdgeLabel(edge);</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">			if (label != null)</span>
-<span class="fc" id="L260">				set(e, &quot;label&quot;, labelDim(label));</span>
+<span class="fc" id="L304">			final XDimension2D label = input.getEdgeLabel(edge);</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">			if (label != null)</span>
+<span class="fc" id="L306">				set(e, &quot;label&quot;, labelDim(label));</span>
+
+			// The ports of a loop would need selfTop/selfLeft/selfBottom, which are not
+			// ported yet: a loop is always drawn on the right of its node
+<span class="fc bfc" id="L310" title="All 2 branches covered.">			if (edge.getTail() != edge.getHead()) {</span>
+<span class="fc" id="L311">				final String tailport = compass(edge.getTailPort());</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">				if (tailport != null)</span>
+<span class="fc" id="L313">					set(e, &quot;tailport&quot;, tailport);</span>
+<span class="fc" id="L314">				final String headport = compass(edge.getHeadPort());</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">				if (headport != null)</span>
+<span class="fc" id="L316">					set(e, &quot;headport&quot;, headport);</span>
+			}
 
 			// Shapes unknown to Smetana: route up to the center, PlantUML clips
-<span class="fc bfc" id="L263" title="All 2 branches covered.">			if (input.getContour(edge.getTail()) != null)</span>
-<span class="fc" id="L264">				set(e, &quot;tailclip&quot;, &quot;false&quot;);</span>
-<span class="fc bfc" id="L265" title="All 2 branches covered.">			if (input.getContour(edge.getHead()) != null)</span>
-<span class="fc" id="L266">				set(e, &quot;headclip&quot;, &quot;false&quot;);</span>
-<span class="fc" id="L267">		}</span>
-<span class="fc" id="L268">	}</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">			if (input.getContour(edge.getTail()) != null)</span>
+<span class="fc" id="L321">				set(e, &quot;tailclip&quot;, &quot;false&quot;);</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">			if (input.getContour(edge.getHead()) != null)</span>
+<span class="fc" id="L323">				set(e, &quot;headclip&quot;, &quot;false&quot;);</span>
+<span class="fc" id="L324">		}</span>
+<span class="fc" id="L325">	}</span>
+
+	/**
+	 * The compass point of a port ({@code &quot;ne&quot;}, {@code &quot;p1:ne&quot;}...), or
+	 * {@code null}. Port names (records, HTML labels) are not supported yet.
+	 * As BT and RL are computed as TB and LR then mirrored, their compass points
+	 * are mirrored first.
+	 */
+	private String compass(String port) {
+<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (port == null)</span>
+<span class="fc" id="L335">			return null;</span>
+<span class="fc" id="L336">		String s = port.trim().toLowerCase();</span>
+<span class="fc" id="L337">		final int colon = s.lastIndexOf(':');</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">		if (colon != -1)</span>
+<span class="fc" id="L339">			s = s.substring(colon + 1);</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">		if (COMPASS_POINTS.contains(s) == false)</span>
+<span class="nc" id="L341">			return null;</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">		if (rankdir == Rankdir.BT)</span>
+<span class="fc" id="L343">			s = s.replace('n', 'x').replace('s', 'n').replace('x', 's');</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		else if (rankdir == Rankdir.RL)</span>
+<span class="nc" id="L345">			s = s.replace('e', 'x').replace('w', 'e').replace('x', 'w');</span>
+<span class="fc" id="L346">		return s;</span>
+	}
 
 	// ------------------------------------------------------------------
 	// Reading the result back
@@ -277,94 +356,94 @@ public final class SmetanaLayout {
 
 	private XPoint2D transform(double x, double y) {
 		// Smetana has Y going up. TB is drawn mirrored, BT as is; RL is LR mirrored.
-<span class="fc" id="L280">		double tx = x - minX;</span>
-<span class="fc" id="L281">		double ty = maxY - y;</span>
-<span class="fc bfc" id="L282" title="All 2 branches covered.">		if (rankdir == Rankdir.BT)</span>
-<span class="fc" id="L283">			ty = y - minY;</span>
-<span class="fc bfc" id="L284" title="All 2 branches covered.">		if (rankdir == Rankdir.RL)</span>
-<span class="fc" id="L285">			tx = maxX - x;</span>
-<span class="fc" id="L286">		return new XPoint2D(tx, ty);</span>
+<span class="fc" id="L359">		double tx = x - minX;</span>
+<span class="fc" id="L360">		double ty = maxY - y;</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">		if (rankdir == Rankdir.BT)</span>
+<span class="fc" id="L362">			ty = y - minY;</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">		if (rankdir == Rankdir.RL)</span>
+<span class="fc" id="L364">			tx = maxX - x;</span>
+<span class="fc" id="L365">		return new XPoint2D(tx, ty);</span>
 	}
 
 	private XPoint2D transform(ST_pointf pt) {
-<span class="fc" id="L290">		return transform(pt.x, pt.y);</span>
+<span class="fc" id="L369">		return transform(pt.x, pt.y);</span>
 	}
 
 	private LayoutResult extract() {
-<span class="fc" id="L294">		final ST_Agraphinfo_t info = (ST_Agraphinfo_t) root.data;</span>
-<span class="fc" id="L295">		minX = info.bb.LL.x;</span>
-<span class="fc" id="L296">		minY = info.bb.LL.y;</span>
-<span class="fc" id="L297">		maxX = info.bb.UR.x;</span>
-<span class="fc" id="L298">		maxY = info.bb.UR.y;</span>
+<span class="fc" id="L373">		final ST_Agraphinfo_t info = (ST_Agraphinfo_t) root.data;</span>
+<span class="fc" id="L374">		minX = info.bb.LL.x;</span>
+<span class="fc" id="L375">		minY = info.bb.LL.y;</span>
+<span class="fc" id="L376">		maxX = info.bb.UR.x;</span>
+<span class="fc" id="L377">		maxY = info.bb.UR.y;</span>
 
-<span class="fc" id="L300">		final LayoutResult result = new LayoutResult(new XDimension2D(maxX - minX, maxY - minY));</span>
+<span class="fc" id="L379">		final LayoutResult result = new LayoutResult(new XDimension2D(maxX - minX, maxY - minY));</span>
 
-<span class="fc bfc" id="L302" title="All 2 branches covered.">		for (Map.Entry&lt;DotNode, ST_Agnode_s&gt; ent : nodes.entrySet()) {</span>
-<span class="fc" id="L303">			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) ent.getValue().data;</span>
-<span class="fc" id="L304">			final XPoint2D center = transform(data.coord.x, data.coord.y);</span>
-<span class="fc" id="L305">			result.put(ent.getKey(), new NodeBox(center, new XDimension2D(data.width * 72, data.height * 72)));</span>
-<span class="fc" id="L306">		}</span>
+<span class="fc bfc" id="L381" title="All 2 branches covered.">		for (Map.Entry&lt;DotNode, ST_Agnode_s&gt; ent : nodes.entrySet()) {</span>
+<span class="fc" id="L382">			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) ent.getValue().data;</span>
+<span class="fc" id="L383">			final XPoint2D center = transform(data.coord.x, data.coord.y);</span>
+<span class="fc" id="L384">			result.put(ent.getKey(), new NodeBox(center, new XDimension2D(data.width * 72, data.height * 72)));</span>
+<span class="fc" id="L385">		}</span>
 
-<span class="fc bfc" id="L308" title="All 2 branches covered.">		for (Map.Entry&lt;DotEdge, ST_Agedge_s&gt; ent : edges.entrySet()) {</span>
-<span class="fc" id="L309">			final EdgeRoute route = extractEdge(ent.getKey(), (ST_Agedgeinfo_t) ent.getValue().data, result);</span>
-<span class="pc bpc" id="L310" title="1 of 2 branches missed.">			if (route != null)</span>
-<span class="fc" id="L311">				result.put(ent.getKey(), route);</span>
-<span class="fc" id="L312">		}</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">		for (Map.Entry&lt;DotEdge, ST_Agedge_s&gt; ent : edges.entrySet()) {</span>
+<span class="fc" id="L388">			final EdgeRoute route = extractEdge(ent.getKey(), (ST_Agedgeinfo_t) ent.getValue().data, result);</span>
+<span class="pc bpc" id="L389" title="1 of 2 branches missed.">			if (route != null)</span>
+<span class="fc" id="L390">				result.put(ent.getKey(), route);</span>
+<span class="fc" id="L391">		}</span>
 
-<span class="fc bfc" id="L314" title="All 2 branches covered.">		for (Map.Entry&lt;DotSubgraph, ST_Agraph_s&gt; ent : clusters.entrySet()) {</span>
-<span class="fc" id="L315">			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) ent.getValue().data;</span>
-<span class="fc" id="L316">			final XPoint2D a = transform(data.bb.LL.x, data.bb.LL.y);</span>
-<span class="fc" id="L317">			final XPoint2D b = transform(data.bb.UR.x, data.bb.UR.y);</span>
-<span class="fc" id="L318">			final XPoint2D topLeft = new XPoint2D(Math.min(a.getX(), b.getX()), Math.min(a.getY(), b.getY()));</span>
-<span class="fc" id="L319">			final XDimension2D size = new XDimension2D(Math.abs(a.getX() - b.getX()), Math.abs(a.getY() - b.getY()));</span>
-<span class="fc" id="L320">			XPoint2D labelCenter = null;</span>
-<span class="fc" id="L321">			final ST_textlabel_t label = data.label;</span>
-<span class="fc bfc" id="L322" title="All 2 branches covered.">			if (label != null)</span>
-<span class="fc" id="L323">				labelCenter = transform(label.pos);</span>
-<span class="fc" id="L324">			result.put(ent.getKey(), new ClusterBox(topLeft, size, labelCenter));</span>
-<span class="fc" id="L325">		}</span>
-<span class="fc" id="L326">		return result;</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">		for (Map.Entry&lt;DotSubgraph, ST_Agraph_s&gt; ent : clusters.entrySet()) {</span>
+<span class="fc" id="L394">			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) ent.getValue().data;</span>
+<span class="fc" id="L395">			final XPoint2D a = transform(data.bb.LL.x, data.bb.LL.y);</span>
+<span class="fc" id="L396">			final XPoint2D b = transform(data.bb.UR.x, data.bb.UR.y);</span>
+<span class="fc" id="L397">			final XPoint2D topLeft = new XPoint2D(Math.min(a.getX(), b.getX()), Math.min(a.getY(), b.getY()));</span>
+<span class="fc" id="L398">			final XDimension2D size = new XDimension2D(Math.abs(a.getX() - b.getX()), Math.abs(a.getY() - b.getY()));</span>
+<span class="fc" id="L399">			XPoint2D labelCenter = null;</span>
+<span class="fc" id="L400">			final ST_textlabel_t label = data.label;</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">			if (label != null)</span>
+<span class="fc" id="L402">				labelCenter = transform(label.pos);</span>
+<span class="fc" id="L403">			result.put(ent.getKey(), new ClusterBox(topLeft, size, labelCenter));</span>
+<span class="fc" id="L404">		}</span>
+<span class="fc" id="L405">		return result;</span>
 	}
 
 	private EdgeRoute extractEdge(DotEdge edge, ST_Agedgeinfo_t data, LayoutResult result) {
-<span class="pc bpc" id="L330" title="2 of 4 branches missed.">		if (data.spl == null || data.spl.size == 0)</span>
-<span class="nc" id="L331">			return null;</span>
+<span class="pc bpc" id="L409" title="2 of 4 branches missed.">		if (data.spl == null || data.spl.size == 0)</span>
+<span class="nc" id="L410">			return null;</span>
 
-<span class="fc" id="L333">		final ST_bezier bezier = data.spl.list.get__(0);</span>
-<span class="pc bpc" id="L334" title="1 of 2 branches missed.">		if (bezier.size &lt; 4)</span>
-<span class="nc" id="L335">			return null;</span>
+<span class="fc" id="L412">		final ST_bezier bezier = data.spl.list.get__(0);</span>
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">		if (bezier.size &lt; 4)</span>
+<span class="nc" id="L414">			return null;</span>
 
-<span class="fc" id="L337">		List&lt;XPoint2D&gt; points = new ArrayList&lt;XPoint2D&gt;();</span>
-<span class="fc bfc" id="L338" title="All 2 branches covered.">		for (int i = 0; i &lt; bezier.size; i++)</span>
-<span class="fc" id="L339">			points.add(transform(bezier.list.get__(i)));</span>
+<span class="fc" id="L416">		List&lt;XPoint2D&gt; points = new ArrayList&lt;XPoint2D&gt;();</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">		for (int i = 0; i &lt; bezier.size; i++)</span>
+<span class="fc" id="L418">			points.add(transform(bezier.list.get__(i)));</span>
 
-<span class="fc" id="L341">		final NodeContour tailContour = input.getContour(edge.getTail());</span>
-<span class="fc bfc" id="L342" title="All 2 branches covered.">		if (tailContour != null)</span>
-<span class="fc" id="L343">			points = BezierClip.clipStartToContour(points, tailContour,</span>
-<span class="fc" id="L344">					result.getNodes().get(edge.getTail()).getCenter());</span>
-<span class="fc" id="L345">		final NodeContour headContour = input.getContour(edge.getHead());</span>
-<span class="fc bfc" id="L346" title="All 2 branches covered.">		if (headContour != null)</span>
-<span class="fc" id="L347">			points = BezierClip.clipEndToContour(points, headContour,</span>
-<span class="fc" id="L348">					result.getNodes().get(edge.getHead()).getCenter());</span>
+<span class="fc" id="L420">		final NodeContour tailContour = input.getContour(edge.getTail());</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">		if (tailContour != null)</span>
+<span class="fc" id="L422">			points = BezierClip.clipStartToContour(points, tailContour,</span>
+<span class="fc" id="L423">					result.getNodes().get(edge.getTail()).getCenter());</span>
+<span class="fc" id="L424">		final NodeContour headContour = input.getContour(edge.getHead());</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">		if (headContour != null)</span>
+<span class="fc" id="L426">			points = BezierClip.clipEndToContour(points, headContour,</span>
+<span class="fc" id="L427">					result.getNodes().get(edge.getHead()).getCenter());</span>
 
-<span class="fc" id="L350">		XPoint2D tailTip = null;</span>
-<span class="fc" id="L351">		XPoint2D headTip = null;</span>
-<span class="fc" id="L352">		final Double tailArrow = input.getTailArrow(edge);</span>
-<span class="fc bfc" id="L353" title="All 2 branches covered.">		if (tailArrow != null) {</span>
-<span class="fc" id="L354">			tailTip = points.get(0);</span>
-<span class="fc" id="L355">			points = BezierClip.clipStart(points, tailArrow);</span>
+<span class="fc" id="L429">		XPoint2D tailTip = null;</span>
+<span class="fc" id="L430">		XPoint2D headTip = null;</span>
+<span class="fc" id="L431">		final Double tailArrow = input.getTailArrow(edge);</span>
+<span class="fc bfc" id="L432" title="All 2 branches covered.">		if (tailArrow != null) {</span>
+<span class="fc" id="L433">			tailTip = points.get(0);</span>
+<span class="fc" id="L434">			points = BezierClip.clipStart(points, tailArrow);</span>
 		}
-<span class="fc" id="L357">		final Double headArrow = input.getHeadArrow(edge);</span>
-<span class="fc bfc" id="L358" title="All 2 branches covered.">		if (headArrow != null) {</span>
-<span class="fc" id="L359">			headTip = points.get(points.size() - 1);</span>
-<span class="fc" id="L360">			points = BezierClip.clipEnd(points, headArrow);</span>
+<span class="fc" id="L436">		final Double headArrow = input.getHeadArrow(edge);</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">		if (headArrow != null) {</span>
+<span class="fc" id="L438">			headTip = points.get(points.size() - 1);</span>
+<span class="fc" id="L439">			points = BezierClip.clipEnd(points, headArrow);</span>
 		}
 
-<span class="fc" id="L363">		XPoint2D labelCenter = null;</span>
-<span class="pc bpc" id="L364" title="1 of 4 branches missed.">		if (data.label != null &amp;&amp; input.getEdgeLabel(edge) != null)</span>
-<span class="fc" id="L365">			labelCenter = transform(data.label.pos);</span>
+<span class="fc" id="L442">		XPoint2D labelCenter = null;</span>
+<span class="pc bpc" id="L443" title="1 of 4 branches missed.">		if (data.label != null &amp;&amp; input.getEdgeLabel(edge) != null)</span>
+<span class="fc" id="L444">			labelCenter = transform(data.label.pos);</span>
 
-<span class="fc" id="L367">		return new EdgeRoute(points, tailTip, headTip, labelCenter);</span>
+<span class="fc" id="L446">		return new EdgeRoute(points, tailTip, headTip, labelCenter);</span>
 	}
 
 }

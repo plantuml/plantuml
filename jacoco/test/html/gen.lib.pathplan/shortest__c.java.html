@@ -225,14 +225,14 @@ try {
 <span class="fc bfc" id="L225" title="All 2 branches covered.">	    		trip.get__(0).e[ei].rtp.get__(0).mark == 1)</span>
 <span class="fc" id="L226">		break;</span>
 <span class="fc bfc" id="L227" title="All 2 branches covered.">	if (ei == 3) {		/* in last triangle */</span>
-<span class="pc bpc" id="L228" title="1 of 2 branches missed.">	    if (ccw(eps.get__(1), zz.dq.pnlps[zz.dq.fpnlpi].pp,</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">	    if (ccw(eps.get__(1), zz.dq.pnlps[zz.dq.fpnlpi].pp,</span>
 		    zz.dq.pnlps[zz.dq.lpnlpi].pp) == 1)
 		{
 <span class="fc" id="L231">		lpnlp = zz.dq.pnlps[zz.dq.lpnlpi];</span>
 <span class="fc" id="L232">		rpnlp = epnls[1];</span>
 	    } else {
-<span class="nc" id="L234">		lpnlp = epnls[1];</span>
-<span class="nc" id="L235">		rpnlp = zz.dq.pnlps[zz.dq.lpnlpi];</span>
+<span class="fc" id="L234">		lpnlp = epnls[1];</span>
+<span class="fc" id="L235">		rpnlp = zz.dq.pnlps[zz.dq.lpnlpi];</span>
 		}
 	} else {
 <span class="fc" id="L238">	    pnlp = trip.get__(0).e[(ei + 1) % 3].pnl1p;</span>
@@ -251,7 +251,7 @@ try {
 <span class="fc" id="L251">	    add2dq(zz, 2, lpnlp);</span>
 <span class="fc" id="L252">	    add2dq(zz, 1, rpnlp);</span>
 	} else {
-<span class="pc bpc" id="L254" title="1 of 4 branches missed.">	    if ((zz.dq.pnlps[zz.dq.fpnlpi] != rpnlp)</span>
+<span class="fc bfc" id="L254" title="All 4 branches covered.">	    if ((zz.dq.pnlps[zz.dq.fpnlpi] != rpnlp)</span>
 		&amp;&amp; (zz.dq.pnlps[zz.dq.lpnlpi] != rpnlp)) {
 		/* add right point to deque */
 <span class="fc" id="L257">		splitindex = finddqsplit(zz, rpnlp);</span>
@@ -353,7 +353,7 @@ try {
 <span class="fc bfc" id="L353" title="All 2 branches covered.">    if (ccw(pnlps[pnlim1].pp, pnlps[pnli].pp, pnlps[pnlip1].pp) ==</span>
 	1)
 <span class="fc" id="L355">	res =</span>
-<span class="pc bpc" id="L356" title="1 of 2 branches missed.">	    (ccw(pnlps[pnli].pp, pnlps[pnlip2].pp, pnlps[pnlim1].pp) ==</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">	    (ccw(pnlps[pnli].pp, pnlps[pnlip2].pp, pnlps[pnlim1].pp) ==</span>
 	     1)
 <span class="fc bfc" id="L358" title="All 2 branches covered.">	    &amp;&amp; (ccw(pnlps[pnlip2].pp, pnlps[pnli].pp, pnlps[pnlip1].pp)</span>
 		== 1);
@@ -579,7 +579,7 @@ try {
     int ccw1, ccw2, ccw3, ccw4;
 <span class="fc bfc" id="L580" title="All 4 branches covered.">    if (ccw(pap, pbp, pcp) == 3 || ccw(pap, pbp, pdp) == 3 ||</span>
 <span class="fc bfc" id="L581" title="All 4 branches covered.">	ccw(pcp, pdp, pap) == 3 || ccw(pcp, pdp, pbp) == 3) {</span>
-<span class="pc bpc" id="L582" title="1 of 4 branches missed.">	if (between(pap, pbp, pcp) || between(pap, pbp, pdp) ||</span>
+<span class="fc bfc" id="L582" title="All 4 branches covered.">	if (between(pap, pbp, pcp) || between(pap, pbp, pdp) ||</span>
 <span class="pc bpc" id="L583" title="2 of 4 branches missed.">	    between(pcp, pdp, pap) || between(pcp, pdp, pbp))</span>
 <span class="fc" id="L584">	    return ((!(false)));</span>
     } else {

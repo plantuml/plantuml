@@ -1529,7 +1529,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.file" --> "java.lang"
 "net.sourceforge.plantuml.file" --> "java.util"
 
-class "net.sourceforge.plantuml.filesdiagram" %lighten("red", 100) {
+class "net.sourceforge.plantuml.filesdiagram" %lighten("red", 96) {
 Total Classes: 8
 }
 "net.sourceforge.plantuml.filesdiagram" --> "java.io"
@@ -3366,7 +3366,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.teavm" --> "java.lang"
 "net.sourceforge.plantuml.teavm" --> "java.util"
 
-class "net.sourceforge.plantuml.teavm.c" %lighten("red", 93) {
+class "net.sourceforge.plantuml.teavm.c" %lighten("red", 94) {
 Total Classes: 13
 }
 "net.sourceforge.plantuml.teavm.c" --> "java.io"
@@ -3386,6 +3386,7 @@ Total Classes: 13
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.eggs"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.error"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.explain"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.filesdiagram"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.gantt"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.jaws"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.jsondiagram"

@@ -960,11 +960,15 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">utils__c.</span><code><a href="../../lib/common/utils__c.html#common_init_node(smetana.core.Globals,h.ST_Agnode_s)" class="member-name-link">common_init_node</a><wbr>(<a href="../../../smetana/core/Globals.html" title="class in smetana.core">Globals</a>&nbsp;zz,
  <a href="../../../h/ST_Agnode_s.html" title="class in h">ST_Agnode_s</a>&nbsp;n)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">shapes__c.</span><code><a href="../../lib/common/shapes__c.html#compassPoint(java.lang.Object...)" class="member-name-link">compassPoint</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;arg)</code></div>
+<div class="col-first even-row-color"><code>static <a href="../../../h/ST_pointf.html" title="class in h">ST_pointf</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">shapes__c.</span><code><a href="../../lib/common/shapes__c.html#compassPoint(smetana.core.Globals,h.ST_inside_t,double,double)" class="member-name-link">compassPoint</a><wbr>(<a href="../../../smetana/core/Globals.html" title="class in smetana.core">Globals</a>&nbsp;zz,
+ <a href="../../../h/ST_inside_t.html" title="class in h">ST_inside_t</a>&nbsp;ictxt,
+ double&nbsp;y,
+ double&nbsp;x)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">shapes__c.</span><code><a href="../../lib/common/shapes__c.html#compassPort(h.ST_Agnode_s,h.ST_boxf,h.ST_port,smetana.core.CString,int,h.ST_inside_t)" class="member-name-link">compassPort</a><wbr>(<a href="../../../h/ST_Agnode_s.html" title="class in h">ST_Agnode_s</a>&nbsp;n,
+<div class="col-second odd-row-color"><span class="type-name-label">shapes__c.</span><code><a href="../../lib/common/shapes__c.html#compassPort(smetana.core.Globals,h.ST_Agnode_s,h.ST_boxf,h.ST_port,smetana.core.CString,int,h.ST_inside_t)" class="member-name-link">compassPort</a><wbr>(<a href="../../../smetana/core/Globals.html" title="class in smetana.core">Globals</a>&nbsp;zz,
+ <a href="../../../h/ST_Agnode_s.html" title="class in h">ST_Agnode_s</a>&nbsp;n,
  <a href="../../../h/ST_boxf.html" title="class in h">ST_boxf</a>&nbsp;bp,
  <a href="../../../h/ST_port.html" title="class in h">ST_port</a>&nbsp;pp,
  <a href="../../../smetana/core/CString.html" title="class in smetana.core">CString</a>&nbsp;compass,
@@ -1752,8 +1756,11 @@ loadScripts(document, 'script');</script>
  <a href="../../../h/ST_Agraph_s.html" title="class in h">ST_Agraph_s</a>&nbsp;g,
  <a href="../../../h/ST_Agraph_s.html" title="class in h">ST_Agraph_s</a>&nbsp;subg)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">rank__c.</span><code><a href="../../lib/dotgen/rank__c.html#collapse_rankset(java.lang.Object...)" class="member-name-link">collapse_rankset</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;arg_)</code></div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">rank__c.</span><code><a href="../../lib/dotgen/rank__c.html#collapse_rankset(smetana.core.Globals,h.ST_Agraph_s,h.ST_Agraph_s,int)" class="member-name-link">collapse_rankset</a><wbr>(<a href="../../../smetana/core/Globals.html" title="class in smetana.core">Globals</a>&nbsp;zz,
+ <a href="../../../h/ST_Agraph_s.html" title="class in h">ST_Agraph_s</a>&nbsp;g,
+ <a href="../../../h/ST_Agraph_s.html" title="class in h">ST_Agraph_s</a>&nbsp;subg,
+ int&nbsp;kind)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">rank__c.</span><code><a href="../../lib/dotgen/rank__c.html#collapse_sets(smetana.core.Globals,h.ST_Agraph_s,h.ST_Agraph_s)" class="member-name-link">collapse_sets</a><wbr>(<a href="../../../smetana/core/Globals.html" title="class in smetana.core">Globals</a>&nbsp;zz,
@@ -2348,7 +2355,8 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">rank__c.</span><code><a href="../../lib/dotgen/rank__c.html#minmax_edges(h.ST_Agraph_s)" class="member-name-link">minmax_edges</a><wbr>(<a href="../../../h/ST_Agraph_s.html" title="class in h">ST_Agraph_s</a>&nbsp;g)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">rank__c.</span><code><a href="../../lib/dotgen/rank__c.html#minmax_edges2(h.ST_Agraph_s,h.ST_point)" class="member-name-link">minmax_edges2</a><wbr>(<a href="../../../h/ST_Agraph_s.html" title="class in h">ST_Agraph_s</a>&nbsp;g,
+<div class="col-second even-row-color"><span class="type-name-label">rank__c.</span><code><a href="../../lib/dotgen/rank__c.html#minmax_edges2(smetana.core.Globals,h.ST_Agraph_s,h.ST_point)" class="member-name-link">minmax_edges2</a><wbr>(<a href="../../../smetana/core/Globals.html" title="class in smetana.core">Globals</a>&nbsp;zz,
+ <a href="../../../h/ST_Agraph_s.html" title="class in h">ST_Agraph_s</a>&nbsp;g,
  <a href="../../../h/ST_point.html" title="class in h">ST_point</a>&nbsp;slen)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static int</code></div>

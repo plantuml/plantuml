@@ -309,10 +309,10 @@ try {
 <span class="pc bpc" id="L309" title="1 of 2 branches missed.">    if ((agroot(g) != n0.root))</span>
 <span class="nc" id="L310">	return null;</span>
 <span class="fc" id="L311">    n = agfindnode_by_id(zz, g, n0.tag.id);</span>
-<span class="pc bpc" id="L312" title="1 of 4 branches missed.">    if ((n == null) &amp;&amp; cflag) {</span>
-<span class="nc bnc" id="L313" title="All 2 branches missed.">	if ((par = agparent(g))!=null) {</span>
-<span class="nc" id="L314">	    n = agsubnode(zz, par, n0, cflag);</span>
-<span class="nc" id="L315">	    installnode(zz, g, n);</span>
+<span class="fc bfc" id="L312" title="All 4 branches covered.">    if ((n == null) &amp;&amp; cflag) {</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">	if ((par = agparent(g))!=null) {</span>
+<span class="fc" id="L314">	    n = agsubnode(zz, par, n0, cflag);</span>
+<span class="fc" id="L315">	    installnode(zz, g, n);</span>
 	    /* no callback for existing node insertion in subgraph (?) */
 	}
 	/* else impossible that &lt;n&gt; doesn't belong to &lt;g&gt; */

@@ -410,7 +410,7 @@ try {
 <span class="fc" id="L410">	    t = ND_order(agtail(e1)) - inv;</span>
 <span class="fc bfc" id="L411" title="All 4 branches covered.">	    if ((t &gt; 0)</span>
 		|| ((t == 0)
-<span class="pc bpc" id="L413" title="1 of 2 branches missed.">		    &amp;&amp; (  ED_tail_port(e1).p.x &gt; e2px)))</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">		    &amp;&amp; (  ED_tail_port(e1).p.x &gt; e2px)))</span>
 <span class="fc" id="L414">		cross += ED_xpenalty(e1) * cnt;</span>
 	}
     }
@@ -443,7 +443,7 @@ try {
 <span class="fc" id="L443">	    t = ND_order(aghead(e1)) - inv;</span>
 <span class="fc bfc" id="L444" title="All 4 branches covered.">	    if ((t &gt; 0)</span>
 		|| ((t == 0)
-<span class="pc bpc" id="L446" title="1 of 2 branches missed.">		    &amp;&amp; ((ED_head_port(e1)).p.x) &gt; e2px))</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">		    &amp;&amp; ((ED_head_port(e1)).p.x) &gt; e2px))</span>
 <span class="fc" id="L447">		cross += ((ED_xpenalty(e1)) * cnt);</span>
 	}
     }
@@ -1190,17 +1190,17 @@ try {
 <span class="pc bpc" id="L1190" title="1 of 2 branches missed.">    if (((ND_flat_out(aghead(e)).list))==null)</span>
 <span class="nc" id="L1191">	rev = null;</span>
     else
-<span class="pc bpc" id="L1193" title="1 of 2 branches missed.">	for (j = 0; (rev = (ST_Agedge_s) ND_flat_out(aghead(e)).list.get_(j))!=null; j++)</span>
-<span class="nc bnc" id="L1194" title="All 2 branches missed.">	    if (aghead(rev) == agtail(e))</span>
-<span class="nc" id="L1195">		break;</span>
-<span class="pc bpc" id="L1196" title="1 of 2 branches missed.">    if (rev!=null) {</span>
-<span class="nc" id="L1197">	merge_oneway(e, rev);</span>
-<span class="nc bnc" id="L1198" title="All 2 branches missed.">	if (ED_to_virt(e) == null)</span>
+<span class="pc bfc" id="L1193" title="All 2 branches covered.">	for (j = 0; (rev = (ST_Agedge_s) ND_flat_out(aghead(e)).list.get_(j))!=null; j++)</span>
+<span class="pc bpc" id="L1194" title="1 of 2 branches missed.">	    if (aghead(rev) == agtail(e))</span>
+<span class="fc" id="L1195">		break;</span>
+<span class="fc bfc" id="L1196" title="All 2 branches covered.">    if (rev!=null) {</span>
+<span class="fc" id="L1197">	merge_oneway(e, rev);</span>
+<span class="pc bpc" id="L1198" title="1 of 2 branches missed.">	if (ED_to_virt(e) == null)</span>
 <span class="nc" id="L1199">	    ED_to_virt(e, rev);</span>
-<span class="nc bnc" id="L1200" title="All 2 branches missed.">	if ((ED_edge_type(rev) == 4)</span>
+<span class="pc bpc" id="L1200" title="1 of 2 branches missed.">	if ((ED_edge_type(rev) == 4)</span>
 <span class="nc bnc" id="L1201" title="All 2 branches missed.">	    &amp;&amp; (ED_to_orig(rev) == null))</span>
 <span class="nc" id="L1202">	    ED_to_orig(rev, e);</span>
-<span class="nc" id="L1203">	elist_append(e, ND_other(agtail(e)));</span>
+<span class="fc" id="L1203">	elist_append(e, ND_other(agtail(e)));</span>
     } else {
 <span class="fc" id="L1205">	rev = new_virtual_edge(aghead(e), agtail(e), e);</span>
 <span class="pc bpc" id="L1206" title="1 of 2 branches missed.">	if (ED_edge_type(e) == 4)</span>
@@ -1239,15 +1239,15 @@ try {
 <span class="fc" id="L1239">		continue;</span>
 <span class="pc bpc" id="L1240" title="1 of 2 branches missed.">	    if (ED_weight(e) == 0)</span>
 <span class="nc" id="L1241">		continue;</span>
-<span class="pc bpc" id="L1242" title="1 of 2 branches missed.">	    if (ND_onstack(aghead(e)) == true) {</span>
-<span class="nc bnc" id="L1243" title="All 2 branches missed.">		assert(ND_low(aghead(e)) &lt; M.nrows);</span>
-<span class="nc bnc" id="L1244" title="All 2 branches missed.">		assert(ND_low(agtail(e)) &lt; M.ncols);</span>
-<span class="nc" id="L1245">		M.data[ND_low(aghead(e))][ND_low(agtail(e))]=1;</span>
-<span class="nc" id="L1246">		delete_flat_edge(e);</span>
-<span class="nc" id="L1247">		i--;</span>
-<span class="nc bnc" id="L1248" title="All 2 branches missed.">		if (ED_edge_type(e) == FLATORDER)</span>
+<span class="fc bfc" id="L1242" title="All 2 branches covered.">	    if (ND_onstack(aghead(e)) == true) {</span>
+<span class="pc bpc" id="L1243" title="1 of 2 branches missed.">		assert(ND_low(aghead(e)) &lt; M.nrows);</span>
+<span class="pc bpc" id="L1244" title="1 of 2 branches missed.">		assert(ND_low(agtail(e)) &lt; M.ncols);</span>
+<span class="fc" id="L1245">		M.data[ND_low(aghead(e))][ND_low(agtail(e))]=1;</span>
+<span class="fc" id="L1246">		delete_flat_edge(e);</span>
+<span class="fc" id="L1247">		i--;</span>
+<span class="pc bpc" id="L1248" title="1 of 2 branches missed.">		if (ED_edge_type(e) == FLATORDER)</span>
 <span class="nc" id="L1249">		    continue;</span>
-<span class="nc" id="L1250">		flat_rev(g, e);</span>
+<span class="fc" id="L1250">		flat_rev(g, e);</span>
 	    } else {
 <span class="pc bpc" id="L1252" title="1 of 2 branches missed.">		assert(ND_low(aghead(e)) &lt; M.nrows);</span>
 <span class="pc bpc" id="L1253" title="1 of 2 branches missed.">		assert(ND_low(agtail(e)) &lt; M.ncols);</span>
@@ -1766,13 +1766,13 @@ try {
 <span class="fc bfc" id="L1766" title="All 2 branches covered.">	if (is_out)</span>
 <span class="fc bfc" id="L1767" title="All 2 branches covered.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
 <span class="fc" id="L1768">		if ((ND_order(aghead(f)) - ND_order(aghead(e)))</span>
-<span class="pc bpc" id="L1769" title="1 of 2 branches missed.">			 * (ED_tail_port(f).p.x - ED_tail_port(e).p.x) &lt; 0)</span>
-<span class="nc" id="L1770">UNSUPPORTED(&quot;bw8rwv11yqzss88pad7ljil8a&quot;); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
+<span class="fc bfc" id="L1769" title="All 2 branches covered.">			 * (ED_tail_port(f).p.x - ED_tail_port(e).p.x) &lt; 0)</span>
+<span class="fc" id="L1770">		    cross += ED_xpenalty(e) * ED_xpenalty(f); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
 	} else
-<span class="pc bpc" id="L1772" title="1 of 2 branches missed.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
-<span class="nc" id="L1773">UNSUPPORTED(&quot;bza83c6rmihrkzyllwf0jm4tn&quot;); // 		if ((ND_order(agtail(f)) - ND_order(agtail(e)))</span>
-<span class="nc" id="L1774">UNSUPPORTED(&quot;csrxg0y1azmvde7t833lm13sp&quot;); // 			* (ED_head_port(f).p.x - ED_head_port(e).p.x) &lt; 0)</span>
-<span class="nc" id="L1775">UNSUPPORTED(&quot;bw8rwv11yqzss88pad7ljil8a&quot;); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
+<span class="fc bfc" id="L1772" title="All 2 branches covered.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
+<span class="fc" id="L1773">		if ((ND_order(agtail(f)) - ND_order(agtail(e))) // 		if ((ND_order(agtail(f)) - ND_order(agtail(e)))</span>
+<span class="pc bpc" id="L1774" title="1 of 2 branches missed.">			* (ED_head_port(f).p.x - ED_head_port(e).p.x) &lt; 0) // 			* (ED_head_port(f).p.x - ED_head_port(e).p.x) &lt; 0)</span>
+<span class="nc" id="L1775">		    cross += ED_xpenalty(e) * ED_xpenalty(f); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
 	    }
     }
 <span class="fc" id="L1778">    return cross;</span>
