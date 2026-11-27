@@ -88,9 +88,9 @@ public static boolean nonconstraint_edge(Globals zz, ST_Agedge_s e) {
 try {
     CString constr;
     
-<span class="pc bpc" id="L91" title="3 of 4 branches missed.">    if (zz.E_constr!=null &amp;&amp; (constr = agxget(e, zz.E_constr))!=null) {</span>
-<span class="nc bnc" id="L92" title="All 4 branches missed.">	if (constr.charAt(0)!='\0' &amp;&amp; mapbool(constr) == false)</span>
-<span class="nc" id="L93">	    return true;</span>
+<span class="pc bpc" id="L91" title="1 of 4 branches missed.">    if (zz.E_constr!=null &amp;&amp; (constr = agxget(e, zz.E_constr))!=null) {</span>
+<span class="pc bpc" id="L92" title="1 of 4 branches missed.">	if (constr.charAt(0)!='\0' &amp;&amp; mapbool(constr) == false)</span>
+<span class="fc" id="L93">	    return true;</span>
     }
 <span class="fc" id="L95">    return false;</span>
 } finally {
@@ -160,8 +160,8 @@ try {
 <span class="nc" id="L160">		continue;</span>
 	    
 	    /* skip edges that we want to ignore in this phase */
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">	    if (nonconstraint_edge(zz, e))</span>
-<span class="nc" id="L164">		continue;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">	    if (nonconstraint_edge(zz, e))</span>
+<span class="fc" id="L164">		continue;</span>
 	    
 <span class="fc" id="L166">	    t = UF_find(agtail(e));</span>
 	    

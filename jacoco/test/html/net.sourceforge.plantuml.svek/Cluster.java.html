@@ -214,7 +214,7 @@ public class Cluster implements Moveable {
 	}
 
 	private boolean isNormalPosition(final SvekNode sh) {
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		return sh.getEntityPosition() == EntityPosition.NORMAL;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		return sh.getEntityPosition() == EntityPosition.NORMAL;</span>
 	}
 
 	private List&lt;SvekNode&gt; getNodesOrderedWithoutTop(Collection&lt;SvekEdge&gt; lines) {
@@ -413,8 +413,8 @@ public class Cluster implements Moveable {
 <span class="fc" id="L413">		final Collection&lt;RectangleArea&gt; insides = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L414">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L415" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
-<span class="pc bpc" id="L416" title="1 of 2 branches missed.">			if (isNormalPosition(sh))</span>
-<span class="nc" id="L417">				insides.add(sh.getRectangleArea());</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">			if (isNormalPosition(sh))</span>
+<span class="fc" id="L417">				insides.add(sh.getRectangleArea());</span>
 			else
 <span class="fc" id="L419">				points.add(sh.getRectangleArea().getPointCenter());</span>
 

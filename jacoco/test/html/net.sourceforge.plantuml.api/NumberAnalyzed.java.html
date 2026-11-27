@@ -72,7 +72,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 <span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (name.length() == 0) {</span>
 <span class="nc" id="L73">			throw new UnsupportedOperationException();</span>
 		}
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (saveLock.tryLock())</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (saveLock.tryLock())</span>
 			try {
 <span class="fc" id="L77">				prefs.put(name + &quot;.saved&quot;, getSavedString());</span>
 			} finally {

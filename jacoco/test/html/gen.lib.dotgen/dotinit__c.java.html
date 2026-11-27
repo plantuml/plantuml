@@ -198,9 +198,9 @@ try {
 <span class="nc" id="L198">	UNSUPPORTED(&quot;atjraranegsdjegclykesn5gx&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xpenalty) = 1000;</span>
 <span class="nc" id="L199">	UNSUPPORTED(&quot;5y0yunmvmngg67c9exlbn6jbk&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;weight) *= 100;</span>
     }
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">    if (nonconstraint_edge(zz, e)) {</span>
-<span class="nc" id="L202">	UNSUPPORTED(&quot;54niz21n2omf1i9v67brdid9w&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xpenalty) = 0;</span>
-<span class="nc" id="L203">	UNSUPPORTED(&quot;2v5u5jdguhhn7vjihniotrml0&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;weight) = 0;</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">    if (nonconstraint_edge(zz, e)) {</span>
+<span class="fc" id="L202">	ED_xpenalty(e, 0);</span>
+<span class="fc" id="L203">	ED_weight(e, 0);</span>
     }
     
     

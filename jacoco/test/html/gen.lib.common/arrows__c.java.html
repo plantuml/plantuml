@@ -203,9 +203,9 @@ try {
 <span class="nc" id="L203">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
 <span class="nc" id="L204">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
     }
-<span class="pc bpc" id="L206" title="3 of 6 branches missed.">    if (zz.E_arrowhead!=null &amp;&amp; (eflag[0] == ARR_TYPE_NORM) &amp;&amp; ((attr = agxget(e,zz.E_arrowhead))).charAt(0)!='\0')</span>
+<span class="pc bpc" id="L206" title="2 of 6 branches missed.">    if (zz.E_arrowhead!=null &amp;&amp; (eflag[0] == ARR_TYPE_NORM) &amp;&amp; ((attr = agxget(e,zz.E_arrowhead))).charAt(0)!='\0')</span>
 <span class="fc" id="L207">	arrow_match_name(zz, attr, eflag);</span>
-<span class="pc bpc" id="L208" title="3 of 6 branches missed.">    if (zz.E_arrowtail!=null &amp;&amp; (sflag[0] == ARR_TYPE_NORM) &amp;&amp; ((attr = agxget(e, zz.E_arrowtail))).charAt(0)!='\0')</span>
+<span class="pc bpc" id="L208" title="2 of 6 branches missed.">    if (zz.E_arrowtail!=null &amp;&amp; (sflag[0] == ARR_TYPE_NORM) &amp;&amp; ((attr = agxget(e, zz.E_arrowtail))).charAt(0)!='\0')</span>
 <span class="fc" id="L209">	arrow_match_name(zz, attr, sflag);</span>
 <span class="pc bpc" id="L210" title="1 of 2 branches missed.">    if (ED_conc_opp_flag(e)) {</span>
 <span class="nc" id="L211">UNSUPPORTED(&quot;1p2usipxeqlorwroqo37t3yfy&quot;); // 	edge_t *f;</span>
@@ -324,36 +324,36 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrowStartClip&quot;, key=&quot;q7y4oxn0paexbgynmtg2zmiv&quot;, definition=&quot;int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag)&quot;)
 public static int arrowStartClip(Globals zz, ST_Agedge_s e, CArray&lt;ST_pointf&gt; ps, int startp, int endp, ST_bezier spl, int sflag) {
-<span class="nc" id="L327">ENTERING(&quot;q7y4oxn0paexbgynmtg2zmiv&quot;,&quot;arrowStartClip&quot;);</span>
+<span class="fc" id="L327">ENTERING(&quot;q7y4oxn0paexbgynmtg2zmiv&quot;,&quot;arrowStartClip&quot;);</span>
 try {
-<span class="nc" id="L329">    final ST_inside_t inside_context = new ST_inside_t();</span>
-<span class="nc" id="L330">    final CArray&lt;ST_pointf&gt; sp = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+<span class="fc" id="L329">    final ST_inside_t inside_context = new ST_inside_t();</span>
+<span class="fc" id="L330">    final CArray&lt;ST_pointf&gt; sp = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
     double slen;
     
-<span class="nc" id="L333">    final double[] slen2 = new double[] {0};</span>
-<span class="nc" id="L334">    slen = arrow_length(zz, e, sflag);</span>
-<span class="nc" id="L335">    slen2[0] = slen * slen;</span>
-<span class="nc" id="L336">    spl.sflag = sflag;</span>
-<span class="nc" id="L337">    spl.sp.___(ps.get__(startp));</span>
-<span class="nc bnc" id="L338" title="All 4 branches missed.">    if (endp &gt; startp &amp;&amp; DIST2(ps.get__(startp), ps.get__(startp + 3)) &lt; slen2[0]) {</span>
+<span class="fc" id="L333">    final double[] slen2 = new double[] {0};</span>
+<span class="fc" id="L334">    slen = arrow_length(zz, e, sflag);</span>
+<span class="fc" id="L335">    slen2[0] = slen * slen;</span>
+<span class="fc" id="L336">    spl.sflag = sflag;</span>
+<span class="fc" id="L337">    spl.sp.___(ps.get__(startp));</span>
+<span class="pc bpc" id="L338" title="1 of 4 branches missed.">    if (endp &gt; startp &amp;&amp; DIST2(ps.get__(startp), ps.get__(startp + 3)) &lt; slen2[0]) {</span>
 <span class="nc" id="L339">    	startp += 3;</span>
     }
-<span class="nc" id="L341">    sp.get__(0).___(ps.get__(startp+3));</span>
-<span class="nc" id="L342">    sp.get__(1).___(ps.get__(startp+2));</span>
-<span class="nc" id="L343">    sp.get__(2).___(ps.get__(startp+1));</span>
-<span class="nc" id="L344">    sp.get__(3).___(spl.sp);    /* ensure endpoint starts inside */</span>
+<span class="fc" id="L341">    sp.get__(0).___(ps.get__(startp+3));</span>
+<span class="fc" id="L342">    sp.get__(1).___(ps.get__(startp+2));</span>
+<span class="fc" id="L343">    sp.get__(2).___(ps.get__(startp+1));</span>
+<span class="fc" id="L344">    sp.get__(3).___(spl.sp);    /* ensure endpoint starts inside */</span>
     
-<span class="nc" id="L346">    inside_context.a_p = sp.plus_(3);</span>
-<span class="nc" id="L347">    inside_context.a_r = slen2;</span>
-<span class="nc" id="L348">    bezier_clip(zz, inside_context, arrows__c.inside, sp, false);</span>
+<span class="fc" id="L346">    inside_context.a_p = sp.plus_(3);</span>
+<span class="fc" id="L347">    inside_context.a_r = slen2;</span>
+<span class="fc" id="L348">    bezier_clip(zz, inside_context, arrows__c.inside, sp, false);</span>
     
-<span class="nc" id="L350">    ps.get__(startp).___(sp.get__(3));</span>
-<span class="nc" id="L351">    ps.get__(startp+1).___(sp.get__(2));</span>
-<span class="nc" id="L352">    ps.get__(startp+2).___(sp.get__(1));</span>
-<span class="nc" id="L353">    ps.get__(startp+3).___(sp.get__(0));</span>
-<span class="nc" id="L354">    return startp;</span>
+<span class="fc" id="L350">    ps.get__(startp).___(sp.get__(3));</span>
+<span class="fc" id="L351">    ps.get__(startp+1).___(sp.get__(2));</span>
+<span class="fc" id="L352">    ps.get__(startp+2).___(sp.get__(1));</span>
+<span class="fc" id="L353">    ps.get__(startp+3).___(sp.get__(0));</span>
+<span class="fc" id="L354">    return startp;</span>
 } finally {
-<span class="nc" id="L356">LEAVING(&quot;9eellwhg4gsa2pdszpeqihs2d&quot;,&quot;arrowEndClip&quot;);</span>
+<span class="fc" id="L356">LEAVING(&quot;9eellwhg4gsa2pdszpeqihs2d&quot;,&quot;arrowEndClip&quot;);</span>
 }
 }
 
