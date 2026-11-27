@@ -199,8 +199,8 @@ try {
 	UNSUPPORTED("5y0yunmvmngg67c9exlbn6jbk"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->weight) *= 100;
     }
     if (nonconstraint_edge(zz, e)) {
-	UNSUPPORTED("54niz21n2omf1i9v67brdid9w"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->xpenalty) = 0;
-	UNSUPPORTED("2v5u5jdguhhn7vjihniotrml0"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->weight) = 0;
+	ED_xpenalty(e, 0);
+	ED_weight(e, 0);
     }
     
     

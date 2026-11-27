@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.FileFormat;
@@ -23,9 +22,8 @@ import net.sourceforge.plantuml.SourceStringReader;
  * edges, so the layout engine has to break it without leaving the port in the
  * middle of the container.
  * <p>
- * Runs through Svek (skipped when dot is not installed). The Smetana variant
- * only covers what Smetana can do today, see
- * {@link #smetanaPortoutLinkedToInnerNode()}.
+ * Runs through Svek (skipped when dot is not installed); the Smetana variant
+ * needs <code>constraint=false</code>, ported in dot_init_edge.
  */
 class PortoutInnerLinkTest extends SvekSvgTest {
 
@@ -56,18 +54,7 @@ class PortoutInnerLinkTest extends SvekSvgTest {
 		assertPortsOnBottomEdge(render(SOURCE), "C.po1", "C.po2");
 	}
 
-	/**
-	 * Smetana does not implement <code>constraint=false</code> (it is still
-	 * UNSUPPORTED in the generated dot_init_edge), so the real link po1 --&gt; c2
-	 * keeps po1 above c2. The layout must at least not fail, and the portout
-	 * without an inner link must still be on the bottom edge.
-	 */
-	@Test
-	void smetanaPortoutWithoutInnerLinkStaysOnBottomEdge() throws IOException {
-		assertPortsOnBottomEdge(render(SOURCE.replace("@startuml", "@startuml\n!pragma layout smetana")), "C.po2");
-	}
-
-	@Disabled("Known limitation: Smetana ignores constraint=false, a po --> c link keeps the port above c (#2457)")
+	/** Smetana must honour constraint=false on the po1 --> c2 link. */
 	@Test
 	void smetanaPortoutLinkedToInnerNode() throws IOException {
 		assertPortsOnBottomEdge(render(SOURCE.replace("@startuml", "@startuml\n!pragma layout smetana")), "C.po1",

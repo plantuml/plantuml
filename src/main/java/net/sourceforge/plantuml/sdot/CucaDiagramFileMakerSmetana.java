@@ -971,6 +971,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		int length = link.getLength();
 		agsafeset(zz, e, new CString("minlen"), new CString("" + (length - 1)), new CString(""));
+		if (link.isPortoutToOwnContent())
+			agsafeset(zz, e, new CString("constraint"), new CString("false"), new CString(""));
 
 		final TextBlock label = getLabel(stringBounder, link);
 		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {

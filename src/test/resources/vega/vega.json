@@ -4038,6 +4038,20 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "nonreg/group2457/mixing_portin_portout.puml",
+      "folder": "nonreg/group2457",
+      "status": "pass",
+      "description": "(9 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "nonreg/group2457/nested_portout.puml",
+      "folder": "nonreg/group2457",
+      "status": "pass",
+      "description": "(11 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
       "file": "nonreg/group2628/note_under_folder.puml",
       "folder": "nonreg/group2628",
       "status": "pass",
@@ -5788,6 +5802,174 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "nonreg/group3028/break_close_events.puml",
+      "folder": "nonreg/group3028",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "nonreg/group3028/close_events.puml",
+      "folder": "nonreg/group3028",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "nonreg/group3028/manual_axis_codes.puml",
+      "folder": "nonreg/group3028",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "nonreg/group3028/neighbours_fit.puml",
+      "folder": "nonreg/group3028",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "nonreg/group3028/overflow_without_neighbour.puml",
+      "folder": "nonreg/group3028",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "nonreg/group3028/rectangle_close_events.puml",
+      "folder": "nonreg/group3028",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "nonreg/group3030/annotation_y_infinity.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/area_stack_overflow.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/bar_infinity.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/bar_minus_infinity.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/bar_nan.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/bar_overflow.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/extreme_negative_value.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group3030/fixed_v_axis_nan.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/line_infinity.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/pie_infinity.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/radar_infinity.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/scatter_pair_infinity.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/smallest_value.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group3030/spread_overflow.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/stacked_overflow.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/stacked_overflow_fixed_axis.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/v_axis_overflow.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3030/valid_bar.puml",
+      "folder": "nonreg/group3030",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
       "file": "nonreg/group3031/empty_h_axis_horizontal.puml",
       "folder": "nonreg/group3031",
       "status": "pass",
@@ -5851,6 +6033,20 @@
       "diagram_class": "ChartDiagram"
     },
     {
+      "file": "nonreg/group712/empty_list_item.puml",
+      "folder": "nonreg/group712",
+      "status": "pass",
+      "description": "(Yaml)",
+      "diagram_class": "JsonDiagram"
+    },
+    {
+      "file": "nonreg/group712/list_item_key_without_value.puml",
+      "folder": "nonreg/group712",
+      "status": "pass",
+      "description": "(Yaml)",
+      "diagram_class": "JsonDiagram"
+    },
+    {
       "file": "nonreg/json/style-highlight-with-style-tags.puml",
       "folder": "nonreg/json",
       "status": "pass",
@@ -5866,6 +6062,20 @@
     },
     {
       "file": "nonreg/mindmap/mindmap-deep-ancestor-cascade-with-stereotype.puml",
+      "folder": "nonreg/mindmap",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/mindmap/mindmap-double-tab-indented-items.puml",
+      "folder": "nonreg/mindmap",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/mindmap/mindmap-tab-indented-items.puml",
       "folder": "nonreg/mindmap",
       "status": "pass",
       "description": "MindMap",
@@ -6153,6 +6363,20 @@
     },
     {
       "file": "nonreg/wbs/wbs-deep-ancestor-cascade-with-stereotype.puml",
+      "folder": "nonreg/wbs",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "nonreg/wbs/wbs-space-tab-indented-items.puml",
+      "folder": "nonreg/wbs",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "nonreg/wbs/wbs-tab-indented-items.puml",
       "folder": "nonreg/wbs",
       "status": "pass",
       "description": "Work Breakdown Structure",
@@ -9325,6 +9549,13 @@
       "diagram_class": "ListSpriteDiagram"
     },
     {
+      "file": "stdlib/edgy/sprite_from_procedure.puml",
+      "folder": "stdlib/edgy",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
       "file": "stdlib/eip/eip_rabbitmq.puml",
       "folder": "stdlib/eip",
       "status": "pass",
@@ -9574,6 +9805,13 @@
       "folder": "stdlib/tupadr3",
       "status": "pass",
       "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/unknown-sprite/unknown_sprite.puml",
+      "folder": "stdlib/unknown-sprite",
+      "status": "pass",
+      "description": "(2 entities)",
       "diagram_class": "DescriptionDiagram"
     },
     {
@@ -10587,8 +10825,8 @@
     }
   ],
   "summary": {
-    "total": 1475,
-    "passed": 1470,
+    "total": 1509,
+    "passed": 1504,
     "failed": 0,
     "skipped": 5
   }

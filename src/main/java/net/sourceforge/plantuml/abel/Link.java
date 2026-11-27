@@ -447,6 +447,31 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 				&& getEntity1().getParentContainer() == getEntity2().getParentContainer();
 	}
 
+	/**
+	 * True for a link between a portout and a leaf lying inside the container of
+	 * that portout. Such a link must not take part in ranking: the portout is
+	 * pinned below the content of its container, and honouring the link would
+	 * put it above the node it is linked to (issue #2457).
+	 */
+	public boolean isPortoutToOwnContent() {
+		return isPortoutToContentOf(getEntity1(), getEntity2()) || isPortoutToContentOf(getEntity2(), getEntity1());
+	}
+
+	private static boolean isPortoutToContentOf(Entity port, Entity other) {
+		if (port.isGroup() || other.isGroup())
+			return false;
+
+		if (port.getEntityPosition() != EntityPosition.PORTOUT || other.getEntityPosition() != EntityPosition.NORMAL)
+			return false;
+
+		final Entity container = port.getParentContainer();
+		for (Entity parent = other.getParentContainer(); parent != null; parent = parent.getParentContainer())
+			if (parent == container)
+				return true;
+
+		return false;
+	}
+
 	public Url getUrl() {
 		return url;
 	}

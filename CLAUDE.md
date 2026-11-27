@@ -121,9 +121,12 @@ git clone --depth 1 https://github.com/plantuml/plantuml
 
 ## Packages to avoid modifying
 
-**Generated code** (do not modify):
-- `gen` - generated code
-- `h` - generated code
+**Generated code**:
+- `gen` - Java port of Graphviz (Smetana). It may now be modified: when a
+  piece of the original C code is still `UNSUPPORTED(...)`, port it faithfully
+  from Graphviz 2.38 and keep the original C line as a trailing comment.
+  Keep such changes minimal and cover them with a test.
+- `h` - generated code (do not modify)
 
 **External/third-party packages** (do not modify):
 - `jcckit` - external charting library
