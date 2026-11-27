@@ -3905,6 +3905,76 @@
       "diagram_class": "PSystemNgDot"
     },
     {
+      "file": "ngdot/R01-rank-same.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R02-rank-min-max.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R03-rank-source-sink.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R04-rank-in-cluster.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R05-compass-ports.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R06-compass-ports-cluster.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R07-group.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R08-ports-on-loop.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R09-compass-ports-lr.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
+      "file": "ngdot/R10-compass-ports-bt.puml",
+      "folder": "ngdot",
+      "status": "pass",
+      "description": "(Dot)",
+      "diagram_class": "PSystemNgDot"
+    },
+    {
       "file": "ngdot/S01-colors.puml",
       "folder": "ngdot",
       "status": "pass",
@@ -11007,8 +11077,8 @@
     }
   ],
   "summary": {
-    "total": 1535,
-    "passed": 1530,
+    "total": 1545,
+    "passed": 1540,
     "failed": 0,
     "skipped": 5
   }
