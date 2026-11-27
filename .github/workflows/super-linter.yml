@@ -33,7 +33,10 @@ jobs:
           persist-credentials: false
 
       - name: Lint Code Base
-        uses: super-linter/super-linter/slim@v9.0.0
+        # Super-Linter slim v9.0.0, run by image digest: an image tag can be pushed again.
+        # Dependabot does not follow docker:// references, so an upgrade is a manual edit
+        # of the tag and of the digest that tag has on ghcr.io.
+        uses: docker://ghcr.io/super-linter/super-linter:slim-v9.0.0@sha256:7d0b4d3387deaac975e86e0787c7a05a25d530469b27d74c2b4599ab5800d9e4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Only lint the files changed by the push / pull request
