@@ -73,8 +73,6 @@ import net.sourceforge.plantuml.klimt.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontFace;
-import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
@@ -108,6 +106,8 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SkinParam implements ISkinParam {
+
+	private final SkinFontResolver fontResolver = new SkinFontResolver(this);
 
 	public static boolean isDark(ISkinParam skinParam) {
 		return "dark".equalsIgnoreCase(skinParam.getValue("mode"));
@@ -458,125 +458,20 @@ public class SkinParam implements ISkinParam {
 		// }
 	}
 
-	private int getFontSize(Stereotype stereotype, FontParam... param) {
-		if (stereotype != null) {
-			checkStereotype(stereotype);
-			final String value2 = getFirstValueNonNullWithSuffix(
-					"fontsize" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);
-			if (isDigits(value2))
-				return Integer.parseInt(value2);
-
-		}
-		String value = getFirstValueNonNullWithSuffix("fontsize", param);
-		if (isDigits(value) == false)
-			value = getValue("defaultfontsize");
-
-		if (isDigits(value) == false)
-			return param[0].getDefaultSize(this);
-
-		return Integer.parseInt(value);
-	}
-
-	private String getFontFamily(Stereotype stereotype, FontParam... param) {
-		if (stereotype != null) {
-			checkStereotype(stereotype);
-			final String value2 = getFirstValueNonNullWithSuffix(
-					"fontname" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);
-			if (value2 != null)
-				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value2);
-
-		}
-		// Times, Helvetica, Courier or Symbol
-		String value = getFirstValueNonNullWithSuffix("fontname", param);
-		if (value != null)
-			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value);
-
-		if (param[0] != FontParam.CIRCLED_CHARACTER) {
-			value = getValue("defaultfontname");
-			if (value != null)
-				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value);
-
-		}
-		return param[0].getDefaultFamily();
-	}
-
 	@Override
 	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
-		String value = null;
-		if (stereotype != null) {
-			checkStereotype(stereotype);
-			value = getFirstValueNonNullWithSuffix("fontcolor" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),
-					param);
-		}
-
-		if (value == null)
-			value = getFirstValueNonNullWithSuffix("fontcolor", param);
-
-		if (value == null)
-			value = getValue("defaultfontcolor");
-
-		if (value == null)
-			value = param[0].getDefaultColor();
-
-		if (value == null)
-			return null;
-
-		return getIHtmlColorSet().getColorOrWhite(value);
-	}
-
-	private String getFirstValueNonNullWithSuffix(String suffix, FontParam... param) {
-		for (FontParam p : param) {
-			final String v = getValue(p.name() + suffix);
-			if (v != null)
-				return v;
-
-		}
-		return null;
-	}
-
-	private UFontFace getFontFace(Stereotype stereotype, boolean inPackageTitle, FontParam... param) {
-		String value = null;
-		if (stereotype != null) {
-			checkStereotype(stereotype);
-			value = getFirstValueNonNullWithSuffix("fontstyle" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),
-					param);
-		}
-		if (value == null)
-			value = getFirstValueNonNullWithSuffix("fontstyle", param);
-
-		if (value == null)
-			value = getValue("defaultfontstyle");
-
-		if (value == null)
-			return param[0].getDefaultFontFace(this, inPackageTitle);
-
-		final String lower = StringUtils.goLowerCase(value);
-		final boolean bold = lower.contains("bold");
-		final boolean italic = lower.contains("italic");
-		if (bold && italic)
-			return UFontFace.boldItalic();
-		if (bold)
-			return UFontFace.bold();
-		if (italic)
-			return UFontFace.italic();
-		return UFontFace.normal();
+		return fontResolver.getFontHtmlColor(stereotype, param);
 	}
 
 	@Override
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam) {
-		if (stereotype != null)
-			checkStereotype(stereotype);
-
-		final String fontFamily = getFontFamily(stereotype, fontParam);
-		final UFontFace face = getFontFace(stereotype, inPackageTitle, fontParam);
-		final int fontSize = getFontSize(stereotype, fontParam);
-		return UFontFactory.build(fontFamily, face, fontSize);
+		return fontResolver.getFont(stereotype, inPackageTitle, fontParam);
 	}
 
 	@Override
 	public int getCircledCharacterRadius() {
 		final int value = getAsInt("circledCharacterRadius", -1);
-		return value == -1 ? getFontSize(null, FontParam.CIRCLED_CHARACTER) / 3 + 6 : value;
+		return value == -1 ? fontResolver.getFontSize(null, FontParam.CIRCLED_CHARACTER) / 3 + 6 : value;
 	}
 
 	@Override
