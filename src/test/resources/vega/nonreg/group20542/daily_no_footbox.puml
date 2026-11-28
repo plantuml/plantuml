@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startgantt
+hide footbox
+Project starts 2020-07-01
+[Prototype design] requires 15 days
+@endgantt

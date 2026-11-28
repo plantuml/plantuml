@@ -77,8 +77,7 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h = timelineStyle.getFontSizeMonth() + 4;
-		return h;
+		return getTextLineHeight(stringBounder, SName.month, true) + 4;
 	}
 
 	private double getHeaderNameDayHeight() {

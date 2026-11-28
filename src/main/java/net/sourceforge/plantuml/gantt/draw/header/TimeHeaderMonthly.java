@@ -75,8 +75,8 @@ class TimeHeaderMonthly extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = timelineStyle.getFontSizeYear();
-		final double h2 = timelineStyle.getFontSizeMonth();
+		final double h1 = getTextLineHeight(stringBounder, SName.year, true);
+		final double h2 = getTextLineHeight(stringBounder, SName.month, true);
 		return h1 + h2 + 5;
 	}
 
@@ -102,8 +102,8 @@ class TimeHeaderMonthly extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double h1 = timelineStyle.getFontSizeYear();
-		final double h2 = timelineStyle.getFontSizeMonth();
+		final double h1 = getTextLineHeight(ug.getStringBounder(), SName.year, true);
+		final double h2 = getTextLineHeight(ug.getStringBounder(), SName.month, true);
 		// ug = ug.apply(UTranslate.dy(3));
 		drawMonths(ug);
 		drawYears(ug.apply(UTranslate.dy(h2 + 2)));

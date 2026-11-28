@@ -77,10 +77,10 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = timelineStyle.getFontSizeDay();
-		final double h2 = timelineStyle.getFontSizeDay();
-		final double h3 = timelineStyle.getFontSizeMonth();
-		return h1 + h2 + h3 + 8;
+		// Same layout as drawTimeFooter(): two lines of days, then the months line,
+		// which needs its full text height (descenders), not only its font size.
+		final double h = timelineStyle.getFontSizeDay() + 2;
+		return 2 * h + 3 + getTextLineHeight(stringBounder, SName.month, true) + 1;
 	}
 
 	private double getHeaderNameDayHeight() {

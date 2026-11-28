@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="92px" preserveAspectRatio="none" style="width:234px;height:92px;background:#FFFFFF;" version="1.1" viewBox="0 0 234 92" width="234px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="115.688" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="115.688" y1="30" y2="30"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="115.688" y1="60" y2="60"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="60"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="33.938" x2="33.938" y1="0" y2="60"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="67.875" x2="67.875" y1="0" y2="60"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="115.688" y1="0" y2="60"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="17.778">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="38.938" y="17.778">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="72.875" y="17.778">Duration</text>
+    <text fill="#000" font-size="10" textLength="18.375" x="5" y="40.278">Jul 1</text>
+    <text fill="#000" font-size="10" textLength="23.938" x="38.938" y="40.278">Jul 15</text>
+    <text fill="#000" font-size="10" textLength="32.25" x="72.875" y="40.278">15 days</text>
+    <text fill="#000" font-size="10" textLength="23.938" x="5" y="55.278">Jul 16</text>
+    <text fill="#000" font-size="10" textLength="23.938" x="38.938" y="55.278">Jul 25</text>
+    <text fill="#000" font-size="10" textLength="32.25" x="72.875" y="55.278">10 days</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="115.688" y1="0" y2="16"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="26.7" x="115.688" y="9.333">2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="142.354" x2="142.354" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="115.688" y1="16" y2="30"/>
+    <text fill="#000" font-size="10" textLength="17.813" x="120.115" y="23.778">July</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="142.354" x2="142.354" y1="16" y2="30"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="142.354" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="142.354" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="142.354" y1="30" y2="30"/>
+    <path d="M123.688,43 L123.688,52.5 L128.688,52.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="127.688,48.5,131.688,52.5,127.688,56.5,127.688,48.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="12" x="117.688" y="32"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="117.688" y="32"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="6.667" x="133.688" y="47"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="6.667" x="133.688" y="47"/>
+    <text fill="#000" font-size="11" textLength="79.475" x="133.688" y="40.556">Prototype design</text>
+    <text fill="#000" font-size="11" textLength="67.169" x="144.354" y="55.556">Test prototype</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="115.688" y1="60" y2="74"/>
+    <text fill="#000" font-size="10" textLength="17.813" x="120.115" y="67.778">July</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="142.354" x2="142.354" y1="60" y2="74"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="115.688" y1="74" y2="90"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="26.7" x="115.688" y="83.333">2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="142.354" x2="142.354" y1="74" y2="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="142.354" y1="60" y2="60"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="142.354" y1="74" y2="74"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="142.354" y1="90" y2="90"/>
+  </g>
+</svg>

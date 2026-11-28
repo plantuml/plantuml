@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+printscale quarterly
+Project starts 2020-07-01
+[Prototype design] requires 15 days
+[Test prototype] requires 10 days
+[Test prototype] starts at [Prototype design]'s end
+@endgantt

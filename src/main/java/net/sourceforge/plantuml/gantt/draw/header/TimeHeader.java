@@ -233,6 +233,18 @@ public abstract class TimeHeader {
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty()));
 	}
 
+	/**
+	 * Real height of one line of text in the given timeline font (month, year...).
+	 * It is larger than the font size (ascent + descent + leading); the footers
+	 * must be at least that high, otherwise the descenders of the last line
+	 * (the "y" of "July") are clipped by the bottom of the image.
+	 */
+	protected final double getTextLineHeight(StringBounder stringBounder, SName param, boolean bold) {
+		final FontConfiguration fc = getFontConfigurationSLOW(param, bold, openFontColor());
+		return Math.max(timelineStyle.getFont(param).getSize2D(),
+				getTextBlockSLOW("Ay", fc).calculateDimension(stringBounder).getHeight());
+	}
+
 	protected final FontConfiguration getFontConfigurationSLOW(SName param, boolean bold, HColor color) {
 		final UFont font = timelineStyle.getFont(param);
 		return getFontConfiguration(font, bold, color);
