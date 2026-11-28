@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+' The package "outer" only holds "inner", so it is packed and drawn as the
+' single package "outer.inner". Removing "Gone" leaves "outer.inner" empty,
+' so it becomes a plain node. Graphviz writes the content of a packed package
+' at its own position among the sibling packages, after "sib". Smetana must do
+' the same, so "sib" stays on the left as with Graphviz: in the reference SVG
+' the title "sib" has a smaller x than "outer.inner".
+!pragma layout smetana
+!pragma useIntermediatePackages false
+package sib {
+  class S
+}
+package outer {
+  package inner {
+    class Gone $gone
+  }
+}
+remove $gone
+@enduml

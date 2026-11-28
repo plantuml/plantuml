@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+' The dot pipeline writes the empty packages of the root before the other
+' root entities, so Graphviz lays out P, A, B from left to right. Smetana must
+' receive the same order: in the reference SVG the title "P" has the smallest
+' x, then "A", then "B".
+!pragma layout smetana
+class A
+class B
+package P {
+}
+@enduml

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="275px" preserveAspectRatio="none" style="width:922px;height:275px;background:#FFFFFF;" version="1.1" viewBox="0 0 922 275" width="922px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster dependable_element_message_passing-->
+    <g class="cluster" data-qualified-name="dependable_element_message_passing" data-source-line="7" id="ent0001">
+      <rect fill="none" height="215" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="900" x="14" y="36"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="894" y="41"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="892" y="43"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="892" y="47"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="251.475" x="338.262" y="59.889">dependable_element_message_passing</text>
+    </g>
+    <!--cluster component_message_passing-->
+    <g class="cluster" data-qualified-name="dependable_element_message_passing.component_message_passing" data-source-line="8" id="ent0002">
+      <rect fill="none" height="158" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="868" x="30" y="77"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="878" y="82"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="876" y="84"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="876" y="88"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="189.875" x="369.063" y="100.889">component_message_passing</text>
+    </g>
+    <!--cluster client-->
+    <g class="cluster" data-qualified-name="dependable_element_message_passing.component_message_passing.client" data-source-line="9" id="ent0003">
+      <rect fill="none" height="101" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="640" x="242" y="118"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="862" y="123"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="860" y="125"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="860" y="129"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="545.638" y="141.889">client</text>
+    </g>
+    <!--entity IClientFactory-->
+    <g class="entity" data-qualified-name="IClientFactory" data-source-line="22" id="ent0013">
+      <ellipse cx="759" cy="13" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="86.363" x="715.819" y="40.889">IClientFactory</text>
+    </g>
+    <!--entity ReplyCallback-->
+    <g class="entity" data-qualified-name="ReplyCallback" data-source-line="23" id="ent0016">
+      <ellipse cx="332" cy="13" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="89.688" x="287.156" y="40.889">ReplyCallback</text>
+    </g>
+    <!--entity engine-->
+    <g class="entity" data-qualified-name="dependable_element_message_passing.component_message_passing.engine" data-source-line="14" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.088" x="144" y="159"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="206.088" y="164"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="204.088" y="166"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="204.088" y="170"/>
+      <text fill="#000" font-size="14" textLength="42.088" x="159" y="189.889">engine</text>
+    </g>
+    <!--entity server-->
+    <g class="entity" data-qualified-name="dependable_element_message_passing.component_message_passing.server" data-source-line="16" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.85" x="46.5" y="159"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="105.35" y="164"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="103.35" y="166"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="103.35" y="170"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="61.5" y="189.889">server</text>
+    </g>
+    <!--entity client_connection-->
+    <g class="entity" data-qualified-name="dependable_element_message_passing.component_message_passing.client.client_connection" data-source-line="10" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.238" x="258" y="159"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="386.238" y="164"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="384.238" y="166"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="384.238" y="170"/>
+      <text fill="#000" font-size="14" textLength="108.238" x="273" y="189.889">client_connection</text>
+    </g>
+    <!--entity unix_domain_client_factory-->
+    <g class="entity" data-qualified-name="dependable_element_message_passing.component_message_passing.client.unix_domain_client_factory" data-source-line="11" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="209.663" x="424" y="159"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="613.663" y="164"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="611.663" y="166"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="611.663" y="170"/>
+      <text fill="#000" font-size="14" textLength="169.663" x="439" y="189.889">unix_domain_client_factory</text>
+    </g>
+    <!--entity qnx_dispatch_client_factory-->
+    <g class="entity" data-qualified-name="dependable_element_message_passing.component_message_passing.client.qnx_dispatch_client_factory" data-source-line="12" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="212.725" x="652.5" y="159"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="845.225" y="164"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="843.225" y="166"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="843.225" y="170"/>
+      <text fill="#000" font-size="14" textLength="172.725" x="667.5" y="189.889">qnx_dispatch_client_factory</text>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0006" data-link-type="association" id="lnk15">
+      <path d="M759,28.204 C759,55.104 759,123.701 759,158.725" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0004" id="lnk18">
+      <path d="M323.543,31.282 A9,9 0 0 0 340.457 31.282" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M332,38.204 C332,65.104 332,123.701 332,158.725" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

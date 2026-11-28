@@ -15,54 +15,54 @@
     </g>
     <!--entity coldBlobStorage-->
     <g class="entity" data-qualified-name="coldBlobStorage" data-source-line="14" id="ent0002">
-      <rect fill="#FFF" height="170.615" rx="0.5" ry="0.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="206.15" x="387" y="23"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="110.775" x="434.688" y="42.333">«AzureBlobStorage»</text>
-      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="28.875" x="451.138" y="55.889">Cold</text>
-      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" x="480.013" y="55.889"> </text>
-      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="49" x="480.013" y="55.889">Storage</text>
-      <image height="65" width="65" x="457.767" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAACuklEQVR4Xu3ZzU/TcBjAca4ePakxMT158U/w7/BuOCHx4MXEk3oyivHlogSjIMQIEZAEjBrFDqKAewkIvuDeEdhGx1a6rRtru/axHcGkfbbETS+/Pb/DN1mebCPPJ126H+sCgC7qoQHF0IBiaEAxNKAYGlAMDSj254FhWiczRf1WUq4OdXiD+bJxCSFUDfPYbKQw/zSYVR/7JejwrNGVnBTOVu65EAr7NeHufBpuiikS3Z5Lw6sfcsCFoNgI3id2eiOhXY4wHMpyBI4gcoR6HEHkCPU4gsgR6nEEsQFCWTOFibU8UOpDtOBGqJnW0S1Fu0EpqaT3uhDsY/TxpKz5KJUu6v1ehBPxfDVEqe2CNtISwq5qXNmr1LpZa1vRn3l3aRuhalhnDl/AUlnVuObdhSNwBI6A4ggcoU2ETEm/b7/hddbaVLQp7y5NEbSadWo1XVYoFd3dF70IQmhLBUqtSxX3AepvEHyxgnPyYqaFZAnt8E8IA0sS9PlSTHXwK9Me2qVthIeLO+ifEiw0/V1Gu3AEjkAUYeqrDMFNvA8phInVHPh/Nb5LtIww9iUHQ8Esc72PKGiXthEWN4rwKcleza6Chgj7hinMx4tAqeXtsgdBNwXn0mmW83EYWNqB/kV2ehLI1u8O3l0O82+WWkO4PLMB50djTNU9FoNHn3fQLm0j9E4m4NxwmLkeLGTQLhyBIkKfmILX63ton5YR3oU5Akx/k6FnPI7+AAvdmUvBm5//AcHp6tst6J1IwAWGuvgyCYOBg2+NjWoZwbnfjq7k4PkyO42v5pteBQ0RKjbCjL0opT4mim4EVTOFF/a3QkrNRhR8dnAuEe8TO7VJ+6NiH6LcCKYFR6SS3rOcUqMUWsuU/SXNPOtCcLJsCOfnNgpphnX6cG8XAuXQgGJoQDE0oBgaUAwNKIYGFPsNTQSoxq8uPuMAAAAASUVORK5CYII=" y="59"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="45.975" x="397.713" y="132.949">[General</text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="443.688" y="132.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="44.7" x="443.688" y="132.949">Purpose</text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="488.388" y="132.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="15.975" x="488.388" y="132.949">v2,</text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="504.363" y="132.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="28.05" x="504.363" y="132.949">Cool,</text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="532.413" y="132.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="50.025" x="532.413" y="132.949">RA-GRS]</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="490.075" y="144.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="397" y="156.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="12.075" x="397" y="156.949">all</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="409.075" y="156.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="48.075" x="409.075" y="156.949">incoming</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="457.15" y="156.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="23.325" x="457.15" y="156.949">data</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="480.475" y="156.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="39.975" x="480.475" y="156.949">records</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="520.45" y="156.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="17.325" x="520.45" y="156.949">are</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="537.775" y="156.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="45.375" x="537.775" y="156.949">archived</text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="56.775" x="400.975" y="168.949">indefinitely</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="457.75" y="168.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.975" x="457.75" y="168.949">at</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="467.725" y="168.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="18.075" x="467.725" y="168.949">low</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="485.8" y="168.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="25.275" x="485.8" y="168.949">cost,</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="511.075" y="168.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="20.025" x="511.075" y="168.949">and</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="531.1" y="168.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="17.325" x="531.1" y="168.949">are</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="548.425" y="168.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="30.75" x="548.425" y="168.949">easily</text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="56.1" x="411.363" y="180.949">accessible</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="467.463" y="180.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="13.95" x="467.463" y="180.949">for</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="481.413" y="180.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="29.325" x="481.413" y="180.949">batch</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="510.738" y="180.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="58.05" x="510.738" y="180.949">processing</text>
+      <rect fill="#FFF" height="170.615" rx="0.5" ry="0.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="206.15" x="387" y="212"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="110.775" x="434.688" y="231.333">«AzureBlobStorage»</text>
+      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="28.875" x="451.138" y="244.889">Cold</text>
+      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" x="480.013" y="244.889"> </text>
+      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="49" x="480.013" y="244.889">Storage</text>
+      <image height="65" width="65" x="457.767" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAACuklEQVR4Xu3ZzU/TcBjAca4ePakxMT158U/w7/BuOCHx4MXEk3oyivHlogSjIMQIEZAEjBrFDqKAewkIvuDeEdhGx1a6rRtru/axHcGkfbbETS+/Pb/DN1mebCPPJ126H+sCgC7qoQHF0IBiaEAxNKAYGlAMDSj254FhWiczRf1WUq4OdXiD+bJxCSFUDfPYbKQw/zSYVR/7JejwrNGVnBTOVu65EAr7NeHufBpuiikS3Z5Lw6sfcsCFoNgI3id2eiOhXY4wHMpyBI4gcoR6HEHkCPU4gsgR6nEEsQFCWTOFibU8UOpDtOBGqJnW0S1Fu0EpqaT3uhDsY/TxpKz5KJUu6v1ehBPxfDVEqe2CNtISwq5qXNmr1LpZa1vRn3l3aRuhalhnDl/AUlnVuObdhSNwBI6A4ggcoU2ETEm/b7/hddbaVLQp7y5NEbSadWo1XVYoFd3dF70IQmhLBUqtSxX3AepvEHyxgnPyYqaFZAnt8E8IA0sS9PlSTHXwK9Me2qVthIeLO+ifEiw0/V1Gu3AEjkAUYeqrDMFNvA8phInVHPh/Nb5LtIww9iUHQ8Esc72PKGiXthEWN4rwKcleza6Chgj7hinMx4tAqeXtsgdBNwXn0mmW83EYWNqB/kV2ehLI1u8O3l0O82+WWkO4PLMB50djTNU9FoNHn3fQLm0j9E4m4NxwmLkeLGTQLhyBIkKfmILX63ton5YR3oU5Akx/k6FnPI7+AAvdmUvBm5//AcHp6tst6J1IwAWGuvgyCYOBg2+NjWoZwbnfjq7k4PkyO42v5pteBQ0RKjbCjL0opT4mim4EVTOFF/a3QkrNRhR8dnAuEe8TO7VJ+6NiH6LcCKYFR6SS3rOcUqMUWsuU/SXNPOtCcLJsCOfnNgpphnX6cG8XAuXQgGJoQDE0oBgaUAwNKIYGFPsNTQSoxq8uPuMAAAAASUVORK5CYII=" y="248"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="45.975" x="397.713" y="321.949">[General</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="443.688" y="321.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="44.7" x="443.688" y="321.949">Purpose</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="488.388" y="321.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="15.975" x="488.388" y="321.949">v2,</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="504.363" y="321.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="28.05" x="504.363" y="321.949">Cool,</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="532.413" y="321.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="50.025" x="532.413" y="321.949">RA-GRS]</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="490.075" y="333.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="397" y="345.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="12.075" x="397" y="345.949">all</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="409.075" y="345.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="48.075" x="409.075" y="345.949">incoming</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="457.15" y="345.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="23.325" x="457.15" y="345.949">data</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="480.475" y="345.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="39.975" x="480.475" y="345.949">records</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="520.45" y="345.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="17.325" x="520.45" y="345.949">are</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="537.775" y="345.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="45.375" x="537.775" y="345.949">archived</text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="56.775" x="400.975" y="357.949">indefinitely</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="457.75" y="357.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.975" x="457.75" y="357.949">at</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="467.725" y="357.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="18.075" x="467.725" y="357.949">low</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="485.8" y="357.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="25.275" x="485.8" y="357.949">cost,</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="511.075" y="357.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="20.025" x="511.075" y="357.949">and</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="531.1" y="357.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="17.325" x="531.1" y="357.949">are</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="548.425" y="357.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="30.75" x="548.425" y="357.949">easily</text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="56.1" x="411.363" y="369.949">accessible</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="467.463" y="369.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="13.95" x="467.463" y="369.949">for</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="481.413" y="369.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="29.325" x="481.413" y="369.949">batch</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="510.738" y="369.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="58.05" x="510.738" y="369.949">processing</text>
     </g>
     <!--entity iotHub-->
     <g class="entity" data-qualified-name="iotHub" data-source-line="15" id="ent0003">
@@ -207,66 +207,66 @@
     </g>
     <!--entity streamAnalytics-->
     <g class="entity" data-qualified-name="streamAnalytics" data-source-line="19" id="ent0007">
-      <rect fill="#FFF" height="170.615" rx="0.5" ry="0.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="218" x="381" y="212"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="150.75" x="414.625" y="231.333">«AzureStreamAnalyticsJob»</text>
-      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="45.063" x="439.425" y="244.889">Stream</text>
-      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" x="484.488" y="244.889"> </text>
-      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="56.087" x="484.488" y="244.889">Analytics</text>
-      <image height="65" width="65" x="457.692" xlink:href="data:image/png;base64,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" y="248"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="9.975" x="472" y="321.949">[6</text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="481.975" y="321.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="26.025" x="481.975" y="321.949">SUs]</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="490" y="333.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="410.613" y="345.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="28.725" x="410.613" y="345.949">apply</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="439.338" y="345.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="44.7" x="439.338" y="345.949">complex</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="484.038" y="345.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="39.375" x="484.038" y="345.949">queries</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="523.413" y="345.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="23.325" x="523.413" y="345.949">over</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="546.738" y="345.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="22.65" x="546.738" y="345.949">time</text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="42.675" x="391" y="357.949">periods,</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="433.675" y="357.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="45.975" x="433.675" y="357.949">tolerates</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="479.65" y="357.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="19.35" x="479.65" y="357.949">late</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="499" y="357.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="17.325" x="499" y="357.949">(up</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="516.325" y="357.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.975" x="516.325" y="357.949">to</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="526.3" y="357.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="13.35" x="526.3" y="357.949">21</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="539.65" y="357.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="29.325" x="539.65" y="357.949">days)</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="568.975" y="357.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="20.025" x="568.975" y="357.949">and</text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="62.55" x="403.413" y="369.949">out-of-order</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="465.963" y="369.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="17.325" x="465.963" y="369.949">(up</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="483.288" y="369.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.975" x="483.288" y="369.949">to</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="493.263" y="369.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="20.025" x="493.263" y="369.949">one</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="513.288" y="369.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="27.975" x="513.288" y="369.949">hour)</text>
-      <text fill="#000" font-family="Verdana" font-size="12" x="541.263" y="369.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" textLength="35.325" x="541.263" y="369.949">events</text>
+      <rect fill="#FFF" height="170.615" rx="0.5" ry="0.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="218" x="381" y="23"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="150.75" x="414.625" y="42.333">«AzureStreamAnalyticsJob»</text>
+      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="45.063" x="439.425" y="55.889">Stream</text>
+      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" x="484.488" y="55.889"> </text>
+      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="56.087" x="484.488" y="55.889">Analytics</text>
+      <image height="65" width="65" x="457.692" xlink:href="data:image/png;base64,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" y="59"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="9.975" x="472" y="132.949">[6</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="481.975" y="132.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="26.025" x="481.975" y="132.949">SUs]</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="490" y="144.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="410.613" y="156.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="28.725" x="410.613" y="156.949">apply</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="439.338" y="156.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="44.7" x="439.338" y="156.949">complex</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="484.038" y="156.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="39.375" x="484.038" y="156.949">queries</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="523.413" y="156.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="23.325" x="523.413" y="156.949">over</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="546.738" y="156.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="22.65" x="546.738" y="156.949">time</text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="42.675" x="391" y="168.949">periods,</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="433.675" y="168.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="45.975" x="433.675" y="168.949">tolerates</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="479.65" y="168.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="19.35" x="479.65" y="168.949">late</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="499" y="168.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="17.325" x="499" y="168.949">(up</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="516.325" y="168.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.975" x="516.325" y="168.949">to</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="526.3" y="168.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="13.35" x="526.3" y="168.949">21</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="539.65" y="168.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="29.325" x="539.65" y="168.949">days)</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="568.975" y="168.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="20.025" x="568.975" y="168.949">and</text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="62.55" x="403.413" y="180.949">out-of-order</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="465.963" y="180.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="17.325" x="465.963" y="180.949">(up</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="483.288" y="180.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.975" x="483.288" y="180.949">to</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="493.263" y="180.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="20.025" x="493.263" y="180.949">one</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="513.288" y="180.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="27.975" x="513.288" y="180.949">hour)</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="541.263" y="180.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="35.325" x="541.263" y="180.949">events</text>
     </g>
     <!--entity alertingFunction-->
     <g class="entity" data-qualified-name="alertingFunction" data-source-line="20" id="ent0008">
-      <rect fill="#FFF" height="122.615" rx="0.5" ry="0.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="153.35" x="809" y="236"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="90.75" x="840.3" y="255.333">«AzureFunction»</text>
-      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="47.512" x="861.919" y="268.889">Alerting</text>
-      <image height="65" width="65" x="853.367" xlink:href="data:image/png;base64,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" y="272"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="19.275" x="819" y="345.949">[v2,</text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="838.275" y="345.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="70.725" x="838.275" y="345.949">Consumption</text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="909" y="345.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="26.025" x="909" y="345.949">plan,</text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="935.025" y="345.949"> </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="17.325" x="935.025" y="345.949">JS]</text>
+      <rect fill="#FFF" height="122.615" rx="0.5" ry="0.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="153.35" x="809" y="47"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="90.75" x="840.3" y="66.333">«AzureFunction»</text>
+      <text fill="#000" font-family="Verdana" font-size="14" font-weight="700" textLength="47.512" x="861.919" y="79.889">Alerting</text>
+      <image height="65" width="65" x="853.367" xlink:href="data:image/png;base64,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" y="83"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="19.275" x="819" y="156.949">[v2,</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="838.275" y="156.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="70.725" x="838.275" y="156.949">Consumption</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="909" y="156.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="26.025" x="909" y="156.949">plan,</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" x="935.025" y="156.949"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-style="italic" textLength="17.325" x="935.025" y="156.949">JS]</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk9">
       <polygon fill="#666" points="106,209.852,110,200.852,106,204.852,102,200.852,106,209.852" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
@@ -278,15 +278,15 @@
       <text fill="#666" font-family="Verdana" font-size="12" textLength="9.975" x="128.825" y="196.583">to</text>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk10">
-      <polygon fill="#666" points="386.699,156.972,376.853,157.211,382.181,159.113,380.279,164.441,386.699,156.972" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M202.902,244.06 C258.927,217.514 325.09,186.164 382.181,159.113" fill="none" style="stroke:#666;stroke-width:1;"/>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="38.025" x="239" y="167.833">Routes</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="277.025" y="167.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="12.075" x="277.025" y="167.833">all</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="289.1" y="167.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="49.275" x="289.1" y="167.833">telemetry</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="338.375" y="167.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="9.975" x="338.375" y="167.833">to</text>
+      <polygon fill="#666" points="386.699,295.358,377.785,291.17,381.7,295.253,377.617,299.168,386.699,295.358" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M202.902,291.508 C258.927,292.682 324.61,294.057 381.7,295.253" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="38.025" x="239" y="286.833">Routes</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="277.025" y="286.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="12.075" x="277.025" y="286.833">all</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="289.1" y="286.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="49.275" x="289.1" y="286.833">telemetry</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="338.375" y="286.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="9.975" x="338.375" y="286.833">to</text>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk11">
       <polygon fill="#666" points="106,402.951,110,393.951,106,397.951,102,393.951,106,402.951" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
@@ -300,15 +300,15 @@
       <text fill="#666" font-family="Verdana" font-size="12" textLength="9.975" x="139.875" y="389.333">to</text>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" id="lnk13">
-      <polygon fill="#666" points="202.902,291.508,211.816,295.696,207.901,291.613,211.983,287.698,202.902,291.508" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M207.901,291.613 C262.047,292.747 324.885,294.063 380.912,295.236" fill="none" style="stroke:#666;stroke-width:1;"/>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="48.75" x="229.5" y="287.833">Analyzes</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="278.25" y="287.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="26.025" x="278.25" y="287.833">each</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="304.275" y="287.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="29.325" x="304.275" y="287.833">event</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="333.6" y="287.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="23.925" x="333.6" y="287.833">from</text>
+      <polygon fill="#666" points="202.902,244.06,212.748,243.821,207.42,241.919,209.322,236.591,202.902,244.06" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M207.42,241.919 C261.567,216.263 324.885,186.261 380.912,159.715" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="48.75" x="229.5" y="166.833">Analyzes</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="278.25" y="166.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="26.025" x="278.25" y="166.833">each</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="304.275" y="166.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="29.325" x="304.275" y="166.833">event</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="333.6" y="166.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="23.925" x="333.6" y="166.833">from</text>
     </g>
     <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk15">
       <polygon fill="#666" points="206.369,488.5,215.369,492.5,211.369,488.5,215.369,484.5,206.369,488.5" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
@@ -322,17 +322,17 @@
       <text fill="#666" font-family="Verdana" font-size="12" textLength="23.925" x="337.375" y="483.833">from</text>
     </g>
     <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk16">
-      <polygon fill="#666" points="808.785,297.5,799.785,293.5,803.785,297.5,799.785,301.5,808.785,297.5" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M599.046,297.5 C665.596,297.5 744.272,297.5 803.785,297.5" fill="none" style="stroke:#666;stroke-width:1;"/>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="44.025" x="625" y="292.833">Triggers</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="669.025" y="292.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="13.95" x="669.025" y="292.833">for</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="682.975" y="292.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="33.3" x="682.975" y="292.833">output</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="716.275" y="292.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="42" x="716.275" y="292.833">batches</text>
-      <text fill="#666" font-family="Verdana" font-size="12" x="758.275" y="292.833"> </text>
-      <text fill="#666" font-family="Verdana" font-size="12" textLength="9.975" x="758.275" y="292.833">to</text>
+      <polygon fill="#666" points="808.785,108.5,799.785,104.5,803.785,108.5,799.785,112.5,808.785,108.5" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M599.046,108.5 C665.596,108.5 744.272,108.5 803.785,108.5" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="44.025" x="625" y="103.833">Triggers</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="669.025" y="103.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="13.95" x="669.025" y="103.833">for</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="682.975" y="103.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="33.3" x="682.975" y="103.833">output</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="716.275" y="103.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="42" x="716.275" y="103.833">batches</text>
+      <text fill="#666" font-family="Verdana" font-size="12" x="758.275" y="103.833"> </text>
+      <text fill="#666" font-family="Verdana" font-size="12" textLength="9.975" x="758.275" y="103.833">to</text>
     </g>
     <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk17">
       <polygon fill="#666" points="793.902,488.5,784.902,484.5,788.902,488.5,784.902,492.5,793.902,488.5" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

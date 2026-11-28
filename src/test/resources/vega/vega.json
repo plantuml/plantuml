@@ -6425,6 +6425,34 @@
       "diagram_class": "ClassDiagram"
     },
     {
+      "file": "nonreg/smetana-input-order/empty_package_after_leaves_in_cluster.puml",
+      "folder": "nonreg/smetana-input-order",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/smetana-input-order/empty_package_before_root_entities.puml",
+      "folder": "nonreg/smetana-input-order",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/smetana-input-order/hidden_left_chain_in_nested_components.puml",
+      "folder": "nonreg/smetana-input-order",
+      "status": "pass",
+      "description": "(7 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "nonreg/smetana-input-order/packed_group_keeps_its_position.puml",
+      "folder": "nonreg/smetana-input-order",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
       "file": "nonreg/stereogroup/inline-semicolon-property-list.puml",
       "folder": "nonreg/stereogroup",
       "status": "pass",
@@ -11077,8 +11105,8 @@
     }
   ],
   "summary": {
-    "total": 1545,
-    "passed": 1540,
+    "total": 1549,
+    "passed": 1544,
     "failed": 0,
     "skipped": 5
   }
