@@ -1762,7 +1762,7 @@ Total Classes: 10
 "net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.gantt.lang" %lighten("red", 85) {
-Total Classes: 83
+Total Classes: 84
 }
 "net.sourceforge.plantuml.gantt.lang" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.gantt.lang" --> "com.plantuml.ubrex.builder"

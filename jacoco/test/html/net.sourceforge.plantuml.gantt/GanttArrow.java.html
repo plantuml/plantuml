@@ -127,22 +127,22 @@ public class GanttArrow implements UDrawable {
 <span class="fc" id="L127">		final GArrows arrows = new GArrows(this.atEnd, style.value(PName.LineColor).asColor(colorSet));</span>
 
 <span class="pc bpc" id="L129" title="1 of 4 branches missed.">		if (this.atStart.isBottom() &amp;&amp; this.atEnd == GSide.LEFT) {</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (x2 &gt; x1 + minimalWidth) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">			if (x2 &gt; x1 + minimalWidth) {</span>
 <span class="fc" id="L131">				arrows.addPoint(x1, y1);</span>
 <span class="fc" id="L132">				arrows.addPoint(x1, y2);</span>
 <span class="fc" id="L133">				arrows.addPoint(x2, y2);</span>
 
 			} else {
-<span class="nc" id="L136">				x1 = start.getX(stringBounder, GSide.RIGHT, GArrowType.OUTGOING);</span>
-<span class="nc" id="L137">				y1 = start.getY(stringBounder, GSide.RIGHT);</span>
-<span class="nc" id="L138">				final double y1b = end.getY(stringBounder).getCurrentValue();</span>
-<span class="nc" id="L139">				arrows.addPoint(x1, y1);</span>
-<span class="nc" id="L140">				arrows.addPoint(x1 + 6, y1);</span>
-<span class="nc" id="L141">				arrows.addPoint(x1 + 6, y1b);</span>
-<span class="nc" id="L142">				arrows.addPoint(x2 - 8, y1b);</span>
-<span class="nc" id="L143">				arrows.addPoint(x2 - 8, y2);</span>
-<span class="nc" id="L144">				arrows.addPoint(x2, y2);</span>
-<span class="nc" id="L145">			}</span>
+<span class="fc" id="L136">				x1 = start.getX(stringBounder, GSide.RIGHT, GArrowType.OUTGOING);</span>
+<span class="fc" id="L137">				y1 = start.getY(stringBounder, GSide.RIGHT);</span>
+<span class="fc" id="L138">				final double y1b = end.getY(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L139">				arrows.addPoint(x1, y1);</span>
+<span class="fc" id="L140">				arrows.addPoint(x1 + 6, y1);</span>
+<span class="fc" id="L141">				arrows.addPoint(x1 + 6, y1b);</span>
+<span class="fc" id="L142">				arrows.addPoint(x2 - 8, y1b);</span>
+<span class="fc" id="L143">				arrows.addPoint(x2 - 8, y2);</span>
+<span class="fc" id="L144">				arrows.addPoint(x2, y2);</span>
+<span class="fc" id="L145">			}</span>
 <span class="pc bpc" id="L146" title="1 of 4 branches missed.">		} else if (this.atStart == GSide.RIGHT &amp;&amp; this.atEnd == GSide.RIGHT) {</span>
 <span class="fc" id="L147">			final double xmax = Math.max(x1, x2) + 8;</span>
 <span class="fc" id="L148">			arrows.addPoint(x1, y1);</span>

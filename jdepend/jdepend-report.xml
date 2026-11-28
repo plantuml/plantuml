@@ -8516,8 +8516,8 @@
 
         <Package name="net.sourceforge.plantuml.gantt.lang">
             <Stats>
-                <TotalClasses>83</TotalClasses>
-                <ConcreteClasses>80</ConcreteClasses>
+                <TotalClasses>84</TotalClasses>
+                <ConcreteClasses>81</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>4</Ca>
                 <Ce>17</Ce>
@@ -8569,6 +8569,9 @@
                 </Class>
                 <Class sourceFile="ComplementFromTo.java">
                     net.sourceforge.plantuml.gantt.lang.ComplementFromTo
+                </Class>
+                <Class sourceFile="ComplementHappensAlone.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementHappensAlone
                 </Class>
                 <Class sourceFile="ComplementInColors.java">
                     net.sourceforge.plantuml.gantt.lang.ComplementInColors
@@ -8697,9 +8700,6 @@
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$10
                 </Class>
                 <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.gantt.lang.SubjectTask$12
-                </Class>
-                <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$13
                 </Class>
                 <Class sourceFile="SubjectTask.java">
@@ -8709,7 +8709,7 @@
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$15
                 </Class>
                 <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.gantt.lang.SubjectTask$17
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$16
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$18
@@ -8734,6 +8734,9 @@
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$24
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$25
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$3

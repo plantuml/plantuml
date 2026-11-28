@@ -142,49 +142,55 @@ implements <a href="Task.html" title="interface in net.sourceforge.plantuml.gant
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addTask(net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">addTask</a><wbr>(<a href="Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;child)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEnd()" class="member-name-link">getEnd</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../ngm/Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoad()" class="member-name-link">getLoad</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="TaskGroup.html" title="class in net.sourceforge.plantuml.gantt.core">TaskGroup</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParent()" class="member-name-link">getParent</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart</a><wbr>(<a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Like <a href="Task.html#setStart(net.sourceforge.plantuml.gantt.time.TimePoint)"><code>Task.setStart(TimePoint)</code></a>, but may also move the start <em>earlier</em>
+ (setStart never does: an already known start can only be pushed later).</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStart()" class="member-name-link">getStart</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEnd()" class="member-name-link">getEnd</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAssignedTo(net.sourceforge.plantuml.gantt.core.Resource)" class="member-name-link">isAssignedTo</a><wbr>(<a href="Resource.html" title="class in net.sourceforge.plantuml.gantt.core">Resource</a>&nbsp;res)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../ngm/Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoad()" class="member-name-link">getLoad</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="TaskGroup.html" title="class in net.sourceforge.plantuml.gantt.core">TaskGroup</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParent()" class="member-name-link">getParent</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStart()" class="member-name-link">getStart</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDiamond()" class="member-name-link">isDiamond</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAssignedTo(net.sourceforge.plantuml.gantt.core.Resource)" class="member-name-link">isAssignedTo</a><wbr>(<a href="Resource.html" title="class in net.sourceforge.plantuml.gantt.core">Resource</a>&nbsp;res)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setColors(net.sourceforge.plantuml.gantt.lang.CenterBorderColor...)" class="member-name-link">setColors</a><wbr>(<a href="../lang/CenterBorderColor.html" title="class in net.sourceforge.plantuml.gantt.lang">CenterBorderColor</a>...&nbsp;colors)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDiamond()" class="member-name-link">isDiamond</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCompletion(int)" class="member-name-link">setCompletion</a><wbr>(int&nbsp;completion)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setColors(net.sourceforge.plantuml.gantt.lang.CenterBorderColor...)" class="member-name-link">setColors</a><wbr>(<a href="../lang/CenterBorderColor.html" title="class in net.sourceforge.plantuml.gantt.lang">CenterBorderColor</a>...&nbsp;colors)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDiamond(boolean)" class="member-name-link">setDiamond</a><wbr>(boolean&nbsp;diamond)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCompletion(int)" class="member-name-link">setCompletion</a><wbr>(int&nbsp;completion)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnd(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">setEnd</a><wbr>(<a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;end)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDiamond(boolean)" class="member-name-link">setDiamond</a><wbr>(boolean&nbsp;diamond)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLoad(net.sourceforge.plantuml.gantt.ngm.Load)" class="member-name-link">setLoad</a><wbr>(<a href="../ngm/Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a>&nbsp;load)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnd(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">setEnd</a><wbr>(<a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;end)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNote(net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">setNote</a><wbr>(<a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;note,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLoad(net.sourceforge.plantuml.gantt.ngm.Load)" class="member-name-link">setLoad</a><wbr>(<a href="../ngm/Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a>&nbsp;load)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNote(net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">setNote</a><wbr>(<a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;note,
  <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">setStart</a><wbr>(<a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUrl(net.sourceforge.plantuml.url.Url)" class="member-name-link">setUrl</a><wbr>(<a href="../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&nbsp;url)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">setStart</a><wbr>(<a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUrl(net.sourceforge.plantuml.url.Url)" class="member-name-link">setUrl</a><wbr>(<a href="../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&nbsp;url)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -254,6 +260,19 @@ implements <a href="Task.html" title="interface in net.sourceforge.plantuml.gant
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Task.html#setStart(net.sourceforge.plantuml.gantt.time.TimePoint)">setStart</a></code>&nbsp;in interface&nbsp;<code><a href="Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)">
+<h3>forceStart</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forceStart</span><wbr><span class="parameters">(<a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="Task.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)">Task</a></code></span></div>
+<div class="block">Like <a href="Task.html#setStart(net.sourceforge.plantuml.gantt.time.TimePoint)"><code>Task.setStart(TimePoint)</code></a>, but may also move the start <em>earlier</em>
+ (setStart never does: an already known start can only be pushed later).</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Task.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)">forceStart</a></code>&nbsp;in interface&nbsp;<code><a href="Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a></code></dd>
 </dl>
 </section>
 </li>

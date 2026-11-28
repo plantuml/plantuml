@@ -5749,8 +5749,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 83
-    Concrete Classes: 80
+    Total Classes: 84
+    Concrete Classes: 81
     Abstract Classes: 3
 
     Ca: 4
@@ -5776,6 +5776,7 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.lang.ComplementDayOfWeek
     net.sourceforge.plantuml.gantt.lang.ComplementDeleted
     net.sourceforge.plantuml.gantt.lang.ComplementFromTo
+    net.sourceforge.plantuml.gantt.lang.ComplementHappensAlone
     net.sourceforge.plantuml.gantt.lang.ComplementInColors
     net.sourceforge.plantuml.gantt.lang.ComplementInColors2
     net.sourceforge.plantuml.gantt.lang.ComplementInColorsFromTo
@@ -5818,11 +5819,10 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.lang.SubjectTask
     net.sourceforge.plantuml.gantt.lang.SubjectTask$1
     net.sourceforge.plantuml.gantt.lang.SubjectTask$10
-    net.sourceforge.plantuml.gantt.lang.SubjectTask$12
     net.sourceforge.plantuml.gantt.lang.SubjectTask$13
     net.sourceforge.plantuml.gantt.lang.SubjectTask$14
     net.sourceforge.plantuml.gantt.lang.SubjectTask$15
-    net.sourceforge.plantuml.gantt.lang.SubjectTask$17
+    net.sourceforge.plantuml.gantt.lang.SubjectTask$16
     net.sourceforge.plantuml.gantt.lang.SubjectTask$18
     net.sourceforge.plantuml.gantt.lang.SubjectTask$19
     net.sourceforge.plantuml.gantt.lang.SubjectTask$2
@@ -5831,6 +5831,7 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.lang.SubjectTask$22
     net.sourceforge.plantuml.gantt.lang.SubjectTask$23
     net.sourceforge.plantuml.gantt.lang.SubjectTask$24
+    net.sourceforge.plantuml.gantt.lang.SubjectTask$25
     net.sourceforge.plantuml.gantt.lang.SubjectTask$3
     net.sourceforge.plantuml.gantt.lang.SubjectTask$4
     net.sourceforge.plantuml.gantt.lang.SubjectTask$5
@@ -16319,7 +16320,7 @@ net.sourceforge.plantuml.gantt.core,12,3,9,14,0.25,0.61,0.14,1
 net.sourceforge.plantuml.gantt.data,8,0,4,20,0,0.83,0.17,1
 net.sourceforge.plantuml.gantt.draw,9,2,4,26,0.22,0.87,0.09,1
 net.sourceforge.plantuml.gantt.draw.header,10,2,2,15,0.2,0.88,0.08,1
-net.sourceforge.plantuml.gantt.lang,83,3,4,17,0.04,0.81,0.15,1
+net.sourceforge.plantuml.gantt.lang,84,3,4,17,0.04,0.81,0.15,1
 net.sourceforge.plantuml.gantt.ngm,4,1,4,3,0.25,0.43,0.32,1
 net.sourceforge.plantuml.gantt.ngm.math,11,2,5,6,0.18,0.55,0.27,1
 net.sourceforge.plantuml.gantt.solver,2,0,1,8,0,0.89,0.11,1

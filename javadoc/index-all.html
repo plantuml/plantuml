@@ -9323,6 +9323,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementFromTo.html#%3Cinit%3E()" class="member-name-link">ComplementFromTo()</a> - Constructor for class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementFromTo.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementFromTo</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementHappensAlone.html" class="type-name-link" title="class in net.sourceforge.plantuml.gantt.lang">ComplementHappensAlone</a> - Class in <a href="net/sourceforge/plantuml/gantt/lang/package-summary.html">net.sourceforge.plantuml.gantt.lang</a></dt>
+<dd>
+<div class="block">Complement of "[Task] happens" when no date follows.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementHappensAlone.html#%3Cinit%3E()" class="member-name-link">ComplementHappensAlone()</a> - Constructor for class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementHappensAlone.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementHappensAlone</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementInColors.html" class="type-name-link" title="class in net.sourceforge.plantuml.gantt.lang">ComplementInColors</a> - Class in <a href="net/sourceforge/plantuml/gantt/lang/package-summary.html">net.sourceforge.plantuml.gantt.lang</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementInColors.html#%3Cinit%3E()" class="member-name-link">ComplementInColors()</a> - Constructor for class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementInColors.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementInColors</a></dt>
@@ -21005,6 +21011,19 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/style/ISkinParam.html#forceSequenceParticipantUnderlined()" class="member-name-link">forceSequenceParticipantUnderlined()</a> - Method in interface net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/core/Task.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart(TimePoint)</a> - Method in interface net.sourceforge.plantuml.gantt.core.<a href="net/sourceforge/plantuml/gantt/core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a></dt>
+<dd>
+<div class="block">Like <a href="net/sourceforge/plantuml/gantt/core/Task.html#setStart(net.sourceforge.plantuml.gantt.time.TimePoint)"><code>Task.setStart(TimePoint)</code></a>, but may also move the start <em>earlier</em>
+ (setStart never does: an already known start can only be pushed later).</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/core/TaskGroup.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart(TimePoint)</a> - Method in class net.sourceforge.plantuml.gantt.core.<a href="net/sourceforge/plantuml/gantt/core/TaskGroup.html" title="class in net.sourceforge.plantuml.gantt.core">TaskGroup</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/core/TaskImpl.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart(TimePoint)</a> - Method in class net.sourceforge.plantuml.gantt.core.<a href="net/sourceforge/plantuml/gantt/core/TaskImpl.html" title="class in net.sourceforge.plantuml.gantt.core">TaskImpl</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/core/TaskSeparator.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart(TimePoint)</a> - Method in class net.sourceforge.plantuml.gantt.core.<a href="net/sourceforge/plantuml/gantt/core/TaskSeparator.html" title="class in net.sourceforge.plantuml.gantt.core">TaskSeparator</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/solver/Solver.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart(TimePoint)</a> - Method in class net.sourceforge.plantuml.gantt.solver.<a href="net/sourceforge/plantuml/gantt/solver/Solver.html" title="class in net.sourceforge.plantuml.gantt.solver">Solver</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/GanttDiagram.html#forceTaskOrder(net.sourceforge.plantuml.gantt.core.Task,net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">forceTaskOrder(Task, Task)</a> - Method in class net.sourceforge.plantuml.gantt.<a href="net/sourceforge/plantuml/gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/openpdf/text/pdf/BaseFont.html#forceWidthsOutput" class="member-name-link">forceWidthsOutput</a> - Variable in class org.openpdf.text.pdf.<a href="org/openpdf/text/pdf/BaseFont.html" title="class in org.openpdf.text.pdf">BaseFont</a></dt>
@@ -27990,6 +28009,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementDuration.html#getMe(net.sourceforge.plantuml.gantt.GanttDiagram,com.plantuml.ubrex.CaptureLookup)" class="member-name-link">getMe(GanttDiagram, CaptureLookup)</a> - Method in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementDuration.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementDuration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementFromTo.html#getMe(net.sourceforge.plantuml.gantt.GanttDiagram,com.plantuml.ubrex.CaptureLookup)" class="member-name-link">getMe(GanttDiagram, CaptureLookup)</a> - Method in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementFromTo.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementFromTo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementHappensAlone.html#getMe(net.sourceforge.plantuml.gantt.GanttDiagram,com.plantuml.ubrex.CaptureLookup)" class="member-name-link">getMe(GanttDiagram, CaptureLookup)</a> - Method in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementHappensAlone.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementHappensAlone</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementInColors.html#getMe(net.sourceforge.plantuml.gantt.GanttDiagram,com.plantuml.ubrex.CaptureLookup)" class="member-name-link">getMe(GanttDiagram, CaptureLookup)</a> - Method in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementInColors.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementInColors</a></dt>
 <dd>&nbsp;</dd>
@@ -35262,6 +35283,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/Verbs.html#happens" class="member-name-link">happens</a> - Static variable in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/Verbs.html" title="class in net.sourceforge.plantuml.gantt.lang">Verbs</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/lang/Verbs.html#happensAlone" class="member-name-link">happensAlone</a> - Static variable in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/Verbs.html" title="class in net.sourceforge.plantuml.gantt.lang">Verbs</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/StackLayout.html#has(int,int)" class="member-name-link">has(int, int)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/StackLayout.html" title="class in net.sourceforge.plantuml.chart">StackLayout</a></dt>
 <dd>
 <div class="block">Whether the i-th value of the s-th series is there.</div>
@@ -37866,6 +37889,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/utils/StartUtils.html#isEndDirective(java.lang.String)" class="member-name-link">isEndDirective(String)</a> - Static method in class net.sourceforge.plantuml.utils.<a href="net/sourceforge/plantuml/utils/StartUtils.html" title="class in net.sourceforge.plantuml.utils">StartUtils</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/GanttConstraint.html#isEndToStartOf(net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">isEndToStartOf(Task)</a> - Method in class net.sourceforge.plantuml.gantt.<a href="net/sourceforge/plantuml/gantt/GanttConstraint.html" title="class in net.sourceforge.plantuml.gantt">GanttConstraint</a></dt>
+<dd>
+<div class="block">True when this constraint makes the start of <code>task</code> follow the end
+ of another task (what <code>then</code> and <code>starts at [X]'s end</code>
+ create).</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/FileFormat.html#isEps()" class="member-name-link">isEps()</a> - Method in enum class net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></dt>
 <dd>
 <div class="block">Check if this file format is Encapsulated PostScript.</div>
@@ -38682,6 +38711,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/stathissideris/ascii2image/text/TextGrid.html#isStarOnLine(org.stathissideris.ascii2image.text.TextGrid.Cell)" class="member-name-link">isStarOnLine(TextGrid.Cell)</a> - Method in class org.stathissideris.ascii2image.text.<a href="org/stathissideris/ascii2image/text/TextGrid.html" title="class in org.stathissideris.ascii2image.text">TextGrid</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/sequencediagram/GroupingType.html#isStart()" class="member-name-link">isStart()</a> - Method in enum class net.sourceforge.plantuml.sequencediagram.<a href="net/sourceforge/plantuml/sequencediagram/GroupingType.html" title="enum class in net.sourceforge.plantuml.sequencediagram">GroupingType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/GanttDiagram.html#isStartAfterEndOfAnotherTask(net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">isStartAfterEndOfAnotherTask(Task)</a> - Method in class net.sourceforge.plantuml.gantt.<a href="net/sourceforge/plantuml/gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/core/UmlSource.html#isStartDef()" class="member-name-link">isStartDef()</a> - Method in class net.sourceforge.plantuml.core.<a href="net/sourceforge/plantuml/core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a></dt>
 <dd>&nbsp;</dd>
@@ -59227,6 +59258,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementDuration.html#toUnicodeBracketedExpressionComplement()" class="member-name-link">toUnicodeBracketedExpressionComplement()</a> - Method in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementDuration.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementDuration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementFromTo.html#toUnicodeBracketedExpressionComplement()" class="member-name-link">toUnicodeBracketedExpressionComplement()</a> - Method in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementFromTo.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementFromTo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementHappensAlone.html#toUnicodeBracketedExpressionComplement()" class="member-name-link">toUnicodeBracketedExpressionComplement()</a> - Method in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementHappensAlone.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementHappensAlone</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/ComplementInColors.html#toUnicodeBracketedExpressionComplement()" class="member-name-link">toUnicodeBracketedExpressionComplement()</a> - Method in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/ComplementInColors.html" title="class in net.sourceforge.plantuml.gantt.lang">ComplementInColors</a></dt>
 <dd>&nbsp;</dd>

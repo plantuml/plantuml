@@ -282,97 +282,103 @@ public class TaskImpl extends AbstractTask implements Task {
 <span class="fc" id="L282">	}</span>
 
 	@Override
+	public void forceStart(TimePoint start) {
+<span class="fc" id="L286">		solver.forceStart(start);</span>
+<span class="fc" id="L287">		invalidateCache();</span>
+<span class="fc" id="L288">	}</span>
+
+	@Override
 	public void setEnd(TimePoint end) {
 //		if (end.toString().endsWith(&quot;T00:00&quot;) == false)
 //			throw new IllegalArgumentException(end.toString());
-<span class="fc" id="L288">		solver.setData(TaskAttribute.END, end);</span>
-<span class="fc" id="L289">		invalidateCache();</span>
-<span class="fc" id="L290">	}</span>
+<span class="fc" id="L294">		solver.setData(TaskAttribute.END, end);</span>
+<span class="fc" id="L295">		invalidateCache();</span>
+<span class="fc" id="L296">	}</span>
 
 	@Override
 	public void setColors(CenterBorderColor... colors) {
-<span class="fc" id="L294">		this.colors = colors;</span>
-<span class="fc" id="L295">	}</span>
+<span class="fc" id="L300">		this.colors = colors;</span>
+<span class="fc" id="L301">	}</span>
 
 	@Override
 	public void addResource(Resource resource, int percentage) {
-<span class="fc" id="L299">		this.resources.put(resource, percentage);</span>
-<span class="fc" id="L300">		invalidateCache();</span>
-<span class="fc" id="L301">	}</span>
+<span class="fc" id="L305">		this.resources.put(resource, percentage);</span>
+<span class="fc" id="L306">		invalidateCache();</span>
+<span class="fc" id="L307">	}</span>
 
 	private void invalidateCache() {
-<span class="fc" id="L304">		cachedPiecewiseConstant = null;</span>
-<span class="fc" id="L305">		cachedStart = null;</span>
-<span class="fc" id="L306">		cachedEnd = null;</span>
-<span class="fc" id="L307">	}</span>
+<span class="fc" id="L310">		cachedPiecewiseConstant = null;</span>
+<span class="fc" id="L311">		cachedStart = null;</span>
+<span class="fc" id="L312">		cachedEnd = null;</span>
+<span class="fc" id="L313">	}</span>
 
 	@Override
 	public void setDiamond(boolean diamond) {
-<span class="fc" id="L311">		this.diamond = diamond;</span>
-<span class="fc" id="L312">	}</span>
+<span class="fc" id="L317">		this.diamond = diamond;</span>
+<span class="fc" id="L318">	}</span>
 
 	@Override
 	public boolean isDiamond() {
-<span class="fc" id="L316">		return this.diamond;</span>
+<span class="fc" id="L322">		return this.diamond;</span>
 	}
 
 	@Override
 	public void setCompletion(int completion) {
-<span class="nc" id="L321">		this.completion = completion;</span>
-<span class="nc" id="L322">	}</span>
+<span class="nc" id="L327">		this.completion = completion;</span>
+<span class="nc" id="L328">	}</span>
 
 	public final Url getUrl() {
-<span class="fc" id="L325">		return url;</span>
+<span class="fc" id="L331">		return url;</span>
 	}
 
 	public final CenterBorderColor getColors() {
-<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (colors == null)</span>
-<span class="fc" id="L330">			return null;</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">		if (colors == null)</span>
+<span class="fc" id="L336">			return null;</span>
 
-<span class="pc bpc" id="L332" title="1 of 2 branches missed.">		if (colors.length == 1)</span>
-<span class="fc" id="L333">			return colors[0];</span>
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">		if (colors.length == 1)</span>
+<span class="fc" id="L339">			return colors[0];</span>
 
-<span class="nc" id="L335">		return colors[0].unlinearTo(colors[1], completion);</span>
+<span class="nc" id="L341">		return colors[0].unlinearTo(colors[1], completion);</span>
 	}
 
 	public final int getCompletion() {
-<span class="fc" id="L339">		return completion;</span>
+<span class="fc" id="L345">		return completion;</span>
 	}
 
 	public final Collection&lt;LocalDate&gt; getAllPaused() {
-<span class="fc" id="L343">		final SortedSet&lt;LocalDate&gt; result = new TreeSet&lt;&gt;(pausedDay);</span>
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
-<span class="nc" id="L345">			addAll(result, dayOfWeek);</span>
+<span class="fc" id="L349">		final SortedSet&lt;LocalDate&gt; result = new TreeSet&lt;&gt;(pausedDay);</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
+<span class="nc" id="L351">			addAll(result, dayOfWeek);</span>
 
-<span class="fc" id="L347">		return MyCollections.unmodifiableCollection(result);</span>
+<span class="fc" id="L353">		return MyCollections.unmodifiableCollection(result);</span>
 	}
 
 	private void addAll(SortedSet&lt;LocalDate&gt; result, DayOfWeek dayOfWeek) {
-<span class="nc" id="L351">		final TimePoint start = getStart();</span>
-<span class="nc" id="L352">		final TimePoint end = getEndMinusOneDayTOBEREMOVED();</span>
-<span class="nc bnc" id="L353" title="All 2 branches missed.">		for (TimePoint current = start; current.compareTo(end) &lt;= 0; current = current.increment())</span>
-<span class="nc bnc" id="L354" title="All 2 branches missed.">			if (current.toDayOfWeek() == dayOfWeek)</span>
-<span class="nc" id="L355">				result.add(current.toDay());</span>
+<span class="nc" id="L357">		final TimePoint start = getStart();</span>
+<span class="nc" id="L358">		final TimePoint end = getEndMinusOneDayTOBEREMOVED();</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">		for (TimePoint current = start; current.compareTo(end) &lt;= 0; current = current.increment())</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">			if (current.toDayOfWeek() == dayOfWeek)</span>
+<span class="nc" id="L361">				result.add(current.toDay());</span>
 
-<span class="nc" id="L357">	}</span>
+<span class="nc" id="L363">	}</span>
 
 	@Override
 	public void setNote(Display note, Stereotype stereotype) {
-<span class="fc" id="L361">		this.note = note;</span>
-<span class="fc" id="L362">		this.noteStereotype = stereotype;</span>
-<span class="fc" id="L363">	}</span>
+<span class="fc" id="L367">		this.note = note;</span>
+<span class="fc" id="L368">		this.noteStereotype = stereotype;</span>
+<span class="fc" id="L369">	}</span>
 
 	public Display getNote() {
-<span class="fc" id="L366">		return note;</span>
+<span class="fc" id="L372">		return note;</span>
 	}
 
 	public Stereotype getNoteStereotype() {
-<span class="fc" id="L370">		return noteStereotype;</span>
+<span class="fc" id="L376">		return noteStereotype;</span>
 	}
 
 	@Override
 	public boolean isAssignedTo(Resource res) {
-<span class="nc" id="L375">		return resources.containsKey(res);</span>
+<span class="nc" id="L381">		return resources.containsKey(res);</span>
 	}
 
 }

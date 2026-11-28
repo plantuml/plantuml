@@ -247,16 +247,16 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		double x;
 <span class="fc bfc" id="L248" title="All 2 branches covered.">		if (side == GSide.LEFT)</span>
 <span class="fc" id="L249">			x = timeScale.getPosition(start);</span>
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		else if (side == GSide.RIGHT)</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		else if (side == GSide.RIGHT)</span>
 <span class="fc" id="L251">			x = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
 		else
-<span class="nc" id="L253">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
+<span class="fc" id="L253">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
 
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (arrowType == GArrowType.OUTGOING) {</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (arrowType == GArrowType.OUTGOING) {</span>
 <span class="fc" id="L256">			final double width = getDiamondHeight();</span>
 <span class="fc bfc" id="L257" title="All 2 branches covered.">			if (side == GSide.LEFT)</span>
 <span class="fc" id="L258">				x += width / 2;</span>
-<span class="pc bpc" id="L259" title="1 of 2 branches missed.">			else if (side == GSide.RIGHT)</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">			else if (side == GSide.RIGHT)</span>
 <span class="fc" id="L260">				x -= width / 2;</span>
 		}
 <span class="fc" id="L262">		return x;</span>

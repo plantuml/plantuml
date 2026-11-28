@@ -151,18 +151,25 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#goNorank()" class="member-name-link">goNorank</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHidden(net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">isHidden</a><wbr>(<a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;min,
- <a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;max)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEndToStartOf(net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">isEndToStartOf</a><wbr>(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">True when this constraint makes the start of <code>task</code> follow the end
+ of another task (what <code>then</code> and <code>starts at [X]'s end</code>
+ create).</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOn(net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">isOn</a><wbr>(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHidden(net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">isHidden</a><wbr>(<a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;min,
+ <a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;max)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isThereRightArrow(net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">isThereRightArrow</a><wbr>(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOn(net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">isOn</a><wbr>(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isThereRightArrow(net.sourceforge.plantuml.gantt.core.Task)" class="member-name-link">isThereRightArrow</a><wbr>(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -214,6 +221,15 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isOn(net.sourceforge.plantuml.gantt.core.Task)">
 <h3>isOn</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isOn</span><wbr><span class="parameters">(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isEndToStartOf(net.sourceforge.plantuml.gantt.core.Task)">
+<h3>isEndToStartOf</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEndToStartOf</span><wbr><span class="parameters">(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task)</span></div>
+<div class="block">True when this constraint makes the start of <code>task</code> follow the end
+ of another task (what <code>then</code> and <code>starts at [X]'s end</code>
+ create).</div>
 </section>
 </li>
 <li>

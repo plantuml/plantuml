@@ -71,10 +71,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.lang">net.sourceforge.plantuml.gantt.lang</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.time">net.sourceforge.plantuml.gantt.time</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.solver">net.sourceforge.plantuml.gantt.solver</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.timescale">net.sourceforge.plantuml.gantt.timescale</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.time">net.sourceforge.plantuml.gantt.time</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.timescale">net.sourceforge.plantuml.gantt.timescale</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -158,6 +160,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Task.</span><code><a href="../../core/Task.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Like <a href="../../core/Task.html#setStart(net.sourceforge.plantuml.gantt.time.TimePoint)"><code>Task.setStart(TimePoint)</code></a>, but may also move the start <em>earlier</em>
+ (setStart never does: an already known start can only be pushed later).</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TaskGroup.</span><code><a href="../../core/TaskGroup.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TaskImpl.</span><code><a href="../../core/TaskImpl.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TaskSeparator.</span><code><a href="../../core/TaskSeparator.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>int</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">TaskImpl.</span><code><a href="../../core/TaskImpl.html#loadForResource(net.sourceforge.plantuml.gantt.core.Resource,net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">loadForResource</a><wbr>(<a href="../../core/Resource.html" title="class in net.sourceforge.plantuml.gantt.core">Resource</a>&nbsp;res,
  <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;instant)</code></div>
@@ -381,6 +398,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../../Failable.html" title="class in net.sourceforge.plantuml.gantt">Failable</a><wbr>&lt;<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ComplementTimePoint.</span><code><a href="../../lang/ComplementTimePoint.html#getMe(net.sourceforge.plantuml.gantt.GanttDiagram,com.plantuml.ubrex.CaptureLookup)" class="member-name-link">getMe</a><wbr>(<a href="../../GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;gantt,
  <a href="../../../../../../com/plantuml/ubrex/CaptureLookup.html" title="interface in com.plantuml.ubrex">CaptureLookup</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.gantt.solver">
+<h2>Uses of <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a> in <a href="../../solver/package-summary.html">net.sourceforge.plantuml.gantt.solver</a></h2>
+<div class="caption"><span>Methods in <a href="../../solver/package-summary.html">net.sourceforge.plantuml.gantt.solver</a> with parameters of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>final void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Solver.</span><code><a href="../../solver/Solver.html#forceStart(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">forceStart</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

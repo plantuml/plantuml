@@ -55,21 +55,24 @@ public class Verbs {
 <span class="fc" id="L55">	public static Verbs displayOnSameRowAs = new Verbs(new UBrexLeaf(&quot;display〇?s 〇+〴s on 〇+〴s same 〇+〴s row 〇+〴s as&quot;));</span>
 <span class="fc" id="L56">	public static Verbs ends = new Verbs(new UBrexLeaf(&quot;ends&quot;));</span>
 <span class="fc" id="L57">	public static Verbs happens = new Verbs(new UBrexLeaf(&quot;happens&quot;));</span>
-<span class="fc" id="L58">	public static Verbs is = new Verbs(new UBrexLeaf(&quot;is&quot;));</span>
-<span class="fc" id="L59">	public static Verbs isColored = new Verbs(new UBrexLeaf(&quot;is 〇+〴s colo〇?ured&quot;));</span>
-<span class="fc" id="L60">	public static Verbs isDeleted = new Verbs(new UBrexLeaf(&quot;is 〇+〴s deleted&quot;));</span>
-<span class="fc" id="L61">	public static Verbs isDisplayedAs = new Verbs(new UBrexLeaf(&quot;is 〇+〴s displayed 〇+〴s as&quot;));</span>
-<span class="fc" id="L62">	public static Verbs isOff = new Verbs(new UBrexLeaf(&quot;is 〇+〴s off&quot;));</span>
-<span class="fc" id="L63">	public static Verbs isOn = new Verbs(new UBrexLeaf(&quot;is 〇+〴s on&quot;));</span>
-<span class="fc" id="L64">	public static Verbs isOrAre = new Verbs(new UBrexLeaf(&quot;【is┇are】&quot;));</span>
-<span class="fc" id="L65">	public static Verbs isOrAreNamed = new Verbs(new UBrexLeaf(&quot;【is┇are】〇+〴s named&quot;));</span>
-<span class="fc" id="L66">	public static Verbs just = new Verbs(new UBrexLeaf(&quot;just&quot;));</span>
-<span class="fc" id="L67">	public static Verbs linksTo = new Verbs(new UBrexLeaf(&quot;links 〇+〴s to&quot;));</span>
-<span class="fc" id="L68">	public static Verbs occurs = new Verbs(new UBrexLeaf(&quot;occurs&quot;));</span>
-<span class="fc" id="L69">	public static Verbs pauses = new Verbs(new UBrexLeaf(&quot;pauses&quot;));</span>
-<span class="fc" id="L70">	public static Verbs requires = new Verbs(new UBrexLeaf(&quot;【lasts┇requires】&quot;));</span>
-<span class="fc" id="L71">	public static Verbs starts = new Verbs(new UBrexLeaf(&quot;starts&quot;));</span>
-<span class="fc" id="L72">	public static Verbs worksOn = new Verbs(new UBrexLeaf(&quot;works 〇+〴s on&quot;));</span>
+	// &quot;happens&quot; with nothing after it: the &quot;s&quot; is the whole complement, because a
+	// verb phrase cannot have an empty complement (see ComplementHappensAlone).
+<span class="fc" id="L60">	public static Verbs happensAlone = new Verbs(new UBrexLeaf(&quot;happen&quot;));</span>
+<span class="fc" id="L61">	public static Verbs is = new Verbs(new UBrexLeaf(&quot;is&quot;));</span>
+<span class="fc" id="L62">	public static Verbs isColored = new Verbs(new UBrexLeaf(&quot;is 〇+〴s colo〇?ured&quot;));</span>
+<span class="fc" id="L63">	public static Verbs isDeleted = new Verbs(new UBrexLeaf(&quot;is 〇+〴s deleted&quot;));</span>
+<span class="fc" id="L64">	public static Verbs isDisplayedAs = new Verbs(new UBrexLeaf(&quot;is 〇+〴s displayed 〇+〴s as&quot;));</span>
+<span class="fc" id="L65">	public static Verbs isOff = new Verbs(new UBrexLeaf(&quot;is 〇+〴s off&quot;));</span>
+<span class="fc" id="L66">	public static Verbs isOn = new Verbs(new UBrexLeaf(&quot;is 〇+〴s on&quot;));</span>
+<span class="fc" id="L67">	public static Verbs isOrAre = new Verbs(new UBrexLeaf(&quot;【is┇are】&quot;));</span>
+<span class="fc" id="L68">	public static Verbs isOrAreNamed = new Verbs(new UBrexLeaf(&quot;【is┇are】〇+〴s named&quot;));</span>
+<span class="fc" id="L69">	public static Verbs just = new Verbs(new UBrexLeaf(&quot;just&quot;));</span>
+<span class="fc" id="L70">	public static Verbs linksTo = new Verbs(new UBrexLeaf(&quot;links 〇+〴s to&quot;));</span>
+<span class="fc" id="L71">	public static Verbs occurs = new Verbs(new UBrexLeaf(&quot;occurs&quot;));</span>
+<span class="fc" id="L72">	public static Verbs pauses = new Verbs(new UBrexLeaf(&quot;pauses&quot;));</span>
+<span class="fc" id="L73">	public static Verbs requires = new Verbs(new UBrexLeaf(&quot;【lasts┇requires】&quot;));</span>
+<span class="fc" id="L74">	public static Verbs starts = new Verbs(new UBrexLeaf(&quot;starts&quot;));</span>
+<span class="fc" id="L75">	public static Verbs worksOn = new Verbs(new UBrexLeaf(&quot;works 〇+〴s on&quot;));</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

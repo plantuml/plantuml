@@ -24,7 +24,7 @@
 </ul>
 <div class="tab">
 <h2>Gradle Test Run :test</h2>
-<h1>python/legacy</h1>
+<h1>python/language</h1>
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
@@ -43,7 +43,7 @@
 <tr>
 <td>
 <div class="infoBox">
-<div class="counter">24</div>
+<div class="counter">18</div>
 <p>tests</p>
 </div>
 </td>
@@ -61,7 +61,7 @@
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.249s</div>
+<div class="counter">0.035s</div>
 <p>duration</p>
 </div>
 </td>
@@ -92,7 +92,7 @@
 </thead>
 <tbody>
 <tr>
-<td class="success">include_defines_python.puml</td>
+<td class="success">global_in_def.puml</td>
 <td class="path">testAllPumlFiles()[91][10]</td>
 <td>1</td>
 <td>0</td>
@@ -101,8 +101,17 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">include_defines_python2.puml</td>
+<td class="success">global_in_def2.puml</td>
 <td class="path">testAllPumlFiles()[91][11]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">int_overflow_is_32_bits.puml</td>
+<td class="path">testAllPumlFiles()[91][12]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -110,25 +119,16 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">include_then_python.puml</td>
-<td class="path">testAllPumlFiles()[91][12]</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td data-sort-value="97">0.097s</td>
-<td class="success" data-sort-value="100">100%</td>
-</tr>
-<tr>
-<td class="success">include_then_python2.puml</td>
+<td class="success">try_except.puml</td>
 <td class="path">testAllPumlFiles()[91][13]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="90">0.090s</td>
+<td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">legacy_if_beside_python.puml</td>
+<td class="success">try_except2.puml</td>
 <td class="path">testAllPumlFiles()[91][14]</td>
 <td>1</td>
 <td>0</td>
@@ -137,25 +137,25 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">legacy_while_without_colon.puml</td>
+<td class="success">unsupported_class.puml</td>
 <td class="path">testAllPumlFiles()[91][15]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="2">0.002s</td>
+<td data-sort-value="1">0.001s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">pragma_untouched.puml</td>
+<td class="success">unsupported_with.puml</td>
 <td class="path">testAllPumlFiles()[91][16]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="2">0.002s</td>
+<td data-sort-value="0">0s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">pragma_untouched2.puml</td>
+<td class="success">while_with_colon_is_python.puml</td>
 <td class="path">testAllPumlFiles()[91][17]</td>
 <td>1</td>
 <td>0</td>
@@ -164,106 +164,52 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">preprocessor_output_not_reprocessed.puml</td>
+<td class="success">while_with_colon_is_python2.puml</td>
 <td class="path">testAllPumlFiles()[91][18]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="2">0.002s</td>
-<td class="success" data-sort-value="100">100%</td>
-</tr>
-<tr>
-<td class="success">procedure_called_with_bang.puml</td>
-<td class="path">testAllPumlFiles()[91][19]</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
 <td data-sort-value="1">0.001s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">adaml_constant.puml</td>
+<td class="success">closure.puml</td>
 <td class="path">testAllPumlFiles()[91][1]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="17">0.017s</td>
-<td class="success" data-sort-value="100">100%</td>
-</tr>
-<tr>
-<td class="success">python_and_legacy_variables_are_separate.puml</td>
-<td class="path">testAllPumlFiles()[91][20]</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
 <td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">question_equal_stays_legacy.puml</td>
-<td class="path">testAllPumlFiles()[91][21]</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td data-sort-value="1">0.001s</td>
-<td class="success" data-sort-value="100">100%</td>
-</tr>
-<tr>
-<td class="success">return_inside_python_def.puml</td>
-<td class="path">testAllPumlFiles()[91][22]</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td data-sort-value="2">0.002s</td>
-<td class="success" data-sort-value="100">100%</td>
-</tr>
-<tr>
-<td class="success">theme_untouched.puml</td>
-<td class="path">testAllPumlFiles()[91][23]</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td data-sort-value="5">0.005s</td>
-<td class="success" data-sort-value="100">100%</td>
-</tr>
-<tr>
-<td class="success">theme_untouched2.puml</td>
-<td class="path">testAllPumlFiles()[91][24]</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td data-sort-value="5">0.005s</td>
-<td class="success" data-sort-value="100">100%</td>
-</tr>
-<tr>
-<td class="success">assignment_without_dollar_and_legacy_call.puml</td>
+<td class="success">closure2.puml</td>
 <td class="path">testAllPumlFiles()[91][2]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="1">0.001s</td>
+<td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">assignment_without_dollar_beside_python.puml</td>
+<td class="success">comprehension_emit.puml</td>
 <td class="path">testAllPumlFiles()[91][3]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="4">0.004s</td>
+<td data-sort-value="3">0.003s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">assignment_without_dollar_stays_legacy.puml</td>
+<td class="success">comprehension_emit2.puml</td>
 <td class="path">testAllPumlFiles()[91][4]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="1">0.001s</td>
+<td data-sort-value="3">0.003s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">assignment_without_dollar_warning.puml</td>
+<td class="success">dict_iteration_order.puml</td>
 <td class="path">testAllPumlFiles()[91][5]</td>
 <td>1</td>
 <td>0</td>
@@ -272,16 +218,16 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">define_untouched.puml</td>
+<td class="success">dict_iteration_order2.puml</td>
 <td class="path">testAllPumlFiles()[91][6]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="1">0.001s</td>
+<td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">dollar_variable_stays_legacy.puml</td>
+<td class="success">dollar_name_is_not_python.puml</td>
 <td class="path">testAllPumlFiles()[91][7]</td>
 <td>1</td>
 <td>0</td>
@@ -290,16 +236,16 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">emit_does_not_include.puml</td>
+<td class="success">f_string_format.puml</td>
 <td class="path">testAllPumlFiles()[91][8]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="1">0.001s</td>
+<td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">function_beside_python_def.puml</td>
+<td class="success">f_string_format2.puml</td>
 <td class="path">testAllPumlFiles()[91][9]</td>
 <td>1</td>
 <td>0</td>
@@ -321,7 +267,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.9.2</a> at Nov 28, 2026, 2:33:57 PM</p>
+<a href="https://www.gradle.org">Gradle 9.9.2</a> at Nov 28, 2026, 2:48:56 PM</p>
 </div>
 </div>
 </body>
