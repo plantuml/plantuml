@@ -9,17 +9,17 @@ workflows:
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-java@v6.3.0'
         - 'actions/setup-node@v7.1.0'
-        - 'gradle/actions@v6.4.0'
+        - 'gradle/actions@v6.4.1'
     '.github/workflows/build-for-sonar.yml':
         - 'actions/cache@v6.1.0'
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-java@v6.3.0'
-        - 'gradle/actions@v6.4.0'
+        - 'gradle/actions@v6.4.1'
     '.github/workflows/ci-other.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-java@v6.3.0'
         - 'actions/upload-artifact@v7.0.2'
-        - 'gradle/actions@v6.4.0'
+        - 'gradle/actions@v6.4.1'
     '.github/workflows/ci.yml':
         - 'actions/cache@v6.1.0'
         - 'actions/checkout@v7.0.1'
@@ -30,7 +30,7 @@ workflows:
         - 'docker/login-action@v4.8.0'
         - 'docker/metadata-action@v6.2.0'
         - 'docker/setup-buildx-action@v4.4.1'
-        - 'gradle/actions@v6.4.0'
+        - 'gradle/actions@v6.4.1'
         - 'peaceiris/actions-gh-pages@v4.1.0'
     '.github/workflows/close-and-put-in-backlog.yml':
         - 'actions/add-to-project@v2.0.1'
@@ -42,11 +42,11 @@ workflows:
     '.github/workflows/dev-intermediate-test.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/upload-artifact@v7.0.2'
-        - 'gradle/actions@v6.4.0'
+        - 'gradle/actions@v6.4.1'
     '.github/workflows/dev-unit-test.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/upload-artifact@v7.0.2'
-        - 'gradle/actions@v6.4.0'
+        - 'gradle/actions@v6.4.1'
     '.github/workflows/labeler.yml':
         - 'actions/labeler@v7.0.0'
     '.github/workflows/native-image-release.yml':
@@ -58,7 +58,7 @@ workflows:
         - 'actions/setup-java@v6.3.0'
         - 'actions/setup-node@v7.1.0'
         - 'actions/upload-artifact@v7.0.2'
-        - 'gradle/actions@v6.4.0'
+        - 'gradle/actions@v6.4.1'
     '.github/workflows/plumber.yml':
         - 'actions/checkout@v7.0.1'
         - 'getplumber/plumber@v0.7.23'
@@ -165,9 +165,9 @@ dependencies:
         commit: 'sha1-60e76998d25690099182b796e99b8804da582d90'
         owner_id: 10176827
         repo_id: 443997241
-    'gradle/actions@v6.4.0':
-        ref: 'v6.4.0'
-        commit: 'sha1-3f5f9adaf7d9fecd50b5935e54106014257a94e6'
+    'gradle/actions@v6.4.1':
+        ref: 'v6.4.1'
+        commit: 'sha1-8da46b539cd8fe6ab27ca75128919a18d757604c'
         owner_id: 124156
         repo_id: 743626948
     'peaceiris/actions-gh-pages@v4.1.0':
