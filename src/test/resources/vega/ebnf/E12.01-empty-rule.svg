@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="95px" preserveAspectRatio="none" style="width:236px;height:95px;background:#FFFFFF;" version="1.1" viewBox="0 0 236 95" width="236px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="194.513" x="20" y="30.889">See example of §8.2 of ISO-EBNF</text>
+    </g>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.063" x="87.756" y="55.889">empty</text>
+    <ellipse cx="91.756" cy="69" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="147.756" cy="69" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="95.756" x2="117.756" y1="69" y2="69"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="117.756" x2="143.756" y1="69" y2="69"/>
+    <path d="M128.756,69 L128.756,66 L134.756,69 L128.756,72 L128.756,69" fill="#181818"/>
+  </g>
+</svg>

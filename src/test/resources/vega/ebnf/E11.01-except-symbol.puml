@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+title Restriction using the except symbol
+
+letter = ? "A" - "Z" ?;
+vowel = "A" | "E" | "I" | "O" | "U";
+consonant = letter - vowel;
+@endebnf

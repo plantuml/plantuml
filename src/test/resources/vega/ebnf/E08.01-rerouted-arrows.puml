@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+title Rerouted lines have arrow heads
+test = [1], [12], [123], [1234];
+@endebnf

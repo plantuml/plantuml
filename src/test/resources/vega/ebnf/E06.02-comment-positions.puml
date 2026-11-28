@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+title Test on comments
+test_alt =  z (*this is a comment\nbelow z*), (*this is a prefix comment\nabove alt*) [(*this is a comment\nabove a*) a (*this is a comment\nbelow a*) | (*this is a comment\nabove b*) b (*this is a comment\nbelow b*)] (*this is a suffix comment below the alt. *), (*this is a comment\nabove z*) z (*this is a comment\nbelow z*);
+@endebnf

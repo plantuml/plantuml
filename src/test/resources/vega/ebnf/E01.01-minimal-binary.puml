@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+binaryDigit = "0" | "1";
+@endebnf

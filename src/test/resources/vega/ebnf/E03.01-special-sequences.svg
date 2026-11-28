@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="287px" preserveAspectRatio="none" style="width:897px;height:287px;background:#FFFFFF;" version="1.1" viewBox="0 0 897 287" width="897px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M10,15 L10,38 L173.35,38 L173.35,25 L163.35,15 L10,15" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M163.35,15 L163.35,25 L173.35,25 L163.35,15" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="142.35" x="16" y="30.111">ISO-EBNF §8.1 examples</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.85" x="10" y="63.889">h-tab</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="252.025" x="40" y="77"/>
+    <text fill="#000" font-size="14" textLength="242.025" x="45" y="92.889">ISO 6429 character Horizontal Tabulation</text>
+    <ellipse cx="14" cy="89" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="322.025" cy="89" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="89" y2="89"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="292.025" x2="318.025" y1="89" y2="89"/>
+    <path d="M303.025,89 L303.025,86 L309.025,89 L303.025,92 L303.025,89" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.238" x="10" y="126.889">new-line</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="152" y2="152"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="337.213" y1="152" y2="152"/>
+    <path d="M156.885,152 L156.885,149 L162.885,152 L156.885,155 L156.885,152" fill="#181818"/>
+    <path d="M40,152 C49,152 52,160 52,169 C52,178 55,186 64,186" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M313.213,186 C322.213,186 325.213,178 325.213,169 C325.213,160 328.213,152 337.213,152" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M72,178 C72,184 74,186 80,186" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="72" x2="72" y1="175" y2="178"/>
+    <path d="M72,175 C72,169 74,167 80,167" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="79" x2="298.213" y1="167" y2="167"/>
+    <path d="M208.528,167 L208.528,164 L202.528,167 L208.528,170 L208.528,167" fill="#181818"/>
+    <path d="M305.213,178 C305.213,184 303.213,186 297.213,186" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="305.213" x2="305.213" y1="175" y2="178"/>
+    <path d="M297.213,167 C303.213,167 305.213,169 305.213,175" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="64" x2="79" y1="186" y2="186"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="298.213" x2="313.213" y1="186" y2="186"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="219.213" x="79" y="174"/>
+    <text fill="#000" font-size="14" textLength="209.213" x="84" y="189.889">ISO 6429 character Carriage Return</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="337.213" x2="357.213" y1="152" y2="152"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="181.938" x="357.213" y="140"/>
+    <text fill="#000" font-size="14" textLength="171.938" x="362.213" y="155.889">ISO 6429 character Line Feed</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="539.15" x2="559.15" y1="152" y2="152"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="559.15" x2="856.363" y1="152" y2="152"/>
+    <path d="M676.035,152 L676.035,149 L682.035,152 L676.035,155 L676.035,152" fill="#181818"/>
+    <path d="M559.15,152 C568.15,152 571.15,160 571.15,169 C571.15,178 574.15,186 583.15,186" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M832.363,186 C841.363,186 844.363,178 844.363,169 C844.363,160 847.363,152 856.363,152" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M591.15,178 C591.15,184 593.15,186 599.15,186" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="591.15" x2="591.15" y1="175" y2="178"/>
+    <path d="M591.15,175 C591.15,169 593.15,167 599.15,167" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="598.15" x2="817.363" y1="167" y2="167"/>
+    <path d="M727.678,167 L727.678,164 L721.678,167 L727.678,170 L727.678,167" fill="#181818"/>
+    <path d="M824.363,178 C824.363,184 822.363,186 816.363,186" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="824.363" x2="824.363" y1="175" y2="178"/>
+    <path d="M816.363,167 C822.363,167 824.363,169 824.363,175" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="583.15" x2="598.15" y1="186" y2="186"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="817.363" x2="832.363" y1="186" y2="186"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="219.213" x="598.15" y="174"/>
+    <text fill="#000" font-size="14" textLength="209.213" x="603.15" y="189.889">ISO 6429 character Carriage Return</text>
+    <ellipse cx="14" cy="152" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="886.363" cy="152" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="152" y2="152"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="856.363" x2="882.363" y1="152" y2="152"/>
+    <path d="M867.363,152 L867.363,149 L873.363,152 L867.363,155 L867.363,152" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="73.15" x="10" y="223.889">unicode-tab</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="110.975" x="40" y="237"/>
+    <text fill="#000" font-size="14" textLength="100.975" x="45" y="252.889">Unicode U+0009</text>
+    <ellipse cx="14" cy="249" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="180.975" cy="249" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="249" y2="249"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="150.975" x2="176.975" y1="249" y2="249"/>
+    <path d="M161.975,249 L161.975,246 L167.975,249 L161.975,252 L161.975,249" fill="#181818"/>
+  </g>
+</svg>

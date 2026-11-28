@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+(* Accented and Unicode identifiers *)
+alt = été | hiver;
+hiver = 'froid';
+été = 'chaud';
+@endebnf
