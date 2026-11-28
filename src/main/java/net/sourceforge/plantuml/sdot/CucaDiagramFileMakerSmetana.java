@@ -47,10 +47,13 @@ import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
@@ -627,18 +630,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			agsafeset(zz, g, new CString("ranksep"),
 					new CString(SvekUtils.pixelToInches(diagram.getSkinParam().getRanksep())), new CString(""));
 
-		exportEntities(zz, g, getUnpackagedEntities());
-		exportGroups(zz, g, root);
-
-		for (Link link : getLocalLinks()) {
-			if (link.isRemoved())
-				continue;
-
-			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);
-			if (e != null)
-				edges.put(link, e);
-
-		}
+		exportGraph(stringBounder, zz, g);
 
 		addPortRankingEdges(zz, g);
 
@@ -714,26 +706,257 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 	}
 
-	private void exportGroups(Globals zz, ST_Agraph_s graph, Entity parent) {
+	// Builds the nodes, clusters and edges of the root graph in the order in which
+	// the dot pipeline writes them to its .dot file (DotStringFactory with
+	// Cluster.printCluster1/printCluster2 and Bibliotekon.lines0/lines1):
+	//
+	// 1. the start nodes of inverted links of the root level (see exportLevel),
+	// 2. the links of length 1 between two leaves,
+	// 3. the remaining nodes of the root level, then its clusters, recursively,
+	// 4. all other links (longer links and links to or from a group).
+	//
+	// dot breaks ties in mincross by the order in which nodes and edges were
+	// created, so the same input order gives the same left-to-right order as the
+	// Graphviz rendering, and arrows such as -l-/-r- keep the order their author
+	// tuned with Graphviz.
+	//
+	// The endpoints of the length-1 links are declared in the root graph before
+	// the clusters exist; declaring them again later inside their cluster moves
+	// the existing node into it (agnode -> agsubnode). This is what dot does when
+	// it reads an edge statement before the subgraph statement of its nodes.
+	private void exportGraph(StringBounder stringBounder, Globals zz, ST_Agraph_s g) {
+		final List<Link> links = new ArrayList<>();
+		for (Link link : getLocalLinks())
+			if (link.isRemoved() == false)
+				links.add(link);
+
+		final Set<Entity> exportedLeaves = new HashSet<>();
+		collectExportedLeaves(root, true, exportedLeaves);
+
+		final List<Link> lines0 = new ArrayList<>();
+		final List<Link> lines1 = new ArrayList<>();
+		for (Link link : links)
+			if (isLengthOneBetweenLeaves(link, exportedLeaves))
+				addLengthOneLink(lines0, link);
+			else
+				lines1.add(link);
+
+		final Map<Link, ST_Agedge_s> created = new HashMap<>();
+
+		final List<Entity> rootLeaves = new ArrayList<>();
+		final List<Entity> rootGroups = new ArrayList<>();
+		collectLevel(root, true, rootLeaves, rootGroups);
+		final List<Entity> rootStarts = getInvertedStarts(rootLeaves, links);
+		exportEntities(zz, g, rootStarts);
+
+		for (Link link : lines0) {
+			final ST_Agnode_s node1 = declareInRootGraph(zz, g, link.getEntity1());
+			final ST_Agnode_s node2 = declareInRootGraph(zz, g, link.getEntity2());
+			created.put(link, createEdge(stringBounder, zz, g, link, node1, node2));
+		}
+
+		exportLevelContent(zz, g, rootLeaves, rootGroups, rootStarts, links);
+
+		for (Link link : lines1)
+			created.put(link, createEdge(stringBounder, zz, g, link, getAgnode(zz, link.getEntity1()),
+					getAgnode(zz, link.getEntity2())));
+
+		// The order given to dot only drives the layout. The SVG keeps drawing the
+		// edges in the order of the links in the source, and the nodes in the order
+		// of collectDrawingOrder.
+		for (Link link : links) {
+			final ST_Agedge_s e = created.get(link);
+			if (e != null)
+				edges.put(link, e);
+		}
+
+		final Map<Entity, ST_Agnode_s> exported = new LinkedHashMap<>(nodes);
+		nodes.clear();
+		final List<Entity> drawingOrder = new ArrayList<>();
+		collectDrawingOrder(root, true, drawingOrder);
+		for (Entity ent : drawingOrder) {
+			final ST_Agnode_s n = exported.remove(ent);
+			if (n != null)
+				nodes.put(ent, n);
+		}
+		nodes.putAll(exported);
+	}
+
+	// The unpackaged entities, then the content of each group in source order,
+	// depth first.
+	private void collectDrawingOrder(Entity parent, boolean isLayoutRoot, List<Entity> result) {
+		final Collection<Entity> leaves = isLayoutRoot ? getUnpackagedEntities() : parent.leafs();
+		for (Entity ent : leaves)
+			if (ent.isRemoved() == false)
+				result.add(ent);
+
 		for (Entity g : getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE)
-				exportEntity(zz, graph, g);
+				result.add(g);
 			else
-				exportGroup(zz, graph, g);
-
+				collectDrawingOrder(g, false, result);
 		}
-
 	}
 
-	private void exportGroup(Globals zz, ST_Agraph_s graph, Entity group) {
+	// Mirrors Bibliotekon.addLine: only links of length 1 are written before the
+	// clusters. A link carrying a label, a note or a direction arrow
+	// (SvekEdge.hasNoteLabelText) is put before the first plain link joining the
+	// same two entities.
+	private static void addLengthOneLink(List<Link> lines0, Link link) {
+		if (hasLabelText(link))
+			for (int i = 0; i < lines0.size(); i++) {
+				final Link other = lines0.get(i);
+				if (hasLabelText(other) == false && link.sameConnections(other)) {
+					lines0.add(i, link);
+					return;
+				}
+			}
+
+		lines0.add(link);
+	}
+
+	// Same condition as SvekEdge.hasNoteLabelText, which is true as soon as the
+	// edge has a label block, even an empty one: a label, a note on the link or a
+	// direction arrow on the label all create one.
+	private static boolean hasLabelText(Link link) {
+		return Display.isNull(link.getLabel()) == false || link.getNote() != null
+				|| link.getLinkArrow() != LinkArrow.NONE_OR_SEVERAL;
+	}
+
+	// A link to or from a group ends on the core node of its cluster, which only
+	// exists once the cluster is built, so such a link is never written early.
+	private boolean isLengthOneBetweenLeaves(Link link, Set<Entity> exportedLeaves) {
+		if (link.getLength() != 1)
+			return false;
+
+		final Entity entity1 = link.getEntity1();
+		final Entity entity2 = link.getEntity2();
+		if (entity1.isGroup() || entity2.isGroup())
+			return false;
+
+		return exportedLeaves.contains(entity1) && exportedLeaves.contains(entity2);
+	}
+
+	private ST_Agnode_s declareInRootGraph(Globals zz, ST_Agraph_s g, Entity leaf) {
+		final SvekNode node = getBibliotekon().getNode(leaf);
+		return agnode(zz, g, new CString(node.getUid()), true);
+	}
+
+	private ST_Agnode_s getAgnode(Globals zz, Entity entity) {
+		if (entity.isGroup())
+			return getCoreFromGroup(zz, entity);
+
+		return getAgnodeFromLeaf(entity);
+	}
+
+	// Lists what belongs directly to the graph of 'parent', in the order in which
+	// the dot pipeline registers the nodes of its Cluster and so writes them
+	// (GraphvizImageBuilder.printGroups/printGroup): the leaves, then the groups,
+	// in source order.
+	//
+	// Empty packages are leaves too: printAllSubgroups has already turned them
+	// into EMPTY_PACKAGE leaves, which leafs() lists at their source position. The
+	// dot pipeline registers them while it walks the child groups, so they follow
+	// the other leaves of a cluster. At the layout root they come before the
+	// unpackaged entities instead, as the groups are printed first there.
+	//
+	// A packed group is listed among the groups like any other: the dot pipeline
+	// keeps it as a child Cluster and writes its content, without a subgraph of
+	// its own, at its position among the children (ClusterDotString).
+	private void collectLevel(Entity parent, boolean isLayoutRoot, List<Entity> leaves, List<Entity> groups) {
+		final List<Entity> emptyPackages = new ArrayList<>();
+		final List<Entity> otherLeaves = new ArrayList<>();
+		for (Entity ent : isLayoutRoot ? getUnpackagedEntities() : parent.leafs()) {
+			if (ent.isRemoved())
+				continue;
+
+			if (ent.getLeafType() == LeafType.EMPTY_PACKAGE)
+				emptyPackages.add(ent);
+			else
+				otherLeaves.add(ent);
+		}
+
+		if (isLayoutRoot) {
+			leaves.addAll(emptyPackages);
+			leaves.addAll(otherLeaves);
+		} else {
+			leaves.addAll(otherLeaves);
+			leaves.addAll(emptyPackages);
+		}
+
+		for (Entity g : getChildrenGroups(parent))
+			if (g.isRemoved() == false)
+				groups.add(g);
+	}
+
+	// Every leaf that exportGraph turns into a node, so that a link is only
+	// written early when both of its ends really get a node.
+	private void collectExportedLeaves(Entity parent, boolean isLayoutRoot, Set<Entity> result) {
+		final List<Entity> leaves = new ArrayList<>();
+		final List<Entity> groups = new ArrayList<>();
+		collectLevel(parent, isLayoutRoot, leaves, groups);
+		for (Entity leaf : leaves)
+			if (getBibliotekon().getNode(leaf) != null)
+				result.add(leaf);
+
+		for (Entity group : groups)
+			if (group.isPacked() || getBibliotekon().getCluster(group) != null)
+				collectExportedLeaves(group, false, result);
+	}
+
+	// Mirrors Cluster.getNodesOrderedTop: the start node of every inverted link
+	// that sits at this level in a normal position comes first. An arrow pointing
+	// left or up is stored inverted: "A -l- B" becomes a link from B to A, whose
+	// start is B. Each start is inserted at the front, so the last such link gives
+	// the first node.
+	private static List<Entity> getInvertedStarts(List<Entity> leaves, List<Link> links) {
+		final List<Entity> result = new ArrayList<>();
+		for (Link link : links) {
+			if (link.isInverted() == false)
+				continue;
+
+			final Entity start = link.getEntity1();
+			if (start.getEntityPosition() == EntityPosition.NORMAL && leaves.contains(start)) {
+				result.remove(start);
+				result.add(0, start);
+			}
+		}
+		return result;
+	}
+
+	// Mirrors Cluster.printCluster1 followed by Cluster.printCluster2 for one
+	// cluster: the start nodes of inverted links, the other leaves, then the
+	// nested clusters. For a packed group, 'graph' is the graph of its parent.
+	private void exportLevel(Globals zz, ST_Agraph_s graph, Entity parent, List<Link> links) {
+		final List<Entity> leaves = new ArrayList<>();
+		final List<Entity> groups = new ArrayList<>();
+		collectLevel(parent, false, leaves, groups);
+		final List<Entity> starts = getInvertedStarts(leaves, links);
+		exportEntities(zz, graph, starts);
+		exportLevelContent(zz, graph, leaves, groups, starts, links);
+	}
+
+	private void exportLevelContent(Globals zz, ST_Agraph_s graph, List<Entity> leaves, List<Entity> groups,
+			List<Entity> alreadyExported, List<Link> links) {
+		for (Entity leaf : leaves)
+			if (alreadyExported.contains(leaf) == false)
+				exportEntity(zz, graph, leaf);
+
+		for (Entity group : groups)
+			exportGroup(zz, graph, group, links);
+	}
+
+	private void exportGroup(Globals zz, ST_Agraph_s graph, Entity group, List<Link> links) {
+		// A packed group draws no frame of its own: its content goes into the parent
+		// graph, ordered as a level of its own (ClusterDotString, packed case).
 		if (group.isPacked()) {
-			this.exportEntities(zz, graph, group.leafs());
-			this.exportGroups(zz, graph, group);
+			exportLevel(zz, graph, group, links);
 			return;
 		}
+
 		final Cluster cluster = getBibliotekon().getCluster(group);
 		if (cluster == null) {
 			System.err.println("CucaDiagramFileMakerSmetana::exportGroup issue");
@@ -768,9 +991,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		agsafeset(zz, cluster1, new CString("margin"), new CString("" + clusterMargin), new CString(""));
 
-		this.exportEntities(zz, cluster1, group.leafs());
 		this.clusters.put(group, cluster1);
-		this.exportGroups(zz, cluster1, group);
+		this.exportLevel(zz, cluster1, group, links);
 	}
 
 	private CString createLabelDim(final double width, final double height) {
@@ -935,20 +1157,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	}
 
-	private ST_Agedge_s createEdge(StringBounder stringBounder, Globals zz, final ST_Agraph_s g, Link link) {
-
-		final ST_Agnode_s node1;
-		final ST_Agnode_s node2;
-
-		if (link.getEntity1().isGroup())
-			node1 = getCoreFromGroup(zz, link.getEntity1());
-		else
-			node1 = getAgnodeFromLeaf(link.getEntity1());
-
-		if (link.getEntity2().isGroup())
-			node2 = getCoreFromGroup(zz, link.getEntity2());
-		else
-			node2 = getAgnodeFromLeaf(link.getEntity2());
+	private ST_Agedge_s createEdge(StringBounder stringBounder, Globals zz, final ST_Agraph_s g, Link link,
+			ST_Agnode_s node1, ST_Agnode_s node2) {
 
 		if (node1 == null || node2 == null)
 			return null;

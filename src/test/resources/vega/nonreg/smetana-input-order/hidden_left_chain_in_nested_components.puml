@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+' Smetana must receive nodes and edges in the order the Graphviz pipeline
+' writes them, so the hidden -l- chain lays out the three units left to right
+' as client_connection, unix_domain_client_factory, qnx_dispatch_client_factory,
+' exactly as Graphviz does. In the reference SVG their x coordinates increase
+' in that order.
+!pragma layout smetana
+component dependable_element_message_passing {
+  component component_message_passing {
+    component client {
+      [client_connection]
+      [unix_domain_client_factory]
+      [qnx_dispatch_client_factory]
+    }
+    component engine {
+    }
+    component server {
+    }
+    qnx_dispatch_client_factory -l[hidden]- unix_domain_client_factory
+    unix_domain_client_factory -l[hidden]- client_connection
+  }
+}
+qnx_dispatch_client_factory -u- IClientFactory
+client_connection -u-( ReplyCallback
+@enduml

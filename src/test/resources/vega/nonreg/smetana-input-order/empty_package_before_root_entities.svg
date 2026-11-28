@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:169px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 76" width="169px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="53" y="12"/>
+      <ellipse cx="68" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="63" y="33">C</text>
+      <text fill="#000" font-size="14" x="82" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="54" x2="93.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="54" x2="93.363" y1="52" y2="52"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="112" y="12"/>
+      <ellipse cx="127" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="122" y="33">C</text>
+      <text fill="#000" font-size="14" x="141" y="31.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="113" x2="152.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="113" x2="152.363" y1="52" y2="52"/>
+    </g>
+    <path d="M8.5,12 L18.862,12 A3.75,3.75 0 0 1 21.362,14.5 L28.362,32 L32.863,32 A2.5,2.5 0 0 1 35.363,34.5 L35.363,57.5 A2.5,2.5 0 0 1 32.863,60 L8.5,60 A2.5,2.5 0 0 1 6,57.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="28.362" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" x="10" y="24.889">P</text>
+  </g>
+</svg>
