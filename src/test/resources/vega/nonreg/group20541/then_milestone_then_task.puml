@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+[Test prototype] requires 10 days
+then [pop a bottle] requires 1 day
+then [Prototype completed] happens
+then [Clean the mess] requires 1 day
+then [Setup assembly line] requires 12 days
+@endgantt

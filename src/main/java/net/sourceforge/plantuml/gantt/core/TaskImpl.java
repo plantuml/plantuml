@@ -282,6 +282,12 @@ public class TaskImpl extends AbstractTask implements Task {
 	}
 
 	@Override
+	public void forceStart(TimePoint start) {
+		solver.forceStart(start);
+		invalidateCache();
+	}
+
+	@Override
 	public void setEnd(TimePoint end) {
 //		if (end.toString().endsWith("T00:00") == false)
 //			throw new IllegalArgumentException(end.toString());

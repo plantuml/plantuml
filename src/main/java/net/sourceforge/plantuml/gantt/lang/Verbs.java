@@ -55,6 +55,9 @@ public class Verbs {
 	public static Verbs displayOnSameRowAs = new Verbs(new UBrexLeaf("display〇?s 〇+〴s on 〇+〴s same 〇+〴s row 〇+〴s as"));
 	public static Verbs ends = new Verbs(new UBrexLeaf("ends"));
 	public static Verbs happens = new Verbs(new UBrexLeaf("happens"));
+	// "happens" with nothing after it: the "s" is the whole complement, because a
+	// verb phrase cannot have an empty complement (see ComplementHappensAlone).
+	public static Verbs happensAlone = new Verbs(new UBrexLeaf("happen"));
 	public static Verbs is = new Verbs(new UBrexLeaf("is"));
 	public static Verbs isColored = new Verbs(new UBrexLeaf("is 〇+〴s colo〇?ured"));
 	public static Verbs isDeleted = new Verbs(new UBrexLeaf("is 〇+〴s deleted"));

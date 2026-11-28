@@ -78,6 +78,13 @@ public class Solver {
 
 	}
 
+	public final void forceStart(TimePoint start) {
+		values.remove(TaskAttribute.START);
+		values.put(TaskAttribute.START, start);
+		if (values.size() > 2)
+			removeFirstElement();
+	}
+
 	private void removeFirstElement() {
 		final Iterator<Entry<TaskAttribute, PValue>> it = values.entrySet().iterator();
 		it.next();

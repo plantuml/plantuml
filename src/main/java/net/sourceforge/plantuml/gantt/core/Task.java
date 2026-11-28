@@ -56,6 +56,12 @@ public interface Task extends Moment {
 
 	public void setStart(TimePoint start);
 
+	/**
+	 * Like {@link #setStart(TimePoint)}, but may also move the start <em>earlier</em>
+	 * (setStart never does: an already known start can only be pushed later).
+	 */
+	public void forceStart(TimePoint start);
+
 	public void setEnd(TimePoint end);
 
 	public void setColors(CenterBorderColor... colors);

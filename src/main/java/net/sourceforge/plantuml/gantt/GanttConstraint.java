@@ -79,6 +79,16 @@ public class GanttConstraint extends WithLinkType {
 		return source.getMoment() == task || dest.getMoment() == task;
 	}
 
+	/**
+	 * True when this constraint makes the start of <code>task</code> follow the end
+	 * of another task (what <code>then</code> and <code>starts at [X]'s end</code>
+	 * create).
+	 */
+	public boolean isEndToStartOf(Task task) {
+		return dest.getMoment() == task && dest.getAttribute() == TaskAttribute.START
+				&& source.getAttribute() == TaskAttribute.END;
+	}
+
 	public boolean isThereRightArrow(Task task) {
 		if (dest.getMoment() == task && dest.getAttribute() == TaskAttribute.END)
 			return true;

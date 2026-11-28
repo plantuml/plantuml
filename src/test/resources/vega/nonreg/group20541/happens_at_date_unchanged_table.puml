@@ -1,0 +1,8 @@
+---
+output: utxt
+---
+@startgantt
+Project starts 2020-07-01
+[Prototype completed] happens at 2020-07-05
+then [Clean the mess] requires 1 day
+@endgantt

@@ -266,6 +266,14 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 		return result;
 	}
 
+	public boolean isStartAfterEndOfAnotherTask(Task task) {
+		for (GanttConstraint constraint : this.modelData.getConstraints())
+			if (constraint.isEndToStartOf(task))
+				return true;
+
+		return false;
+	}
+
 	public Task getOrCreateTask(TaskCode code, boolean linkedToPrevious) {
 		Task result = this.modelData.getTask(Objects.requireNonNull(code));
 		if (result == null) {

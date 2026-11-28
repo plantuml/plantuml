@@ -230,6 +230,27 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			}
 		});
 
+		// "then [Milestone] happens": the milestone sits on the last day of the task
+		// it follows, exactly like "[Milestone] happens at [Previous]'s end". It must
+		// stay after the other "happens" phrases, so that they are tried first.
+		result.add(new VerbPhraseAction(Verbs.happensAlone, new ComplementHappensAlone()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				if (gantt.isStartAfterEndOfAnotherTask(task) == false)
+					return CommandExecutionResult.error(
+							"A milestone needs a date, or to follow a task: use 'then [" + task.getCode().getDisplay()
+									+ "] happens' or 'happens at [Task]'s end'");
+
+				task.setLoad(Load.of(Duration.ofDays(1)));
+				task.setDiamond(true);
+				// setStart() cannot move the start earlier, and "then" already set it to the day after
+				// the previous task.
+				task.forceStart(task.getStart().decrement());
+				return CommandExecutionResult.ok();
+			}
+		});
+
 		result.add(new VerbPhraseAction(Verbs.occurs, new ComplementFromTo()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {

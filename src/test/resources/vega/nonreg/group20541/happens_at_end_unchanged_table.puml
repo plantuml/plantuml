@@ -1,0 +1,9 @@
+---
+output: utxt
+---
+@startgantt
+[Test prototype] requires 10 days
+then [pop a bottle] requires 1 day
+[Prototype completed] happens at [pop a bottle]'s end
+then [Clean the mess] requires 1 day
+@endgantt
