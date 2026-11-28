@@ -826,8 +826,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				|| link.getLinkArrow() != LinkArrow.NONE_OR_SEVERAL;
 	}
 
-	// A link to or from a group ends on the core node of its cluster, which only
-	// exists once the cluster is built, so such a link is never written early.
+	// Unlike Bibliotekon.addLine, a length-1 link to or from a group is not written
+	// early. It ends on the core node of the group's cluster, which stands for the
+	// center point of the dot pipeline (Cluster.getSpecialPointId). That point sits
+	// beside extra clusters wrapping the cluster's content (ClusterDotString,
+	// thereALinkFromOrToGroup1); Smetana builds no such clusters. Creating the core
+	// node early without them puts it on the far side of the content, so the edge
+	// would reach the cluster from behind its content.
 	private boolean isLengthOneBetweenLeaves(Link link, Set<Entity> exportedLeaves) {
 		if (link.getLength() != 1)
 			return false;
