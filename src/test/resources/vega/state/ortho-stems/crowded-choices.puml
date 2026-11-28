@@ -1,0 +1,49 @@
+---
+output: svg
+---
+@startuml
+' https://github.com/plantuml/plantuml/pull/2989
+' Same diagram as nonreg.svg.StateEdgeStemTest (edges_spread_over_the_points_of_a_crowded_choice).
+' Vega forces Smetana, which has no orthogonal routing: this file does not run
+' the ortho stem rewrite, it guards that Smetana output is left unchanged.
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+hide empty description
+state InService {
+  state WaitingForDriver
+  WaitingForDriver : entry / showWelcome()
+  WaitingForDriver : do / pollRfidReader()
+  WaitingForDriver --> WaitingForDriver : cardPresented [!isReadable] / beep(2)
+  state Authorising {
+    state "full" as authFull <<entryPoint>>
+    state "cachedToken" as authCached <<entryPoint>>
+    state "authorised" as authOk <<exitPoint>>
+    state "refused" as authNo <<exitPoint>>
+    authFull -[hidden]right-> authCached
+    authOk -[hidden]right-> authNo
+  }
+  authFull <-- WaitingForDriver : connectorInserted [connectorLocks()]\n/ lockConnector()
+  authCached <-- WaitingForDriver : cardPresented [tokenCached && isReadable]\n/ reuseToken()
+  state PickProfile <<choice>>
+  authOk --> PickProfile
+  PickProfile --> ChargeSession : [request.kW > 150 && pack.degC < 35]\n/ setLimit(500 A)
+  PickProfile --> ChargeSession : [request.kW > 150 && pack.degC >= 35]\n/ setLimit(125 A) ; warnDerated()
+  PickProfile --> ChargeSession : [else]\n/ setLimit(request.kW)
+  state RetryOrBlock <<choice>>
+  authNo --> RetryOrBlock
+  RetryOrBlock --> WaitingForDriver : [strikes < 2] /\lunlockConnector();\lshowRetry()
+  RetryOrBlock --> CardBlocked : [strikes >= 2] / captureAudit()
+  CardBlocked : entry / holdCard(60 s)
+  CardBlocked --> WaitingForDriver : holdExpired / unlockConnector()
+  state "Charge Session" as ChargeSession
+  ChargeSession : do / deliverEnergy()
+  state Suspended
+  Suspended : entry / openContactors() ; showHoldMessage()
+  Suspended <-- ChargeSession : gridBrownout / openContactors()
+  Suspended --> ChargeSession : gridRestored [insulationOk]\n/ closeContactors()
+  Suspended --> RetryOrBlock : holdTimeout(15 min) / endSessionEarly()
+  ChargeSession --> Finalising
+  state "Finalising Session" as Finalising
+  Finalising --> WaitingForDriver : / printReceipt()
+}
+@enduml

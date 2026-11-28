@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+' https://github.com/plantuml/plantuml/pull/2989
+' Same diagram as nonreg.svg.EntryExitPointStemTest (edges_from_outside_meet_entry_and_exit_points_from_outside_and_clear_of_their_labels).
+' Vega forces Smetana, which has no orthogonal routing: this file does not run
+' the ortho stem rewrite, it guards that Smetana output is left unchanged.
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+hide empty description
+state Session {
+  state "card" as epCard <<entryPoint>>
+  state "app" as epApp <<entryPoint>>
+  state "done" as xpDone <<exitPoint>>
+  state "aborted" as xpAbort <<exitPoint>>
+  epCard --> Reading
+  epApp --> Validating
+  Reading --> Validating : cardRead
+  Validating --> Charging : accepted
+  Validating --> xpAbort : refused
+  Charging --> xpDone : full
+  Charging --> xpAbort : unplugged
+}
+Idle --> epCard : cardTapped
+Idle --> epApp : appStart
+xpDone --> Idle
+xpAbort --> Idle : / showError()
+@enduml
