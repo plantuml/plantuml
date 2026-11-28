@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+title See example of §8.2 of ISO-EBNF
+empty = ;
+@endebnf

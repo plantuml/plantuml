@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+title Comments
+(* Notes for Rule1 *)
+Rule1 = {"a-z" (* any letter *) };
+(* Notes for Rule2 *)
+(* Additional notes and references *)
+@endebnf

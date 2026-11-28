@@ -1,0 +1,24 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+<style>
+element {
+  ebnf {
+    LineColor blue
+    Fontcolor green
+    Backgroundcolor palegreen
+    note {
+      Backgroundcolor pink
+    }
+  }
+}
+</style>
+title Styled EBNF
+styled_ebnf = {"a", c, "a" (* Note on a *)}
+| ? special ?
+| "repetition", 4 * '2';
+(* Global end note *)
+@endebnf

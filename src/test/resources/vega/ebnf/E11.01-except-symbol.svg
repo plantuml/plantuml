@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="381px" preserveAspectRatio="none" style="width:246px;height:381px;background:#FFFFFF;" version="1.1" viewBox="0 0 246 381" width="246px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="204.663" x="20" y="30.889">Restriction using the except symbol</text>
+    </g>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.062" x="20.575" y="55.889">letter</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="52.525" x="50.575" y="69"/>
+    <text fill="#000" font-size="14" textLength="42.525" x="55.575" y="84.889">"A" - "Z"</text>
+    <ellipse cx="24.575" cy="81" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="133.1" cy="81" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="28.575" x2="50.575" y1="81" y2="81"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="103.1" x2="129.1" y1="81" y2="81"/>
+    <path d="M114.1,81 L114.1,78 L120.1,81 L114.1,84 L114.1,81" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35.875" x="20.575" y="118.889">vowel</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="19.362" x="74.575" y="132"/>
+    <text fill="#000" font-size="14" x="79.575" y="147.889">A</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="50.575" x2="74.575" y1="144" y2="144"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="93.938" x2="119.425" y1="144" y2="144"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="19.362" x="74.575" y="166"/>
+    <text fill="#000" font-size="14" x="79.575" y="181.889">E</text>
+    <path d="M62.575,166 C62.575,175 65.575,178 74.575,178" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="93.938" x2="95.425" y1="178" y2="178"/>
+    <path d="M107.425,166 C107.425,175 104.425,178 95.425,178" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="74.575" y="200"/>
+    <text fill="#000" font-size="14" x="79.575" y="215.889">I</text>
+    <path d="M62.575,200 C62.575,209 65.575,212 74.575,212" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="88.425" x2="95.425" y1="212" y2="212"/>
+    <path d="M107.425,200 C107.425,209 104.425,212 95.425,212" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="20.85" x="74.575" y="234"/>
+    <text fill="#000" font-size="14" x="79.575" y="249.889">O</text>
+    <path d="M62.575,234 C62.575,243 65.575,246 74.575,246" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="95.425" x2="95.425" y1="246" y2="246"/>
+    <path d="M107.425,234 C107.425,243 104.425,246 95.425,246" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="20.15" x="74.575" y="268"/>
+    <text fill="#000" font-size="14" x="79.575" y="283.889">U</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="94.725" x2="95.425" y1="280" y2="280"/>
+    <path d="M62.575,268 C62.575,277 65.575,280 74.575,280" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.575" x2="62.575" y1="156" y2="268"/>
+    <path d="M50.575,144 C59.575,144 62.575,147 62.575,156" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M107.425,268 C107.425,277 104.425,280 95.425,280" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="107.425" x2="107.425" y1="156" y2="268"/>
+    <path d="M107.425,156 C107.425,147 110.425,144 119.425,144" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <ellipse cx="24.575" cy="144" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="149.425" cy="144" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="28.575" x2="50.575" y1="144" y2="144"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="119.425" x2="145.425" y1="144" y2="144"/>
+    <path d="M130.425,144 L130.425,141 L136.425,144 L130.425,147 L130.425,144" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="20.575" y="317.889">consonant</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="50.575" x2="50.575" y1="343" y2="343"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="41.062" x="50.575" y="331"/>
+    <text fill="#000" font-size="14" textLength="31.062" x="55.575" y="346.889">letter</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="91.638" x2="111.638" y1="343" y2="343"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="114.638" y="347.111">NOT</text>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="45.875" x="149.213" y="331"/>
+    <text fill="#000" font-size="14" textLength="35.875" x="154.213" y="346.889">vowel</text>
+    <ellipse cx="24.575" cy="343" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="225.088" cy="343" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="28.575" x2="50.575" y1="343" y2="343"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="195.088" x2="221.088" y1="343" y2="343"/>
+    <path d="M206.088,343 L206.088,340 L212.088,343 L206.088,346 L206.088,343" fill="#181818"/>
+  </g>
+</svg>

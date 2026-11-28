@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+(* ISO-EBNF §8.1 examples *)
+h-tab = ? ISO 6429 character Horizontal Tabulation ?;
+new-line = { ? ISO 6429 character Carriage Return ? },
+? ISO 6429 character Line Feed ?,
+{ ? ISO 6429 character Carriage Return ? };
+
+unicode-tab = ?Unicode U+0009?;
+@endebnf

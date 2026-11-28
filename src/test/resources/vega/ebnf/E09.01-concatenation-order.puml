@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+a = (one, two), three;
+b = (one (* 1 *), two (* 2 *)), three (* 3 *);
+@endebnf

@@ -1,0 +1,19 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+(* Simplified Fortran example *)
+Fortran_77_continuation_line = 5 * " ", '[...]', 66 * [character];
+
+test = 4 * '2';
+
+aa = "A";
+bb = 3 * aa, "B";
+cc = 3 * [aa], "C";
+dd = {aa}, "D";
+ee = aa, {aa}, "E";
+ff = 3 * aa, 3 * [aa], "F";
+gg = 3 * {aa}, "D";
+@endebnf

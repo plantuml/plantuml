@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: (EBNF)
+tag: ebnf
+---
+@startebnf
+empty-special = ??;
+@endebnf

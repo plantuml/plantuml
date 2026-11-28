@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="729px" preserveAspectRatio="none" style="width:296px;height:729px;background:#FFFFFF;" version="1.1" viewBox="0 0 296 729" width="296px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="98.088" x="98.169" y="30.889">Expanded mode</text>
+    </g>
+    <text fill="#000" font-size="14" font-weight="700" textLength="87.063" x="10" y="55.889">zero_or_more</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="135.788" y1="79" y2="79"/>
+    <path d="M76.315,79 L76.315,76 L82.315,79 L76.315,82 L76.315,79" fill="#181818"/>
+    <path d="M40,79 C49,79 52,87 52,96 C52,105 55,113 64,113" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M111.788,113 C120.788,113 123.788,105 123.788,96 C123.788,87 126.788,79 135.788,79" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M72,105 C72,111 74,113 80,113" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="72" x2="72" y1="102" y2="105"/>
+    <path d="M72,102 C72,96 74,94 80,94" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="79" x2="96.788" y1="94" y2="94"/>
+    <path d="M87.673,94 L87.673,91 L81.673,94 L87.673,97 L87.673,94" fill="#181818"/>
+    <path d="M103.788,105 C103.788,111 101.788,113 95.788,113" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="103.788" x2="103.788" y1="102" y2="105"/>
+    <path d="M95.788,94 C101.788,94 103.788,96 103.788,102" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="64" x2="79" y1="113" y2="113"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="96.788" x2="111.788" y1="113" y2="113"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="79" y="101"/>
+    <text fill="#000" font-size="14" x="84" y="116.889">a</text>
+    <ellipse cx="14" cy="79" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="165.788" cy="79" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="79" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="135.788" x2="161.788" y1="79" y2="79"/>
+    <path d="M146.788,79 L146.788,76 L152.788,79 L146.788,82 L146.788,79" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="83.213" x="10" y="150.889">one_or_more</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="176" y2="176"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="40" y="164"/>
+    <text fill="#000" font-size="14" x="45" y="179.889">a</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.788" x2="77.788" y1="176" y2="176"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="77.788" x2="173.575" y1="176" y2="176"/>
+    <path d="M114.102,176 L114.102,173 L120.102,176 L114.102,179 L114.102,176" fill="#181818"/>
+    <path d="M77.788,176 C86.788,176 89.788,184 89.788,193 C89.788,202 92.788,210 101.788,210" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M149.575,210 C158.575,210 161.575,202 161.575,193 C161.575,184 164.575,176 173.575,176" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M109.788,202 C109.788,208 111.788,210 117.788,210" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="109.788" x2="109.788" y1="199" y2="202"/>
+    <path d="M109.788,199 C109.788,193 111.788,191 117.788,191" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="116.788" x2="134.575" y1="191" y2="191"/>
+    <path d="M125.46,191 L125.46,188 L119.46,191 L125.46,194 L125.46,191" fill="#181818"/>
+    <path d="M141.575,202 C141.575,208 139.575,210 133.575,210" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="141.575" x2="141.575" y1="199" y2="202"/>
+    <path d="M133.575,191 C139.575,191 141.575,193 141.575,199" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="101.788" x2="116.788" y1="210" y2="210"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="134.575" x2="149.575" y1="210" y2="210"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="116.788" y="198"/>
+    <text fill="#000" font-size="14" x="121.788" y="213.889">a</text>
+    <ellipse cx="14" cy="176" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="203.575" cy="176" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="176" y2="176"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="173.575" x2="199.575" y1="176" y2="176"/>
+    <path d="M184.575,176 L184.575,173 L190.575,176 L184.575,179 L184.575,176" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="118.213" x="10" y="247.889">one_or_more_ebnf</text>
+    <path d="M48,277 C48,283 50,285 56,285" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="48" x2="48" y1="274" y2="277"/>
+    <path d="M48,274 C48,268 50,266 56,266" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="55" x2="72.788" y1="266" y2="266"/>
+    <path d="M63.673,266 L63.673,263 L57.673,266 L63.673,269 L63.673,266" fill="#181818"/>
+    <path d="M79.788,277 C79.788,283 77.788,285 71.788,285" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="79.788" x2="79.788" y1="274" y2="277"/>
+    <path d="M71.788,266 C77.788,266 79.788,268 79.788,274" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="55" y1="285" y2="285"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="72.788" x2="87.788" y1="285" y2="285"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="55" y="273"/>
+    <text fill="#000" font-size="14" x="60" y="288.889">a</text>
+    <ellipse cx="14" cy="285" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="117.788" cy="285" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="285" y2="285"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="87.788" x2="113.788" y1="285" y2="285"/>
+    <path d="M98.788,285 L98.788,282 L104.788,285 L98.788,288 L98.788,285" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="186.638" x="10" y="322.889">zero_or_more_with_separator</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="255.425" y1="346" y2="346"/>
+    <path d="M124.17,346 L124.17,343 L130.17,346 L124.17,349 L124.17,346" fill="#181818"/>
+    <path d="M40,346 C49,346 52,348 52,357 C52,366 55,368 64,368" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M231.425,368 C240.425,368 243.425,366 243.425,357 C243.425,348 246.425,346 255.425,346" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="64" x2="64" y1="368" y2="368"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="64" y="356"/>
+    <text fill="#000" font-size="14" x="69" y="371.889">a</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="81.788" x2="101.788" y1="368" y2="368"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="101.788" x2="231.425" y1="368" y2="368"/>
+    <path d="M151.642,368 L151.642,365 L157.642,368 L151.642,371 L151.642,368" fill="#181818"/>
+    <path d="M101.788,368 C110.788,368 113.788,376 113.788,385 C113.788,394 116.788,402 125.788,402" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M207.425,402 C216.425,402 219.425,394 219.425,385 C219.425,376 222.425,368 231.425,368" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M133.788,394 C133.788,400 135.788,402 141.788,402" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="133.788" x2="133.788" y1="391" y2="394"/>
+    <path d="M133.788,391 C133.788,385 135.788,383 141.788,383" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="140.788" x2="192.425" y1="383" y2="383"/>
+    <path d="M169.77,383 L169.77,380 L163.77,383 L169.77,386 L169.77,383" fill="#181818"/>
+    <path d="M199.425,394 C199.425,400 197.425,402 191.425,402" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="199.425" x2="199.425" y1="391" y2="394"/>
+    <path d="M191.425,383 C197.425,383 199.425,385 199.425,391" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="125.788" x2="140.788" y1="402" y2="402"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="192.425" x2="207.425" y1="402" y2="402"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="140.788" x2="140.788" y1="402" y2="402"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="140.788" y="390"/>
+    <text fill="#000" font-size="14" x="145.788" y="405.889">,</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="154.638" x2="174.638" y1="402" y2="402"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="174.638" y="390"/>
+    <text fill="#000" font-size="14" x="179.638" y="405.889">a</text>
+    <ellipse cx="14" cy="346" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="285.425" cy="346" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="346" y2="346"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="255.425" x2="281.425" y1="346" y2="346"/>
+    <path d="M266.425,346 L266.425,343 L272.425,346 L266.425,349 L266.425,346" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="182.788" x="10" y="439.889">one_or_more_with_separator</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="465" y2="465"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="40" y="453"/>
+    <text fill="#000" font-size="14" x="45" y="468.889">a</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.788" x2="77.788" y1="465" y2="465"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="77.788" x2="207.425" y1="465" y2="465"/>
+    <path d="M127.642,465 L127.642,462 L133.642,465 L127.642,468 L127.642,465" fill="#181818"/>
+    <path d="M77.788,465 C86.788,465 89.788,473 89.788,482 C89.788,491 92.788,499 101.788,499" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M183.425,499 C192.425,499 195.425,491 195.425,482 C195.425,473 198.425,465 207.425,465" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M109.788,491 C109.788,497 111.788,499 117.788,499" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="109.788" x2="109.788" y1="488" y2="491"/>
+    <path d="M109.788,488 C109.788,482 111.788,480 117.788,480" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="116.788" x2="168.425" y1="480" y2="480"/>
+    <path d="M145.77,480 L145.77,477 L139.77,480 L145.77,483 L145.77,480" fill="#181818"/>
+    <path d="M175.425,491 C175.425,497 173.425,499 167.425,499" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="175.425" x2="175.425" y1="488" y2="491"/>
+    <path d="M167.425,480 C173.425,480 175.425,482 175.425,488" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="101.788" x2="116.788" y1="499" y2="499"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="168.425" x2="183.425" y1="499" y2="499"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="116.788" x2="116.788" y1="499" y2="499"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="116.788" y="487"/>
+    <text fill="#000" font-size="14" x="121.788" y="502.889">,</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="130.638" x2="150.638" y1="499" y2="499"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="150.638" y="487"/>
+    <text fill="#000" font-size="14" x="155.638" y="502.889">a</text>
+    <ellipse cx="14" cy="465" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="237.425" cy="465" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="465" y2="465"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="207.425" x2="233.425" y1="465" y2="465"/>
+    <path d="M218.425,465 L218.425,462 L224.425,465 L218.425,468 L218.425,465" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="190.488" x="10" y="536.889">zero_or_more_with_terminator</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="169.638" y1="560" y2="560"/>
+    <path d="M89.855,560 L89.855,557 L95.855,560 L89.855,563 L89.855,560" fill="#181818"/>
+    <path d="M40,560 C49,560 52,568 52,577 C52,586 55,594 64,594" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M145.638,594 C154.638,594 157.638,586 157.638,577 C157.638,568 160.638,560 169.638,560" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M72,586 C72,592 74,594 80,594" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="72" x2="72" y1="583" y2="586"/>
+    <path d="M72,583 C72,577 74,575 80,575" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="79" x2="130.638" y1="575" y2="575"/>
+    <path d="M107.983,575 L107.983,572 L101.983,575 L107.983,578 L107.983,575" fill="#181818"/>
+    <path d="M137.638,586 C137.638,592 135.638,594 129.638,594" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="137.638" x2="137.638" y1="583" y2="586"/>
+    <path d="M129.638,575 C135.638,575 137.638,577 137.638,583" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="64" x2="79" y1="594" y2="594"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="130.638" x2="145.638" y1="594" y2="594"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="79" x2="79" y1="594" y2="594"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="79" y="582"/>
+    <text fill="#000" font-size="14" x="84" y="597.889">a</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="96.788" x2="116.788" y1="594" y2="594"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="116.788" y="582"/>
+    <text fill="#000" font-size="14" x="121.788" y="597.889">,</text>
+    <ellipse cx="14" cy="560" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="199.638" cy="560" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="560" y2="560"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="169.638" x2="195.638" y1="560" y2="560"/>
+    <path d="M180.638,560 L180.638,557 L186.638,560 L180.638,563 L180.638,560" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="186.638" x="10" y="631.889">one_or_more_with_terminator</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="657" y2="657"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="40" y="645"/>
+    <text fill="#000" font-size="14" x="45" y="660.889">a</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.788" x2="77.788" y1="657" y2="657"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="77.788" y="645"/>
+    <text fill="#000" font-size="14" x="82.788" y="660.889">,</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="91.638" x2="111.638" y1="657" y2="657"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="111.638" x2="241.275" y1="657" y2="657"/>
+    <path d="M161.493,657 L161.493,654 L167.493,657 L161.493,660 L161.493,657" fill="#181818"/>
+    <path d="M111.638,657 C120.638,657 123.638,665 123.638,674 C123.638,683 126.638,691 135.638,691" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M217.275,691 C226.275,691 229.275,683 229.275,674 C229.275,665 232.275,657 241.275,657" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M143.638,683 C143.638,689 145.638,691 151.638,691" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="143.638" x2="143.638" y1="680" y2="683"/>
+    <path d="M143.638,680 C143.638,674 145.638,672 151.638,672" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="150.638" x2="202.275" y1="672" y2="672"/>
+    <path d="M179.62,672 L179.62,669 L173.62,672 L179.62,675 L179.62,672" fill="#181818"/>
+    <path d="M209.275,683 C209.275,689 207.275,691 201.275,691" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="209.275" x2="209.275" y1="680" y2="683"/>
+    <path d="M201.275,672 C207.275,672 209.275,674 209.275,680" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="135.638" x2="150.638" y1="691" y2="691"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="202.275" x2="217.275" y1="691" y2="691"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="150.638" x2="150.638" y1="691" y2="691"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="150.638" y="679"/>
+    <text fill="#000" font-size="14" x="155.638" y="694.889">a</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="168.425" x2="188.425" y1="691" y2="691"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="188.425" y="679"/>
+    <text fill="#000" font-size="14" x="193.425" y="694.889">,</text>
+    <ellipse cx="14" cy="657" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="271.275" cy="657" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="657" y2="657"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="241.275" x2="267.275" y1="657" y2="657"/>
+    <path d="M252.275,657 L252.275,654 L258.275,657 L252.275,660 L252.275,657" fill="#181818"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="84px" preserveAspectRatio="none" style="width:107px;height:84px;background:#FFFFFF;" version="1.1" viewBox="0 0 107 84" width="107px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="14" font-weight="700" textLength="86.363" x="10" y="20.889">empty-special</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="10" x="40" y="34"/>
+    <text fill="#000" font-size="14" x="45" y="49.889"> </text>
+    <ellipse cx="14" cy="46" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="80" cy="46" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="46" y2="46"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="50" x2="76" y1="46" y2="46"/>
+    <path d="M61,46 L61,43 L67,46 L61,49 L61,46" fill="#181818"/>
+  </g>
+</svg>
