@@ -65,6 +65,8 @@ import net.sourceforge.plantuml.url.Url;
 
 public class ActivityDiagram3 extends TitledDiagram {
 
+	private static final String ERROR_CANNOT_FIND_IF = "Cannot find if";
+
 	enum SwimlaneStrategy {
 		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED;
 	}
@@ -322,19 +324,19 @@ public class ActivityDiagram3 extends TitledDiagram {
 			setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
 		}
-		return CommandExecutionResult.error("Cannot find if");
+		return CommandExecutionResult.error(ERROR_CANNOT_FIND_IF);
 	}
 
 	public CommandExecutionResult else2(LinkRendering whenElse) {
 		if (current() instanceof InstructionIf) {
 			final boolean result = ((InstructionIf) current()).switchToElse2(whenElse, nextLinkRenderer());
 			if (result == false)
-				return CommandExecutionResult.error("Cannot find if");
+				return CommandExecutionResult.error(ERROR_CANNOT_FIND_IF);
 
 			setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
 		}
-		return CommandExecutionResult.error("Cannot find if");
+		return CommandExecutionResult.error(ERROR_CANNOT_FIND_IF);
 	}
 
 	public CommandExecutionResult endif(Colors colors) {
@@ -345,7 +347,7 @@ public class ActivityDiagram3 extends TitledDiagram {
 			setCurrent(((InstructionIf) current()).getParent());
 			return CommandExecutionResult.ok();
 		}
-		return CommandExecutionResult.error("Cannot find if");
+		return CommandExecutionResult.error(ERROR_CANNOT_FIND_IF);
 	}
 
 	public void startRepeat(Display label, BoxStyle boxStyleIn, Colors colors, Stereogroup stereogroup) {
