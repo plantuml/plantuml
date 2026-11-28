@@ -59,10 +59,10 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L59">	public RectangleTask(double startPos, double endPos, double round, int completion, Collection&lt;Segment&gt; paused) {</span>
 <span class="fc" id="L60">		this.round = round;</span>
 <span class="fc" id="L61">		this.completion = completion;</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (startPos &lt; endPos)</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (startPos &lt; endPos)</span>
 <span class="fc" id="L63">			this.segments = new ArrayList&lt;&gt;(new Segment(startPos, endPos).cutSegmentIfNeed(paused));</span>
 		else
-<span class="nc" id="L65">			this.segments = Collections.singletonList(new Segment(startPos, startPos + 1));</span>
+<span class="fc" id="L65">			this.segments = Collections.singletonList(new Segment(startPos, startPos + 1));</span>
 
 <span class="fc" id="L67">	}</span>
 

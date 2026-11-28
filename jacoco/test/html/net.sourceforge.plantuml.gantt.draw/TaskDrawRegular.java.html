@@ -247,8 +247,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 <span class="nc" id="L247">				x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
 <span class="pc bpc" id="L248" title="2 of 4 branches missed.">		} else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT) {</span>
 <span class="fc" id="L249">			x = timeScale.getPosition(end) - 8;</span>
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">			if (x &lt; timeScale.getPosition(start) + timeScale.getWidth(start))</span>
-<span class="nc" id="L251">				x = timeScale.getPosition(end) - 8;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">			if (x &lt; timeScale.getPosition(start) + timeScale.getWidth(start))</span>
+<span class="fc" id="L251">				x = timeScale.getPosition(end) - 8;</span>
 			// x = (timeScale.getPosition(end) + timeScale.getPosition(end) +
 			// timeScale.getWidth(end)) / 2;
 		} else

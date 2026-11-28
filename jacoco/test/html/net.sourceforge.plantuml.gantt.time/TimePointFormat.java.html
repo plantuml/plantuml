@@ -45,12 +45,12 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 <span class="fc" id="L45">	DAY_OF_MONTH, MONTH_AND_DAY;</span>
 
 	public String format(TimePoint when, Locale locale) {
-<span class="pc bpc" id="L48" title="2 of 11 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L48" title="1 of 11 branches missed.">		switch (this) {</span>
 		case DAY_OF_MONTH:
 <span class="fc" id="L50">			return &quot;&quot; + when.getDayOfMonth();</span>
 
 		case QUARTER:
-<span class="nc" id="L53">			return &quot;&quot; + when.quarter();</span>
+<span class="fc" id="L53">			return &quot;&quot; + when.quarter();</span>
 
 		case YEAR:
 <span class="fc" id="L56">			return &quot;&quot; + when.year();</span>

@@ -86,7 +86,7 @@ public class TimeHeaderFactory {
 					weekConfig, dayCalendar, timeBounds, scaleConfig, timelineStyle, workingHours);
 		}
 
-<span class="pc bpc" id="L89" title="3 of 6 branches missed.">		switch (scaleConfig.getPrintScale()) {</span>
+<span class="pc bpc" id="L89" title="1 of 6 branches missed.">		switch (scaleConfig.getPrintScale()) {</span>
 		case DAILY:
 <span class="fc" id="L91">			return new TimeHeaderDaily(createDailyScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
@@ -96,11 +96,11 @@ public class TimeHeaderFactory {
 					timelineStyle);
 
 		case MONTHLY:
-<span class="nc" id="L99">			return new TimeHeaderMonthly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+<span class="fc" id="L99">			return new TimeHeaderMonthly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
 
 		case QUARTERLY:
-<span class="nc" id="L103">			return new TimeHeaderQuarterly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+<span class="fc" id="L103">			return new TimeHeaderQuarterly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
 
 		case YEARLY:
